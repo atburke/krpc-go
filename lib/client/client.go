@@ -16,6 +16,7 @@ import (
 
 // KRPCClient is a client for a kRPC server.
 type KRPCClient struct {
+	mu sync.Mutex
 	KRPCClientConfig
 	conn net.Conn
 	*StreamClient
@@ -76,6 +77,7 @@ func (c *KRPCClient) Connect(ctx context.Context) error {
 
 // connectRPC performs the kRPC connection handshake with the RPC server.
 func (c *KRPCClient) connectRPC() error {
+	fmt.Println("connecting RPC")
 	conn, err := net.Dial("tcp", net.JoinHostPort(c.Host, c.RPCPort))
 	if err != nil {
 		return tracerr.Wrap(err)
@@ -107,11 +109,13 @@ func (c *KRPCClient) connectRPC() error {
 	}
 
 	copy(c.clientIdentifier[:], resp.ClientIdentifier)
+	fmt.Println("Successfully connected!")
 	return nil
 }
 
 // connectStream creates a new stream from a kRPC client.
 func (c *KRPCClient) connectStream(ctx context.Context) error {
+	fmt.Println("connecting stream")
 	conn, err := net.Dial("tcp", net.JoinHostPort(c.Host, c.StreamPort))
 	if err != nil {
 		tracerr.Wrap(err)
@@ -143,6 +147,7 @@ func (c *KRPCClient) connectStream(ctx context.Context) error {
 
 	c.StreamClient = NewStreamClient(conn)
 	go c.StreamClient.Run(ctx)
+	fmt.Println("Successfully connected stream!")
 	return nil
 }
 
@@ -211,24 +216,50 @@ func readMessageLength(r io.Reader) (uint64, error) {
 	return 0, tracerr.Errorf("Message does not appear to start with length: %v", rawLength)
 }
 
-// Call performs a remote procedure call.
-func (c *KRPCClient) Call(call *api.ProcedureCall) (*api.ProcedureResult, error) {
-	out, err := proto.Marshal(call)
+func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall, expectResponse bool) ([]*api.ProcedureResult, error) {
+	req := &api.Request{
+		Calls: calls,
+	}
+	out, err := proto.Marshal(req)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
+
+	// Lock here to prevent RPC requests from intermingling.
+	c.mu.Lock()
 	if err := c.Send(out); err != nil {
+		c.mu.Unlock()
 		return nil, tracerr.Wrap(err)
+	}
+	if !expectResponse {
+		c.mu.Unlock()
+		return nil, nil
 	}
 	in, err := c.Receive()
+	c.mu.Unlock()
+
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	var resp *api.ProcedureResult
-	if err := proto.Unmarshal(in, resp); err != nil {
+	var resp api.Response
+	if err := proto.Unmarshal(in, &resp); err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	return resp, tracerr.Wrap(resp.Error)
+
+	if resp.Error != nil {
+		return nil, tracerr.Wrap(resp.Error)
+	}
+	fmt.Printf("got results: %+v\n", resp.Results)
+	return resp.Results, nil
+}
+
+// Call performs a remote procedure call.
+func (c *KRPCClient) Call(call *api.ProcedureCall, expectResponse bool) (*api.ProcedureResult, error) {
+	resp, err := c.CallMultiple([]*api.ProcedureCall{call}, expectResponse)
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
+	return resp[0], nil
 }
 
 // StreamClient is a client for kRPC streams.
@@ -285,8 +316,8 @@ func (s *StreamClient) Run(ctx context.Context) {
 	for {
 		select {
 		case data := <-c:
-			var streamUpdate *api.StreamUpdate
-			if err := proto.Unmarshal(data, streamUpdate); err != nil {
+			var streamUpdate api.StreamUpdate
+			if err := proto.Unmarshal(data, &streamUpdate); err != nil {
 				fmt.Fprintf(os.Stderr, "Error unmarshaling stream result: %v\n", err)
 			}
 			s.RLock()
