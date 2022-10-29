@@ -2,11 +2,9 @@ package client
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"net"
-	"os"
 	"sync"
 
 	"github.com/atburke/krpc-go/api"
@@ -260,117 +258,4 @@ func (c *KRPCClient) Call(call *api.ProcedureCall, expectResponse bool) (*api.Pr
 		return nil, tracerr.Wrap(err)
 	}
 	return resp[0], nil
-}
-
-// StreamClient is a client for kRPC streams.
-type StreamClient struct {
-	sync.RWMutex
-	conn    net.Conn
-	streams map[uint64]chan *api.ProcedureResult
-}
-
-// NewStreamClient creates a new stream client with an existing connection.
-func NewStreamClient(conn net.Conn) *StreamClient {
-	return &StreamClient{
-		conn:    conn,
-		streams: make(map[uint64]chan *api.ProcedureResult),
-	}
-}
-
-// Close closes the stream client.
-func (s *StreamClient) Close() error {
-	return tracerr.Wrap(s.conn.Close())
-}
-
-// Send sends protobuf-encoded data to a stream server.
-func (s *StreamClient) Send(data []byte) error {
-	return tracerr.Wrap(send(s.conn, data))
-}
-
-// Receive receives protobuf-encoded data from a stream server.
-func (s *StreamClient) Receive() ([]byte, error) {
-	data, err := receive(s.conn)
-	return data, tracerr.Wrap(err)
-}
-
-// Run starts the stream handler.
-func (s *StreamClient) Run(ctx context.Context) {
-	c := make(chan []byte)
-	go func() {
-		for {
-			data, err := s.Receive()
-			if errors.Is(err, io.EOF) {
-				return
-			}
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error reading stream: %v\n", err)
-			}
-			select {
-			case c <- data:
-			case <-ctx.Done():
-				return
-			}
-		}
-	}()
-
-	for {
-		select {
-		case data := <-c:
-			var streamUpdate api.StreamUpdate
-			if err := proto.Unmarshal(data, &streamUpdate); err != nil {
-				fmt.Fprintf(os.Stderr, "Error unmarshaling stream result: %v\n", err)
-			}
-			s.RLock()
-			for _, result := range streamUpdate.Results {
-				streamCh, ok := s.streams[result.Id]
-				if !ok {
-					fmt.Fprintf(os.Stderr, "Unexpected stream id: %v\n", result.Id)
-					continue
-				}
-				// Don't update channel if no one is listening.
-				select {
-				case streamCh <- result.Result:
-				default:
-				}
-			}
-			s.RUnlock()
-		case <-ctx.Done():
-			s.Close()
-			return
-		}
-	}
-}
-
-// AddStream adds a stream channel to listen for by ID. Returns an error if a
-// stream with this ID already exists.
-func (s *StreamClient) AddStream(id uint64) error {
-	s.Lock()
-	defer s.Unlock()
-	if _, ok := s.streams[id]; ok {
-		return tracerr.Errorf("Stream %v already exists", id)
-	}
-	s.streams[id] = make(chan *api.ProcedureResult)
-	return nil
-}
-
-// GetStream gets a stream channel by ID. The ch and ok return values should be
-// treated the same as the return values from a map.
-func (s *StreamClient) GetStream(id uint64) (ch chan *api.ProcedureResult, ok bool) {
-	s.RLock()
-	defer s.RUnlock()
-	ch, ok = s.streams[id]
-	return
-}
-
-// RemoveStream removes a stream channel. Returns an error if no stream exists
-// with the provided ID.
-func (s *StreamClient) RemoveStream(id uint64) error {
-	s.Lock()
-	defer s.Unlock()
-	_, ok := s.streams[id]
-	if !ok {
-		return tracerr.Errorf("No stream with id: %v", id)
-	}
-	delete(s.streams, id)
-	return nil
 }

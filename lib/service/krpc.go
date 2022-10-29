@@ -6,7 +6,6 @@ import (
 
 	"github.com/atburke/krpc-go/api"
 	"github.com/atburke/krpc-go/lib/client"
-	"github.com/atburke/krpc-go/lib/utils"
 	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"
 )
@@ -52,70 +51,4 @@ func (s *KRPC) GetServices() (*api.Services, error) {
 		return nil, tracerr.Wrap(err)
 	}
 	return &services, nil
-}
-
-func (s *KRPC) AddStream(call *api.ProcedureCall, startStream bool) (uint64, error) {
-	rawCall, err := proto.Marshal(call)
-	if err != nil {
-		return 0, tracerr.Wrap(err)
-	}
-	request := &api.ProcedureCall{
-		Service:   "KRPC",
-		Procedure: "AddStream",
-		Arguments: []*api.Argument{
-			{
-				Position: 0,
-				Value:    rawCall,
-			},
-			{
-				Position: 1,
-				Value:    utils.EncodeBool(startStream),
-			},
-		},
-	}
-	result, err := s.client.Call(request, true)
-	if err != nil {
-		return 0, tracerr.Wrap(err)
-	}
-	var stream api.Stream
-	if err := proto.Unmarshal(result.Value, &stream); err != nil {
-		return 0, tracerr.Wrap(err)
-	}
-	if err := s.client.AddStream(stream.Id); err != nil {
-		return 0, tracerr.Wrap(err)
-	}
-	return stream.Id, nil
-}
-
-func (s *KRPC) StartStream(id uint64) error {
-	request := &api.ProcedureCall{
-		Service:   "KRPC",
-		Procedure: "StartStream",
-		Arguments: []*api.Argument{
-			{
-				Position: 0,
-				Value:    proto.EncodeVarint(id),
-			},
-		},
-	}
-	_, err := s.client.Call(request, false)
-	return tracerr.Wrap(err)
-}
-
-func (s *KRPC) RemoveStream(id uint64) error {
-	request := &api.ProcedureCall{
-		Service:   "KRPC",
-		Procedure: "RemoveStream",
-		Arguments: []*api.Argument{
-			{
-				Position: 0,
-				Value:    proto.EncodeVarint(id),
-			},
-		},
-	}
-	_, err := s.client.Call(request, false)
-	if err != nil {
-		return tracerr.Wrap(err)
-	}
-	return tracerr.Wrap(s.client.RemoveStream(id))
 }
