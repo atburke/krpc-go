@@ -66,6 +66,8 @@ func ParseXMLDocumentation(docData, prefix string) (string, error) {
 	summary = ReplaceXMLLink(summary)
 	summary = strings.ReplaceAll(summary, "\\n", " ")
 	summary = strings.TrimSpace(summary)
-	summary = strings.ToLower(summary[:1]) + summary[1:]
+	if prefix != "" {
+		summary = strings.ToLower(summary[:1]) + summary[1:]
+	}
 	return prefix + summary, nil
 }

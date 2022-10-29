@@ -12,6 +12,10 @@ import (
 
 const DocsLineLength = 77 // line length of 80 minus "// "
 
+func wrap(s string) string {
+	return wordwrap.WrapString(s, DocsLineLength)
+}
+
 func GenerateService(f *jen.File, service *api.Service) error {
 	return nil
 }
@@ -24,10 +28,37 @@ func GenerateClass(f *jen.File, class *api.Class) error {
 	return nil
 }
 
+// GenerateEnum generates an enum for a given enum definition.
 func GenerateEnum(f *jen.File, enum *api.Enumeration) error {
+	enumName := enum.Name
+	enumDocs, err := utils.ParseXMLDocumentation(enum.Documentation, enumName+" is ")
+	if err != nil {
+		return tracerr.Wrap(err)
+	}
+
+	// Define the enum type.
+	f.Comment(wordwrap.WrapString(enumDocs, DocsLineLength))
+	f.Type().Id(enumName).Int32()
+
+	// Define the enum values.
+	var defs []jen.Code
+	for _, value := range enum.Values {
+		valueName := fmt.Sprintf("%v_%v", enumName, value.Name)
+		valueDocs, err := utils.ParseXMLDocumentation(value.Documentation, "")
+		if err != nil {
+			return tracerr.Wrap(err)
+		}
+		defs = append(defs,
+			jen.Comment(wrap(valueDocs)),
+			jen.Id(valueName).Id(enumName).Op("=").Lit(value.Value),
+		)
+	}
+
+	f.Const().Defs(defs...)
 	return nil
 }
 
+// GenerateException generates an error for a given exception definition.
 func GenerateException(f *jen.File, exception *api.Exception) error {
 	// Names are given in the format XYZException. We want the more go-like
 	// ErrXYZ.
@@ -38,7 +69,7 @@ func GenerateException(f *jen.File, exception *api.Exception) error {
 	}
 
 	// Define the error type.
-	f.Comment(wordwrap.WrapString(docs, DocsLineLength))
+	f.Comment(wrap(docs))
 	f.Type().Id(exceptionName).Struct(
 		jen.Id("msg").String(),
 	)
