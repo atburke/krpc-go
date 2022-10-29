@@ -1,4 +1,4 @@
-package service
+package internal
 
 import (
 	"encoding/json"
@@ -10,15 +10,17 @@ import (
 	"github.com/ztrue/tracerr"
 )
 
-type KRPC struct {
+// BasicKRPC is a partial implementation of the KRPC service. This should only
+// be used to fetch the rest of the services.
+type BasicKRPC struct {
 	client *client.KRPCClient
 }
 
-func NewKRPC(client *client.KRPCClient) *KRPC {
-	return &KRPC{client: client}
+func NewBasicKRPC(client *client.KRPCClient) *BasicKRPC {
+	return &BasicKRPC{client: client}
 }
 
-func (s *KRPC) GetStatus() (*api.Status, error) {
+func (s *BasicKRPC) GetStatus() (*api.Status, error) {
 	request := &api.ProcedureCall{
 		Service:   "KRPC",
 		Procedure: "GetStatus",
@@ -34,7 +36,7 @@ func (s *KRPC) GetStatus() (*api.Status, error) {
 	return &status, nil
 }
 
-func (s *KRPC) GetServices() (*api.Services, error) {
+func (s *BasicKRPC) GetServices() (*api.Services, error) {
 	fmt.Println("GetServices")
 	request := &api.ProcedureCall{
 		Service:   "KRPC",
