@@ -121,6 +121,7 @@ func (sm *streamManager) newStream() *Stream[[]byte] {
 	sm.channels[idx] = c
 	return &Stream[[]byte]{
 		C:     c,
+		clone: sm.newStream,
 		close: func() { sm.deleteStream(idx) },
 	}
 }
@@ -148,7 +149,13 @@ func (sm *streamManager) write(b []byte) {
 // Stream is a struct for receiving stream data.
 type Stream[T any] struct {
 	C     chan T
+	clone func() *Stream[T]
 	close func()
+}
+
+// Clone clones the stream for another thread to listen on.
+func (s *Stream[T]) Clone() *Stream[T] {
+	return s.clone()
 }
 
 // Close closes the stream.
@@ -162,6 +169,9 @@ func MapStream[S, T any](src *Stream[S], m func(S) T) *Stream[T] {
 	ctx, cancel := context.WithCancel(context.Background())
 	dst := &Stream[T]{
 		C: make(chan T),
+		clone: func() *Stream[T] {
+			return MapStream(src.Clone(), m)
+		},
 		close: func() {
 			cancel()
 			src.close()
