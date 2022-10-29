@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/atburke/krpc-go/internal"
 	"github.com/atburke/krpc-go/lib/client"
-	"github.com/atburke/krpc-go/lib/service"
 )
 
 func main() {
@@ -20,7 +20,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	krpc := service.NewKRPC(client)
+	krpc := internal.NewBasicKRPC(client)
 
 	status, err := krpc.GetStatus()
 	if err != nil {
