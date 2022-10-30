@@ -10,6 +10,42 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const testClass = `
+package gentest
+
+import client "github.com/atburke/krpc-go/lib/client"
+
+// Test - a test class.
+type Test struct {
+	BaseClass
+}
+
+// NewTest creates a new Test.
+func NewTest(id uint64, client *client.KRPCClient) *Test {
+	return &Test{
+		Client: client,
+		ID: id,
+	}
+}
+`
+
+func TestGenerateClass(t *testing.T) {
+	expectedOut, err := format.Source([]byte(testClass))
+	require.NoError(t, err)
+
+	class := &api.Class{
+		Name:          "Test",
+		Documentation: "<summary>A test class.</summary>",
+	}
+
+	f := jen.NewFile("gentest")
+	require.NoError(t, GenerateClass(f, class))
+
+	var out bytes.Buffer
+	require.NoError(t, f.Render(&out))
+	require.Equal(t, string(expectedOut), out.String())
+}
+
 const testEnum = `
 package gentest
 
