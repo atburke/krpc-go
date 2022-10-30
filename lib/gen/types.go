@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"regexp"
 
+	"github.com/atburke/krpc-go/api"
+	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"
 )
 
@@ -88,4 +90,66 @@ func GetClassName(procedureName string) (string, error) {
 	default:
 		return "", tracerr.Errorf("Procedure %q does not have a class", procedureName)
 	}
+}
+
+// GetGoType gets the Go representation of a kRPC type.
+func GetGoType(t *api.Type) *jen.Statement {
+	const apiMod = "github.com/atburke/krpc-go/api"
+	const serviceMod = "github.com/atburke/krpc-go/lib/service"
+
+	switch t.Code {
+	// Special KRPC types.
+	case api.Type_PROCEDURE_CALL:
+		return jen.Qual(apiMod, "ProcedureCall")
+	case api.Type_STREAM:
+		return jen.Qual(apiMod, "Stream")
+	case api.Type_STATUS:
+		return jen.Qual(apiMod, "Status")
+	case api.Type_SERVICES:
+		return jen.Qual(apiMod, "Services")
+
+	// Class or enum.
+	case api.Type_CLASS, api.Type_ENUMERATION:
+		return jen.Qual(serviceMod, t.Name)
+
+	// Primitives.
+	case api.Type_DOUBLE:
+		return jen.Float64()
+	case api.Type_FLOAT:
+		return jen.Float32()
+	case api.Type_SINT32:
+		return jen.Int32()
+	case api.Type_SINT64:
+		return jen.Int64()
+	case api.Type_UINT32:
+		return jen.Uint32()
+	case api.Type_UINT64:
+		return jen.Uint64()
+	case api.Type_BOOL:
+		return jen.Bool()
+	case api.Type_STRING:
+		return jen.String()
+	case api.Type_BYTES:
+		return jen.Index().Byte()
+
+	// Collections.
+	case api.Type_TUPLE:
+		var tupleTypes []jen.Code
+		for _, subType := range t.Types {
+			tupleTypes = append(tupleTypes, GetGoType(subType))
+		}
+		return jen.Qual(
+			apiMod, fmt.Sprintf("Tuple%v", len(t.Types)),
+		).Types(tupleTypes...)
+
+	case api.Type_LIST:
+		return jen.Index().Add(GetGoType(t.Types[0]))
+	case api.Type_SET:
+		return jen.Map(GetGoType(t.Types[0])).Struct()
+	case api.Type_DICTIONARY:
+		return jen.Map(GetGoType(t.Types[0])).Add(GetGoType(t.Types[1]))
+	}
+
+	// Type is None or unrecognized.
+	return nil
 }
