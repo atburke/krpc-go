@@ -5,26 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"
 )
-
-// EncodeBool encodes a bool in the Protobuf format.
-func EncodeBool(b bool) []byte {
-	if b {
-		return proto.EncodeVarint(1)
-	}
-	return proto.EncodeVarint(0)
-}
-
-// DecodeBool decodes a bool from the Protobuf format.
-func DecodeBool(d []byte) (bool, error) {
-	b, size := proto.DecodeVarint(d)
-	if size == 0 {
-		return false, tracerr.Errorf("Failed to decode bool: %v", d)
-	}
-	return b != 0, nil
-}
 
 var xmlLink = regexp.MustCompile(`<see cref=\\"(T|M):([a-zA-z.]+)\\" ?/>`)
 

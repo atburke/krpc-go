@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"net"
 	"sync"
@@ -75,7 +74,6 @@ func (c *KRPCClient) Connect(ctx context.Context) error {
 
 // connectRPC performs the kRPC connection handshake with the RPC server.
 func (c *KRPCClient) connectRPC() error {
-	fmt.Println("connecting RPC")
 	conn, err := net.Dial("tcp", net.JoinHostPort(c.Host, c.RPCPort))
 	if err != nil {
 		return tracerr.Wrap(err)
@@ -107,13 +105,11 @@ func (c *KRPCClient) connectRPC() error {
 	}
 
 	copy(c.clientIdentifier[:], resp.ClientIdentifier)
-	fmt.Println("Successfully connected!")
 	return nil
 }
 
 // connectStream creates a new stream from a kRPC client.
 func (c *KRPCClient) connectStream(ctx context.Context) error {
-	fmt.Println("connecting stream")
 	conn, err := net.Dial("tcp", net.JoinHostPort(c.Host, c.StreamPort))
 	if err != nil {
 		tracerr.Wrap(err)
@@ -145,7 +141,6 @@ func (c *KRPCClient) connectStream(ctx context.Context) error {
 
 	c.StreamClient = NewStreamClient(conn)
 	go c.StreamClient.Run(ctx)
-	fmt.Println("Successfully connected stream!")
 	return nil
 }
 
@@ -247,7 +242,6 @@ func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall, expectResponse boo
 	if resp.Error != nil {
 		return nil, tracerr.Wrap(resp.Error)
 	}
-	fmt.Printf("got results: %+v\n", resp.Results)
 	return resp.Results, nil
 }
 
@@ -257,5 +251,6 @@ func (c *KRPCClient) Call(call *api.ProcedureCall, expectResponse bool) (*api.Pr
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	return resp[0], nil
+	r := resp[0]
+	return r, tracerr.Wrap(r.Error)
 }

@@ -2,7 +2,7 @@
 .DEFAULT: build
 
 build:
-	go build -o build/listservices cmd/listservices.go
+	go build -o build/marshal cmd/marshal.go
 
 gen:
 	go generate ./...
