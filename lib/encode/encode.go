@@ -20,8 +20,8 @@ func Marshal(m interface{}) ([]byte, error) {
 	var b []byte
 	switch v := m.(type) {
 	// Special types
-	case *api.ProcedureCall, *api.Stream, *api.Status, *api.Services, *api.Event:
-		b, err = proto.Marshal(v.(proto.Message))
+	case proto.Message:
+		b, err = proto.Marshal(v)
 	case service.Class:
 		b, err = Marshal(v.ID())
 	// Varints
@@ -137,8 +137,8 @@ func Unmarshal(b []byte, m interface{}) error {
 	var isCollection bool
 	switch v := m.(type) {
 	// Special types
-	case *api.ProcedureCall, *api.Stream, *api.Status, *api.Services, *api.Event:
-		err = proto.Unmarshal(b, m.(proto.Message))
+	case proto.Message:
+		err = proto.Unmarshal(b, v)
 	case service.Class:
 		err = Unmarshal(b, &u)
 		if err == nil {
