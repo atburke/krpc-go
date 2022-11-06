@@ -3,6 +3,7 @@ package gen
 import (
 	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/atburke/krpc-go/api"
 	"github.com/dave/jennifer/jen"
@@ -92,11 +93,13 @@ func GetClassName(procedureName string) (string, error) {
 	}
 }
 
+func GetProcedureName(procedureName string) string {
+	terms := strings.Split(procedureName, "_")
+	return terms[len(terms)-1]
+}
+
 // GetGoType gets the Go representation of a kRPC type.
 func GetGoType(t *api.Type) *jen.Statement {
-	const apiMod = "github.com/atburke/krpc-go/api"
-	const serviceMod = "github.com/atburke/krpc-go/lib/service"
-
 	switch t.Code {
 	// Special KRPC types.
 	case api.Type_PROCEDURE_CALL:

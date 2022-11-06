@@ -29,6 +29,89 @@ func NewTest(id uint64, client *client.KRPCClient) *Test {
 }
 `
 
+func TestGenerateProcedure(t *testing.T) {
+	tests := []struct {
+		name        string
+		procedure   *api.Procedure
+		expectedOut string
+	}{
+		{
+			name: "basic procedure",
+			procedure: &api.Procedure{
+				Name:          "MyProcedure",
+				Documentation: "<summary>Test procedure generation.</summary>",
+				Parameters: []*api.Parameter{
+					{
+						Name: "param1",
+						Type: &api.Type{
+							Code: api.Type_UINT64,
+						},
+					},
+					{
+						Name: "param2",
+						Type: &api.Type{
+							Code: api.Type_STRING,
+						},
+					},
+				},
+				ReturnType: &api.Type{
+					Code: api.Type_BOOL,
+				},
+				GameScenes: []api.Procedure_GameScene{api.Procedure_FLIGHT},
+			},
+			expectedOut: testProcedure,
+		},
+		{
+			name: "class setter",
+			procedure: &api.Procedure{
+				Name:          "MyClass_set_MyProperty",
+				Documentation: "<summary>Test class setter generation.</summary>",
+				Parameters: []*api.Parameter{
+					{
+						Name: "this",
+						Type: &api.Type{
+							Code:    api.Type_CLASS,
+							Service: "MyService",
+							Name:    "MyClass",
+						},
+					},
+					{
+						Name: "param1",
+						Type: &api.Type{
+							Code: api.Type_TUPLE,
+							Types: []*api.Type{
+								{
+									Code: api.Type_STRING,
+								},
+								{
+									Code: api.Type_UINT64,
+								},
+							},
+						},
+					},
+				},
+				ReturnType: &api.Type{
+					Code: api.Type_NONE,
+				},
+			},
+			expectedOut: testClassSetter,
+		},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			expectedOut, err := format.Source([]byte(tc.expectedOut))
+			require.NoError(t, err)
+
+			f := jen.NewFile("gentest")
+			require.NoError(t, GenerateProcedure(f, "MyService", tc.procedure))
+
+			var out bytes.Buffer
+			require.NoError(t, f.Render(&out))
+			require.Equal(t, string(expectedOut), out.String())
+		})
+	}
+}
+
 func TestGenerateClass(t *testing.T) {
 	expectedOut, err := format.Source([]byte(testClass))
 	require.NoError(t, err)
