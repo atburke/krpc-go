@@ -13,7 +13,7 @@ import (
 
 const DocsLineLength = 77 // line length of 80 minus "// "
 
-func wrap(s string) string {
+func wrapDocComment(s string) string {
 	wrapped := wordwrap.WrapString(s, DocsLineLength)
 	inputLines := strings.Split(wrapped, "\n")
 	var outputLines []string
@@ -23,7 +23,39 @@ func wrap(s string) string {
 	return strings.Join(outputLines, "\n")
 }
 
+// GenerateService generates a service.
 func GenerateService(f *jen.File, service *api.Service) error {
+	for _, exception := range service.Exceptions {
+		if err := GenerateException(f, exception); err != nil {
+			return tracerr.Wrap(err)
+		}
+	}
+	for _, enum := range service.Enumerations {
+		if err := GenerateEnum(f, enum); err != nil {
+			return tracerr.Wrap(err)
+		}
+	}
+	for _, class := range service.Classes {
+		if err := GenerateClass(f, class); err != nil {
+			return tracerr.Wrap(err)
+		}
+	}
+
+	serviceDocs, err := utils.ParseXMLDocumentation(service.Documentation, service.Name+" - ")
+	if err != nil {
+		return tracerr.Wrap(err)
+	}
+
+	f.Comment(wrapDocComment(serviceDocs))
+	f.Type().Id(service.Name).Struct(
+		jen.Id("Client").Op("*").Qual(clientMod, "KRPCClient"),
+	)
+
+	for _, procedure := range service.Procedures {
+		if err := GenerateProcedure(f, service.Name, procedure); err != nil {
+			return tracerr.Wrap(err)
+		}
+	}
 	return nil
 }
 
@@ -168,7 +200,7 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 		retType = jen.Error()
 	}
 	// Define the procedure function
-	f.Comment(wrap(procDocs))
+	f.Comment(wrapDocComment(procDocs))
 	f.Func().Params(
 		jen.Id("s").Op("*").Id(receiver),
 	).Id(procName).Params(params...).Add(retType).Block(funcBody...)
@@ -287,7 +319,7 @@ func GenerateClass(f *jen.File, class *api.Class) error {
 	}
 
 	// Define the struct.
-	f.Comment(wrap(classDocs))
+	f.Comment(wrapDocComment(classDocs))
 	f.Type().Id(className).Struct(
 		jen.Id("BaseClass"),
 	)
@@ -328,7 +360,7 @@ func GenerateEnum(f *jen.File, enum *api.Enumeration) error {
 			return tracerr.Wrap(err)
 		}
 		defs = append(defs,
-			jen.Comment(wrap(valueDocs)),
+			jen.Comment(wrapDocComment(valueDocs)),
 			jen.Id(valueName).Id(enumName).Op("=").Lit(value.Value),
 		)
 	}
@@ -348,7 +380,7 @@ func GenerateException(f *jen.File, exception *api.Exception) error {
 	}
 
 	// Define the error type.
-	f.Comment(wrap(docs))
+	f.Comment(wrapDocComment(docs))
 	f.Type().Id(exceptionName).Struct(
 		jen.Id("msg").String(),
 	)
