@@ -10,10 +10,12 @@ import (
 	"github.com/ztrue/tracerr"
 )
 
+// isEmptyStruct checks if a type represents an empty struct.
 func isEmptyStruct(t reflect.Type) bool {
 	return t.Kind() == reflect.Struct && t.NumField() == 0
 }
 
+// Marshal encodes a type in kRPC's protobuf format.
 func Marshal(m interface{}) ([]byte, error) {
 	var err error
 	buf := proto.NewBuffer([]byte{})
@@ -130,6 +132,7 @@ func Marshal(m interface{}) ([]byte, error) {
 	return b, tracerr.Wrap(err)
 }
 
+// Unmarshal decodes a type from kRPC's protobuf format.
 func Unmarshal(b []byte, m interface{}) error {
 	buf := proto.NewBuffer(b)
 	var err error

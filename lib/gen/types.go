@@ -93,6 +93,7 @@ func GetClassName(procedureName string) (string, error) {
 	}
 }
 
+// GetProcedureName gets the name of a procedure.
 func GetProcedureName(procedureName string) string {
 	terms := strings.Split(procedureName, "_")
 	return terms[len(terms)-1]

@@ -10,6 +10,7 @@ import (
 	"github.com/ztrue/tracerr"
 )
 
+// GenerateProcedure generates a procedure function from a given procedure definition.
 func GenerateProcedure(f *jen.File, serviceName string, procedure *api.Procedure) error {
 	var err error
 	switch procedureType := GetProcedureType(procedure.Name); procedureType {
@@ -33,6 +34,7 @@ func GenerateProcedure(f *jen.File, serviceName string, procedure *api.Procedure
 	return tracerr.Wrap(err)
 }
 
+// formatGameScences formats a list of allowed game scenes as a string.
 func formatGameScenes(gameScenes []api.Procedure_GameScene) string {
 	var scenes []string
 	for _, scene := range gameScenes {
@@ -47,6 +49,7 @@ func formatGameScenes(gameScenes []api.Procedure_GameScene) string {
 	return fmt.Sprintf("Allowed game scenes: %v.", sceneString)
 }
 
+// generateProcedureBody generates the function body for a procedure.
 func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, params []jen.Code, returnType *jen.Statement) {
 	returnType = GetGoType(procedure.ReturnType)
 
@@ -141,6 +144,7 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 	return
 }
 
+// generateBaseProcedure generates a procedure function using extra info about the call signature.
 func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceName string, procedure *api.Procedure) {
 	funcBody, params, returnType := generateProcedureBody(serviceName, procedure)
 

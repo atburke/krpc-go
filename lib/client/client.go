@@ -209,6 +209,7 @@ func readMessageLength(r io.Reader) (uint64, error) {
 	return 0, tracerr.Errorf("Message does not appear to start with length: %v", rawLength)
 }
 
+// CallMultiple performs a batch of procedure calls to the rpc server.
 func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall, expectResponse bool) ([]*api.ProcedureResult, error) {
 	req := &api.Request{
 		Calls: calls,
