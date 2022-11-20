@@ -16,29 +16,35 @@ func NewTuple2[T, U any](a T, b U) Tuple2[T, U] {
 
 // Tuple3 is a generic tuple with 3 elements.
 type Tuple3[T, U, V any] struct {
-	Tuple2[T, U]
+	A T
+	B U
 	C V
 }
 
 // NewTuple3 creates a new Tuple3.
 func NewTuple3[T, U, V any](a T, b U, c V) Tuple3[T, U, V] {
 	return Tuple3[T, U, V]{
-		Tuple2: NewTuple2(a, b),
-		C:      c,
+		A: a,
+		B: b,
+		C: c,
 	}
 }
 
 // Tuple4 is a generic tuple with 4 elements.
 type Tuple4[T, U, V, W any] struct {
-	Tuple3[T, U, V]
+	A T
+	B U
+	C V
 	D W
 }
 
 // NewTuple4 creates a new Tuple4.
 func NewTuple4[T, U, V, W any](a T, b U, c V, d W) Tuple4[T, U, V, W] {
 	return Tuple4[T, U, V, W]{
-		Tuple3: NewTuple3(a, b, c),
-		D:      d,
+		A: a,
+		B: b,
+		C: c,
+		D: d,
 	}
 }
 
