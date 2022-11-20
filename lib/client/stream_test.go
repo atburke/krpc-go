@@ -17,7 +17,7 @@ func TestStreamManager(t *testing.T) {
 	for _, numStreams := range streamCounts {
 		numStreams := numStreams
 		t.Run(fmt.Sprintf("%v stream(s) listening", numStreams), func(t *testing.T) {
-			sm := newStreamManager()
+			sm := newStreamManager(0)
 			streamData := map[int][]string{}
 			mu := sync.Mutex{}
 			ctx, cancel := context.WithCancel(context.Background())

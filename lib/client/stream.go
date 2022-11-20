@@ -85,7 +85,7 @@ func (s *StreamClient) WriteToStream(id uint64, b []byte) {
 		// Another thread may have already created the stream manager.
 		sm, ok = s.streams[id]
 		if !ok {
-			sm = newStreamManager()
+			sm = newStreamManager(id)
 			s.streams[id] = sm
 		}
 		s.Unlock()
@@ -99,14 +99,25 @@ func (s *StreamClient) GetStream(id uint64) *Stream[[]byte] {
 	return s.streams[id].newStream()
 }
 
+// DeleteStream removes a byte stream for a particular stream ID. Note that
+// if the stream hasn't yet been closed on the kRPC server, a new local stream
+// will eventually be recreated.
+func (s *StreamClient) DeleteStream(id uint64) {
+	s.Lock()
+	defer s.Unlock()
+	delete(s.streams, id)
+}
+
 type streamManager struct {
+	id       uint64
 	channels map[int]chan []byte
 	newID    func() int
 	sync.RWMutex
 }
 
-func newStreamManager() *streamManager {
+func newStreamManager(id uint64) *streamManager {
 	return &streamManager{
+		id:       id,
 		channels: make(map[int]chan []byte),
 		newID:    utils.NewIDGenerator(),
 	}
@@ -121,6 +132,7 @@ func (sm *streamManager) newStream() *Stream[[]byte] {
 	sm.channels[idx] = c
 	return &Stream[[]byte]{
 		C:     c,
+		ID:    sm.id,
 		clone: sm.newStream,
 		close: func() { sm.deleteStream(idx) },
 	}
@@ -149,6 +161,7 @@ func (sm *streamManager) write(b []byte) {
 // Stream is a struct for receiving stream data.
 type Stream[T any] struct {
 	C     chan T
+	ID    uint64
 	clone func() *Stream[T]
 	close func()
 }
@@ -168,7 +181,8 @@ func (s *Stream[T]) Close() error {
 func MapStream[S, T any](src *Stream[S], m func(S) T) *Stream[T] {
 	ctx, cancel := context.WithCancel(context.Background())
 	dst := &Stream[T]{
-		C: make(chan T),
+		C:  make(chan T),
+		ID: src.ID,
 		clone: func() *Stream[T] {
 			return MapStream(src.Clone(), m)
 		},
