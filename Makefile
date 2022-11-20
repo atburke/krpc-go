@@ -1,4 +1,4 @@
-.PHONY: build gen
+.PHONY: build gen fmt test
 .DEFAULT: build
 
 build:
@@ -6,3 +6,9 @@ build:
 
 gen:
 	go generate ./...
+
+fmt:
+	gofmt -w .
+
+test:
+	go test ./...
