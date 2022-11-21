@@ -159,6 +159,93 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 	f.Func().Params(
 		jen.Id("s").Op("*").Id(receiver),
 	).Id(procName).Params(params...).Add(retType).Block(funcBody...)
+
+	// If this procedure has a return value, also generate a stream definition
+	if returnType != nil {
+		funcBody, streamRetType := generateStreamBody(serviceName, procedure)
+		f.Comment(wrapDocComment("Stream" + procDocs))
+		f.Func().Params(
+			jen.Id("s").Op("*").Id(receiver),
+		).Id("Stream" + procName).Params(params...).Add(jen.Parens(jen.List(streamRetType, jen.Error()))).Block(funcBody...)
+	}
+}
+
+func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, returnType *jen.Statement) {
+	internalReturnType := GetGoType(procedure.ReturnType)
+	returnType = jen.Op("*").Qual(clientMod, "Stream").Types(internalReturnType)
+
+	funcBody = []jen.Code{
+		jen.Var().Err().Error(),
+	}
+
+	if len(procedure.Parameters) > 0 {
+		funcBody = append(funcBody,
+			jen.Var().Id("argBytes").Index().Byte(),
+		)
+	}
+
+	funcBody = append(funcBody,
+		jen.Id("request").Op(":=").Op("&").Qual(apiMod, "ProcedureCall").Values(jen.Dict{
+			jen.Id("Service"):   jen.Lit(serviceName),
+			jen.Id("Procedure"): jen.Lit(procedure.Name),
+		}),
+	)
+
+	// Shorthand for if err != nil {...
+	errReturn := []jen.Code{jen.Nil(), jen.Qual(tracerrMod, "Wrap").Call(jen.Err())}
+	errCheck := jen.If(jen.Err().Op("!=").Nil()).Block(
+		jen.Return(errReturn...),
+	)
+
+	// Marshal arguments
+	_, err := GetClassName(procedure.Name)
+	isClass := err == nil
+	for i, param := range procedure.Parameters {
+		// If this is any kind of class method, use the class itself as the first param
+		if i == 0 && isClass {
+			param.Name = "s"
+		}
+
+		funcBody = append(funcBody,
+			jen.List(jen.Id("argBytes"), jen.Err()).Op("=").Qual(encodeMod, "Marshal").Call(
+				jen.Id(param.Name),
+			),
+			errCheck,
+			jen.Id("request").Dot("Arguments").Op("=").Append(
+				jen.Id("request").Dot("Arguments"),
+				jen.Op("&").Qual(apiMod, "Argument").Values(jen.Dict{
+					jen.Id("Position"): jen.Lit(uint32(i)),
+					jen.Id("Value"):    jen.Id("argBytes"),
+				}),
+			),
+		)
+	}
+
+	funcBody = append(funcBody,
+		jen.Id("krpc").Op(":=").Id("NewKRPC").Call(jen.Id("s").Dot("Client")),
+
+		// Start the stream
+		jen.List(jen.Id("id"), jen.Err()).Op(":=").Id("krpc").Dot("AddStream").Call(
+			jen.Id("request"),
+		),
+		errCheck,
+
+		jen.Id("rawStream").Op(":=").Id("s").Dot("Client").Dot("GetStream").Call(
+			jen.Id("id"),
+		),
+
+		jen.Id("stream").Op(":=").Qual(clientMod, "MapStream").Call(
+			jen.Id("rawStream"),
+			jen.Func().Params(jen.Id("b").Index().Byte()).Add(internalReturnType).Block(
+				jen.Var().Id("value").Add(internalReturnType),
+				jen.Qual(encodeMod, "Unmarshal").Call(jen.Id("b"), jen.Op("&").Id("value")),
+				jen.Return(jen.Id("value")),
+			),
+		),
+		jen.Return(jen.Id("stream"), jen.Nil()),
+	)
+
+	return
 }
 
 func generateProcedure(f *jen.File, serviceName string, procedure *api.Procedure) error {

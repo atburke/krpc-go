@@ -1,6 +1,7 @@
 package gen
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/atburke/krpc-go/api"
@@ -48,6 +49,15 @@ func GenerateService(f *jen.File, service *api.Service) error {
 	f.Comment(wrapDocComment(serviceDocs))
 	f.Type().Id(service.Name).Struct(
 		jen.Id("Client").Op("*").Qual(clientMod, "KRPCClient"),
+	)
+
+	f.Comment(fmt.Sprintf("New%v creates a new %v.", service.Name, service.Name))
+	f.Func().Id("New" + service.Name).Params(
+		jen.Id("client").Op("*").Qual(clientMod, "KRPCClient"),
+	).Op("*").Id(service.Name).Block(
+		jen.Return(jen.Op("&").Id(service.Name).Values(jen.Dict{
+			jen.Id("client"): jen.Id("client"),
+		})),
 	)
 
 	for _, procedure := range service.Procedures {
