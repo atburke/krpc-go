@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"
 )

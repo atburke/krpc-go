@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/dave/jennifer/jen"
 	"github.com/stretchr/testify/require"
 )
@@ -215,10 +215,10 @@ func TestGetGoType(t *testing.T) {
 		},
 	}
 	for _, tc := range tests {
-		t.Run(tc.expectedType, func(t *testing.T) {
+		t.Run(tc.name, func(t *testing.T) {
 			var imports []string
 			if tc.wantAPI {
-				imports = append(imports, `import api "github.com/atburke/krpc-go/api"`)
+				imports = append(imports, `import api "github.com/atburke/krpc-go/lib/api"`)
 			}
 			if tc.wantService != "" {
 				imports = append(imports, fmt.Sprintf("import %v %q", strings.ToLower(tc.wantService), getServicePackage(tc.wantService)))
@@ -234,7 +234,7 @@ func TestGetGoType(t *testing.T) {
 			require.NoError(t, err)
 
 			f := jen.NewFile("gentest")
-			f.Type().Id("Test").Add(GetGoType(tc.t, "github.com/atburke/krpc-go/lib/service/myservice"))
+			f.Type().Id("Test").Add(GetGoType(tc.t, "github.com/atburke/krpc-go/myservice"))
 			var out bytes.Buffer
 			require.NoError(t, f.Render(&out))
 			require.Equal(t, string(expectedOut), out.String())

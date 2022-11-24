@@ -3,7 +3,7 @@ package gen
 import (
 	"fmt"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
 	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"

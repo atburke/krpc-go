@@ -4,10 +4,10 @@ const testProcedure = `
 package gentest
 
 import (
-	api "github.com/atburke/krpc-go/api"
-	encode "github.com/atburke/krpc-go/lib/encode"
-	client "github.com/atburke/krpc-go/lib/client"
+	krpcgo "github.com/atburke/krpc-go"
 	krpc "github.com/atburke/krpc-go/lib/service/krpc"
+	api "github.com/atburke/krpc-go/lib/api"
+	encode "github.com/atburke/krpc-go/lib/encode"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -52,7 +52,7 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 // StreamMyProcedure will test procedure generation.
 //
 // Allowed game scenes: FLIGHT.
-func (s *MyService) StreamMyProcedure(param1 uint64, param2 string) (*client.Stream[bool], error) {
+func (s *MyService) StreamMyProcedure(param1 uint64, param2 string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -81,7 +81,7 @@ func (s *MyService) StreamMyProcedure(param1 uint64, param2 string) (*client.Str
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte)bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte)bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -94,7 +94,7 @@ const testClassSetter = `
 package gentest
 
 import (
-	api "github.com/atburke/krpc-go/api"
+	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	tracerr "github.com/ztrue/tracerr"
 )

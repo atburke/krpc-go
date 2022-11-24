@@ -1,6 +1,6 @@
 package service
 
-import "github.com/atburke/krpc-go/lib/client"
+import krpcgo "github.com/atburke/krpc-go"
 
 type Class interface {
 	// ID gets the instance's ID.
@@ -14,7 +14,7 @@ type BaseClass struct {
 	// ID is the struct's id.
 	id uint64
 	// Client is a kRPC client.
-	Client *client.KRPCClient
+	Client *krpcgo.KRPCClient
 }
 
 // ID gets the instance's ID.

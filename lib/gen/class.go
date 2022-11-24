@@ -3,7 +3,7 @@ package gen
 import (
 	"fmt"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
 	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"
@@ -28,7 +28,7 @@ func GenerateClass(f *jen.File, class *api.Class) error {
 	f.Comment(fmt.Sprintf("%v creates a new %v.", constructorName, className))
 	f.Func().Id(constructorName).Params(
 		jen.Id("id").Uint64(),
-		jen.Id("client").Op("*").Qual("github.com/atburke/krpc-go/lib/client", "KRPCClient"),
+		jen.Id("client").Op("*").Qual(krpcPkg, "KRPCClient"),
 	).Op("*").Id(className).Block(
 		jen.Id("c").Op(":=").Op("&").Id(className).Values(jen.Dict{
 			jen.Id("BaseClass"): jen.Qual(servicePkg, "BaseClass").Values(jen.Dict{

@@ -1,12 +1,12 @@
 package remotetech
 
 import (
-	api "github.com/atburke/krpc-go/api"
-	client "github.com/atburke/krpc-go/lib/client"
+	krpcgo "github.com/atburke/krpc-go"
+	krpc "github.com/atburke/krpc-go/krpc"
+	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
-	krpc "github.com/atburke/krpc-go/lib/service/krpc"
-	spacecenter "github.com/atburke/krpc-go/lib/service/spacecenter"
+	spacecenter "github.com/atburke/krpc-go/spacecenter"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -38,7 +38,7 @@ type Antenna struct {
 }
 
 // NewAntenna creates a new Antenna.
-func NewAntenna(id uint64, client *client.KRPCClient) *Antenna {
+func NewAntenna(id uint64, client *krpcgo.KRPCClient) *Antenna {
 	c := &Antenna{BaseClass: service.BaseClass{Client: client}}
 	c.SetID(id)
 	return c
@@ -50,7 +50,7 @@ type Comms struct {
 }
 
 // NewComms creates a new Comms.
-func NewComms(id uint64, client *client.KRPCClient) *Comms {
+func NewComms(id uint64, client *krpcgo.KRPCClient) *Comms {
 	c := &Comms{BaseClass: service.BaseClass{Client: client}}
 	c.SetID(id)
 	return c
@@ -59,11 +59,11 @@ func NewComms(id uint64, client *client.KRPCClient) *Comms {
 // RemoteTech - this service provides functionality to interact with <a
 // href="https://forum.kerbalspaceprogram.com/index.php?/topic/139167-13-remotetech-v188-2017-09-03/">RemoteTech</a>.
 type RemoteTech struct {
-	Client *client.KRPCClient
+	Client *krpcgo.KRPCClient
 }
 
 // NewRemoteTech creates a new RemoteTech.
-func NewRemoteTech(client *client.KRPCClient) *RemoteTech {
+func NewRemoteTech(client *krpcgo.KRPCClient) *RemoteTech {
 	return &RemoteTech{Client: client}
 }
 
@@ -102,7 +102,7 @@ func (s *RemoteTech) Comms(vessel spacecenter.Vessel) (Comms, error) {
 // capability of a particular vessel.
 //
 // Allowed game scenes: any.
-func (s *RemoteTech) StreamComms(vessel spacecenter.Vessel) (*client.Stream[Comms], error) {
+func (s *RemoteTech) StreamComms(vessel spacecenter.Vessel) (*krpcgo.Stream[Comms], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -123,7 +123,7 @@ func (s *RemoteTech) StreamComms(vessel spacecenter.Vessel) (*client.Stream[Comm
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Comms {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Comms {
 		var value Comms
 		encode.Unmarshal(b, &value)
 		return value
@@ -164,7 +164,7 @@ func (s *RemoteTech) Antenna(part spacecenter.Part) (Antenna, error) {
 // StreamAntenna will get the antenna object for a particular part.
 //
 // Allowed game scenes: any.
-func (s *RemoteTech) StreamAntenna(part spacecenter.Part) (*client.Stream[Antenna], error) {
+func (s *RemoteTech) StreamAntenna(part spacecenter.Part) (*krpcgo.Stream[Antenna], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -185,7 +185,7 @@ func (s *RemoteTech) StreamAntenna(part spacecenter.Part) (*client.Stream[Antenn
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Antenna {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Antenna {
 		var value Antenna
 		encode.Unmarshal(b, &value)
 		return value
@@ -217,7 +217,7 @@ func (s *RemoteTech) Available() (bool, error) {
 // StreamAvailable will whether RemoteTech is installed.
 //
 // Allowed game scenes: any.
-func (s *RemoteTech) StreamAvailable() (*client.Stream[bool], error) {
+func (s *RemoteTech) StreamAvailable() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Available",
@@ -229,7 +229,7 @@ func (s *RemoteTech) StreamAvailable() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -261,7 +261,7 @@ func (s *RemoteTech) GroundStations() ([]string, error) {
 // StreamGroundStations will the names of the ground stations.
 //
 // Allowed game scenes: any.
-func (s *RemoteTech) StreamGroundStations() (*client.Stream[[]string], error) {
+func (s *RemoteTech) StreamGroundStations() (*krpcgo.Stream[[]string], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_GroundStations",
@@ -273,7 +273,7 @@ func (s *RemoteTech) StreamGroundStations() (*client.Stream[[]string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []string {
 		var value []string
 		encode.Unmarshal(b, &value)
 		return value
@@ -314,7 +314,7 @@ func (s *Antenna) Part() (spacecenter.Part, error) {
 // StreamPart will get the part containing this antenna.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamPart() (*client.Stream[spacecenter.Part], error) {
+func (s *Antenna) StreamPart() (*krpcgo.Stream[spacecenter.Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -335,7 +335,7 @@ func (s *Antenna) StreamPart() (*client.Stream[spacecenter.Part], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) spacecenter.Part {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.Part {
 		var value spacecenter.Part
 		encode.Unmarshal(b, &value)
 		return value
@@ -376,7 +376,7 @@ func (s *Antenna) HasConnection() (bool, error) {
 // StreamHasConnection will whether the antenna has a connection.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamHasConnection() (*client.Stream[bool], error) {
+func (s *Antenna) StreamHasConnection() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -397,7 +397,7 @@ func (s *Antenna) StreamHasConnection() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -450,7 +450,7 @@ func (s *Antenna) Target() (Target, error) {
 // cref="M:RemoteTech.Antenna.TargetVessel" />.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamTarget() (*client.Stream[Target], error) {
+func (s *Antenna) StreamTarget() (*krpcgo.Stream[Target], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -471,7 +471,7 @@ func (s *Antenna) StreamTarget() (*client.Stream[Target], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Target {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Target {
 		var value Target
 		encode.Unmarshal(b, &value)
 		return value
@@ -551,7 +551,7 @@ func (s *Antenna) TargetBody() (spacecenter.CelestialBody, error) {
 // StreamTargetBody will the celestial body the antenna is targetting.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamTargetBody() (*client.Stream[spacecenter.CelestialBody], error) {
+func (s *Antenna) StreamTargetBody() (*krpcgo.Stream[spacecenter.CelestialBody], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -572,7 +572,7 @@ func (s *Antenna) StreamTargetBody() (*client.Stream[spacecenter.CelestialBody],
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) spacecenter.CelestialBody {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.CelestialBody {
 		var value spacecenter.CelestialBody
 		encode.Unmarshal(b, &value)
 		return value
@@ -646,7 +646,7 @@ func (s *Antenna) TargetGroundStation() (string, error) {
 // StreamTargetGroundStation will the ground station the antenna is targetting.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamTargetGroundStation() (*client.Stream[string], error) {
+func (s *Antenna) StreamTargetGroundStation() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -667,7 +667,7 @@ func (s *Antenna) StreamTargetGroundStation() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -741,7 +741,7 @@ func (s *Antenna) TargetVessel() (spacecenter.Vessel, error) {
 // StreamTargetVessel will the vessel the antenna is targetting.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamTargetVessel() (*client.Stream[spacecenter.Vessel], error) {
+func (s *Antenna) StreamTargetVessel() (*krpcgo.Stream[spacecenter.Vessel], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -762,7 +762,7 @@ func (s *Antenna) StreamTargetVessel() (*client.Stream[spacecenter.Vessel], erro
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) spacecenter.Vessel {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.Vessel {
 		var value spacecenter.Vessel
 		encode.Unmarshal(b, &value)
 		return value
@@ -846,7 +846,7 @@ func (s *Comms) SignalDelayToVessel(other spacecenter.Vessel) (float64, error) {
 // another vessel, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamSignalDelayToVessel(other spacecenter.Vessel) (*client.Stream[float64], error) {
+func (s *Comms) StreamSignalDelayToVessel(other spacecenter.Vessel) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -875,7 +875,7 @@ func (s *Comms) StreamSignalDelayToVessel(other spacecenter.Vessel) (*client.Str
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float64 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float64 {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
@@ -916,7 +916,7 @@ func (s *Comms) Vessel() (spacecenter.Vessel, error) {
 // StreamVessel will get the vessel.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamVessel() (*client.Stream[spacecenter.Vessel], error) {
+func (s *Comms) StreamVessel() (*krpcgo.Stream[spacecenter.Vessel], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -937,7 +937,7 @@ func (s *Comms) StreamVessel() (*client.Stream[spacecenter.Vessel], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) spacecenter.Vessel {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.Vessel {
 		var value spacecenter.Vessel
 		encode.Unmarshal(b, &value)
 		return value
@@ -978,7 +978,7 @@ func (s *Comms) HasLocalControl() (bool, error) {
 // StreamHasLocalControl will whether the vessel can be controlled locally.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamHasLocalControl() (*client.Stream[bool], error) {
+func (s *Comms) StreamHasLocalControl() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -999,7 +999,7 @@ func (s *Comms) StreamHasLocalControl() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1041,7 +1041,7 @@ func (s *Comms) HasFlightComputer() (bool, error) {
 // board.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamHasFlightComputer() (*client.Stream[bool], error) {
+func (s *Comms) StreamHasFlightComputer() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1062,7 +1062,7 @@ func (s *Comms) StreamHasFlightComputer() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1103,7 +1103,7 @@ func (s *Comms) HasConnection() (bool, error) {
 // StreamHasConnection will whether the vessel has any connection.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamHasConnection() (*client.Stream[bool], error) {
+func (s *Comms) StreamHasConnection() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1124,7 +1124,7 @@ func (s *Comms) StreamHasConnection() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1167,7 +1167,7 @@ func (s *Comms) HasConnectionToGroundStation() (bool, error) {
 // to a ground station.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamHasConnectionToGroundStation() (*client.Stream[bool], error) {
+func (s *Comms) StreamHasConnectionToGroundStation() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1188,7 +1188,7 @@ func (s *Comms) StreamHasConnectionToGroundStation() (*client.Stream[bool], erro
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1229,7 +1229,7 @@ func (s *Comms) SignalDelay() (float64, error) {
 // StreamSignalDelay will the shortest signal delay to the vessel, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamSignalDelay() (*client.Stream[float64], error) {
+func (s *Comms) StreamSignalDelay() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1250,7 +1250,7 @@ func (s *Comms) StreamSignalDelay() (*client.Stream[float64], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float64 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float64 {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
@@ -1293,7 +1293,7 @@ func (s *Comms) SignalDelayToGroundStation() (float64, error) {
 // the closest ground station, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamSignalDelayToGroundStation() (*client.Stream[float64], error) {
+func (s *Comms) StreamSignalDelayToGroundStation() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1314,7 +1314,7 @@ func (s *Comms) StreamSignalDelayToGroundStation() (*client.Stream[float64], err
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float64 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float64 {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
@@ -1355,7 +1355,7 @@ func (s *Comms) Antennas() ([]Antenna, error) {
 // StreamAntennas will the antennas for this vessel.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamAntennas() (*client.Stream[[]Antenna], error) {
+func (s *Comms) StreamAntennas() (*krpcgo.Stream[[]Antenna], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1376,7 +1376,7 @@ func (s *Comms) StreamAntennas() (*client.Stream[[]Antenna], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []Antenna {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []Antenna {
 		var value []Antenna
 		encode.Unmarshal(b, &value)
 		return value

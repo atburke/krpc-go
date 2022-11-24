@@ -3,8 +3,8 @@ package internal
 import (
 	"fmt"
 
-	"github.com/atburke/krpc-go/api"
-	"github.com/atburke/krpc-go/lib/client"
+	krpcgo "github.com/atburke/krpc-go"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"
 )
@@ -12,10 +12,10 @@ import (
 // BasicKRPC is a partial implementation of the KRPC service. This should only
 // be used to fetch the rest of the services.
 type BasicKRPC struct {
-	client *client.KRPCClient
+	client *krpcgo.KRPCClient
 }
 
-func NewBasicKRPC(client *client.KRPCClient) *BasicKRPC {
+func NewBasicKRPC(client *krpcgo.KRPCClient) *BasicKRPC {
 	return &BasicKRPC{client: client}
 }
 

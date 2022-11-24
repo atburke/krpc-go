@@ -1,8 +1,8 @@
 package krpc
 
 import (
-	api "github.com/atburke/krpc-go/api"
-	client "github.com/atburke/krpc-go/lib/client"
+	krpcgo "github.com/atburke/krpc-go"
+	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
 	tracerr "github.com/ztrue/tracerr"
@@ -96,7 +96,7 @@ type Expression struct {
 }
 
 // NewExpression creates a new Expression.
-func NewExpression(id uint64, client *client.KRPCClient) *Expression {
+func NewExpression(id uint64, client *krpcgo.KRPCClient) *Expression {
 	c := &Expression{BaseClass: service.BaseClass{Client: client}}
 	c.SetID(id)
 	return c
@@ -108,7 +108,7 @@ type Type struct {
 }
 
 // NewType creates a new Type.
-func NewType(id uint64, client *client.KRPCClient) *Type {
+func NewType(id uint64, client *krpcgo.KRPCClient) *Type {
 	c := &Type{BaseClass: service.BaseClass{Client: client}}
 	c.SetID(id)
 	return c
@@ -117,11 +117,11 @@ func NewType(id uint64, client *client.KRPCClient) *Type {
 // KRPC - main kRPC service, used by clients to interact with basic server
 // functionality.
 type KRPC struct {
-	Client *client.KRPCClient
+	Client *krpcgo.KRPCClient
 }
 
 // NewKRPC creates a new KRPC.
-func NewKRPC(client *client.KRPCClient) *KRPC {
+func NewKRPC(client *krpcgo.KRPCClient) *KRPC {
 	return &KRPC{Client: client}
 }
 
@@ -149,7 +149,7 @@ func (s *KRPC) GetClientID() ([]byte, error) {
 // StreamGetClientID will returns the identifier for the current client.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamGetClientID() (*client.Stream[[]byte], error) {
+func (s *KRPC) StreamGetClientID() (*krpcgo.Stream[[]byte], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "GetClientID",
@@ -161,7 +161,7 @@ func (s *KRPC) StreamGetClientID() (*client.Stream[[]byte], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []byte {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []byte {
 		var value []byte
 		encode.Unmarshal(b, &value)
 		return value
@@ -195,7 +195,7 @@ func (s *KRPC) GetClientName() (string, error) {
 // empty string if the client has no name.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamGetClientName() (*client.Stream[string], error) {
+func (s *KRPC) StreamGetClientName() (*krpcgo.Stream[string], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "GetClientName",
@@ -207,7 +207,7 @@ func (s *KRPC) StreamGetClientName() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -241,7 +241,7 @@ func (s *KRPC) GetStatus() (api.Status, error) {
 // version.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamGetStatus() (*client.Stream[api.Status], error) {
+func (s *KRPC) StreamGetStatus() (*krpcgo.Stream[api.Status], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "GetStatus",
@@ -253,7 +253,7 @@ func (s *KRPC) StreamGetStatus() (*client.Stream[api.Status], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) api.Status {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Status {
 		var value api.Status
 		encode.Unmarshal(b, &value)
 		return value
@@ -289,7 +289,7 @@ func (s *KRPC) GetServices() (api.Services, error) {
 // libraries to automatically create functionality such as stubs.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamGetServices() (*client.Stream[api.Services], error) {
+func (s *KRPC) StreamGetServices() (*krpcgo.Stream[api.Services], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "GetServices",
@@ -301,7 +301,7 @@ func (s *KRPC) StreamGetServices() (*client.Stream[api.Services], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) api.Services {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Services {
 		var value api.Services
 		encode.Unmarshal(b, &value)
 		return value
@@ -350,7 +350,7 @@ func (s *KRPC) AddStream(call api.ProcedureCall, start bool) (api.Stream, error)
 // StreamAddStream will add a streaming request and return its identifier.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamAddStream(call api.ProcedureCall, start bool) (*client.Stream[api.Stream], error) {
+func (s *KRPC) StreamAddStream(call api.ProcedureCall, start bool) (*krpcgo.Stream[api.Stream], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -379,7 +379,7 @@ func (s *KRPC) StreamAddStream(call api.ProcedureCall, start bool) (*client.Stre
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) api.Stream {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Stream {
 		var value api.Stream
 		encode.Unmarshal(b, &value)
 		return value
@@ -521,7 +521,7 @@ func (s *KRPC) Clients() ([]api.Tuple3[[]byte, string, string], error) {
 // server. Each entry in the list is a clients identifier, name and address.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamClients() (*client.Stream[[]api.Tuple3[[]byte, string, string]], error) {
+func (s *KRPC) StreamClients() (*krpcgo.Stream[[]api.Tuple3[[]byte, string, string]], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Clients",
@@ -533,7 +533,7 @@ func (s *KRPC) StreamClients() (*client.Stream[[]api.Tuple3[[]byte, string, stri
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []api.Tuple3[[]byte, string, string] {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []api.Tuple3[[]byte, string, string] {
 		var value []api.Tuple3[[]byte, string, string]
 		encode.Unmarshal(b, &value)
 		return value
@@ -565,7 +565,7 @@ func (s *KRPC) CurrentGameScene() (GameScene, error) {
 // StreamCurrentGameScene will get the current game scene.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamCurrentGameScene() (*client.Stream[GameScene], error) {
+func (s *KRPC) StreamCurrentGameScene() (*krpcgo.Stream[GameScene], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_CurrentGameScene",
@@ -577,7 +577,7 @@ func (s *KRPC) StreamCurrentGameScene() (*client.Stream[GameScene], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) GameScene {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) GameScene {
 		var value GameScene
 		encode.Unmarshal(b, &value)
 		return value
@@ -609,7 +609,7 @@ func (s *KRPC) Paused() (bool, error) {
 // StreamPaused will whether the game is paused.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamPaused() (*client.Stream[bool], error) {
+func (s *KRPC) StreamPaused() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Paused",
@@ -621,7 +621,7 @@ func (s *KRPC) StreamPaused() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -688,7 +688,7 @@ func (s *Expression) ConstantDouble() (Expression, error) {
 // type.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamConstantDouble() (*client.Stream[Expression], error) {
+func (s *Expression) StreamConstantDouble() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -709,7 +709,7 @@ func (s *Expression) StreamConstantDouble() (*client.Stream[Expression], error) 
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -751,7 +751,7 @@ func (s *Expression) ConstantFloat() (Expression, error) {
 // type.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamConstantFloat() (*client.Stream[Expression], error) {
+func (s *Expression) StreamConstantFloat() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -772,7 +772,7 @@ func (s *Expression) StreamConstantFloat() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -813,7 +813,7 @@ func (s *Expression) ConstantInt() (Expression, error) {
 // StreamConstantInt will a constant value of integer type.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamConstantInt() (*client.Stream[Expression], error) {
+func (s *Expression) StreamConstantInt() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -834,7 +834,7 @@ func (s *Expression) StreamConstantInt() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -875,7 +875,7 @@ func (s *Expression) ConstantBool() (Expression, error) {
 // StreamConstantBool will a constant value of boolean type.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamConstantBool() (*client.Stream[Expression], error) {
+func (s *Expression) StreamConstantBool() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -896,7 +896,7 @@ func (s *Expression) StreamConstantBool() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -937,7 +937,7 @@ func (s *Expression) ConstantString() (Expression, error) {
 // StreamConstantString will a constant value of string type.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamConstantString() (*client.Stream[Expression], error) {
+func (s *Expression) StreamConstantString() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -958,7 +958,7 @@ func (s *Expression) StreamConstantString() (*client.Stream[Expression], error) 
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -999,7 +999,7 @@ func (s *Expression) Call() (Expression, error) {
 // StreamCall will an RPC call.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamCall() (*client.Stream[Expression], error) {
+func (s *Expression) StreamCall() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1020,7 +1020,7 @@ func (s *Expression) StreamCall() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1069,7 +1069,7 @@ func (s *Expression) Equal(arg1 Expression) (Expression, error) {
 // StreamEqual will equality comparison.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamEqual(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamEqual(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1098,7 +1098,7 @@ func (s *Expression) StreamEqual(arg1 Expression) (*client.Stream[Expression], e
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1147,7 +1147,7 @@ func (s *Expression) NotEqual(arg1 Expression) (Expression, error) {
 // StreamNotEqual will inequality comparison.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamNotEqual(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamNotEqual(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1176,7 +1176,7 @@ func (s *Expression) StreamNotEqual(arg1 Expression) (*client.Stream[Expression]
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1225,7 +1225,7 @@ func (s *Expression) GreaterThan(arg1 Expression) (Expression, error) {
 // StreamGreaterThan will greater than numerical comparison.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamGreaterThan(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamGreaterThan(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1254,7 +1254,7 @@ func (s *Expression) StreamGreaterThan(arg1 Expression) (*client.Stream[Expressi
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1303,7 +1303,7 @@ func (s *Expression) GreaterThanOrEqual(arg1 Expression) (Expression, error) {
 // StreamGreaterThanOrEqual will greater than or equal numerical comparison.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamGreaterThanOrEqual(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamGreaterThanOrEqual(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1332,7 +1332,7 @@ func (s *Expression) StreamGreaterThanOrEqual(arg1 Expression) (*client.Stream[E
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1381,7 +1381,7 @@ func (s *Expression) LessThan(arg1 Expression) (Expression, error) {
 // StreamLessThan will less than numerical comparison.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamLessThan(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamLessThan(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1410,7 +1410,7 @@ func (s *Expression) StreamLessThan(arg1 Expression) (*client.Stream[Expression]
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1459,7 +1459,7 @@ func (s *Expression) LessThanOrEqual(arg1 Expression) (Expression, error) {
 // StreamLessThanOrEqual will less than or equal numerical comparison.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamLessThanOrEqual(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamLessThanOrEqual(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1488,7 +1488,7 @@ func (s *Expression) StreamLessThanOrEqual(arg1 Expression) (*client.Stream[Expr
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1537,7 +1537,7 @@ func (s *Expression) And(arg1 Expression) (Expression, error) {
 // StreamAnd will boolean and operator.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamAnd(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamAnd(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1566,7 +1566,7 @@ func (s *Expression) StreamAnd(arg1 Expression) (*client.Stream[Expression], err
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1615,7 +1615,7 @@ func (s *Expression) Or(arg1 Expression) (Expression, error) {
 // StreamOr will boolean or operator.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamOr(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamOr(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1644,7 +1644,7 @@ func (s *Expression) StreamOr(arg1 Expression) (*client.Stream[Expression], erro
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1693,7 +1693,7 @@ func (s *Expression) ExclusiveOr(arg1 Expression) (Expression, error) {
 // StreamExclusiveOr will boolean exclusive-or operator.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamExclusiveOr(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamExclusiveOr(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1722,7 +1722,7 @@ func (s *Expression) StreamExclusiveOr(arg1 Expression) (*client.Stream[Expressi
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1763,7 +1763,7 @@ func (s *Expression) Not() (Expression, error) {
 // StreamNot will boolean negation operator.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamNot() (*client.Stream[Expression], error) {
+func (s *Expression) StreamNot() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1784,7 +1784,7 @@ func (s *Expression) StreamNot() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1833,7 +1833,7 @@ func (s *Expression) Add(arg1 Expression) (Expression, error) {
 // StreamAdd will numerical addition.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamAdd(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamAdd(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1862,7 +1862,7 @@ func (s *Expression) StreamAdd(arg1 Expression) (*client.Stream[Expression], err
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1911,7 +1911,7 @@ func (s *Expression) Subtract(arg1 Expression) (Expression, error) {
 // StreamSubtract will numerical subtraction.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamSubtract(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamSubtract(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1940,7 +1940,7 @@ func (s *Expression) StreamSubtract(arg1 Expression) (*client.Stream[Expression]
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -1989,7 +1989,7 @@ func (s *Expression) Multiply(arg1 Expression) (Expression, error) {
 // StreamMultiply will numerical multiplication.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamMultiply(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamMultiply(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2018,7 +2018,7 @@ func (s *Expression) StreamMultiply(arg1 Expression) (*client.Stream[Expression]
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2067,7 +2067,7 @@ func (s *Expression) Divide(arg1 Expression) (Expression, error) {
 // StreamDivide will numerical division.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamDivide(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamDivide(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2096,7 +2096,7 @@ func (s *Expression) StreamDivide(arg1 Expression) (*client.Stream[Expression], 
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2145,7 +2145,7 @@ func (s *Expression) Modulo(arg1 Expression) (Expression, error) {
 // StreamModulo will numerical modulo operator.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamModulo(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamModulo(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2174,7 +2174,7 @@ func (s *Expression) StreamModulo(arg1 Expression) (*client.Stream[Expression], 
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2223,7 +2223,7 @@ func (s *Expression) Power(arg1 Expression) (Expression, error) {
 // StreamPower will numerical power operator.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamPower(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamPower(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2252,7 +2252,7 @@ func (s *Expression) StreamPower(arg1 Expression) (*client.Stream[Expression], e
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2301,7 +2301,7 @@ func (s *Expression) LeftShift(arg1 Expression) (Expression, error) {
 // StreamLeftShift will bitwise left shift.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamLeftShift(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamLeftShift(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2330,7 +2330,7 @@ func (s *Expression) StreamLeftShift(arg1 Expression) (*client.Stream[Expression
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2379,7 +2379,7 @@ func (s *Expression) RightShift(arg1 Expression) (Expression, error) {
 // StreamRightShift will bitwise right shift.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamRightShift(arg1 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamRightShift(arg1 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2408,7 +2408,7 @@ func (s *Expression) StreamRightShift(arg1 Expression) (*client.Stream[Expressio
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2457,7 +2457,7 @@ func (s *Expression) Cast(t Type) (Expression, error) {
 // StreamCast will perform a cast to the given type.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamCast(t Type) (*client.Stream[Expression], error) {
+func (s *Expression) StreamCast(t Type) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2486,7 +2486,7 @@ func (s *Expression) StreamCast(t Type) (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2535,7 +2535,7 @@ func (s *Expression) Parameter(t Type) (Expression, error) {
 // StreamParameter will a named parameter of type double.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamParameter(t Type) (*client.Stream[Expression], error) {
+func (s *Expression) StreamParameter(t Type) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2564,7 +2564,7 @@ func (s *Expression) StreamParameter(t Type) (*client.Stream[Expression], error)
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2613,7 +2613,7 @@ func (s *Expression) Function(body Expression) (Expression, error) {
 // StreamFunction will a function.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamFunction(body Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamFunction(body Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2642,7 +2642,7 @@ func (s *Expression) StreamFunction(body Expression) (*client.Stream[Expression]
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2691,7 +2691,7 @@ func (s *Expression) Invoke(args map[string]Expression) (Expression, error) {
 // StreamInvoke will a function call.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamInvoke(args map[string]Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamInvoke(args map[string]Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2720,7 +2720,7 @@ func (s *Expression) StreamInvoke(args map[string]Expression) (*client.Stream[Ex
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2761,7 +2761,7 @@ func (s *Expression) CreateTuple() (Expression, error) {
 // StreamCreateTuple will construct a tuple.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamCreateTuple() (*client.Stream[Expression], error) {
+func (s *Expression) StreamCreateTuple() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2782,7 +2782,7 @@ func (s *Expression) StreamCreateTuple() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2823,7 +2823,7 @@ func (s *Expression) CreateList() (Expression, error) {
 // StreamCreateList will construct a list.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamCreateList() (*client.Stream[Expression], error) {
+func (s *Expression) StreamCreateList() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2844,7 +2844,7 @@ func (s *Expression) StreamCreateList() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2885,7 +2885,7 @@ func (s *Expression) CreateSet() (Expression, error) {
 // StreamCreateSet will construct a set.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamCreateSet() (*client.Stream[Expression], error) {
+func (s *Expression) StreamCreateSet() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2906,7 +2906,7 @@ func (s *Expression) StreamCreateSet() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -2957,7 +2957,7 @@ func (s *Expression) CreateDictionary(values []Expression) (Expression, error) {
 // corresponding keys and values.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamCreateDictionary(values []Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamCreateDictionary(values []Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2986,7 +2986,7 @@ func (s *Expression) StreamCreateDictionary(values []Expression) (*client.Stream
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3027,7 +3027,7 @@ func (s *Expression) ToList() (Expression, error) {
 // StreamToList will convert a collection to a list.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamToList() (*client.Stream[Expression], error) {
+func (s *Expression) StreamToList() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3048,7 +3048,7 @@ func (s *Expression) StreamToList() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3089,7 +3089,7 @@ func (s *Expression) ToSet() (Expression, error) {
 // StreamToSet will convert a collection to a set.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamToSet() (*client.Stream[Expression], error) {
+func (s *Expression) StreamToSet() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3110,7 +3110,7 @@ func (s *Expression) StreamToSet() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3159,7 +3159,7 @@ func (s *Expression) Get(index Expression) (Expression, error) {
 // StreamGet will access an element in a tuple, list or dictionary.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamGet(index Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamGet(index Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3188,7 +3188,7 @@ func (s *Expression) StreamGet(index Expression) (*client.Stream[Expression], er
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3229,7 +3229,7 @@ func (s *Expression) Count() (Expression, error) {
 // StreamCount will number of elements in a collection.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamCount() (*client.Stream[Expression], error) {
+func (s *Expression) StreamCount() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3250,7 +3250,7 @@ func (s *Expression) StreamCount() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3291,7 +3291,7 @@ func (s *Expression) Sum() (Expression, error) {
 // StreamSum will sum all elements of a collection.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamSum() (*client.Stream[Expression], error) {
+func (s *Expression) StreamSum() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3312,7 +3312,7 @@ func (s *Expression) StreamSum() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3353,7 +3353,7 @@ func (s *Expression) Max() (Expression, error) {
 // StreamMax will maximum of all elements in a collection.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamMax() (*client.Stream[Expression], error) {
+func (s *Expression) StreamMax() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3374,7 +3374,7 @@ func (s *Expression) StreamMax() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3415,7 +3415,7 @@ func (s *Expression) Min() (Expression, error) {
 // StreamMin will minimum of all elements in a collection.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamMin() (*client.Stream[Expression], error) {
+func (s *Expression) StreamMin() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3436,7 +3436,7 @@ func (s *Expression) StreamMin() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3477,7 +3477,7 @@ func (s *Expression) Average() (Expression, error) {
 // StreamAverage will minimum of all elements in a collection.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamAverage() (*client.Stream[Expression], error) {
+func (s *Expression) StreamAverage() (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3498,7 +3498,7 @@ func (s *Expression) StreamAverage() (*client.Stream[Expression], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3547,7 +3547,7 @@ func (s *Expression) Select(f Expression) (Expression, error) {
 // StreamSelect will run a function on every element in the collection.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamSelect(f Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamSelect(f Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3576,7 +3576,7 @@ func (s *Expression) StreamSelect(f Expression) (*client.Stream[Expression], err
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3625,7 +3625,7 @@ func (s *Expression) Where(f Expression) (Expression, error) {
 // StreamWhere will run a function on every element in the collection.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamWhere(f Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamWhere(f Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3654,7 +3654,7 @@ func (s *Expression) StreamWhere(f Expression) (*client.Stream[Expression], erro
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3703,7 +3703,7 @@ func (s *Expression) Contains(value Expression) (Expression, error) {
 // StreamContains will determine if a collection contains a value.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamContains(value Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamContains(value Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3732,7 +3732,7 @@ func (s *Expression) StreamContains(value Expression) (*client.Stream[Expression
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3781,7 +3781,7 @@ func (s *Expression) Aggregate(f Expression) (Expression, error) {
 // StreamAggregate will applies an accumulator function over a sequence.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamAggregate(f Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamAggregate(f Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3810,7 +3810,7 @@ func (s *Expression) StreamAggregate(f Expression) (*client.Stream[Expression], 
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3869,7 +3869,7 @@ func (s *Expression) AggregateWithSeed(seed Expression, f Expression) (Expressio
 // with a given seed.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamAggregateWithSeed(seed Expression, f Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamAggregateWithSeed(seed Expression, f Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3906,7 +3906,7 @@ func (s *Expression) StreamAggregateWithSeed(seed Expression, f Expression) (*cl
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -3955,7 +3955,7 @@ func (s *Expression) Concat(arg2 Expression) (Expression, error) {
 // StreamConcat will concatenate two sequences.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamConcat(arg2 Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamConcat(arg2 Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3984,7 +3984,7 @@ func (s *Expression) StreamConcat(arg2 Expression) (*client.Stream[Expression], 
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -4033,7 +4033,7 @@ func (s *Expression) OrderBy(key Expression) (Expression, error) {
 // StreamOrderBy will order a collection using a key function.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamOrderBy(key Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamOrderBy(key Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4062,7 +4062,7 @@ func (s *Expression) StreamOrderBy(key Expression) (*client.Stream[Expression], 
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -4113,7 +4113,7 @@ func (s *Expression) All(predicate Expression) (Expression, error) {
 // predicate.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamAll(predicate Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamAll(predicate Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4142,7 +4142,7 @@ func (s *Expression) StreamAll(predicate Expression) (*client.Stream[Expression]
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -4193,7 +4193,7 @@ func (s *Expression) Any(predicate Expression) (Expression, error) {
 // predicate.
 //
 // Allowed game scenes: any.
-func (s *Expression) StreamAny(predicate Expression) (*client.Stream[Expression], error) {
+func (s *Expression) StreamAny(predicate Expression) (*krpcgo.Stream[Expression], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4222,7 +4222,7 @@ func (s *Expression) StreamAny(predicate Expression) (*client.Stream[Expression]
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Expression {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Expression {
 		var value Expression
 		encode.Unmarshal(b, &value)
 		return value
@@ -4254,7 +4254,7 @@ func (s *Type) Double() (Type, error) {
 // StreamDouble will double type.
 //
 // Allowed game scenes: any.
-func (s *Type) StreamDouble() (*client.Stream[Type], error) {
+func (s *Type) StreamDouble() (*krpcgo.Stream[Type], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "Type_static_Double",
@@ -4266,7 +4266,7 @@ func (s *Type) StreamDouble() (*client.Stream[Type], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Type {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Type {
 		var value Type
 		encode.Unmarshal(b, &value)
 		return value
@@ -4298,7 +4298,7 @@ func (s *Type) Float() (Type, error) {
 // StreamFloat will float type.
 //
 // Allowed game scenes: any.
-func (s *Type) StreamFloat() (*client.Stream[Type], error) {
+func (s *Type) StreamFloat() (*krpcgo.Stream[Type], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "Type_static_Float",
@@ -4310,7 +4310,7 @@ func (s *Type) StreamFloat() (*client.Stream[Type], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Type {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Type {
 		var value Type
 		encode.Unmarshal(b, &value)
 		return value
@@ -4342,7 +4342,7 @@ func (s *Type) Int() (Type, error) {
 // StreamInt will int type.
 //
 // Allowed game scenes: any.
-func (s *Type) StreamInt() (*client.Stream[Type], error) {
+func (s *Type) StreamInt() (*krpcgo.Stream[Type], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "Type_static_Int",
@@ -4354,7 +4354,7 @@ func (s *Type) StreamInt() (*client.Stream[Type], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Type {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Type {
 		var value Type
 		encode.Unmarshal(b, &value)
 		return value
@@ -4386,7 +4386,7 @@ func (s *Type) Bool() (Type, error) {
 // StreamBool will bool type.
 //
 // Allowed game scenes: any.
-func (s *Type) StreamBool() (*client.Stream[Type], error) {
+func (s *Type) StreamBool() (*krpcgo.Stream[Type], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "Type_static_Bool",
@@ -4398,7 +4398,7 @@ func (s *Type) StreamBool() (*client.Stream[Type], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Type {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Type {
 		var value Type
 		encode.Unmarshal(b, &value)
 		return value
@@ -4430,7 +4430,7 @@ func (s *Type) String() (Type, error) {
 // StreamString will string type.
 //
 // Allowed game scenes: any.
-func (s *Type) StreamString() (*client.Stream[Type], error) {
+func (s *Type) StreamString() (*krpcgo.Stream[Type], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "Type_static_String",
@@ -4442,7 +4442,7 @@ func (s *Type) StreamString() (*client.Stream[Type], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Type {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Type {
 		var value Type
 		encode.Unmarshal(b, &value)
 		return value

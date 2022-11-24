@@ -4,7 +4,7 @@ import (
 	"math"
 	"reflect"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/service"
 	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"

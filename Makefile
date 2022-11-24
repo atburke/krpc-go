@@ -4,7 +4,7 @@ gen:
 	go generate ./...
 
 gen-clean:
-	rm lib/service/*/*.gen.go
+	rm ./*/*.gen.go
 
 fmt:
 	gofmt -w .

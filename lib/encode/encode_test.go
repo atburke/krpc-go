@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/service"
 	"github.com/stretchr/testify/require"
 )

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
 	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"
@@ -182,7 +182,7 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 
 func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, returnType *jen.Statement) {
 	internalReturnType := GetGoType(procedure.ReturnType, getServicePackage(serviceName))
-	returnType = jen.Op("*").Qual(clientPkg, "Stream").Types(internalReturnType)
+	returnType = jen.Op("*").Qual(krpcPkg, "Stream").Types(internalReturnType)
 
 	funcBody = []jen.Code{
 		jen.Var().Err().Error(),
@@ -252,7 +252,7 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 			jen.Id("st").Dot("Id"),
 		),
 
-		jen.Id("stream").Op(":=").Qual(clientPkg, "MapStream").Call(
+		jen.Id("stream").Op(":=").Qual(krpcPkg, "MapStream").Call(
 			jen.Id("rawStream"),
 			jen.Func().Params(jen.Id("b").Index().Byte()).Add(internalReturnType).Block(
 				jen.Var().Id("value").Add(internalReturnType),

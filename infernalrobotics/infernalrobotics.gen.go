@@ -1,12 +1,12 @@
 package infernalrobotics
 
 import (
-	api "github.com/atburke/krpc-go/api"
-	client "github.com/atburke/krpc-go/lib/client"
+	krpcgo "github.com/atburke/krpc-go"
+	krpc "github.com/atburke/krpc-go/krpc"
+	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
-	krpc "github.com/atburke/krpc-go/lib/service/krpc"
-	spacecenter "github.com/atburke/krpc-go/lib/service/spacecenter"
+	spacecenter "github.com/atburke/krpc-go/spacecenter"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -21,7 +21,7 @@ type Servo struct {
 }
 
 // NewServo creates a new Servo.
-func NewServo(id uint64, client *client.KRPCClient) *Servo {
+func NewServo(id uint64, client *krpcgo.KRPCClient) *Servo {
 	c := &Servo{BaseClass: service.BaseClass{Client: client}}
 	c.SetID(id)
 	return c
@@ -36,7 +36,7 @@ type ServoGroup struct {
 }
 
 // NewServoGroup creates a new ServoGroup.
-func NewServoGroup(id uint64, client *client.KRPCClient) *ServoGroup {
+func NewServoGroup(id uint64, client *krpcgo.KRPCClient) *ServoGroup {
 	c := &ServoGroup{BaseClass: service.BaseClass{Client: client}}
 	c.SetID(id)
 	return c
@@ -46,11 +46,11 @@ func NewServoGroup(id uint64, client *client.KRPCClient) *ServoGroup {
 // href="https://forum.kerbalspaceprogram.com/index.php?/topic/104535-112-magic-smoke-industries-infernal-robotics-202/">Infernal
 // Robotics</a>.
 type InfernalRobotics struct {
-	Client *client.KRPCClient
+	Client *krpcgo.KRPCClient
 }
 
 // NewInfernalRobotics creates a new InfernalRobotics.
-func NewInfernalRobotics(client *client.KRPCClient) *InfernalRobotics {
+func NewInfernalRobotics(client *krpcgo.KRPCClient) *InfernalRobotics {
 	return &InfernalRobotics{Client: client}
 }
 
@@ -89,7 +89,7 @@ func (s *InfernalRobotics) ServoGroups(vessel spacecenter.Vessel) ([]ServoGroup,
 // name="vessel" />.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamServoGroups(vessel spacecenter.Vessel) (*client.Stream[[]ServoGroup], error) {
+func (s *InfernalRobotics) StreamServoGroups(vessel spacecenter.Vessel) (*krpcgo.Stream[[]ServoGroup], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -110,7 +110,7 @@ func (s *InfernalRobotics) StreamServoGroups(vessel spacecenter.Vessel) (*client
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []ServoGroup {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []ServoGroup {
 		var value []ServoGroup
 		encode.Unmarshal(b, &value)
 		return value
@@ -165,7 +165,7 @@ func (s *InfernalRobotics) ServoGroupWithName(vessel spacecenter.Vessel, name st
 // returned.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamServoGroupWithName(vessel spacecenter.Vessel, name string) (*client.Stream[ServoGroup], error) {
+func (s *InfernalRobotics) StreamServoGroupWithName(vessel spacecenter.Vessel, name string) (*krpcgo.Stream[ServoGroup], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -194,7 +194,7 @@ func (s *InfernalRobotics) StreamServoGroupWithName(vessel spacecenter.Vessel, n
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) ServoGroup {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) ServoGroup {
 		var value ServoGroup
 		encode.Unmarshal(b, &value)
 		return value
@@ -247,7 +247,7 @@ func (s *InfernalRobotics) ServoWithName(vessel spacecenter.Vessel, name string)
 // exists. If multiple servos have the same name, only one of them is returned.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamServoWithName(vessel spacecenter.Vessel, name string) (*client.Stream[Servo], error) {
+func (s *InfernalRobotics) StreamServoWithName(vessel spacecenter.Vessel, name string) (*krpcgo.Stream[Servo], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -276,7 +276,7 @@ func (s *InfernalRobotics) StreamServoWithName(vessel spacecenter.Vessel, name s
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Servo {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Servo {
 		var value Servo
 		encode.Unmarshal(b, &value)
 		return value
@@ -308,7 +308,7 @@ func (s *InfernalRobotics) Available() (bool, error) {
 // StreamAvailable will whether Infernal Robotics is installed.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamAvailable() (*client.Stream[bool], error) {
+func (s *InfernalRobotics) StreamAvailable() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Available",
@@ -320,7 +320,7 @@ func (s *InfernalRobotics) StreamAvailable() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -352,7 +352,7 @@ func (s *InfernalRobotics) Ready() (bool, error) {
 // StreamReady will whether Infernal Robotics API is ready.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamReady() (*client.Stream[bool], error) {
+func (s *InfernalRobotics) StreamReady() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Ready",
@@ -364,7 +364,7 @@ func (s *InfernalRobotics) StreamReady() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -597,7 +597,7 @@ func (s *Servo) Name() (string, error) {
 // StreamName will the name of the servo.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamName() (*client.Stream[string], error) {
+func (s *Servo) StreamName() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -618,7 +618,7 @@ func (s *Servo) StreamName() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -692,7 +692,7 @@ func (s *Servo) Part() (spacecenter.Part, error) {
 // StreamPart will the part containing the servo.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamPart() (*client.Stream[spacecenter.Part], error) {
+func (s *Servo) StreamPart() (*krpcgo.Stream[spacecenter.Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -713,7 +713,7 @@ func (s *Servo) StreamPart() (*client.Stream[spacecenter.Part], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) spacecenter.Part {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.Part {
 		var value spacecenter.Part
 		encode.Unmarshal(b, &value)
 		return value
@@ -787,7 +787,7 @@ func (s *Servo) Position() (float32, error) {
 // StreamPosition will the position of the servo.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamPosition() (*client.Stream[float32], error) {
+func (s *Servo) StreamPosition() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -808,7 +808,7 @@ func (s *Servo) StreamPosition() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -851,7 +851,7 @@ func (s *Servo) MinConfigPosition() (float32, error) {
 // the part configuration.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamMinConfigPosition() (*client.Stream[float32], error) {
+func (s *Servo) StreamMinConfigPosition() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -872,7 +872,7 @@ func (s *Servo) StreamMinConfigPosition() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -915,7 +915,7 @@ func (s *Servo) MaxConfigPosition() (float32, error) {
 // the part configuration.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamMaxConfigPosition() (*client.Stream[float32], error) {
+func (s *Servo) StreamMaxConfigPosition() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -936,7 +936,7 @@ func (s *Servo) StreamMaxConfigPosition() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -979,7 +979,7 @@ func (s *Servo) MinPosition() (float32, error) {
 // in-game tweak menu.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamMinPosition() (*client.Stream[float32], error) {
+func (s *Servo) StreamMinPosition() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1000,7 +1000,7 @@ func (s *Servo) StreamMinPosition() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -1077,7 +1077,7 @@ func (s *Servo) MaxPosition() (float32, error) {
 // in-game tweak menu.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamMaxPosition() (*client.Stream[float32], error) {
+func (s *Servo) StreamMaxPosition() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1098,7 +1098,7 @@ func (s *Servo) StreamMaxPosition() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -1175,7 +1175,7 @@ func (s *Servo) ConfigSpeed() (float32, error) {
 // part configuration.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamConfigSpeed() (*client.Stream[float32], error) {
+func (s *Servo) StreamConfigSpeed() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1196,7 +1196,7 @@ func (s *Servo) StreamConfigSpeed() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -1239,7 +1239,7 @@ func (s *Servo) Speed() (float32, error) {
 // tweak menu.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamSpeed() (*client.Stream[float32], error) {
+func (s *Servo) StreamSpeed() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1260,7 +1260,7 @@ func (s *Servo) StreamSpeed() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -1335,7 +1335,7 @@ func (s *Servo) CurrentSpeed() (float32, error) {
 // StreamCurrentSpeed will the current speed at which the servo is moving.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamCurrentSpeed() (*client.Stream[float32], error) {
+func (s *Servo) StreamCurrentSpeed() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1356,7 +1356,7 @@ func (s *Servo) StreamCurrentSpeed() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -1430,7 +1430,7 @@ func (s *Servo) Acceleration() (float32, error) {
 // StreamAcceleration will the current speed multiplier set in the UI.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamAcceleration() (*client.Stream[float32], error) {
+func (s *Servo) StreamAcceleration() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1451,7 +1451,7 @@ func (s *Servo) StreamAcceleration() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -1525,7 +1525,7 @@ func (s *Servo) IsMoving() (bool, error) {
 // StreamIsMoving will whether the servo is moving.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamIsMoving() (*client.Stream[bool], error) {
+func (s *Servo) StreamIsMoving() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1546,7 +1546,7 @@ func (s *Servo) StreamIsMoving() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1587,7 +1587,7 @@ func (s *Servo) IsFreeMoving() (bool, error) {
 // StreamIsFreeMoving will whether the servo is freely moving.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamIsFreeMoving() (*client.Stream[bool], error) {
+func (s *Servo) StreamIsFreeMoving() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1608,7 +1608,7 @@ func (s *Servo) StreamIsFreeMoving() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1649,7 +1649,7 @@ func (s *Servo) IsLocked() (bool, error) {
 // StreamIsLocked will whether the servo is locked.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamIsLocked() (*client.Stream[bool], error) {
+func (s *Servo) StreamIsLocked() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1670,7 +1670,7 @@ func (s *Servo) StreamIsLocked() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1744,7 +1744,7 @@ func (s *Servo) IsAxisInverted() (bool, error) {
 // StreamIsAxisInverted will whether the servos axis is inverted.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamIsAxisInverted() (*client.Stream[bool], error) {
+func (s *Servo) StreamIsAxisInverted() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1765,7 +1765,7 @@ func (s *Servo) StreamIsAxisInverted() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1849,7 +1849,7 @@ func (s *ServoGroup) ServoWithName(name string) (Servo, error) {
 // name="name" /> from this group, or nil if none exists.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamServoWithName(name string) (*client.Stream[Servo], error) {
+func (s *ServoGroup) StreamServoWithName(name string) (*krpcgo.Stream[Servo], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1878,7 +1878,7 @@ func (s *ServoGroup) StreamServoWithName(name string) (*client.Stream[Servo], er
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Servo {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Servo {
 		var value Servo
 		encode.Unmarshal(b, &value)
 		return value
@@ -2070,7 +2070,7 @@ func (s *ServoGroup) Name() (string, error) {
 // StreamName will the name of the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamName() (*client.Stream[string], error) {
+func (s *ServoGroup) StreamName() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2091,7 +2091,7 @@ func (s *ServoGroup) StreamName() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -2165,7 +2165,7 @@ func (s *ServoGroup) ForwardKey() (string, error) {
 // StreamForwardKey will the key assigned to be the "forward" key for the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamForwardKey() (*client.Stream[string], error) {
+func (s *ServoGroup) StreamForwardKey() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2186,7 +2186,7 @@ func (s *ServoGroup) StreamForwardKey() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -2260,7 +2260,7 @@ func (s *ServoGroup) ReverseKey() (string, error) {
 // StreamReverseKey will the key assigned to be the "reverse" key for the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamReverseKey() (*client.Stream[string], error) {
+func (s *ServoGroup) StreamReverseKey() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2281,7 +2281,7 @@ func (s *ServoGroup) StreamReverseKey() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -2355,7 +2355,7 @@ func (s *ServoGroup) Speed() (float32, error) {
 // StreamSpeed will the speed multiplier for the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamSpeed() (*client.Stream[float32], error) {
+func (s *ServoGroup) StreamSpeed() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2376,7 +2376,7 @@ func (s *ServoGroup) StreamSpeed() (*client.Stream[float32], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float32 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float32 {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
@@ -2450,7 +2450,7 @@ func (s *ServoGroup) Expanded() (bool, error) {
 // StreamExpanded will whether the group is expanded in the InfernalRobotics UI.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamExpanded() (*client.Stream[bool], error) {
+func (s *ServoGroup) StreamExpanded() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2471,7 +2471,7 @@ func (s *ServoGroup) StreamExpanded() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -2545,7 +2545,7 @@ func (s *ServoGroup) Servos() ([]Servo, error) {
 // StreamServos will the servos that are in the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamServos() (*client.Stream[[]Servo], error) {
+func (s *ServoGroup) StreamServos() (*krpcgo.Stream[[]Servo], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2566,7 +2566,7 @@ func (s *ServoGroup) StreamServos() (*client.Stream[[]Servo], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []Servo {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []Servo {
 		var value []Servo
 		encode.Unmarshal(b, &value)
 		return value
@@ -2607,7 +2607,7 @@ func (s *ServoGroup) Parts() ([]spacecenter.Part, error) {
 // StreamParts will the parts containing the servos in the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamParts() (*client.Stream[[]spacecenter.Part], error) {
+func (s *ServoGroup) StreamParts() (*krpcgo.Stream[[]spacecenter.Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2628,7 +2628,7 @@ func (s *ServoGroup) StreamParts() (*client.Stream[[]spacecenter.Part], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []spacecenter.Part {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []spacecenter.Part {
 		var value []spacecenter.Part
 		encode.Unmarshal(b, &value)
 		return value

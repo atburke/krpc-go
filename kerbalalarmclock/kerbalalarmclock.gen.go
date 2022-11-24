@@ -1,12 +1,12 @@
 package kerbalalarmclock
 
 import (
-	api "github.com/atburke/krpc-go/api"
-	client "github.com/atburke/krpc-go/lib/client"
+	krpcgo "github.com/atburke/krpc-go"
+	krpc "github.com/atburke/krpc-go/krpc"
+	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
-	krpc "github.com/atburke/krpc-go/lib/service/krpc"
-	spacecenter "github.com/atburke/krpc-go/lib/service/spacecenter"
+	spacecenter "github.com/atburke/krpc-go/spacecenter"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -89,7 +89,7 @@ type Alarm struct {
 }
 
 // NewAlarm creates a new Alarm.
-func NewAlarm(id uint64, client *client.KRPCClient) *Alarm {
+func NewAlarm(id uint64, client *krpcgo.KRPCClient) *Alarm {
 	c := &Alarm{BaseClass: service.BaseClass{Client: client}}
 	c.SetID(id)
 	return c
@@ -99,11 +99,11 @@ func NewAlarm(id uint64, client *client.KRPCClient) *Alarm {
 // href="https://forum.kerbalspaceprogram.com/index.php?/topic/22809-13x-kerbal-alarm-clock-v3850-may-30/">Kerbal
 // Alarm Clock</a>.
 type KerbalAlarmClock struct {
-	Client *client.KRPCClient
+	Client *krpcgo.KRPCClient
 }
 
 // NewKerbalAlarmClock creates a new KerbalAlarmClock.
-func NewKerbalAlarmClock(client *client.KRPCClient) *KerbalAlarmClock {
+func NewKerbalAlarmClock(client *krpcgo.KRPCClient) *KerbalAlarmClock {
 	return &KerbalAlarmClock{Client: client}
 }
 
@@ -144,7 +144,7 @@ func (s *KerbalAlarmClock) AlarmWithName(name string) (Alarm, error) {
 // only returns one of them.
 //
 // Allowed game scenes: any.
-func (s *KerbalAlarmClock) StreamAlarmWithName(name string) (*client.Stream[Alarm], error) {
+func (s *KerbalAlarmClock) StreamAlarmWithName(name string) (*krpcgo.Stream[Alarm], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -165,7 +165,7 @@ func (s *KerbalAlarmClock) StreamAlarmWithName(name string) (*client.Stream[Alar
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Alarm {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Alarm {
 		var value Alarm
 		encode.Unmarshal(b, &value)
 		return value
@@ -208,7 +208,7 @@ func (s *KerbalAlarmClock) AlarmsWithType(t AlarmType) ([]Alarm, error) {
 // name="type" />.
 //
 // Allowed game scenes: any.
-func (s *KerbalAlarmClock) StreamAlarmsWithType(t AlarmType) (*client.Stream[[]Alarm], error) {
+func (s *KerbalAlarmClock) StreamAlarmsWithType(t AlarmType) (*krpcgo.Stream[[]Alarm], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -229,7 +229,7 @@ func (s *KerbalAlarmClock) StreamAlarmsWithType(t AlarmType) (*client.Stream[[]A
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []Alarm {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []Alarm {
 		var value []Alarm
 		encode.Unmarshal(b, &value)
 		return value
@@ -286,7 +286,7 @@ func (s *KerbalAlarmClock) CreateAlarm(t AlarmType, name string, ut float64) (Al
 // StreamCreateAlarm will create a new alarm and return it.
 //
 // Allowed game scenes: any.
-func (s *KerbalAlarmClock) StreamCreateAlarm(t AlarmType, name string, ut float64) (*client.Stream[Alarm], error) {
+func (s *KerbalAlarmClock) StreamCreateAlarm(t AlarmType, name string, ut float64) (*krpcgo.Stream[Alarm], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -323,7 +323,7 @@ func (s *KerbalAlarmClock) StreamCreateAlarm(t AlarmType, name string, ut float6
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) Alarm {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) Alarm {
 		var value Alarm
 		encode.Unmarshal(b, &value)
 		return value
@@ -355,7 +355,7 @@ func (s *KerbalAlarmClock) Available() (bool, error) {
 // StreamAvailable will whether Kerbal Alarm Clock is available.
 //
 // Allowed game scenes: any.
-func (s *KerbalAlarmClock) StreamAvailable() (*client.Stream[bool], error) {
+func (s *KerbalAlarmClock) StreamAvailable() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Available",
@@ -367,7 +367,7 @@ func (s *KerbalAlarmClock) StreamAvailable() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -399,7 +399,7 @@ func (s *KerbalAlarmClock) Alarms() ([]Alarm, error) {
 // StreamAlarms will a list of all the alarms.
 //
 // Allowed game scenes: any.
-func (s *KerbalAlarmClock) StreamAlarms() (*client.Stream[[]Alarm], error) {
+func (s *KerbalAlarmClock) StreamAlarms() (*krpcgo.Stream[[]Alarm], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Alarms",
@@ -411,7 +411,7 @@ func (s *KerbalAlarmClock) StreamAlarms() (*client.Stream[[]Alarm], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) []Alarm {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []Alarm {
 		var value []Alarm
 		encode.Unmarshal(b, &value)
 		return value
@@ -477,7 +477,7 @@ func (s *Alarm) Action() (AlarmAction, error) {
 // StreamAction will the action that the alarm triggers.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamAction() (*client.Stream[AlarmAction], error) {
+func (s *Alarm) StreamAction() (*krpcgo.Stream[AlarmAction], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -498,7 +498,7 @@ func (s *Alarm) StreamAction() (*client.Stream[AlarmAction], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) AlarmAction {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) AlarmAction {
 		var value AlarmAction
 		encode.Unmarshal(b, &value)
 		return value
@@ -573,7 +573,7 @@ func (s *Alarm) Margin() (float64, error) {
 // fire.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamMargin() (*client.Stream[float64], error) {
+func (s *Alarm) StreamMargin() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -594,7 +594,7 @@ func (s *Alarm) StreamMargin() (*client.Stream[float64], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float64 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float64 {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
@@ -669,7 +669,7 @@ func (s *Alarm) Time() (float64, error) {
 // StreamTime will the time at which the alarm will fire.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamTime() (*client.Stream[float64], error) {
+func (s *Alarm) StreamTime() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -690,7 +690,7 @@ func (s *Alarm) StreamTime() (*client.Stream[float64], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float64 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float64 {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
@@ -764,7 +764,7 @@ func (s *Alarm) Type() (AlarmType, error) {
 // StreamType will the type of the alarm.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamType() (*client.Stream[AlarmType], error) {
+func (s *Alarm) StreamType() (*krpcgo.Stream[AlarmType], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -785,7 +785,7 @@ func (s *Alarm) StreamType() (*client.Stream[AlarmType], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) AlarmType {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) AlarmType {
 		var value AlarmType
 		encode.Unmarshal(b, &value)
 		return value
@@ -826,7 +826,7 @@ func (s *Alarm) ID() (string, error) {
 // StreamID will the unique identifier for the alarm.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamID() (*client.Stream[string], error) {
+func (s *Alarm) StreamID() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -847,7 +847,7 @@ func (s *Alarm) StreamID() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -888,7 +888,7 @@ func (s *Alarm) Name() (string, error) {
 // StreamName will the short name of the alarm.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamName() (*client.Stream[string], error) {
+func (s *Alarm) StreamName() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -909,7 +909,7 @@ func (s *Alarm) StreamName() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -983,7 +983,7 @@ func (s *Alarm) Notes() (string, error) {
 // StreamNotes will the long description of the alarm.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamNotes() (*client.Stream[string], error) {
+func (s *Alarm) StreamNotes() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1004,7 +1004,7 @@ func (s *Alarm) StreamNotes() (*client.Stream[string], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) string {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) string {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
@@ -1078,7 +1078,7 @@ func (s *Alarm) Remaining() (float64, error) {
 // StreamRemaining will the number of seconds until the alarm will fire.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamRemaining() (*client.Stream[float64], error) {
+func (s *Alarm) StreamRemaining() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1099,7 +1099,7 @@ func (s *Alarm) StreamRemaining() (*client.Stream[float64], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float64 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float64 {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
@@ -1140,7 +1140,7 @@ func (s *Alarm) Repeat() (bool, error) {
 // StreamRepeat will whether the alarm will be repeated after it has fired.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamRepeat() (*client.Stream[bool], error) {
+func (s *Alarm) StreamRepeat() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1161,7 +1161,7 @@ func (s *Alarm) StreamRepeat() (*client.Stream[bool], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) bool {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) bool {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
@@ -1237,7 +1237,7 @@ func (s *Alarm) RepeatPeriod() (float64, error) {
 // it has fired.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamRepeatPeriod() (*client.Stream[float64], error) {
+func (s *Alarm) StreamRepeatPeriod() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1258,7 +1258,7 @@ func (s *Alarm) StreamRepeatPeriod() (*client.Stream[float64], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) float64 {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) float64 {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
@@ -1333,7 +1333,7 @@ func (s *Alarm) Vessel() (spacecenter.Vessel, error) {
 // StreamVessel will the vessel that the alarm is attached to.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamVessel() (*client.Stream[spacecenter.Vessel], error) {
+func (s *Alarm) StreamVessel() (*krpcgo.Stream[spacecenter.Vessel], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1354,7 +1354,7 @@ func (s *Alarm) StreamVessel() (*client.Stream[spacecenter.Vessel], error) {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) spacecenter.Vessel {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.Vessel {
 		var value spacecenter.Vessel
 		encode.Unmarshal(b, &value)
 		return value
@@ -1428,7 +1428,7 @@ func (s *Alarm) XferOriginBody() (spacecenter.CelestialBody, error) {
 // StreamXferOriginBody will the celestial body the vessel is departing from.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamXferOriginBody() (*client.Stream[spacecenter.CelestialBody], error) {
+func (s *Alarm) StreamXferOriginBody() (*krpcgo.Stream[spacecenter.CelestialBody], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1449,7 +1449,7 @@ func (s *Alarm) StreamXferOriginBody() (*client.Stream[spacecenter.CelestialBody
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) spacecenter.CelestialBody {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.CelestialBody {
 		var value spacecenter.CelestialBody
 		encode.Unmarshal(b, &value)
 		return value
@@ -1523,7 +1523,7 @@ func (s *Alarm) XferTargetBody() (spacecenter.CelestialBody, error) {
 // StreamXferTargetBody will the celestial body the vessel is arriving at.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamXferTargetBody() (*client.Stream[spacecenter.CelestialBody], error) {
+func (s *Alarm) StreamXferTargetBody() (*krpcgo.Stream[spacecenter.CelestialBody], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1544,7 +1544,7 @@ func (s *Alarm) StreamXferTargetBody() (*client.Stream[spacecenter.CelestialBody
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := client.MapStream(rawStream, func(b []byte) spacecenter.CelestialBody {
+	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.CelestialBody {
 		var value spacecenter.CelestialBody
 		encode.Unmarshal(b, &value)
 		return value

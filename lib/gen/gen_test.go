@@ -5,31 +5,10 @@ import (
 	"go/format"
 	"testing"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/dave/jennifer/jen"
 	"github.com/stretchr/testify/require"
 )
-
-const testClass = `
-package gentest
-
-import (
-	client "github.com/atburke/krpc-go/lib/client"
-	service "github.com/atburke/krpc-go/lib/service"
-)
-
-// Test - a test class.
-type Test struct {
-	service.BaseClass
-}
-
-// NewTest creates a new Test.
-func NewTest(id uint64, client *client.KRPCClient) *Test {
-	c := &Test{BaseClass: service.BaseClass{Client: client}}
-	c.SetID(id)
-	return c
-}
-`
 
 func TestGenerateProcedure(t *testing.T) {
 	tests := []struct {
@@ -113,6 +92,27 @@ func TestGenerateProcedure(t *testing.T) {
 		})
 	}
 }
+
+const testClass = `
+package gentest
+
+import (
+	krpcgo "github.com/atburke/krpc-go"
+	service "github.com/atburke/krpc-go/lib/service"
+)
+
+// Test - a test class.
+type Test struct {
+	service.BaseClass
+}
+
+// NewTest creates a new Test.
+func NewTest(id uint64, client *krpcgo.KRPCClient) *Test {
+	c := &Test{BaseClass: service.BaseClass{Client: client}}
+	c.SetID(id)
+	return c
+}
+`
 
 func TestGenerateClass(t *testing.T) {
 	expectedOut, err := format.Source([]byte(testClass))

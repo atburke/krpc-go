@@ -1,4 +1,4 @@
-package client
+package krpcgo
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"
 )

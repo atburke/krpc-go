@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/atburke/krpc-go/api"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
 	"github.com/dave/jennifer/jen"
 	"github.com/mitchellh/go-wordwrap"
@@ -48,12 +48,12 @@ func GenerateService(f *jen.File, service *api.Service) error {
 
 	f.Comment(wrapDocComment(serviceDocs))
 	f.Type().Id(service.Name).Struct(
-		jen.Id("Client").Op("*").Qual(clientPkg, "KRPCClient"),
+		jen.Id("Client").Op("*").Qual(krpcPkg, "KRPCClient"),
 	)
 
 	f.Comment(fmt.Sprintf("New%v creates a new %v.", service.Name, service.Name))
 	f.Func().Id("New" + service.Name).Params(
-		jen.Id("client").Op("*").Qual(clientPkg, "KRPCClient"),
+		jen.Id("client").Op("*").Qual(krpcPkg, "KRPCClient"),
 	).Op("*").Id(service.Name).Block(
 		jen.Return(jen.Op("&").Id(service.Name).Values(jen.Dict{
 			jen.Id("Client"): jen.Id("client"),
