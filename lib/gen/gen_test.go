@@ -13,19 +13,21 @@ import (
 const testClass = `
 package gentest
 
-import client "github.com/atburke/krpc-go/lib/client"
+import (
+	client "github.com/atburke/krpc-go/lib/client"
+	service "github.com/atburke/krpc-go/lib/service"
+)
 
 // Test - a test class.
 type Test struct {
-	BaseClass
+	service.BaseClass
 }
 
 // NewTest creates a new Test.
 func NewTest(id uint64, client *client.KRPCClient) *Test {
-	return &Test{
-		Client: client,
-		ID: id,
-	}
+	c := &Test{BaseClass: service.BaseClass{Client: client}}
+	c.SetID(id)
+	return c
 }
 `
 
@@ -138,11 +140,11 @@ type Test int32
 
 const (
 	// The first enum value.
-	Test_One Test = int32(1)
+	Test_One Test = 1
 	// The second enum value.
-	Test_Two Test = int32(2)
+	Test_Two Test = 2
 	// The third enum value.
-	Test_Three Test = int32(3)
+	Test_Three Test = 3
 )
 `
 

@@ -51,7 +51,8 @@ func formatGameScenes(gameScenes []api.Procedure_GameScene) string {
 
 // generateProcedureBody generates the function body for a procedure.
 func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, params []jen.Code, returnType *jen.Statement) {
-	returnType = GetGoType(procedure.ReturnType)
+	pkg := getServicePackage(serviceName)
+	returnType = GetGoType(procedure.ReturnType, pkg)
 
 	// Define some variables
 	funcBody = []jen.Code{
@@ -67,13 +68,13 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 	// Only create the return variable if needed
 	if returnType != nil {
 		funcBody = append(funcBody,
-			jen.Var().Id("value").Add(returnType),
+			jen.Var().Id("vv").Add(returnType),
 		)
 	}
 
 	// Define the request
 	funcBody = append(funcBody,
-		jen.Id("request").Op(":=").Op("&").Qual(apiMod, "ProcedureCall").Values(jen.Dict{
+		jen.Id("request").Op(":=").Op("&").Qual(apiPkg, "ProcedureCall").Values(jen.Dict{
 			jen.Id("Service"):   jen.Lit(serviceName),
 			jen.Id("Procedure"): jen.Lit(procedure.Name),
 		}),
@@ -82,9 +83,9 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 	// Shorthand for if err != nil {...
 	var errReturn []jen.Code
 	if returnType != nil {
-		errReturn = []jen.Code{jen.Id("value"), jen.Qual(tracerrMod, "Wrap").Call(jen.Err())}
+		errReturn = []jen.Code{jen.Id("vv"), jen.Qual(tracerrPkg, "Wrap").Call(jen.Err())}
 	} else {
-		errReturn = []jen.Code{jen.Qual(tracerrMod, "Wrap").Call(jen.Err())}
+		errReturn = []jen.Code{jen.Qual(tracerrPkg, "Wrap").Call(jen.Err())}
 	}
 	errCheck := jen.If(jen.Err().Op("!=").Nil()).Block(
 		jen.Return(errReturn...),
@@ -94,22 +95,23 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 	_, err := GetClassName(procedure.Name)
 	isClass := err == nil
 	for i, param := range procedure.Parameters {
+		param.Name = utils.SanitizeIdentifier(param.Name)
 		// If this is any kind of class method, use the class itself as the first param
 		if i == 0 && isClass {
 			param.Name = "s"
 		} else {
-			paramType := GetGoType(param.Type)
+			paramType := GetGoType(param.Type, pkg)
 			params = append(params, jen.Id(param.Name).Add(paramType))
 		}
 
 		funcBody = append(funcBody,
-			jen.List(jen.Id("argBytes"), jen.Err()).Op("=").Qual(encodeMod, "Marshal").Call(
+			jen.List(jen.Id("argBytes"), jen.Err()).Op("=").Qual(encodePkg, "Marshal").Call(
 				jen.Id(param.Name),
 			),
 			errCheck,
 			jen.Id("request").Dot("Arguments").Op("=").Append(
 				jen.Id("request").Dot("Arguments"),
-				jen.Op("&").Qual(apiMod, "Argument").Values(jen.Dict{
+				jen.Op("&").Qual(apiPkg, "Argument").Values(jen.Dict{
 					jen.Id("Position"): jen.Lit(uint32(i)),
 					jen.Id("Value"):    jen.Id("argBytes"),
 				}),
@@ -118,10 +120,18 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 	}
 
 	// Call the procedure
-	funcBody = append(funcBody,
-		jen.List(
+	var lhs *jen.Statement
+	if returnType != nil {
+		lhs = jen.List(
 			jen.Id("result"), jen.Err(),
-		).Op(":=").Id("s").Dot("Client").Dot("Call").Call(
+		).Op(":=")
+	} else {
+		lhs = jen.List(
+			jen.Id("_"), jen.Err(),
+		).Op("=")
+	}
+	funcBody = append(funcBody,
+		lhs.Id("s").Dot("Client").Dot("Call").Call(
 			jen.Id("request"), jen.Lit(returnType != nil),
 		),
 		errCheck,
@@ -130,9 +140,9 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 	if returnType != nil {
 		// Unmarshal the result bytes
 		funcBody = append(funcBody,
-			jen.Err().Op("=").Qual(encodeMod, "Unmarshal").Call(jen.Id("result"), jen.Op("&").Id("value")),
+			jen.Err().Op("=").Qual(encodePkg, "Unmarshal").Call(jen.Id("result").Dot("Value"), jen.Op("&").Id("vv")),
 			errCheck,
-			jen.Return(jen.Id("value"), jen.Nil()),
+			jen.Return(jen.Id("vv"), jen.Nil()),
 		)
 	} else {
 		funcBody = append(funcBody,
@@ -171,8 +181,8 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 }
 
 func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, returnType *jen.Statement) {
-	internalReturnType := GetGoType(procedure.ReturnType)
-	returnType = jen.Op("*").Qual(clientMod, "Stream").Types(internalReturnType)
+	internalReturnType := GetGoType(procedure.ReturnType, getServicePackage(serviceName))
+	returnType = jen.Op("*").Qual(clientPkg, "Stream").Types(internalReturnType)
 
 	funcBody = []jen.Code{
 		jen.Var().Err().Error(),
@@ -185,14 +195,14 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 	}
 
 	funcBody = append(funcBody,
-		jen.Id("request").Op(":=").Op("&").Qual(apiMod, "ProcedureCall").Values(jen.Dict{
+		jen.Id("request").Op(":=").Op("&").Qual(apiPkg, "ProcedureCall").Values(jen.Dict{
 			jen.Id("Service"):   jen.Lit(serviceName),
 			jen.Id("Procedure"): jen.Lit(procedure.Name),
 		}),
 	)
 
 	// Shorthand for if err != nil {...
-	errReturn := []jen.Code{jen.Nil(), jen.Qual(tracerrMod, "Wrap").Call(jen.Err())}
+	errReturn := []jen.Code{jen.Nil(), jen.Qual(tracerrPkg, "Wrap").Call(jen.Err())}
 	errCheck := jen.If(jen.Err().Op("!=").Nil()).Block(
 		jen.Return(errReturn...),
 	)
@@ -201,19 +211,20 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 	_, err := GetClassName(procedure.Name)
 	isClass := err == nil
 	for i, param := range procedure.Parameters {
+		param.Name = utils.SanitizeIdentifier(param.Name)
 		// If this is any kind of class method, use the class itself as the first param
 		if i == 0 && isClass {
 			param.Name = "s"
 		}
 
 		funcBody = append(funcBody,
-			jen.List(jen.Id("argBytes"), jen.Err()).Op("=").Qual(encodeMod, "Marshal").Call(
+			jen.List(jen.Id("argBytes"), jen.Err()).Op("=").Qual(encodePkg, "Marshal").Call(
 				jen.Id(param.Name),
 			),
 			errCheck,
 			jen.Id("request").Dot("Arguments").Op("=").Append(
 				jen.Id("request").Dot("Arguments"),
-				jen.Op("&").Qual(apiMod, "Argument").Values(jen.Dict{
+				jen.Op("&").Qual(apiPkg, "Argument").Values(jen.Dict{
 					jen.Id("Position"): jen.Lit(uint32(i)),
 					jen.Id("Value"):    jen.Id("argBytes"),
 				}),
@@ -221,24 +232,31 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 		)
 	}
 
+	var krpcConstructor *jen.Statement
+	if serviceName == "KRPC" {
+		krpcConstructor = jen.Id("NewKRPC")
+	} else {
+		krpcConstructor = jen.Qual(getServicePackage("KRPC"), "NewKRPC")
+	}
+
 	funcBody = append(funcBody,
-		jen.Id("krpc").Op(":=").Id("NewKRPC").Call(jen.Id("s").Dot("Client")),
+		jen.Id("krpc").Op(":=").Add(krpcConstructor).Call(jen.Id("s").Dot("Client")),
 
 		// Start the stream
-		jen.List(jen.Id("id"), jen.Err()).Op(":=").Id("krpc").Dot("AddStream").Call(
-			jen.Id("request"),
+		jen.List(jen.Id("st"), jen.Err()).Op(":=").Id("krpc").Dot("AddStream").Call(
+			jen.Op("*").Id("request"), jen.Lit(true),
 		),
 		errCheck,
 
 		jen.Id("rawStream").Op(":=").Id("s").Dot("Client").Dot("GetStream").Call(
-			jen.Id("id"),
+			jen.Id("st").Dot("Id"),
 		),
 
-		jen.Id("stream").Op(":=").Qual(clientMod, "MapStream").Call(
+		jen.Id("stream").Op(":=").Qual(clientPkg, "MapStream").Call(
 			jen.Id("rawStream"),
 			jen.Func().Params(jen.Id("b").Index().Byte()).Add(internalReturnType).Block(
 				jen.Var().Id("value").Add(internalReturnType),
-				jen.Qual(encodeMod, "Unmarshal").Call(jen.Id("b"), jen.Op("&").Id("value")),
+				jen.Qual(encodePkg, "Unmarshal").Call(jen.Id("b"), jen.Op("&").Id("value")),
 				jen.Return(jen.Id("value")),
 			),
 		),

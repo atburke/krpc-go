@@ -5,8 +5,9 @@ package gentest
 
 import (
 	api "github.com/atburke/krpc-go/api"
-	encode "github.com/atburke/krpc-go/encode"
+	encode "github.com/atburke/krpc-go/lib/encode"
 	client "github.com/atburke/krpc-go/lib/client"
+	krpc "github.com/atburke/krpc-go/lib/service/krpc"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -16,14 +17,14 @@ import (
 func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 	var err error
 	var argBytes []byte
-	var value bool
+	var vv bool
 	request := &api.ProcedureCall{
 		Procedure: "MyProcedure",
 		Service: "MyService",
 	}
 	argBytes, err = encode.Marshal(param1)
 	if err != nil {
-		return value, tracerr.Wrap(err)
+		return vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -31,7 +32,7 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 	})
 	argBytes, err = encode.Marshal(param2)
 	if err != nil {
-		return value, tracerr.Wrap(err)
+		return vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -39,13 +40,13 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return value, tracerr.Wrap(err)
+		return vv, tracerr.Wrap(err)
 	}
-	err = encode.Unmarshal(result, &value)
+	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return value, tracerr.Wrap(err)
+		return vv, tracerr.Wrap(err)
 	}
-	return value, nil
+	return vv, nil
 }
 
 // StreamMyProcedure will test procedure generation.
@@ -74,12 +75,12 @@ func (s *MyService) StreamMyProcedure(param1 uint64, param2 string) (*client.Str
 		Position: uint32(0x1),
 		Value: argBytes,
 	})
-	krpc := NewKRPC(s.Client)
-	id, err := krpc.AddStream(request)
+	krpc := krpc.NewKRPC(s.Client)
+	st, err := krpc.AddStream(*request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	rawStream := s.Client.GetStream(id)
+	rawStream := s.Client.GetStream(st.Id)
 	stream := client.MapStream(rawStream, func(b []byte)bool {
 		var value bool
 		encode.Unmarshal(b, &value)
@@ -94,7 +95,7 @@ package gentest
 
 import (
 	api "github.com/atburke/krpc-go/api"
-	encode "github.com/atburke/krpc-go/encode"
+	encode "github.com/atburke/krpc-go/lib/encode"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -124,7 +125,7 @@ func (s *MyClass) SetMyProperty(param1 api.Tuple2[string, uint64]) error {
 		Position: uint32(0x1),
 		Value: argBytes,
 	})
-	result, err := s.Client.Call(request, false)
+	_, err = s.Client.Call(request, false)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}

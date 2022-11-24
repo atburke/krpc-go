@@ -32,7 +32,7 @@ func GenerateEnum(f *jen.File, enum *api.Enumeration) error {
 		}
 		defs = append(defs,
 			jen.Comment(wrapDocComment(valueDocs)),
-			jen.Id(valueName).Id(enumName).Op("=").Lit(value.Value),
+			jen.Id(valueName).Id(enumName).Op("=").Lit(int(value.Value)),
 		)
 	}
 

@@ -20,7 +20,7 @@ func GenerateClass(f *jen.File, class *api.Class) error {
 	// Define the struct.
 	f.Comment(wrapDocComment(classDocs))
 	f.Type().Id(className).Struct(
-		jen.Id("BaseClass"),
+		jen.Qual(servicePkg, "BaseClass"),
 	)
 
 	// Define the constructor.
@@ -30,10 +30,13 @@ func GenerateClass(f *jen.File, class *api.Class) error {
 		jen.Id("id").Uint64(),
 		jen.Id("client").Op("*").Qual("github.com/atburke/krpc-go/lib/client", "KRPCClient"),
 	).Op("*").Id(className).Block(
-		jen.Return(jen.Op("&").Id(className).Values(jen.Dict{
-			jen.Id("ID"):     jen.Id("id"),
-			jen.Id("Client"): jen.Id("client"),
-		})),
+		jen.Id("c").Op(":=").Op("&").Id(className).Values(jen.Dict{
+			jen.Id("BaseClass"): jen.Qual(servicePkg, "BaseClass").Values(jen.Dict{
+				jen.Id("Client"): jen.Id("client"),
+			}),
+		}),
+		jen.Id("c").Dot("SetID").Call(jen.Id("id")),
+		jen.Return(jen.Id("c")),
 	)
 	return nil
 }

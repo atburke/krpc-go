@@ -36,7 +36,7 @@ var summaryRE = regexp.MustCompile(`<summary>(.+)</summary>`)
 // ParseXMLDocumentation parses a Go doc comment's content from
 // C# XML docs.
 func ParseXMLDocumentation(docData, prefix string) (string, error) {
-	matches := summaryRE.FindStringSubmatch(docData)
+	matches := summaryRE.FindStringSubmatch(strings.ReplaceAll(docData, "\n", " "))
 	if matches == nil {
 		return "", tracerr.Errorf("No summary in doc string: %v", docData)
 	}
@@ -52,4 +52,16 @@ func ParseXMLDocumentation(docData, prefix string) (string, error) {
 		summary = strings.ToLower(summary[:1]) + summary[1:]
 	}
 	return prefix + summary, nil
+}
+
+// SanitizeIdentifier ensures that an identifier is valid for Go.
+func SanitizeIdentifier(s string) string {
+	switch s {
+	case "type":
+		return "t"
+	case "func":
+		return "f"
+	default:
+		return s
+	}
 }

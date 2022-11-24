@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/atburke/krpc-go/api"
@@ -37,19 +36,18 @@ func (s *BasicKRPC) GetStatus() (*api.Status, error) {
 }
 
 func (s *BasicKRPC) GetServices() (*api.Services, error) {
-	fmt.Println("GetServices")
 	request := &api.ProcedureCall{
 		Service:   "KRPC",
 		Procedure: "GetServices",
 	}
-	o, _ := json.Marshal(request)
-	fmt.Println(string(o))
 	result, err := s.client.Call(request, true)
 	if err != nil {
+		fmt.Println("call failed")
 		return nil, tracerr.Wrap(err)
 	}
 	var services api.Services
 	if err := proto.Unmarshal(result.Value, &services); err != nil {
+		fmt.Println("unmarshal failed")
 		return nil, tracerr.Wrap(err)
 	}
 	return &services, nil

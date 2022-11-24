@@ -118,7 +118,7 @@ func TestGetGoType(t *testing.T) {
 		name         string
 		t            *api.Type
 		wantAPI      bool
-		wantService  bool
+		wantService  string
 		expectedType string
 	}{
 		{
@@ -131,11 +131,21 @@ func TestGetGoType(t *testing.T) {
 		{
 			name: "class",
 			t: &api.Type{
-				Code: api.Type_CLASS,
-				Name: "MyClass",
+				Code:    api.Type_CLASS,
+				Name:    "MyClass",
+				Service: "MyService",
 			},
-			wantService:  true,
-			expectedType: "service.MyClass",
+			expectedType: "MyClass",
+		},
+		{
+			name: "class from another package",
+			t: &api.Type{
+				Code:    api.Type_CLASS,
+				Name:    "MyClass",
+				Service: "MyOtherService",
+			},
+			wantService:  "MyOtherService",
+			expectedType: "myotherservice.MyClass",
 		},
 		{
 			name: "special",
@@ -210,8 +220,8 @@ func TestGetGoType(t *testing.T) {
 			if tc.wantAPI {
 				imports = append(imports, `import api "github.com/atburke/krpc-go/api"`)
 			}
-			if tc.wantService {
-				imports = append(imports, `import service "github.com/atburke/krpc-go/lib/service"`)
+			if tc.wantService != "" {
+				imports = append(imports, fmt.Sprintf("import %v %q", strings.ToLower(tc.wantService), getServicePackage(tc.wantService)))
 			}
 			expectedRaw := fmt.Sprintf(`
 			package gentest
@@ -224,7 +234,7 @@ func TestGetGoType(t *testing.T) {
 			require.NoError(t, err)
 
 			f := jen.NewFile("gentest")
-			f.Type().Id("Test").Add(GetGoType(tc.t))
+			f.Type().Id("Test").Add(GetGoType(tc.t, "github.com/atburke/krpc-go/lib/service/myservice"))
 			var out bytes.Buffer
 			require.NoError(t, f.Render(&out))
 			require.Equal(t, string(expectedOut), out.String())

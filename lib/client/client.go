@@ -253,5 +253,8 @@ func (c *KRPCClient) Call(call *api.ProcedureCall, expectResponse bool) (*api.Pr
 		return nil, tracerr.Wrap(err)
 	}
 	r := resp[0]
-	return r, tracerr.Wrap(r.Error)
+	if r.Error != nil {
+		return nil, tracerr.Wrap(r.Error)
+	}
+	return r, nil
 }

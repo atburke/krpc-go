@@ -1,11 +1,10 @@
-.PHONY: build gen fmt test
-.DEFAULT: build
-
-build:
-	go build -o build/marshal cmd/marshal.go
+.PHONY: gen fmt test gen-clean
 
 gen:
 	go generate ./...
+
+gen-clean:
+	rm lib/service/*/*.gen.go
 
 fmt:
 	gofmt -w .

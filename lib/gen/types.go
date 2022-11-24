@@ -100,21 +100,29 @@ func GetProcedureName(procedureName string) string {
 }
 
 // GetGoType gets the Go representation of a kRPC type.
-func GetGoType(t *api.Type) *jen.Statement {
+func GetGoType(t *api.Type, pkg string) *jen.Statement {
+	if t == nil {
+		return nil
+	}
+
 	switch t.Code {
 	// Special KRPC types.
 	case api.Type_PROCEDURE_CALL:
-		return jen.Qual(apiMod, "ProcedureCall")
+		return jen.Qual(apiPkg, "ProcedureCall")
 	case api.Type_STREAM:
-		return jen.Qual(apiMod, "Stream")
+		return jen.Qual(apiPkg, "Stream")
 	case api.Type_STATUS:
-		return jen.Qual(apiMod, "Status")
+		return jen.Qual(apiPkg, "Status")
 	case api.Type_SERVICES:
-		return jen.Qual(apiMod, "Services")
+		return jen.Qual(apiPkg, "Services")
 
 	// Class or enum.
 	case api.Type_CLASS, api.Type_ENUMERATION:
-		return jen.Qual(serviceMod, t.Name)
+		if p := getServicePackage(t.Service); p == pkg {
+			return jen.Id(t.Name)
+		} else {
+			return jen.Qual(p, t.Name)
+		}
 
 	// Primitives.
 	case api.Type_DOUBLE:
@@ -140,18 +148,18 @@ func GetGoType(t *api.Type) *jen.Statement {
 	case api.Type_TUPLE:
 		var tupleTypes []jen.Code
 		for _, subType := range t.Types {
-			tupleTypes = append(tupleTypes, GetGoType(subType))
+			tupleTypes = append(tupleTypes, GetGoType(subType, pkg))
 		}
 		return jen.Qual(
-			apiMod, fmt.Sprintf("Tuple%v", len(t.Types)),
+			apiPkg, fmt.Sprintf("Tuple%v", len(t.Types)),
 		).Types(tupleTypes...)
 
 	case api.Type_LIST:
-		return jen.Index().Add(GetGoType(t.Types[0]))
+		return jen.Index().Add(GetGoType(t.Types[0], pkg))
 	case api.Type_SET:
-		return jen.Map(GetGoType(t.Types[0])).Struct()
+		return jen.Map(GetGoType(t.Types[0], pkg)).Struct()
 	case api.Type_DICTIONARY:
-		return jen.Map(GetGoType(t.Types[0])).Add(GetGoType(t.Types[1]))
+		return jen.Map(GetGoType(t.Types[0], pkg)).Add(GetGoType(t.Types[1], pkg))
 	}
 
 	// Type is None or unrecognized.
