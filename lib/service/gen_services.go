@@ -42,7 +42,7 @@ func main() {
 			log.Fatal(err)
 		}
 		dest := fmt.Sprintf("%v/%v.gen.go", serviceName, serviceName)
-		if err := os.MkdirAll(serviceName, os.ModeDir); err != nil {
+		if err := os.MkdirAll(serviceName, os.ModeDir|0755); err != nil {
 			log.Fatal(err)
 		}
 		fmt.Printf("Writing service definition to %v\n", dest)

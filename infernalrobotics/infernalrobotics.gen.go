@@ -54,14 +54,14 @@ func NewInfernalRobotics(client *krpcgo.KRPCClient) *InfernalRobotics {
 	return &InfernalRobotics{Client: client}
 }
 
-// ServoGroups will a list of all the servo groups in the given <paramref
+// ServoGroups - a list of all the servo groups in the given <paramref
 // name="vessel" />.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) ServoGroups(vessel spacecenter.Vessel) ([]ServoGroup, error) {
+func (s *InfernalRobotics) ServoGroups(vessel *spacecenter.Vessel) ([]*ServoGroup, error) {
 	var err error
 	var argBytes []byte
-	var vv []ServoGroup
+	var vv []*ServoGroup
 	request := &api.ProcedureCall{
 		Procedure: "ServoGroups",
 		Service:   "InfernalRobotics",
@@ -85,11 +85,11 @@ func (s *InfernalRobotics) ServoGroups(vessel spacecenter.Vessel) ([]ServoGroup,
 	return vv, nil
 }
 
-// StreamServoGroups will a list of all the servo groups in the given <paramref
+// StreamServoGroups - a list of all the servo groups in the given <paramref
 // name="vessel" />.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamServoGroups(vessel spacecenter.Vessel) (*krpcgo.Stream[[]ServoGroup], error) {
+func (s *InfernalRobotics) StreamServoGroups(vessel *spacecenter.Vessel) (*krpcgo.Stream[[]*ServoGroup], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -105,26 +105,26 @@ func (s *InfernalRobotics) StreamServoGroups(vessel spacecenter.Vessel) (*krpcgo
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) []ServoGroup {
-		var value []ServoGroup
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []*ServoGroup {
+		var value []*ServoGroup
 		encode.Unmarshal(b, &value)
 		return value
 	})
 	return stream, nil
 }
 
-// ServoGroupWithName will returns the servo group in the given <paramref
+// ServoGroupWithName - returns the servo group in the given <paramref
 // name="vessel" /> with the given <paramref name="name" />, or nil if none
 // exists. If multiple servo groups have the same name, only one of them is
 // returned.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) ServoGroupWithName(vessel spacecenter.Vessel, name string) (ServoGroup, error) {
+func (s *InfernalRobotics) ServoGroupWithName(vessel *spacecenter.Vessel, name string) (*ServoGroup, error) {
 	var err error
 	var argBytes []byte
 	var vv ServoGroup
@@ -134,7 +134,7 @@ func (s *InfernalRobotics) ServoGroupWithName(vessel spacecenter.Vessel, name st
 	}
 	argBytes, err = encode.Marshal(vessel)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -142,7 +142,7 @@ func (s *InfernalRobotics) ServoGroupWithName(vessel spacecenter.Vessel, name st
 	})
 	argBytes, err = encode.Marshal(name)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -150,64 +150,22 @@ func (s *InfernalRobotics) ServoGroupWithName(vessel spacecenter.Vessel, name st
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamServoGroupWithName will returns the servo group in the given <paramref
-// name="vessel" /> with the given <paramref name="name" />, or nil if none
-// exists. If multiple servo groups have the same name, only one of them is
-// returned.
-//
-// Allowed game scenes: any.
-func (s *InfernalRobotics) StreamServoGroupWithName(vessel spacecenter.Vessel, name string) (*krpcgo.Stream[ServoGroup], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "ServoGroupWithName",
-		Service:   "InfernalRobotics",
-	}
-	argBytes, err = encode.Marshal(vessel)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(name)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x1),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) ServoGroup {
-		var value ServoGroup
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// ServoWithName will returns the servo in the given <paramref name="vessel" />
+// ServoWithName - returns the servo in the given <paramref name="vessel" />
 // with the given <paramref name="name" /> or nil if none exists. If multiple
 // servos have the same name, only one of them is returned.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) ServoWithName(vessel spacecenter.Vessel, name string) (Servo, error) {
+func (s *InfernalRobotics) ServoWithName(vessel *spacecenter.Vessel, name string) (*Servo, error) {
 	var err error
 	var argBytes []byte
 	var vv Servo
@@ -217,7 +175,7 @@ func (s *InfernalRobotics) ServoWithName(vessel spacecenter.Vessel, name string)
 	}
 	argBytes, err = encode.Marshal(vessel)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -225,7 +183,7 @@ func (s *InfernalRobotics) ServoWithName(vessel spacecenter.Vessel, name string)
 	})
 	argBytes, err = encode.Marshal(name)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -233,58 +191,17 @@ func (s *InfernalRobotics) ServoWithName(vessel spacecenter.Vessel, name string)
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamServoWithName will returns the servo in the given <paramref
-// name="vessel" /> with the given <paramref name="name" /> or nil if none
-// exists. If multiple servos have the same name, only one of them is returned.
-//
-// Allowed game scenes: any.
-func (s *InfernalRobotics) StreamServoWithName(vessel spacecenter.Vessel, name string) (*krpcgo.Stream[Servo], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "ServoWithName",
-		Service:   "InfernalRobotics",
-	}
-	argBytes, err = encode.Marshal(vessel)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(name)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x1),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) Servo {
-		var value Servo
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// Available will whether Infernal Robotics is installed.
+// Available - whether Infernal Robotics is installed.
 //
 // Allowed game scenes: any.
 func (s *InfernalRobotics) Available() (bool, error) {
@@ -305,7 +222,7 @@ func (s *InfernalRobotics) Available() (bool, error) {
 	return vv, nil
 }
 
-// StreamAvailable will whether Infernal Robotics is installed.
+// StreamAvailable - whether Infernal Robotics is installed.
 //
 // Allowed game scenes: any.
 func (s *InfernalRobotics) StreamAvailable() (*krpcgo.Stream[bool], error) {
@@ -315,7 +232,7 @@ func (s *InfernalRobotics) StreamAvailable() (*krpcgo.Stream[bool], error) {
 		Service:   "InfernalRobotics",
 	}
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -328,7 +245,7 @@ func (s *InfernalRobotics) StreamAvailable() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// Ready will whether Infernal Robotics API is ready.
+// Ready - whether Infernal Robotics API is ready.
 //
 // Allowed game scenes: any.
 func (s *InfernalRobotics) Ready() (bool, error) {
@@ -349,7 +266,7 @@ func (s *InfernalRobotics) Ready() (bool, error) {
 	return vv, nil
 }
 
-// StreamReady will whether Infernal Robotics API is ready.
+// StreamReady - whether Infernal Robotics API is ready.
 //
 // Allowed game scenes: any.
 func (s *InfernalRobotics) StreamReady() (*krpcgo.Stream[bool], error) {
@@ -359,7 +276,7 @@ func (s *InfernalRobotics) StreamReady() (*krpcgo.Stream[bool], error) {
 		Service:   "InfernalRobotics",
 	}
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -372,7 +289,7 @@ func (s *InfernalRobotics) StreamReady() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// MoveRight will moves the servo to the right.
+// MoveRight - moves the servo to the right.
 //
 // Allowed game scenes: any.
 func (s *Servo) MoveRight() error {
@@ -397,7 +314,7 @@ func (s *Servo) MoveRight() error {
 	return nil
 }
 
-// MoveLeft will moves the servo to the left.
+// MoveLeft - moves the servo to the left.
 //
 // Allowed game scenes: any.
 func (s *Servo) MoveLeft() error {
@@ -422,7 +339,7 @@ func (s *Servo) MoveLeft() error {
 	return nil
 }
 
-// MoveCenter will moves the servo to the center.
+// MoveCenter - moves the servo to the center.
 //
 // Allowed game scenes: any.
 func (s *Servo) MoveCenter() error {
@@ -447,7 +364,7 @@ func (s *Servo) MoveCenter() error {
 	return nil
 }
 
-// MoveNextPreset will moves the servo to the next preset.
+// MoveNextPreset - moves the servo to the next preset.
 //
 // Allowed game scenes: any.
 func (s *Servo) MoveNextPreset() error {
@@ -472,7 +389,7 @@ func (s *Servo) MoveNextPreset() error {
 	return nil
 }
 
-// MovePrevPreset will moves the servo to the previous preset.
+// MovePrevPreset - moves the servo to the previous preset.
 //
 // Allowed game scenes: any.
 func (s *Servo) MovePrevPreset() error {
@@ -497,8 +414,8 @@ func (s *Servo) MovePrevPreset() error {
 	return nil
 }
 
-// MoveTo will moves the servo to <paramref name="position" /> and sets the
-// speed multiplier to <paramref name="speed" />.
+// MoveTo - moves the servo to <paramref name="position" /> and sets the speed
+// multiplier to <paramref name="speed" />.
 //
 // Allowed game scenes: any.
 func (s *Servo) MoveTo(position float32, speed float32) error {
@@ -539,7 +456,7 @@ func (s *Servo) MoveTo(position float32, speed float32) error {
 	return nil
 }
 
-// Stop will stops the servo.
+// Stop - stops the servo.
 //
 // Allowed game scenes: any.
 func (s *Servo) Stop() error {
@@ -564,7 +481,7 @@ func (s *Servo) Stop() error {
 	return nil
 }
 
-// Name will the name of the servo.
+// Name - the name of the servo.
 //
 // Allowed game scenes: any.
 func (s *Servo) Name() (string, error) {
@@ -594,7 +511,7 @@ func (s *Servo) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName will the name of the servo.
+// StreamName - the name of the servo.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamName() (*krpcgo.Stream[string], error) {
@@ -613,7 +530,7 @@ func (s *Servo) StreamName() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -626,7 +543,7 @@ func (s *Servo) StreamName() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetName will the name of the servo.
+// SetName - the name of the servo.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetName(value string) error {
@@ -659,10 +576,10 @@ func (s *Servo) SetName(value string) error {
 	return nil
 }
 
-// Part will the part containing the servo.
+// Part - the part containing the servo.
 //
 // Allowed game scenes: any.
-func (s *Servo) Part() (spacecenter.Part, error) {
+func (s *Servo) Part() (*spacecenter.Part, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.Part
@@ -672,7 +589,7 @@ func (s *Servo) Part() (spacecenter.Part, error) {
 	}
 	argBytes, err = encode.Marshal(s)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -680,48 +597,17 @@ func (s *Servo) Part() (spacecenter.Part, error) {
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamPart will the part containing the servo.
-//
-// Allowed game scenes: any.
-func (s *Servo) StreamPart() (*krpcgo.Stream[spacecenter.Part], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "Servo_get_Part",
-		Service:   "InfernalRobotics",
-	}
-	argBytes, err = encode.Marshal(s)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.Part {
-		var value spacecenter.Part
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// SetHighlight will whether the servo should be highlighted in-game.
+// SetHighlight - whether the servo should be highlighted in-game.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetHighlight(value bool) error {
@@ -754,7 +640,7 @@ func (s *Servo) SetHighlight(value bool) error {
 	return nil
 }
 
-// Position will the position of the servo.
+// Position - the position of the servo.
 //
 // Allowed game scenes: any.
 func (s *Servo) Position() (float32, error) {
@@ -784,7 +670,7 @@ func (s *Servo) Position() (float32, error) {
 	return vv, nil
 }
 
-// StreamPosition will the position of the servo.
+// StreamPosition - the position of the servo.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamPosition() (*krpcgo.Stream[float32], error) {
@@ -803,7 +689,7 @@ func (s *Servo) StreamPosition() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -816,8 +702,8 @@ func (s *Servo) StreamPosition() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// MinConfigPosition will the minimum position of the servo, specified by the
-// part configuration.
+// MinConfigPosition - the minimum position of the servo, specified by the part
+// configuration.
 //
 // Allowed game scenes: any.
 func (s *Servo) MinConfigPosition() (float32, error) {
@@ -847,8 +733,8 @@ func (s *Servo) MinConfigPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamMinConfigPosition will the minimum position of the servo, specified by
-// the part configuration.
+// StreamMinConfigPosition - the minimum position of the servo, specified by the
+// part configuration.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamMinConfigPosition() (*krpcgo.Stream[float32], error) {
@@ -867,7 +753,7 @@ func (s *Servo) StreamMinConfigPosition() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -880,8 +766,8 @@ func (s *Servo) StreamMinConfigPosition() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// MaxConfigPosition will the maximum position of the servo, specified by the
-// part configuration.
+// MaxConfigPosition - the maximum position of the servo, specified by the part
+// configuration.
 //
 // Allowed game scenes: any.
 func (s *Servo) MaxConfigPosition() (float32, error) {
@@ -911,8 +797,8 @@ func (s *Servo) MaxConfigPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxConfigPosition will the maximum position of the servo, specified by
-// the part configuration.
+// StreamMaxConfigPosition - the maximum position of the servo, specified by the
+// part configuration.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamMaxConfigPosition() (*krpcgo.Stream[float32], error) {
@@ -931,7 +817,7 @@ func (s *Servo) StreamMaxConfigPosition() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -944,7 +830,7 @@ func (s *Servo) StreamMaxConfigPosition() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// MinPosition will the minimum position of the servo, specified by the in-game
+// MinPosition - the minimum position of the servo, specified by the in-game
 // tweak menu.
 //
 // Allowed game scenes: any.
@@ -975,7 +861,7 @@ func (s *Servo) MinPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamMinPosition will the minimum position of the servo, specified by the
+// StreamMinPosition - the minimum position of the servo, specified by the
 // in-game tweak menu.
 //
 // Allowed game scenes: any.
@@ -995,7 +881,7 @@ func (s *Servo) StreamMinPosition() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1008,8 +894,8 @@ func (s *Servo) StreamMinPosition() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetMinPosition will the minimum position of the servo, specified by the
-// in-game tweak menu.
+// SetMinPosition - the minimum position of the servo, specified by the in-game
+// tweak menu.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetMinPosition(value float32) error {
@@ -1042,7 +928,7 @@ func (s *Servo) SetMinPosition(value float32) error {
 	return nil
 }
 
-// MaxPosition will the maximum position of the servo, specified by the in-game
+// MaxPosition - the maximum position of the servo, specified by the in-game
 // tweak menu.
 //
 // Allowed game scenes: any.
@@ -1073,7 +959,7 @@ func (s *Servo) MaxPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxPosition will the maximum position of the servo, specified by the
+// StreamMaxPosition - the maximum position of the servo, specified by the
 // in-game tweak menu.
 //
 // Allowed game scenes: any.
@@ -1093,7 +979,7 @@ func (s *Servo) StreamMaxPosition() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1106,8 +992,8 @@ func (s *Servo) StreamMaxPosition() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetMaxPosition will the maximum position of the servo, specified by the
-// in-game tweak menu.
+// SetMaxPosition - the maximum position of the servo, specified by the in-game
+// tweak menu.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetMaxPosition(value float32) error {
@@ -1140,7 +1026,7 @@ func (s *Servo) SetMaxPosition(value float32) error {
 	return nil
 }
 
-// ConfigSpeed will the speed multiplier of the servo, specified by the part
+// ConfigSpeed - the speed multiplier of the servo, specified by the part
 // configuration.
 //
 // Allowed game scenes: any.
@@ -1171,8 +1057,8 @@ func (s *Servo) ConfigSpeed() (float32, error) {
 	return vv, nil
 }
 
-// StreamConfigSpeed will the speed multiplier of the servo, specified by the
-// part configuration.
+// StreamConfigSpeed - the speed multiplier of the servo, specified by the part
+// configuration.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamConfigSpeed() (*krpcgo.Stream[float32], error) {
@@ -1191,7 +1077,7 @@ func (s *Servo) StreamConfigSpeed() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1204,7 +1090,7 @@ func (s *Servo) StreamConfigSpeed() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// Speed will the speed multiplier of the servo, specified by the in-game tweak
+// Speed - the speed multiplier of the servo, specified by the in-game tweak
 // menu.
 //
 // Allowed game scenes: any.
@@ -1235,7 +1121,7 @@ func (s *Servo) Speed() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpeed will the speed multiplier of the servo, specified by the in-game
+// StreamSpeed - the speed multiplier of the servo, specified by the in-game
 // tweak menu.
 //
 // Allowed game scenes: any.
@@ -1255,7 +1141,7 @@ func (s *Servo) StreamSpeed() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1268,8 +1154,8 @@ func (s *Servo) StreamSpeed() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetSpeed will the speed multiplier of the servo, specified by the in-game
-// tweak menu.
+// SetSpeed - the speed multiplier of the servo, specified by the in-game tweak
+// menu.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetSpeed(value float32) error {
@@ -1302,7 +1188,7 @@ func (s *Servo) SetSpeed(value float32) error {
 	return nil
 }
 
-// CurrentSpeed will the current speed at which the servo is moving.
+// CurrentSpeed - the current speed at which the servo is moving.
 //
 // Allowed game scenes: any.
 func (s *Servo) CurrentSpeed() (float32, error) {
@@ -1332,7 +1218,7 @@ func (s *Servo) CurrentSpeed() (float32, error) {
 	return vv, nil
 }
 
-// StreamCurrentSpeed will the current speed at which the servo is moving.
+// StreamCurrentSpeed - the current speed at which the servo is moving.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamCurrentSpeed() (*krpcgo.Stream[float32], error) {
@@ -1351,7 +1237,7 @@ func (s *Servo) StreamCurrentSpeed() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1364,7 +1250,7 @@ func (s *Servo) StreamCurrentSpeed() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetCurrentSpeed will the current speed at which the servo is moving.
+// SetCurrentSpeed - the current speed at which the servo is moving.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetCurrentSpeed(value float32) error {
@@ -1397,7 +1283,7 @@ func (s *Servo) SetCurrentSpeed(value float32) error {
 	return nil
 }
 
-// Acceleration will the current speed multiplier set in the UI.
+// Acceleration - the current speed multiplier set in the UI.
 //
 // Allowed game scenes: any.
 func (s *Servo) Acceleration() (float32, error) {
@@ -1427,7 +1313,7 @@ func (s *Servo) Acceleration() (float32, error) {
 	return vv, nil
 }
 
-// StreamAcceleration will the current speed multiplier set in the UI.
+// StreamAcceleration - the current speed multiplier set in the UI.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamAcceleration() (*krpcgo.Stream[float32], error) {
@@ -1446,7 +1332,7 @@ func (s *Servo) StreamAcceleration() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1459,7 +1345,7 @@ func (s *Servo) StreamAcceleration() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetAcceleration will the current speed multiplier set in the UI.
+// SetAcceleration - the current speed multiplier set in the UI.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetAcceleration(value float32) error {
@@ -1492,7 +1378,7 @@ func (s *Servo) SetAcceleration(value float32) error {
 	return nil
 }
 
-// IsMoving will whether the servo is moving.
+// IsMoving - whether the servo is moving.
 //
 // Allowed game scenes: any.
 func (s *Servo) IsMoving() (bool, error) {
@@ -1522,7 +1408,7 @@ func (s *Servo) IsMoving() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsMoving will whether the servo is moving.
+// StreamIsMoving - whether the servo is moving.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamIsMoving() (*krpcgo.Stream[bool], error) {
@@ -1541,7 +1427,7 @@ func (s *Servo) StreamIsMoving() (*krpcgo.Stream[bool], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1554,7 +1440,7 @@ func (s *Servo) StreamIsMoving() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// IsFreeMoving will whether the servo is freely moving.
+// IsFreeMoving - whether the servo is freely moving.
 //
 // Allowed game scenes: any.
 func (s *Servo) IsFreeMoving() (bool, error) {
@@ -1584,7 +1470,7 @@ func (s *Servo) IsFreeMoving() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsFreeMoving will whether the servo is freely moving.
+// StreamIsFreeMoving - whether the servo is freely moving.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamIsFreeMoving() (*krpcgo.Stream[bool], error) {
@@ -1603,7 +1489,7 @@ func (s *Servo) StreamIsFreeMoving() (*krpcgo.Stream[bool], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1616,7 +1502,7 @@ func (s *Servo) StreamIsFreeMoving() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// IsLocked will whether the servo is locked.
+// IsLocked - whether the servo is locked.
 //
 // Allowed game scenes: any.
 func (s *Servo) IsLocked() (bool, error) {
@@ -1646,7 +1532,7 @@ func (s *Servo) IsLocked() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsLocked will whether the servo is locked.
+// StreamIsLocked - whether the servo is locked.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamIsLocked() (*krpcgo.Stream[bool], error) {
@@ -1665,7 +1551,7 @@ func (s *Servo) StreamIsLocked() (*krpcgo.Stream[bool], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1678,7 +1564,7 @@ func (s *Servo) StreamIsLocked() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// SetIsLocked will whether the servo is locked.
+// SetIsLocked - whether the servo is locked.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetIsLocked(value bool) error {
@@ -1711,7 +1597,7 @@ func (s *Servo) SetIsLocked(value bool) error {
 	return nil
 }
 
-// IsAxisInverted will whether the servos axis is inverted.
+// IsAxisInverted - whether the servos axis is inverted.
 //
 // Allowed game scenes: any.
 func (s *Servo) IsAxisInverted() (bool, error) {
@@ -1741,7 +1627,7 @@ func (s *Servo) IsAxisInverted() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsAxisInverted will whether the servos axis is inverted.
+// StreamIsAxisInverted - whether the servos axis is inverted.
 //
 // Allowed game scenes: any.
 func (s *Servo) StreamIsAxisInverted() (*krpcgo.Stream[bool], error) {
@@ -1760,7 +1646,7 @@ func (s *Servo) StreamIsAxisInverted() (*krpcgo.Stream[bool], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1773,7 +1659,7 @@ func (s *Servo) StreamIsAxisInverted() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// SetIsAxisInverted will whether the servos axis is inverted.
+// SetIsAxisInverted - whether the servos axis is inverted.
 //
 // Allowed game scenes: any.
 func (s *Servo) SetIsAxisInverted(value bool) error {
@@ -1806,11 +1692,11 @@ func (s *Servo) SetIsAxisInverted(value bool) error {
 	return nil
 }
 
-// ServoWithName will returns the servo with the given <paramref name="name" />
+// ServoWithName - returns the servo with the given <paramref name="name" />
 // from this group, or nil if none exists.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) ServoWithName(name string) (Servo, error) {
+func (s *ServoGroup) ServoWithName(name string) (*Servo, error) {
 	var err error
 	var argBytes []byte
 	var vv Servo
@@ -1820,7 +1706,7 @@ func (s *ServoGroup) ServoWithName(name string) (Servo, error) {
 	}
 	argBytes, err = encode.Marshal(s)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -1828,7 +1714,7 @@ func (s *ServoGroup) ServoWithName(name string) (Servo, error) {
 	})
 	argBytes, err = encode.Marshal(name)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -1836,57 +1722,17 @@ func (s *ServoGroup) ServoWithName(name string) (Servo, error) {
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamServoWithName will returns the servo with the given <paramref
-// name="name" /> from this group, or nil if none exists.
-//
-// Allowed game scenes: any.
-func (s *ServoGroup) StreamServoWithName(name string) (*krpcgo.Stream[Servo], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "ServoGroup_ServoWithName",
-		Service:   "InfernalRobotics",
-	}
-	argBytes, err = encode.Marshal(s)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(name)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x1),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) Servo {
-		var value Servo
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// MoveRight will moves all of the servos in the group to the right.
+// MoveRight - moves all of the servos in the group to the right.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) MoveRight() error {
@@ -1911,7 +1757,7 @@ func (s *ServoGroup) MoveRight() error {
 	return nil
 }
 
-// MoveLeft will moves all of the servos in the group to the left.
+// MoveLeft - moves all of the servos in the group to the left.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) MoveLeft() error {
@@ -1936,7 +1782,7 @@ func (s *ServoGroup) MoveLeft() error {
 	return nil
 }
 
-// MoveCenter will moves all of the servos in the group to the center.
+// MoveCenter - moves all of the servos in the group to the center.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) MoveCenter() error {
@@ -1961,7 +1807,7 @@ func (s *ServoGroup) MoveCenter() error {
 	return nil
 }
 
-// MoveNextPreset will moves all of the servos in the group to the next preset.
+// MoveNextPreset - moves all of the servos in the group to the next preset.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) MoveNextPreset() error {
@@ -1986,8 +1832,7 @@ func (s *ServoGroup) MoveNextPreset() error {
 	return nil
 }
 
-// MovePrevPreset will moves all of the servos in the group to the previous
-// preset.
+// MovePrevPreset - moves all of the servos in the group to the previous preset.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) MovePrevPreset() error {
@@ -2012,7 +1857,7 @@ func (s *ServoGroup) MovePrevPreset() error {
 	return nil
 }
 
-// Stop will stops the servos in the group.
+// Stop - stops the servos in the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) Stop() error {
@@ -2037,7 +1882,7 @@ func (s *ServoGroup) Stop() error {
 	return nil
 }
 
-// Name will the name of the group.
+// Name - the name of the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) Name() (string, error) {
@@ -2067,7 +1912,7 @@ func (s *ServoGroup) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName will the name of the group.
+// StreamName - the name of the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) StreamName() (*krpcgo.Stream[string], error) {
@@ -2086,7 +1931,7 @@ func (s *ServoGroup) StreamName() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2099,7 +1944,7 @@ func (s *ServoGroup) StreamName() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetName will the name of the group.
+// SetName - the name of the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) SetName(value string) error {
@@ -2132,7 +1977,7 @@ func (s *ServoGroup) SetName(value string) error {
 	return nil
 }
 
-// ForwardKey will the key assigned to be the "forward" key for the group.
+// ForwardKey - the key assigned to be the "forward" key for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) ForwardKey() (string, error) {
@@ -2162,7 +2007,7 @@ func (s *ServoGroup) ForwardKey() (string, error) {
 	return vv, nil
 }
 
-// StreamForwardKey will the key assigned to be the "forward" key for the group.
+// StreamForwardKey - the key assigned to be the "forward" key for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) StreamForwardKey() (*krpcgo.Stream[string], error) {
@@ -2181,7 +2026,7 @@ func (s *ServoGroup) StreamForwardKey() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2194,7 +2039,7 @@ func (s *ServoGroup) StreamForwardKey() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetForwardKey will the key assigned to be the "forward" key for the group.
+// SetForwardKey - the key assigned to be the "forward" key for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) SetForwardKey(value string) error {
@@ -2227,7 +2072,7 @@ func (s *ServoGroup) SetForwardKey(value string) error {
 	return nil
 }
 
-// ReverseKey will the key assigned to be the "reverse" key for the group.
+// ReverseKey - the key assigned to be the "reverse" key for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) ReverseKey() (string, error) {
@@ -2257,7 +2102,7 @@ func (s *ServoGroup) ReverseKey() (string, error) {
 	return vv, nil
 }
 
-// StreamReverseKey will the key assigned to be the "reverse" key for the group.
+// StreamReverseKey - the key assigned to be the "reverse" key for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) StreamReverseKey() (*krpcgo.Stream[string], error) {
@@ -2276,7 +2121,7 @@ func (s *ServoGroup) StreamReverseKey() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2289,7 +2134,7 @@ func (s *ServoGroup) StreamReverseKey() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetReverseKey will the key assigned to be the "reverse" key for the group.
+// SetReverseKey - the key assigned to be the "reverse" key for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) SetReverseKey(value string) error {
@@ -2322,7 +2167,7 @@ func (s *ServoGroup) SetReverseKey(value string) error {
 	return nil
 }
 
-// Speed will the speed multiplier for the group.
+// Speed - the speed multiplier for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) Speed() (float32, error) {
@@ -2352,7 +2197,7 @@ func (s *ServoGroup) Speed() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpeed will the speed multiplier for the group.
+// StreamSpeed - the speed multiplier for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) StreamSpeed() (*krpcgo.Stream[float32], error) {
@@ -2371,7 +2216,7 @@ func (s *ServoGroup) StreamSpeed() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2384,7 +2229,7 @@ func (s *ServoGroup) StreamSpeed() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetSpeed will the speed multiplier for the group.
+// SetSpeed - the speed multiplier for the group.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) SetSpeed(value float32) error {
@@ -2417,7 +2262,7 @@ func (s *ServoGroup) SetSpeed(value float32) error {
 	return nil
 }
 
-// Expanded will whether the group is expanded in the InfernalRobotics UI.
+// Expanded - whether the group is expanded in the InfernalRobotics UI.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) Expanded() (bool, error) {
@@ -2447,7 +2292,7 @@ func (s *ServoGroup) Expanded() (bool, error) {
 	return vv, nil
 }
 
-// StreamExpanded will whether the group is expanded in the InfernalRobotics UI.
+// StreamExpanded - whether the group is expanded in the InfernalRobotics UI.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) StreamExpanded() (*krpcgo.Stream[bool], error) {
@@ -2466,7 +2311,7 @@ func (s *ServoGroup) StreamExpanded() (*krpcgo.Stream[bool], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2479,7 +2324,7 @@ func (s *ServoGroup) StreamExpanded() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// SetExpanded will whether the group is expanded in the InfernalRobotics UI.
+// SetExpanded - whether the group is expanded in the InfernalRobotics UI.
 //
 // Allowed game scenes: any.
 func (s *ServoGroup) SetExpanded(value bool) error {
@@ -2512,13 +2357,13 @@ func (s *ServoGroup) SetExpanded(value bool) error {
 	return nil
 }
 
-// Servos will the servos that are in the group.
+// Servos - the servos that are in the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) Servos() ([]Servo, error) {
+func (s *ServoGroup) Servos() ([]*Servo, error) {
 	var err error
 	var argBytes []byte
-	var vv []Servo
+	var vv []*Servo
 	request := &api.ProcedureCall{
 		Procedure: "ServoGroup_get_Servos",
 		Service:   "InfernalRobotics",
@@ -2542,10 +2387,10 @@ func (s *ServoGroup) Servos() ([]Servo, error) {
 	return vv, nil
 }
 
-// StreamServos will the servos that are in the group.
+// StreamServos - the servos that are in the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamServos() (*krpcgo.Stream[[]Servo], error) {
+func (s *ServoGroup) StreamServos() (*krpcgo.Stream[[]*Servo], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2561,26 +2406,26 @@ func (s *ServoGroup) StreamServos() (*krpcgo.Stream[[]Servo], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) []Servo {
-		var value []Servo
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []*Servo {
+		var value []*Servo
 		encode.Unmarshal(b, &value)
 		return value
 	})
 	return stream, nil
 }
 
-// Parts will the parts containing the servos in the group.
+// Parts - the parts containing the servos in the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) Parts() ([]spacecenter.Part, error) {
+func (s *ServoGroup) Parts() ([]*spacecenter.Part, error) {
 	var err error
 	var argBytes []byte
-	var vv []spacecenter.Part
+	var vv []*spacecenter.Part
 	request := &api.ProcedureCall{
 		Procedure: "ServoGroup_get_Parts",
 		Service:   "InfernalRobotics",
@@ -2604,10 +2449,10 @@ func (s *ServoGroup) Parts() ([]spacecenter.Part, error) {
 	return vv, nil
 }
 
-// StreamParts will the parts containing the servos in the group.
+// StreamParts - the parts containing the servos in the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamParts() (*krpcgo.Stream[[]spacecenter.Part], error) {
+func (s *ServoGroup) StreamParts() (*krpcgo.Stream[[]*spacecenter.Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2623,13 +2468,13 @@ func (s *ServoGroup) StreamParts() (*krpcgo.Stream[[]spacecenter.Part], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) []spacecenter.Part {
-		var value []spacecenter.Part
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []*spacecenter.Part {
+		var value []*spacecenter.Part
 		encode.Unmarshal(b, &value)
 		return value
 	})

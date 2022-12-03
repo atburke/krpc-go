@@ -19,6 +19,21 @@ func newTestClass(id uint64) *testClass {
 	return &c
 }
 
+type testEnum int32
+
+const (
+	a testEnum = 1
+	b testEnum = 2
+)
+
+func (v testEnum) Value() int32 {
+	return int32(v)
+}
+
+func (v *testEnum) SetValue(value int32) {
+	*v = testEnum(value)
+}
+
 func TestMarshalAndUnmarshal(t *testing.T) {
 	tests := []struct {
 		name              string
@@ -51,6 +66,10 @@ func TestMarshalAndUnmarshal(t *testing.T) {
 			skipOutputPointer: true,
 		},
 		{
+			name:  "enum",
+			input: a,
+		},
+		{
 			name:  "slice",
 			input: []string{"test1", "test2", "test3"},
 		},
@@ -73,6 +92,14 @@ func TestMarshalAndUnmarshal(t *testing.T) {
 		{
 			name:  "tuple",
 			input: api.NewTuple3("test", uint64(77), float64(6.28)),
+		},
+		{
+			name:  "slice of pointers",
+			input: []*testClass{newTestClass(1), newTestClass(2)},
+		},
+		{
+			name:  "map of pointers",
+			input: map[string]*testClass{"1": newTestClass(1), "2": newTestClass(2)},
 		},
 	}
 	for _, tc := range tests {

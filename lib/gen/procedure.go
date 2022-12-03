@@ -52,7 +52,8 @@ func formatGameScenes(gameScenes []api.Procedure_GameScene) string {
 // generateProcedureBody generates the function body for a procedure.
 func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, params []jen.Code, returnType *jen.Statement) {
 	pkg := getServicePackage(serviceName)
-	returnType = GetGoType(procedure.ReturnType, pkg)
+	returnType = GetGoType(procedure.ReturnType, WithPackage(pkg))
+	retVarType := GetGoType(procedure.ReturnType, WithPackage(pkg), NoPointerForClass)
 
 	// Define some variables
 	funcBody = []jen.Code{
@@ -68,7 +69,7 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 	// Only create the return variable if needed
 	if returnType != nil {
 		funcBody = append(funcBody,
-			jen.Var().Id("vv").Add(returnType),
+			jen.Var().Id("vv").Add(retVarType),
 		)
 	}
 
@@ -82,8 +83,14 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 
 	// Shorthand for if err != nil {...
 	var errReturn []jen.Code
+	var returnVar *jen.Statement
 	if returnType != nil {
-		errReturn = []jen.Code{jen.Id("vv"), jen.Qual(tracerrPkg, "Wrap").Call(jen.Err())}
+		if isPointerType(procedure.ReturnType.Code) {
+			returnVar = jen.Op("&").Id("vv")
+		} else {
+			returnVar = jen.Id("vv")
+		}
+		errReturn = []jen.Code{returnVar, jen.Qual(tracerrPkg, "Wrap").Call(jen.Err())}
 	} else {
 		errReturn = []jen.Code{jen.Qual(tracerrPkg, "Wrap").Call(jen.Err())}
 	}
@@ -100,7 +107,7 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 		if i == 0 && isClass {
 			param.Name = "s"
 		} else {
-			paramType := GetGoType(param.Type, pkg)
+			paramType := GetGoType(param.Type, WithPackage(pkg))
 			params = append(params, jen.Id(param.Name).Add(paramType))
 		}
 
@@ -142,7 +149,14 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 		funcBody = append(funcBody,
 			jen.Err().Op("=").Qual(encodePkg, "Unmarshal").Call(jen.Id("result").Dot("Value"), jen.Op("&").Id("vv")),
 			errCheck,
-			jen.Return(jen.Id("vv"), jen.Nil()),
+		)
+		if procedure.ReturnType.Code == api.Type_CLASS {
+			funcBody = append(funcBody,
+				jen.Id("vv").Dot("Client").Op("=").Id("s").Dot("Client"),
+			)
+		}
+		funcBody = append(funcBody,
+			jen.Return(returnVar, jen.Nil()),
 		)
 	} else {
 		funcBody = append(funcBody,
@@ -171,7 +185,8 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 	).Id(procName).Params(params...).Add(retType).Block(funcBody...)
 
 	// If this procedure has a return value, also generate a stream definition
-	if returnType != nil {
+	// Note: not streaming classes for simplicity, may change later
+	if returnType != nil && !isPointerType(procedure.ReturnType.Code) {
 		funcBody, streamRetType := generateStreamBody(serviceName, procedure)
 		f.Comment(wrapDocComment("Stream" + procDocs))
 		f.Func().Params(
@@ -181,7 +196,7 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 }
 
 func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, returnType *jen.Statement) {
-	internalReturnType := GetGoType(procedure.ReturnType, getServicePackage(serviceName))
+	internalReturnType := GetGoType(procedure.ReturnType, WithPackage(getServicePackage(serviceName)))
 	returnType = jen.Op("*").Qual(krpcPkg, "Stream").Types(internalReturnType)
 
 	funcBody = []jen.Code{
@@ -244,7 +259,7 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 
 		// Start the stream
 		jen.List(jen.Id("st"), jen.Err()).Op(":=").Id("krpc").Dot("AddStream").Call(
-			jen.Op("*").Id("request"), jen.Lit(true),
+			jen.Id("request"), jen.Lit(true),
 		),
 		errCheck,
 
@@ -268,7 +283,7 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 
 func generateProcedure(f *jen.File, serviceName string, procedure *api.Procedure) error {
 	procName := procedure.Name
-	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" will ")
+	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" - ")
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -284,7 +299,7 @@ func generateServiceGetter(f *jen.File, serviceName string, procedure *api.Proce
 		return tracerr.Wrap(err)
 	}
 	procName := propName
-	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" will ")
+	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" - ")
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -300,7 +315,7 @@ func generateServiceSetter(f *jen.File, serviceName string, procedure *api.Proce
 		return tracerr.Wrap(err)
 	}
 	procName := "Set" + propName
-	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" will ")
+	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" - ")
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -316,7 +331,7 @@ func generateClassMethod(f *jen.File, serviceName string, procedure *api.Procedu
 		return tracerr.Wrap(err)
 	}
 	procName := GetProcedureName(procedure.Name)
-	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" will ")
+	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" - ")
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -340,7 +355,7 @@ func generateClassGetter(f *jen.File, serviceName string, procedure *api.Procedu
 		return tracerr.Wrap(err)
 	}
 	procName := propName
-	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" will ")
+	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" - ")
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -360,7 +375,7 @@ func generateClassSetter(f *jen.File, serviceName string, procedure *api.Procedu
 		return tracerr.Wrap(err)
 	}
 	procName := "Set" + propName
-	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" will ")
+	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" - ")
 	if err != nil {
 		return tracerr.Wrap(err)
 	}

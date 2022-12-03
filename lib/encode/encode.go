@@ -1,6 +1,7 @@
 package encode
 
 import (
+	"fmt"
 	"math"
 	"reflect"
 
@@ -26,6 +27,8 @@ func Marshal(m interface{}) ([]byte, error) {
 		b, err = proto.Marshal(v)
 	case service.Class:
 		b, err = Marshal(v.ID())
+	case service.Enum:
+		b, err = Marshal(v.Value())
 	// Varints
 	case int32:
 		err = buf.EncodeZigzag32(uint64(v))
@@ -53,11 +56,14 @@ func Marshal(m interface{}) ([]byte, error) {
 		err = buf.EncodeRawBytes(v)
 	}
 
+	if err != nil {
+		return nil, tracerr.Wrap(err)
+	}
 	if b != nil {
-		return b, tracerr.Wrap(err)
+		return b, nil
 	}
 	if len(buf.Bytes()) > 0 {
-		return buf.Bytes(), tracerr.Wrap(err)
+		return buf.Bytes(), nil
 	}
 
 	// We have to use reflection for collections.
@@ -110,6 +116,7 @@ func Marshal(m interface{}) ([]byte, error) {
 		}
 		// Assume it's a Tuple
 	case reflect.Struct:
+		fmt.Println(mType.String())
 		var tuple api.Tuple
 		for i := 0; i < mType.NumField(); i++ {
 			fieldBytes, err := Marshal(value.Field(i).Interface())
@@ -146,6 +153,12 @@ func Unmarshal(b []byte, m interface{}) error {
 		err = Unmarshal(b, &u)
 		if err == nil {
 			v.SetID(u)
+		}
+	case service.SettableEnum:
+		var value int32
+		err = Unmarshal(b, &value)
+		if err == nil {
+			v.SetValue(value)
 		}
 	// Varints
 	case *int32:
@@ -220,11 +233,23 @@ func Unmarshal(b []byte, m interface{}) error {
 		elemType := mInternalType.Elem()
 		slice := reflect.MakeSlice(mInternalType, 0, cap(list.Items))
 		for _, elemBytes := range list.Items {
-			elem := reflect.New(elemType)
+
+			var elem reflect.Value
+			if elemType.Kind() == reflect.Pointer {
+				elem = reflect.New(elemType.Elem())
+			} else {
+				elem = reflect.New(elemType)
+			}
+
 			if err := Unmarshal(elemBytes, elem.Interface()); err != nil {
 				return tracerr.Wrap(err)
 			}
-			slice = reflect.Append(slice, elem.Elem())
+
+			out := elem
+			if elemType.Kind() != reflect.Pointer {
+				out = out.Elem()
+			}
+			slice = reflect.Append(slice, out)
 		}
 		reflect.ValueOf(m).Elem().Set(slice)
 	case reflect.Map:
@@ -257,11 +282,23 @@ func Unmarshal(b []byte, m interface{}) error {
 				if err := Unmarshal(entry.Key, key.Interface()); err != nil {
 					return tracerr.Wrap(err)
 				}
-				value := reflect.New(elemType)
+
+				var value reflect.Value
+				if elemType.Kind() == reflect.Pointer {
+					value = reflect.New(elemType.Elem())
+				} else {
+					value = reflect.New(elemType)
+				}
+
 				if err := Unmarshal(entry.Value, value.Interface()); err != nil {
 					return tracerr.Wrap(err)
 				}
-				dictMap.SetMapIndex(key.Elem(), value.Elem())
+
+				out := value
+				if elemType.Kind() != reflect.Pointer {
+					out = out.Elem()
+				}
+				dictMap.SetMapIndex(key.Elem(), out)
 			}
 			reflect.ValueOf(m).Elem().Set(dictMap)
 		}

@@ -146,6 +146,13 @@ const (
 	// The third enum value.
 	Test_Three Test = 3
 )
+
+func (v Test) Value() int32 {
+	return int32(v)
+}
+func (v *Test) SetValue(val int32) {
+	*v = Test(val)
+}
 `
 
 func TestGenerateEnum(t *testing.T) {

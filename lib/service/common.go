@@ -2,6 +2,14 @@ package service
 
 import krpcgo "github.com/atburke/krpc-go"
 
+type Enum interface {
+	Value() int32
+}
+
+type SettableEnum interface {
+	SetValue(int32)
+}
+
 type Class interface {
 	// ID gets the instance's ID.
 	ID() uint64

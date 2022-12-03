@@ -14,7 +14,7 @@ func GenerateException(f *jen.File, exception *api.Exception) error {
 	// Names are given in the format XYZException. We want the more go-like
 	// ErrXYZ.
 	exceptionName := "Err" + exception.Name[:len(exception.Name)-len("exception")]
-	docs, err := utils.ParseXMLDocumentation(exception.Documentation, exceptionName+" means ")
+	docs, err := utils.ParseXMLDocumentation(exception.Documentation, exceptionName+" - ")
 	if err != nil {
 		return tracerr.Wrap(err)
 	}

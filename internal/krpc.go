@@ -1,8 +1,6 @@
 package internal
 
 import (
-	"fmt"
-
 	krpcgo "github.com/atburke/krpc-go"
 	"github.com/atburke/krpc-go/lib/api"
 	"github.com/golang/protobuf/proto"
@@ -42,12 +40,10 @@ func (s *BasicKRPC) GetServices() (*api.Services, error) {
 	}
 	result, err := s.client.Call(request, true)
 	if err != nil {
-		fmt.Println("call failed")
 		return nil, tracerr.Wrap(err)
 	}
 	var services api.Services
 	if err := proto.Unmarshal(result.Value, &services); err != nil {
-		fmt.Println("unmarshal failed")
 		return nil, tracerr.Wrap(err)
 	}
 	return &services, nil

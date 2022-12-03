@@ -74,29 +74,35 @@ func (s *StreamClient) Run(ctx context.Context) {
 	}
 }
 
-// WriteToStream writes data to a particular stream.
-func (s *StreamClient) WriteToStream(id uint64, b []byte) {
+func (s *StreamClient) getStreamManager(id uint64) *streamManager {
 	s.RLock()
 	sm, ok := s.streams[id]
 	s.RUnlock()
-
-	if !ok {
-		s.Lock()
-		// Another thread may have already created the stream manager.
-		sm, ok = s.streams[id]
-		if !ok {
-			sm = newStreamManager(id)
-			s.streams[id] = sm
-		}
-		s.Unlock()
+	if ok {
+		return sm
 	}
 
+	s.Lock()
+	defer s.Unlock()
+	// Check if the stream was created by another thread in between locks.
+	sm, ok = s.streams[id]
+	if ok {
+		return sm
+	}
+	sm = newStreamManager(id)
+	s.streams[id] = sm
+	return sm
+}
+
+// WriteToStream writes data to a particular stream.
+func (s *StreamClient) WriteToStream(id uint64, b []byte) {
+	sm := s.getStreamManager(id)
 	sm.write(b)
 }
 
 // GetStream gets a byte stream for a particular stream ID.
 func (s *StreamClient) GetStream(id uint64) *Stream[[]byte] {
-	return s.streams[id].newStream()
+	return s.getStreamManager(id).newStream()
 }
 
 // DeleteStream removes a byte stream for a particular stream ID. Note that

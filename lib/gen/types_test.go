@@ -234,7 +234,7 @@ func TestGetGoType(t *testing.T) {
 			require.NoError(t, err)
 
 			f := jen.NewFile("gentest")
-			f.Type().Id("Test").Add(GetGoType(tc.t, "github.com/atburke/krpc-go/myservice"))
+			f.Type().Id("Test").Add(GetGoType(tc.t, WithPackage("github.com/atburke/krpc-go/myservice")))
 			var out bytes.Buffer
 			require.NoError(t, f.Render(&out))
 			require.Equal(t, string(expectedOut), out.String())

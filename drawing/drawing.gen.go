@@ -59,10 +59,10 @@ func NewDrawing(client *krpcgo.KRPCClient) *Drawing {
 	return &Drawing{Client: client}
 }
 
-// AddLine will draw a line in the scene.
+// AddLine - draw a line in the scene.
 //
 // Allowed game scenes: any.
-func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.Tuple3[float64, float64, float64], referenceFrame spacecenter.ReferenceFrame, visible bool) (Line, error) {
+func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, visible bool) (*Line, error) {
 	var err error
 	var argBytes []byte
 	var vv Line
@@ -72,7 +72,7 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	}
 	argBytes, err = encode.Marshal(start)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -80,7 +80,7 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	})
 	argBytes, err = encode.Marshal(end)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -88,7 +88,7 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	})
 	argBytes, err = encode.Marshal(referenceFrame)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x2),
@@ -96,7 +96,7 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	})
 	argBytes, err = encode.Marshal(visible)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x3),
@@ -104,76 +104,21 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamAddLine will draw a line in the scene.
+// AddDirection - draw a direction vector in the scene, starting from the origin
+// of the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Drawing) StreamAddLine(start api.Tuple3[float64, float64, float64], end api.Tuple3[float64, float64, float64], referenceFrame spacecenter.ReferenceFrame, visible bool) (*krpcgo.Stream[Line], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "AddLine",
-		Service:   "Drawing",
-	}
-	argBytes, err = encode.Marshal(start)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(end)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x1),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(referenceFrame)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x2),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(visible)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x3),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) Line {
-		var value Line
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// AddDirection will draw a direction vector in the scene, starting from the
-// origin of the given reference frame.
-//
-// Allowed game scenes: any.
-func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], referenceFrame spacecenter.ReferenceFrame, length float32, visible bool) (Line, error) {
+func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, length float32, visible bool) (*Line, error) {
 	var err error
 	var argBytes []byte
 	var vv Line
@@ -183,7 +128,7 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	}
 	argBytes, err = encode.Marshal(direction)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -191,7 +136,7 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	})
 	argBytes, err = encode.Marshal(referenceFrame)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -199,7 +144,7 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	})
 	argBytes, err = encode.Marshal(length)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x2),
@@ -207,7 +152,7 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	})
 	argBytes, err = encode.Marshal(visible)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x3),
@@ -215,77 +160,21 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamAddDirection will draw a direction vector in the scene, starting from
-// the origin of the given reference frame.
+// AddDirectionFromCom - draw a direction vector in the scene, from the center
+// of mass of the active vessel.
 //
 // Allowed game scenes: any.
-func (s *Drawing) StreamAddDirection(direction api.Tuple3[float64, float64, float64], referenceFrame spacecenter.ReferenceFrame, length float32, visible bool) (*krpcgo.Stream[Line], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "AddDirection",
-		Service:   "Drawing",
-	}
-	argBytes, err = encode.Marshal(direction)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(referenceFrame)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x1),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(length)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x2),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(visible)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x3),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) Line {
-		var value Line
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// AddDirectionFromCom will draw a direction vector in the scene, from the
-// center of mass of the active vessel.
-//
-// Allowed game scenes: any.
-func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, float64], referenceFrame spacecenter.ReferenceFrame, length float32, visible bool) (Line, error) {
+func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, length float32, visible bool) (*Line, error) {
 	var err error
 	var argBytes []byte
 	var vv Line
@@ -295,7 +184,7 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	}
 	argBytes, err = encode.Marshal(direction)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -303,7 +192,7 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	})
 	argBytes, err = encode.Marshal(referenceFrame)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -311,7 +200,7 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	})
 	argBytes, err = encode.Marshal(length)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x2),
@@ -319,7 +208,7 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	})
 	argBytes, err = encode.Marshal(visible)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x3),
@@ -327,76 +216,20 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamAddDirectionFromCom will draw a direction vector in the scene, from the
-// center of mass of the active vessel.
+// AddPolygon - draw a polygon in the scene, defined by a list of vertices.
 //
 // Allowed game scenes: any.
-func (s *Drawing) StreamAddDirectionFromCom(direction api.Tuple3[float64, float64, float64], referenceFrame spacecenter.ReferenceFrame, length float32, visible bool) (*krpcgo.Stream[Line], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "AddDirectionFromCom",
-		Service:   "Drawing",
-	}
-	argBytes, err = encode.Marshal(direction)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(referenceFrame)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x1),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(length)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x2),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(visible)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x3),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) Line {
-		var value Line
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// AddPolygon will draw a polygon in the scene, defined by a list of vertices.
-//
-// Allowed game scenes: any.
-func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], referenceFrame spacecenter.ReferenceFrame, visible bool) (Polygon, error) {
+func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, visible bool) (*Polygon, error) {
 	var err error
 	var argBytes []byte
 	var vv Polygon
@@ -406,7 +239,7 @@ func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], r
 	}
 	argBytes, err = encode.Marshal(vertices)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -414,7 +247,7 @@ func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], r
 	})
 	argBytes, err = encode.Marshal(referenceFrame)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -422,7 +255,7 @@ func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], r
 	})
 	argBytes, err = encode.Marshal(visible)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x2),
@@ -430,68 +263,20 @@ func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], r
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamAddPolygon will draw a polygon in the scene, defined by a list of
-// vertices.
+// AddText - draw text in the scene.
 //
 // Allowed game scenes: any.
-func (s *Drawing) StreamAddPolygon(vertices []api.Tuple3[float64, float64, float64], referenceFrame spacecenter.ReferenceFrame, visible bool) (*krpcgo.Stream[Polygon], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "AddPolygon",
-		Service:   "Drawing",
-	}
-	argBytes, err = encode.Marshal(vertices)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(referenceFrame)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x1),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(visible)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x2),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) Polygon {
-		var value Polygon
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// AddText will draw text in the scene.
-//
-// Allowed game scenes: any.
-func (s *Drawing) AddText(text string, referenceFrame spacecenter.ReferenceFrame, position api.Tuple3[float64, float64, float64], rotation api.Tuple4[float64, float64, float64, float64], visible bool) (Text, error) {
+func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFrame, position api.Tuple3[float64, float64, float64], rotation api.Tuple4[float64, float64, float64, float64], visible bool) (*Text, error) {
 	var err error
 	var argBytes []byte
 	var vv Text
@@ -501,7 +286,7 @@ func (s *Drawing) AddText(text string, referenceFrame spacecenter.ReferenceFrame
 	}
 	argBytes, err = encode.Marshal(text)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -509,7 +294,7 @@ func (s *Drawing) AddText(text string, referenceFrame spacecenter.ReferenceFrame
 	})
 	argBytes, err = encode.Marshal(referenceFrame)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x1),
@@ -517,7 +302,7 @@ func (s *Drawing) AddText(text string, referenceFrame spacecenter.ReferenceFrame
 	})
 	argBytes, err = encode.Marshal(position)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x2),
@@ -525,7 +310,7 @@ func (s *Drawing) AddText(text string, referenceFrame spacecenter.ReferenceFrame
 	})
 	argBytes, err = encode.Marshal(rotation)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x3),
@@ -533,7 +318,7 @@ func (s *Drawing) AddText(text string, referenceFrame spacecenter.ReferenceFrame
 	})
 	argBytes, err = encode.Marshal(visible)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x4),
@@ -541,80 +326,17 @@ func (s *Drawing) AddText(text string, referenceFrame spacecenter.ReferenceFrame
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamAddText will draw text in the scene.
-//
-// Allowed game scenes: any.
-func (s *Drawing) StreamAddText(text string, referenceFrame spacecenter.ReferenceFrame, position api.Tuple3[float64, float64, float64], rotation api.Tuple4[float64, float64, float64, float64], visible bool) (*krpcgo.Stream[Text], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "AddText",
-		Service:   "Drawing",
-	}
-	argBytes, err = encode.Marshal(text)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(referenceFrame)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x1),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(position)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x2),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(rotation)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x3),
-		Value:    argBytes,
-	})
-	argBytes, err = encode.Marshal(visible)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x4),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) Text {
-		var value Text
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// Clear will remove all objects being drawn.
+// Clear - remove all objects being drawn.
 //
 // Allowed game scenes: any.
 func (s *Drawing) Clear(clientOnly bool) error {
@@ -639,7 +361,7 @@ func (s *Drawing) Clear(clientOnly bool) error {
 	return nil
 }
 
-// Remove will remove the object.
+// Remove - remove the object.
 //
 // Allowed game scenes: any.
 func (s *Line) Remove() error {
@@ -664,7 +386,7 @@ func (s *Line) Remove() error {
 	return nil
 }
 
-// Start will start position of the line.
+// Start - start position of the line.
 //
 // Allowed game scenes: any.
 func (s *Line) Start() (api.Tuple3[float64, float64, float64], error) {
@@ -694,7 +416,7 @@ func (s *Line) Start() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamStart will start position of the line.
+// StreamStart - start position of the line.
 //
 // Allowed game scenes: any.
 func (s *Line) StreamStart() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
@@ -713,7 +435,7 @@ func (s *Line) StreamStart() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -726,7 +448,7 @@ func (s *Line) StreamStart() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 	return stream, nil
 }
 
-// SetStart will start position of the line.
+// SetStart - start position of the line.
 //
 // Allowed game scenes: any.
 func (s *Line) SetStart(value api.Tuple3[float64, float64, float64]) error {
@@ -759,7 +481,7 @@ func (s *Line) SetStart(value api.Tuple3[float64, float64, float64]) error {
 	return nil
 }
 
-// End will end position of the line.
+// End - end position of the line.
 //
 // Allowed game scenes: any.
 func (s *Line) End() (api.Tuple3[float64, float64, float64], error) {
@@ -789,7 +511,7 @@ func (s *Line) End() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamEnd will end position of the line.
+// StreamEnd - end position of the line.
 //
 // Allowed game scenes: any.
 func (s *Line) StreamEnd() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
@@ -808,7 +530,7 @@ func (s *Line) StreamEnd() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -821,7 +543,7 @@ func (s *Line) StreamEnd() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]
 	return stream, nil
 }
 
-// SetEnd will end position of the line.
+// SetEnd - end position of the line.
 //
 // Allowed game scenes: any.
 func (s *Line) SetEnd(value api.Tuple3[float64, float64, float64]) error {
@@ -854,7 +576,7 @@ func (s *Line) SetEnd(value api.Tuple3[float64, float64, float64]) error {
 	return nil
 }
 
-// Color will set the color
+// Color - set the color
 //
 // Allowed game scenes: any.
 func (s *Line) Color() (api.Tuple3[float64, float64, float64], error) {
@@ -884,7 +606,7 @@ func (s *Line) Color() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamColor will set the color
+// StreamColor - set the color
 //
 // Allowed game scenes: any.
 func (s *Line) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
@@ -903,7 +625,7 @@ func (s *Line) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -916,7 +638,7 @@ func (s *Line) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 	return stream, nil
 }
 
-// SetColor will set the color
+// SetColor - set the color
 //
 // Allowed game scenes: any.
 func (s *Line) SetColor(value api.Tuple3[float64, float64, float64]) error {
@@ -949,7 +671,7 @@ func (s *Line) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	return nil
 }
 
-// Thickness will set the thickness
+// Thickness - set the thickness
 //
 // Allowed game scenes: any.
 func (s *Line) Thickness() (float32, error) {
@@ -979,7 +701,7 @@ func (s *Line) Thickness() (float32, error) {
 	return vv, nil
 }
 
-// StreamThickness will set the thickness
+// StreamThickness - set the thickness
 //
 // Allowed game scenes: any.
 func (s *Line) StreamThickness() (*krpcgo.Stream[float32], error) {
@@ -998,7 +720,7 @@ func (s *Line) StreamThickness() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1011,7 +733,7 @@ func (s *Line) StreamThickness() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetThickness will set the thickness
+// SetThickness - set the thickness
 //
 // Allowed game scenes: any.
 func (s *Line) SetThickness(value float32) error {
@@ -1044,10 +766,10 @@ func (s *Line) SetThickness(value float32) error {
 	return nil
 }
 
-// ReferenceFrame will reference frame for the positions of the object.
+// ReferenceFrame - reference frame for the positions of the object.
 //
 // Allowed game scenes: any.
-func (s *Line) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
+func (s *Line) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.ReferenceFrame
@@ -1057,7 +779,7 @@ func (s *Line) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
 	}
 	argBytes, err = encode.Marshal(s)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -1065,51 +787,20 @@ func (s *Line) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamReferenceFrame will reference frame for the positions of the object.
+// SetReferenceFrame - reference frame for the positions of the object.
 //
 // Allowed game scenes: any.
-func (s *Line) StreamReferenceFrame() (*krpcgo.Stream[spacecenter.ReferenceFrame], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "Line_get_ReferenceFrame",
-		Service:   "Drawing",
-	}
-	argBytes, err = encode.Marshal(s)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.ReferenceFrame {
-		var value spacecenter.ReferenceFrame
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// SetReferenceFrame will reference frame for the positions of the object.
-//
-// Allowed game scenes: any.
-func (s *Line) SetReferenceFrame(value spacecenter.ReferenceFrame) error {
+func (s *Line) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1139,7 +830,7 @@ func (s *Line) SetReferenceFrame(value spacecenter.ReferenceFrame) error {
 	return nil
 }
 
-// Visible will whether the object is visible.
+// Visible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Line) Visible() (bool, error) {
@@ -1169,7 +860,7 @@ func (s *Line) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible will whether the object is visible.
+// StreamVisible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Line) StreamVisible() (*krpcgo.Stream[bool], error) {
@@ -1188,7 +879,7 @@ func (s *Line) StreamVisible() (*krpcgo.Stream[bool], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1201,7 +892,7 @@ func (s *Line) StreamVisible() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// SetVisible will whether the object is visible.
+// SetVisible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Line) SetVisible(value bool) error {
@@ -1234,7 +925,7 @@ func (s *Line) SetVisible(value bool) error {
 	return nil
 }
 
-// Material will material used to render the object. Creates the material from a
+// Material - material used to render the object. Creates the material from a
 // shader with the given name.
 //
 // Allowed game scenes: any.
@@ -1265,7 +956,7 @@ func (s *Line) Material() (string, error) {
 	return vv, nil
 }
 
-// StreamMaterial will material used to render the object. Creates the material
+// StreamMaterial - material used to render the object. Creates the material
 // from a shader with the given name.
 //
 // Allowed game scenes: any.
@@ -1285,7 +976,7 @@ func (s *Line) StreamMaterial() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1298,8 +989,8 @@ func (s *Line) StreamMaterial() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetMaterial will material used to render the object. Creates the material
-// from a shader with the given name.
+// SetMaterial - material used to render the object. Creates the material from a
+// shader with the given name.
 //
 // Allowed game scenes: any.
 func (s *Line) SetMaterial(value string) error {
@@ -1332,7 +1023,7 @@ func (s *Line) SetMaterial(value string) error {
 	return nil
 }
 
-// Remove will remove the object.
+// Remove - remove the object.
 //
 // Allowed game scenes: any.
 func (s *Polygon) Remove() error {
@@ -1357,7 +1048,7 @@ func (s *Polygon) Remove() error {
 	return nil
 }
 
-// Vertices will vertices for the polygon.
+// Vertices - vertices for the polygon.
 //
 // Allowed game scenes: any.
 func (s *Polygon) Vertices() ([]api.Tuple3[float64, float64, float64], error) {
@@ -1387,7 +1078,7 @@ func (s *Polygon) Vertices() ([]api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamVertices will vertices for the polygon.
+// StreamVertices - vertices for the polygon.
 //
 // Allowed game scenes: any.
 func (s *Polygon) StreamVertices() (*krpcgo.Stream[[]api.Tuple3[float64, float64, float64]], error) {
@@ -1406,7 +1097,7 @@ func (s *Polygon) StreamVertices() (*krpcgo.Stream[[]api.Tuple3[float64, float64
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1419,7 +1110,7 @@ func (s *Polygon) StreamVertices() (*krpcgo.Stream[[]api.Tuple3[float64, float64
 	return stream, nil
 }
 
-// SetVertices will vertices for the polygon.
+// SetVertices - vertices for the polygon.
 //
 // Allowed game scenes: any.
 func (s *Polygon) SetVertices(value []api.Tuple3[float64, float64, float64]) error {
@@ -1452,7 +1143,7 @@ func (s *Polygon) SetVertices(value []api.Tuple3[float64, float64, float64]) err
 	return nil
 }
 
-// Color will set the color
+// Color - set the color
 //
 // Allowed game scenes: any.
 func (s *Polygon) Color() (api.Tuple3[float64, float64, float64], error) {
@@ -1482,7 +1173,7 @@ func (s *Polygon) Color() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamColor will set the color
+// StreamColor - set the color
 //
 // Allowed game scenes: any.
 func (s *Polygon) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
@@ -1501,7 +1192,7 @@ func (s *Polygon) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1514,7 +1205,7 @@ func (s *Polygon) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 	return stream, nil
 }
 
-// SetColor will set the color
+// SetColor - set the color
 //
 // Allowed game scenes: any.
 func (s *Polygon) SetColor(value api.Tuple3[float64, float64, float64]) error {
@@ -1547,7 +1238,7 @@ func (s *Polygon) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	return nil
 }
 
-// Thickness will set the thickness
+// Thickness - set the thickness
 //
 // Allowed game scenes: any.
 func (s *Polygon) Thickness() (float32, error) {
@@ -1577,7 +1268,7 @@ func (s *Polygon) Thickness() (float32, error) {
 	return vv, nil
 }
 
-// StreamThickness will set the thickness
+// StreamThickness - set the thickness
 //
 // Allowed game scenes: any.
 func (s *Polygon) StreamThickness() (*krpcgo.Stream[float32], error) {
@@ -1596,7 +1287,7 @@ func (s *Polygon) StreamThickness() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1609,7 +1300,7 @@ func (s *Polygon) StreamThickness() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetThickness will set the thickness
+// SetThickness - set the thickness
 //
 // Allowed game scenes: any.
 func (s *Polygon) SetThickness(value float32) error {
@@ -1642,10 +1333,10 @@ func (s *Polygon) SetThickness(value float32) error {
 	return nil
 }
 
-// ReferenceFrame will reference frame for the positions of the object.
+// ReferenceFrame - reference frame for the positions of the object.
 //
 // Allowed game scenes: any.
-func (s *Polygon) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
+func (s *Polygon) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.ReferenceFrame
@@ -1655,7 +1346,7 @@ func (s *Polygon) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
 	}
 	argBytes, err = encode.Marshal(s)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -1663,51 +1354,20 @@ func (s *Polygon) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamReferenceFrame will reference frame for the positions of the object.
+// SetReferenceFrame - reference frame for the positions of the object.
 //
 // Allowed game scenes: any.
-func (s *Polygon) StreamReferenceFrame() (*krpcgo.Stream[spacecenter.ReferenceFrame], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "Polygon_get_ReferenceFrame",
-		Service:   "Drawing",
-	}
-	argBytes, err = encode.Marshal(s)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.ReferenceFrame {
-		var value spacecenter.ReferenceFrame
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// SetReferenceFrame will reference frame for the positions of the object.
-//
-// Allowed game scenes: any.
-func (s *Polygon) SetReferenceFrame(value spacecenter.ReferenceFrame) error {
+func (s *Polygon) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1737,7 +1397,7 @@ func (s *Polygon) SetReferenceFrame(value spacecenter.ReferenceFrame) error {
 	return nil
 }
 
-// Visible will whether the object is visible.
+// Visible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Polygon) Visible() (bool, error) {
@@ -1767,7 +1427,7 @@ func (s *Polygon) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible will whether the object is visible.
+// StreamVisible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Polygon) StreamVisible() (*krpcgo.Stream[bool], error) {
@@ -1786,7 +1446,7 @@ func (s *Polygon) StreamVisible() (*krpcgo.Stream[bool], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1799,7 +1459,7 @@ func (s *Polygon) StreamVisible() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// SetVisible will whether the object is visible.
+// SetVisible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Polygon) SetVisible(value bool) error {
@@ -1832,7 +1492,7 @@ func (s *Polygon) SetVisible(value bool) error {
 	return nil
 }
 
-// Material will material used to render the object. Creates the material from a
+// Material - material used to render the object. Creates the material from a
 // shader with the given name.
 //
 // Allowed game scenes: any.
@@ -1863,7 +1523,7 @@ func (s *Polygon) Material() (string, error) {
 	return vv, nil
 }
 
-// StreamMaterial will material used to render the object. Creates the material
+// StreamMaterial - material used to render the object. Creates the material
 // from a shader with the given name.
 //
 // Allowed game scenes: any.
@@ -1883,7 +1543,7 @@ func (s *Polygon) StreamMaterial() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1896,8 +1556,8 @@ func (s *Polygon) StreamMaterial() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetMaterial will material used to render the object. Creates the material
-// from a shader with the given name.
+// SetMaterial - material used to render the object. Creates the material from a
+// shader with the given name.
 //
 // Allowed game scenes: any.
 func (s *Polygon) SetMaterial(value string) error {
@@ -1930,7 +1590,7 @@ func (s *Polygon) SetMaterial(value string) error {
 	return nil
 }
 
-// AvailableFonts will a list of all available fonts.
+// AvailableFonts - a list of all available fonts.
 //
 // Allowed game scenes: any.
 func (s *Text) AvailableFonts() ([]string, error) {
@@ -1951,7 +1611,7 @@ func (s *Text) AvailableFonts() ([]string, error) {
 	return vv, nil
 }
 
-// StreamAvailableFonts will a list of all available fonts.
+// StreamAvailableFonts - a list of all available fonts.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamAvailableFonts() (*krpcgo.Stream[[]string], error) {
@@ -1961,7 +1621,7 @@ func (s *Text) StreamAvailableFonts() (*krpcgo.Stream[[]string], error) {
 		Service:   "Drawing",
 	}
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -1974,7 +1634,7 @@ func (s *Text) StreamAvailableFonts() (*krpcgo.Stream[[]string], error) {
 	return stream, nil
 }
 
-// Remove will remove the object.
+// Remove - remove the object.
 //
 // Allowed game scenes: any.
 func (s *Text) Remove() error {
@@ -1999,7 +1659,7 @@ func (s *Text) Remove() error {
 	return nil
 }
 
-// Position will position of the text.
+// Position - position of the text.
 //
 // Allowed game scenes: any.
 func (s *Text) Position() (api.Tuple3[float64, float64, float64], error) {
@@ -2029,7 +1689,7 @@ func (s *Text) Position() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamPosition will position of the text.
+// StreamPosition - position of the text.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamPosition() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
@@ -2048,7 +1708,7 @@ func (s *Text) StreamPosition() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2061,7 +1721,7 @@ func (s *Text) StreamPosition() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 	return stream, nil
 }
 
-// SetPosition will position of the text.
+// SetPosition - position of the text.
 //
 // Allowed game scenes: any.
 func (s *Text) SetPosition(value api.Tuple3[float64, float64, float64]) error {
@@ -2094,7 +1754,7 @@ func (s *Text) SetPosition(value api.Tuple3[float64, float64, float64]) error {
 	return nil
 }
 
-// Rotation will rotation of the text as a quaternion.
+// Rotation - rotation of the text as a quaternion.
 //
 // Allowed game scenes: any.
 func (s *Text) Rotation() (api.Tuple4[float64, float64, float64, float64], error) {
@@ -2124,7 +1784,7 @@ func (s *Text) Rotation() (api.Tuple4[float64, float64, float64, float64], error
 	return vv, nil
 }
 
-// StreamRotation will rotation of the text as a quaternion.
+// StreamRotation - rotation of the text as a quaternion.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamRotation() (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
@@ -2143,7 +1803,7 @@ func (s *Text) StreamRotation() (*krpcgo.Stream[api.Tuple4[float64, float64, flo
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2156,7 +1816,7 @@ func (s *Text) StreamRotation() (*krpcgo.Stream[api.Tuple4[float64, float64, flo
 	return stream, nil
 }
 
-// SetRotation will rotation of the text as a quaternion.
+// SetRotation - rotation of the text as a quaternion.
 //
 // Allowed game scenes: any.
 func (s *Text) SetRotation(value api.Tuple4[float64, float64, float64, float64]) error {
@@ -2189,7 +1849,7 @@ func (s *Text) SetRotation(value api.Tuple4[float64, float64, float64, float64])
 	return nil
 }
 
-// Content will the text string
+// Content - the text string
 //
 // Allowed game scenes: any.
 func (s *Text) Content() (string, error) {
@@ -2219,7 +1879,7 @@ func (s *Text) Content() (string, error) {
 	return vv, nil
 }
 
-// StreamContent will the text string
+// StreamContent - the text string
 //
 // Allowed game scenes: any.
 func (s *Text) StreamContent() (*krpcgo.Stream[string], error) {
@@ -2238,7 +1898,7 @@ func (s *Text) StreamContent() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2251,7 +1911,7 @@ func (s *Text) StreamContent() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetContent will the text string
+// SetContent - the text string
 //
 // Allowed game scenes: any.
 func (s *Text) SetContent(value string) error {
@@ -2284,7 +1944,7 @@ func (s *Text) SetContent(value string) error {
 	return nil
 }
 
-// Font will name of the font
+// Font - name of the font
 //
 // Allowed game scenes: any.
 func (s *Text) Font() (string, error) {
@@ -2314,7 +1974,7 @@ func (s *Text) Font() (string, error) {
 	return vv, nil
 }
 
-// StreamFont will name of the font
+// StreamFont - name of the font
 //
 // Allowed game scenes: any.
 func (s *Text) StreamFont() (*krpcgo.Stream[string], error) {
@@ -2333,7 +1993,7 @@ func (s *Text) StreamFont() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2346,7 +2006,7 @@ func (s *Text) StreamFont() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetFont will name of the font
+// SetFont - name of the font
 //
 // Allowed game scenes: any.
 func (s *Text) SetFont(value string) error {
@@ -2379,7 +2039,7 @@ func (s *Text) SetFont(value string) error {
 	return nil
 }
 
-// Size will font size.
+// Size - font size.
 //
 // Allowed game scenes: any.
 func (s *Text) Size() (int32, error) {
@@ -2409,7 +2069,7 @@ func (s *Text) Size() (int32, error) {
 	return vv, nil
 }
 
-// StreamSize will font size.
+// StreamSize - font size.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamSize() (*krpcgo.Stream[int32], error) {
@@ -2428,7 +2088,7 @@ func (s *Text) StreamSize() (*krpcgo.Stream[int32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2441,7 +2101,7 @@ func (s *Text) StreamSize() (*krpcgo.Stream[int32], error) {
 	return stream, nil
 }
 
-// SetSize will font size.
+// SetSize - font size.
 //
 // Allowed game scenes: any.
 func (s *Text) SetSize(value int32) error {
@@ -2474,7 +2134,7 @@ func (s *Text) SetSize(value int32) error {
 	return nil
 }
 
-// CharacterSize will character size.
+// CharacterSize - character size.
 //
 // Allowed game scenes: any.
 func (s *Text) CharacterSize() (float32, error) {
@@ -2504,7 +2164,7 @@ func (s *Text) CharacterSize() (float32, error) {
 	return vv, nil
 }
 
-// StreamCharacterSize will character size.
+// StreamCharacterSize - character size.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamCharacterSize() (*krpcgo.Stream[float32], error) {
@@ -2523,7 +2183,7 @@ func (s *Text) StreamCharacterSize() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2536,7 +2196,7 @@ func (s *Text) StreamCharacterSize() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetCharacterSize will character size.
+// SetCharacterSize - character size.
 //
 // Allowed game scenes: any.
 func (s *Text) SetCharacterSize(value float32) error {
@@ -2569,7 +2229,7 @@ func (s *Text) SetCharacterSize(value float32) error {
 	return nil
 }
 
-// Style will font style.
+// Style - font style.
 //
 // Allowed game scenes: any.
 func (s *Text) Style() (ui.FontStyle, error) {
@@ -2599,7 +2259,7 @@ func (s *Text) Style() (ui.FontStyle, error) {
 	return vv, nil
 }
 
-// StreamStyle will font style.
+// StreamStyle - font style.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamStyle() (*krpcgo.Stream[ui.FontStyle], error) {
@@ -2618,7 +2278,7 @@ func (s *Text) StreamStyle() (*krpcgo.Stream[ui.FontStyle], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2631,7 +2291,7 @@ func (s *Text) StreamStyle() (*krpcgo.Stream[ui.FontStyle], error) {
 	return stream, nil
 }
 
-// SetStyle will font style.
+// SetStyle - font style.
 //
 // Allowed game scenes: any.
 func (s *Text) SetStyle(value ui.FontStyle) error {
@@ -2664,7 +2324,7 @@ func (s *Text) SetStyle(value ui.FontStyle) error {
 	return nil
 }
 
-// Alignment will alignment.
+// Alignment - alignment.
 //
 // Allowed game scenes: any.
 func (s *Text) Alignment() (ui.TextAlignment, error) {
@@ -2694,7 +2354,7 @@ func (s *Text) Alignment() (ui.TextAlignment, error) {
 	return vv, nil
 }
 
-// StreamAlignment will alignment.
+// StreamAlignment - alignment.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamAlignment() (*krpcgo.Stream[ui.TextAlignment], error) {
@@ -2713,7 +2373,7 @@ func (s *Text) StreamAlignment() (*krpcgo.Stream[ui.TextAlignment], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2726,7 +2386,7 @@ func (s *Text) StreamAlignment() (*krpcgo.Stream[ui.TextAlignment], error) {
 	return stream, nil
 }
 
-// SetAlignment will alignment.
+// SetAlignment - alignment.
 //
 // Allowed game scenes: any.
 func (s *Text) SetAlignment(value ui.TextAlignment) error {
@@ -2759,7 +2419,7 @@ func (s *Text) SetAlignment(value ui.TextAlignment) error {
 	return nil
 }
 
-// LineSpacing will line spacing.
+// LineSpacing - line spacing.
 //
 // Allowed game scenes: any.
 func (s *Text) LineSpacing() (float32, error) {
@@ -2789,7 +2449,7 @@ func (s *Text) LineSpacing() (float32, error) {
 	return vv, nil
 }
 
-// StreamLineSpacing will line spacing.
+// StreamLineSpacing - line spacing.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamLineSpacing() (*krpcgo.Stream[float32], error) {
@@ -2808,7 +2468,7 @@ func (s *Text) StreamLineSpacing() (*krpcgo.Stream[float32], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2821,7 +2481,7 @@ func (s *Text) StreamLineSpacing() (*krpcgo.Stream[float32], error) {
 	return stream, nil
 }
 
-// SetLineSpacing will line spacing.
+// SetLineSpacing - line spacing.
 //
 // Allowed game scenes: any.
 func (s *Text) SetLineSpacing(value float32) error {
@@ -2854,7 +2514,7 @@ func (s *Text) SetLineSpacing(value float32) error {
 	return nil
 }
 
-// Anchor will anchor.
+// Anchor - anchor.
 //
 // Allowed game scenes: any.
 func (s *Text) Anchor() (ui.TextAnchor, error) {
@@ -2884,7 +2544,7 @@ func (s *Text) Anchor() (ui.TextAnchor, error) {
 	return vv, nil
 }
 
-// StreamAnchor will anchor.
+// StreamAnchor - anchor.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamAnchor() (*krpcgo.Stream[ui.TextAnchor], error) {
@@ -2903,7 +2563,7 @@ func (s *Text) StreamAnchor() (*krpcgo.Stream[ui.TextAnchor], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -2916,7 +2576,7 @@ func (s *Text) StreamAnchor() (*krpcgo.Stream[ui.TextAnchor], error) {
 	return stream, nil
 }
 
-// SetAnchor will anchor.
+// SetAnchor - anchor.
 //
 // Allowed game scenes: any.
 func (s *Text) SetAnchor(value ui.TextAnchor) error {
@@ -2949,7 +2609,7 @@ func (s *Text) SetAnchor(value ui.TextAnchor) error {
 	return nil
 }
 
-// Color will set the color
+// Color - set the color
 //
 // Allowed game scenes: any.
 func (s *Text) Color() (api.Tuple3[float64, float64, float64], error) {
@@ -2979,7 +2639,7 @@ func (s *Text) Color() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamColor will set the color
+// StreamColor - set the color
 //
 // Allowed game scenes: any.
 func (s *Text) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
@@ -2998,7 +2658,7 @@ func (s *Text) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -3011,7 +2671,7 @@ func (s *Text) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 	return stream, nil
 }
 
-// SetColor will set the color
+// SetColor - set the color
 //
 // Allowed game scenes: any.
 func (s *Text) SetColor(value api.Tuple3[float64, float64, float64]) error {
@@ -3044,10 +2704,10 @@ func (s *Text) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	return nil
 }
 
-// ReferenceFrame will reference frame for the positions of the object.
+// ReferenceFrame - reference frame for the positions of the object.
 //
 // Allowed game scenes: any.
-func (s *Text) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
+func (s *Text) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.ReferenceFrame
@@ -3057,7 +2717,7 @@ func (s *Text) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
 	}
 	argBytes, err = encode.Marshal(s)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	request.Arguments = append(request.Arguments, &api.Argument{
 		Position: uint32(0x0),
@@ -3065,51 +2725,20 @@ func (s *Text) ReferenceFrame() (spacecenter.ReferenceFrame, error) {
 	})
 	result, err := s.Client.Call(request, true)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
 	err = encode.Unmarshal(result.Value, &vv)
 	if err != nil {
-		return vv, tracerr.Wrap(err)
+		return &vv, tracerr.Wrap(err)
 	}
-	return vv, nil
+	vv.Client = s.Client
+	return &vv, nil
 }
 
-// StreamReferenceFrame will reference frame for the positions of the object.
+// SetReferenceFrame - reference frame for the positions of the object.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamReferenceFrame() (*krpcgo.Stream[spacecenter.ReferenceFrame], error) {
-	var err error
-	var argBytes []byte
-	request := &api.ProcedureCall{
-		Procedure: "Text_get_ReferenceFrame",
-		Service:   "Drawing",
-	}
-	argBytes, err = encode.Marshal(s)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	request.Arguments = append(request.Arguments, &api.Argument{
-		Position: uint32(0x0),
-		Value:    argBytes,
-	})
-	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
-	if err != nil {
-		return nil, tracerr.Wrap(err)
-	}
-	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) spacecenter.ReferenceFrame {
-		var value spacecenter.ReferenceFrame
-		encode.Unmarshal(b, &value)
-		return value
-	})
-	return stream, nil
-}
-
-// SetReferenceFrame will reference frame for the positions of the object.
-//
-// Allowed game scenes: any.
-func (s *Text) SetReferenceFrame(value spacecenter.ReferenceFrame) error {
+func (s *Text) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3139,7 +2768,7 @@ func (s *Text) SetReferenceFrame(value spacecenter.ReferenceFrame) error {
 	return nil
 }
 
-// Visible will whether the object is visible.
+// Visible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Text) Visible() (bool, error) {
@@ -3169,7 +2798,7 @@ func (s *Text) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible will whether the object is visible.
+// StreamVisible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Text) StreamVisible() (*krpcgo.Stream[bool], error) {
@@ -3188,7 +2817,7 @@ func (s *Text) StreamVisible() (*krpcgo.Stream[bool], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -3201,7 +2830,7 @@ func (s *Text) StreamVisible() (*krpcgo.Stream[bool], error) {
 	return stream, nil
 }
 
-// SetVisible will whether the object is visible.
+// SetVisible - whether the object is visible.
 //
 // Allowed game scenes: any.
 func (s *Text) SetVisible(value bool) error {
@@ -3234,7 +2863,7 @@ func (s *Text) SetVisible(value bool) error {
 	return nil
 }
 
-// Material will material used to render the object. Creates the material from a
+// Material - material used to render the object. Creates the material from a
 // shader with the given name.
 //
 // Allowed game scenes: any.
@@ -3265,7 +2894,7 @@ func (s *Text) Material() (string, error) {
 	return vv, nil
 }
 
-// StreamMaterial will material used to render the object. Creates the material
+// StreamMaterial - material used to render the object. Creates the material
 // from a shader with the given name.
 //
 // Allowed game scenes: any.
@@ -3285,7 +2914,7 @@ func (s *Text) StreamMaterial() (*krpcgo.Stream[string], error) {
 		Value:    argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -3298,8 +2927,8 @@ func (s *Text) StreamMaterial() (*krpcgo.Stream[string], error) {
 	return stream, nil
 }
 
-// SetMaterial will material used to render the object. Creates the material
-// from a shader with the given name.
+// SetMaterial - material used to render the object. Creates the material from a
+// shader with the given name.
 //
 // Allowed game scenes: any.
 func (s *Text) SetMaterial(value string) error {

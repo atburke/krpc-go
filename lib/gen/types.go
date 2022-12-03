@@ -99,26 +99,91 @@ func GetProcedureName(procedureName string) string {
 	return terms[len(terms)-1]
 }
 
+type GetGoTypeConfig struct {
+	Package    string
+	UsePointer bool
+}
+
+func NewGetGoTypeConfig() GetGoTypeConfig {
+	return GetGoTypeConfig{
+		UsePointer: true,
+	}
+}
+
+type GetGoTypeOption func(*GetGoTypeConfig)
+
+func WithPackage(pkg string) GetGoTypeOption {
+	return func(cfg *GetGoTypeConfig) {
+		cfg.Package = pkg
+	}
+}
+
+func PointerForClass(cfg *GetGoTypeConfig) {
+	cfg.UsePointer = true
+}
+
+func NoPointerForClass(cfg *GetGoTypeConfig) {
+	cfg.UsePointer = false
+}
+
+func getClassType(t *jen.Statement, withPointer bool) *jen.Statement {
+	if withPointer {
+		return jen.Op("*").Add(t)
+	}
+	return t
+}
+
+var pointerTypes = map[api.Type_TypeCode]struct{}{
+	api.Type_CLASS:          {},
+	api.Type_SERVICES:       {},
+	api.Type_PROCEDURE_CALL: {},
+	api.Type_STREAM:         {},
+	api.Type_STATUS:         {},
+}
+
+func isPointerType(code api.Type_TypeCode) bool {
+	_, ok := pointerTypes[code]
+	return ok
+}
+
 // GetGoType gets the Go representation of a kRPC type.
-func GetGoType(t *api.Type, pkg string) *jen.Statement {
+func GetGoType(t *api.Type, opts ...GetGoTypeOption) *jen.Statement {
 	if t == nil {
 		return nil
+	}
+
+	cfg := NewGetGoTypeConfig()
+	for _, opt := range opts {
+		opt(&cfg)
 	}
 
 	switch t.Code {
 	// Special KRPC types.
 	case api.Type_PROCEDURE_CALL:
-		return jen.Qual(apiPkg, "ProcedureCall")
+		return getClassType(jen.Qual(apiPkg, "ProcedureCall"), cfg.UsePointer)
 	case api.Type_STREAM:
-		return jen.Qual(apiPkg, "Stream")
+		return getClassType(jen.Qual(apiPkg, "Stream"), cfg.UsePointer)
 	case api.Type_STATUS:
-		return jen.Qual(apiPkg, "Status")
+		return getClassType(jen.Qual(apiPkg, "Status"), cfg.UsePointer)
 	case api.Type_SERVICES:
-		return jen.Qual(apiPkg, "Services")
+		return getClassType(jen.Qual(apiPkg, "Services"), cfg.UsePointer)
 
 	// Class or enum.
-	case api.Type_CLASS, api.Type_ENUMERATION:
-		if p := getServicePackage(t.Service); p == pkg {
+	case api.Type_CLASS:
+		if cfg.Package == "" {
+			return getClassType(jen.Id(t.Name), cfg.UsePointer)
+		}
+		if p := getServicePackage(t.Service); p == cfg.Package {
+			return getClassType(jen.Id(t.Name), cfg.UsePointer)
+		} else {
+			return getClassType(jen.Qual(p, t.Name), cfg.UsePointer)
+		}
+
+	case api.Type_ENUMERATION:
+		if cfg.Package == "" {
+			return jen.Id(t.Name)
+		}
+		if p := getServicePackage(t.Service); p == cfg.Package {
 			return jen.Id(t.Name)
 		} else {
 			return jen.Qual(p, t.Name)
@@ -148,18 +213,18 @@ func GetGoType(t *api.Type, pkg string) *jen.Statement {
 	case api.Type_TUPLE:
 		var tupleTypes []jen.Code
 		for _, subType := range t.Types {
-			tupleTypes = append(tupleTypes, GetGoType(subType, pkg))
+			tupleTypes = append(tupleTypes, GetGoType(subType, WithPackage(cfg.Package)))
 		}
 		return jen.Qual(
 			apiPkg, fmt.Sprintf("Tuple%v", len(t.Types)),
 		).Types(tupleTypes...)
 
 	case api.Type_LIST:
-		return jen.Index().Add(GetGoType(t.Types[0], pkg))
+		return jen.Index().Add(GetGoType(t.Types[0], WithPackage(cfg.Package)))
 	case api.Type_SET:
-		return jen.Map(GetGoType(t.Types[0], pkg)).Struct()
+		return jen.Map(GetGoType(t.Types[0], WithPackage(cfg.Package))).Struct()
 	case api.Type_DICTIONARY:
-		return jen.Map(GetGoType(t.Types[0], pkg)).Add(GetGoType(t.Types[1], pkg))
+		return jen.Map(GetGoType(t.Types[0], WithPackage(cfg.Package))).Add(GetGoType(t.Types[1], WithPackage(cfg.Package)))
 	}
 
 	// Type is None or unrecognized.
