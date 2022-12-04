@@ -1,3 +1,7 @@
+// Package ui provides methods to invoke procedures in the UI service.
+//
+// From service docs: provides functionality for drawing and interacting with
+// in-game user interface elements.
 package ui
 
 import (

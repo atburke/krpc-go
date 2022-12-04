@@ -1,5 +1,6 @@
 //go:generate protoc --go_out=. --go_opt=paths=source_relative krpc.proto
 
+// Package types provides various types for krpc-go.
 package types
 
 import "fmt"

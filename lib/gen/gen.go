@@ -1,3 +1,4 @@
+// Package gen provides methods to generate kRPC services.
 package gen
 
 import (
@@ -13,7 +14,7 @@ import (
 
 const DocsLineLength = 77 // line length of 80 minus "// "
 
-func wrapDocComment(s string) string {
+func WrapDocComment(s string) string {
 	wrapped := wordwrap.WrapString(s, DocsLineLength)
 	inputLines := strings.Split(wrapped, "\n")
 	var outputLines []string
@@ -46,7 +47,7 @@ func GenerateService(f *jen.File, service *types.Service) error {
 		return tracerr.Wrap(err)
 	}
 
-	f.Comment(wrapDocComment(serviceDocs))
+	f.Comment(WrapDocComment(serviceDocs))
 	f.Type().Id(service.Name).Struct(
 		jen.Id("Client").Op("*").Qual(krpcPkg, "KRPCClient"),
 	)

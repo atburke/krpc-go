@@ -1,3 +1,9 @@
+// Package infernalrobotics provides methods to invoke procedures in the
+// InfernalRobotics service.
+//
+// From service docs: this service provides functionality to interact with <a
+// href="https://forum.kerbalspaceprogram.com/index.php?/topic/104535-112-magic-smoke-industries-infernal-robotics-202/">Infernal
+// Robotics</a>.
 package infernalrobotics
 
 import (

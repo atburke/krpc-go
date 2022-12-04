@@ -18,7 +18,7 @@ func GenerateClass(f *jen.File, class *types.Class) error {
 	}
 
 	// Define the struct.
-	f.Comment(wrapDocComment(classDocs))
+	f.Comment(WrapDocComment(classDocs))
 	f.Type().Id(className).Struct(
 		jen.Qual(servicePkg, "BaseClass"),
 	)

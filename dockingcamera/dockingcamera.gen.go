@@ -1,3 +1,7 @@
+// Package dockingcamera provides methods to invoke procedures in the
+// DockingCamera service.
+//
+// From service docs: camera Service
 package dockingcamera
 
 import (

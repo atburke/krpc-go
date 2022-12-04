@@ -1,3 +1,9 @@
+// Package kerbalalarmclock provides methods to invoke procedures in the
+// KerbalAlarmClock service.
+//
+// From service docs: this service provides functionality to interact with <a
+// href="https://forum.kerbalspaceprogram.com/index.php?/topic/22809-13x-kerbal-alarm-clock-v3850-may-30/">Kerbal
+// Alarm Clock</a>.
 package kerbalalarmclock
 
 import (

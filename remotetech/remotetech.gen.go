@@ -1,3 +1,8 @@
+// Package remotetech provides methods to invoke procedures in the RemoteTech
+// service.
+//
+// From service docs: this service provides functionality to interact with <a
+// href="https://forum.kerbalspaceprogram.com/index.php?/topic/139167-13-remotetech-v188-2017-09-03/">RemoteTech</a>.
 package remotetech
 
 import (

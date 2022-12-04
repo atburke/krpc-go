@@ -1,3 +1,4 @@
+// Package encode provides methods to convert values to and from kRPC's protobuf format.
 package encode
 
 import (

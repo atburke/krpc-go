@@ -1,3 +1,7 @@
+// Package drawing provides methods to invoke procedures in the Drawing service.
+//
+// From service docs: provides functionality for drawing objects in the flight
+// scene.
 package drawing
 
 import (

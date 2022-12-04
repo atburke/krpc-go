@@ -20,7 +20,7 @@ func GenerateException(f *jen.File, exception *types.Exception) error {
 	}
 
 	// Define the error type.
-	f.Comment(wrapDocComment(docs))
+	f.Comment(WrapDocComment(docs))
 	f.Type().Id(exceptionName).Struct(
 		jen.Id("msg").String(),
 	)

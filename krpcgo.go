@@ -1,3 +1,4 @@
-//go:generate go run lib/service/gen_services.go
+//go:generate go run lib/gen/gen_services.go
 
+// Package krpcgo provides the client to communicate with a kRPC server.
 package krpcgo

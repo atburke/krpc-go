@@ -1,3 +1,4 @@
+// Package utils provides utilities for krpc-go.
 package utils
 
 // NewIDGenerator returns a function that generates unique integer IDs.

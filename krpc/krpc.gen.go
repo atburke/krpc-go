@@ -1,3 +1,7 @@
+// Package krpc provides methods to invoke procedures in the KRPC service.
+//
+// From service docs: main kRPC service, used by clients to interact with basic
+// server functionality.
 package krpc
 
 import (

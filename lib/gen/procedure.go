@@ -179,7 +179,7 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 		retType = jen.Error()
 	}
 	// Define the procedure function
-	f.Comment(wrapDocComment(procDocs))
+	f.Comment(WrapDocComment(procDocs))
 	f.Func().Params(
 		jen.Id("s").Op("*").Id(receiver),
 	).Id(procName).Params(params...).Add(retType).Block(funcBody...)
@@ -189,7 +189,7 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 	if returnType != nil && !isPointerType(procedure.ReturnType.Code) {
 		funcBody, streamRetType := generateStreamBody(serviceName, procedure)
 		streamFuncName := procName + "Stream"
-		f.Comment(wrapDocComment(strings.ReplaceAll(procDocs, procName, streamFuncName)))
+		f.Comment(WrapDocComment(strings.ReplaceAll(procDocs, procName, streamFuncName)))
 		f.Func().Params(
 			jen.Id("s").Op("*").Id(receiver),
 		).Id(streamFuncName).Params(params...).Add(jen.Parens(jen.List(streamRetType, jen.Error()))).Block(funcBody...)

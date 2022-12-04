@@ -1,3 +1,9 @@
+// Package spacecenter provides methods to invoke procedures in the SpaceCenter
+// service.
+//
+// From service docs: provides functionality to interact with Kerbal Space
+// Program. This includes controlling the active vessel, managing its resources,
+// planning maneuver nodes and auto-piloting.
 package spacecenter
 
 import (

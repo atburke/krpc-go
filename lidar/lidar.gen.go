@@ -1,3 +1,6 @@
+// Package lidar provides methods to invoke procedures in the LiDAR service.
+//
+// From service docs: laserDist Service
 package lidar
 
 import (

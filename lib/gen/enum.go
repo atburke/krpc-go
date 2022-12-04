@@ -31,7 +31,7 @@ func GenerateEnum(f *jen.File, enum *types.Enumeration) error {
 			return tracerr.Wrap(err)
 		}
 		defs = append(defs,
-			jen.Comment(wrapDocComment(valueDocs)),
+			jen.Comment(WrapDocComment(valueDocs)),
 			jen.Id(valueName).Id(enumName).Op("=").Lit(int(value.Value)),
 		)
 	}

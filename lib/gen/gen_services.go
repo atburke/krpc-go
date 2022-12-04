@@ -12,6 +12,7 @@ import (
 	krpcgo "github.com/atburke/krpc-go"
 	"github.com/atburke/krpc-go/internal"
 	"github.com/atburke/krpc-go/lib/gen"
+	"github.com/atburke/krpc-go/lib/utils"
 	"github.com/dave/jennifer/jen"
 )
 
@@ -33,7 +34,16 @@ func main() {
 
 	for _, service := range services.Services {
 		serviceName := strings.ToLower(service.Name)
+		serviceDocs, err := utils.ParseXMLDocumentation(service.Documentation, "From service docs: ")
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		f := jen.NewFile(serviceName)
+		f.PackageComment(gen.WrapDocComment(fmt.Sprintf(
+			"Package %v provides methods to invoke procedures in the %v service.\n\n%v",
+			serviceName, service.Name, serviceDocs,
+		)))
 		fmt.Printf("Generating service %q\n", service.Name)
 		f.Comment(genWarning)
 		f.Line()
