@@ -433,10 +433,10 @@ func (s *Button) Clicked() (bool, error) {
 	return vv, nil
 }
 
-// StreamClicked - whether the button has been clicked.
+// ClickedStream - whether the button has been clicked.
 //
 // Allowed game scenes: any.
-func (s *Button) StreamClicked() (*krpcgo.Stream[bool], error) {
+func (s *Button) ClickedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -531,10 +531,10 @@ func (s *Button) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible - whether the UI object is visible.
+// VisibleStream - whether the UI object is visible.
 //
 // Allowed game scenes: any.
-func (s *Button) StreamVisible() (*krpcgo.Stream[bool], error) {
+func (s *Button) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -857,10 +857,10 @@ func (s *Canvas) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible - whether the UI object is visible.
+// VisibleStream - whether the UI object is visible.
 //
 // Allowed game scenes: any.
-func (s *Canvas) StreamVisible() (*krpcgo.Stream[bool], error) {
+func (s *Canvas) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1011,10 +1011,10 @@ func (s *InputField) Value() (string, error) {
 	return vv, nil
 }
 
-// StreamValue - the value of the input field.
+// ValueStream - the value of the input field.
 //
 // Allowed game scenes: any.
-func (s *InputField) StreamValue() (*krpcgo.Stream[string], error) {
+func (s *InputField) ValueStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1140,10 +1140,10 @@ func (s *InputField) Changed() (bool, error) {
 	return vv, nil
 }
 
-// StreamChanged - whether the input field has been changed.
+// ChangedStream - whether the input field has been changed.
 //
 // Allowed game scenes: any.
-func (s *InputField) StreamChanged() (*krpcgo.Stream[bool], error) {
+func (s *InputField) ChangedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1238,10 +1238,10 @@ func (s *InputField) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible - whether the UI object is visible.
+// VisibleStream - whether the UI object is visible.
 //
 // Allowed game scenes: any.
-func (s *InputField) StreamVisible() (*krpcgo.Stream[bool], error) {
+func (s *InputField) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1564,10 +1564,10 @@ func (s *Panel) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible - whether the UI object is visible.
+// VisibleStream - whether the UI object is visible.
 //
 // Allowed game scenes: any.
-func (s *Panel) StreamVisible() (*krpcgo.Stream[bool], error) {
+func (s *Panel) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1662,11 +1662,11 @@ func (s *RectTransform) Position() (api.Tuple2[float64, float64], error) {
 	return vv, nil
 }
 
-// StreamPosition - position of the rectangles pivot point relative to the
+// PositionStream - position of the rectangles pivot point relative to the
 // anchors.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamPosition() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
+func (s *RectTransform) PositionStream() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1762,11 +1762,11 @@ func (s *RectTransform) LocalPosition() (api.Tuple3[float64, float64, float64], 
 	return vv, nil
 }
 
-// StreamLocalPosition - position of the rectangles pivot point relative to the
+// LocalPositionStream - position of the rectangles pivot point relative to the
 // anchors.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamLocalPosition() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *RectTransform) LocalPositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1862,10 +1862,10 @@ func (s *RectTransform) Size() (api.Tuple2[float64, float64], error) {
 	return vv, nil
 }
 
-// StreamSize - width and height of the rectangle.
+// SizeStream - width and height of the rectangle.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamSize() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
+func (s *RectTransform) SizeStream() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1961,11 +1961,11 @@ func (s *RectTransform) UpperRight() (api.Tuple2[float64, float64], error) {
 	return vv, nil
 }
 
-// StreamUpperRight - position of the rectangles upper right corner relative to
+// UpperRightStream - position of the rectangles upper right corner relative to
 // the anchors.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamUpperRight() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
+func (s *RectTransform) UpperRightStream() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2062,11 +2062,11 @@ func (s *RectTransform) LowerLeft() (api.Tuple2[float64, float64], error) {
 	return vv, nil
 }
 
-// StreamLowerLeft - position of the rectangles lower left corner relative to
+// LowerLeftStream - position of the rectangles lower left corner relative to
 // the anchors.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamLowerLeft() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
+func (s *RectTransform) LowerLeftStream() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2197,11 +2197,11 @@ func (s *RectTransform) AnchorMax() (api.Tuple2[float64, float64], error) {
 	return vv, nil
 }
 
-// StreamAnchorMax - the anchor point for the lower left corner of the rectangle
+// AnchorMaxStream - the anchor point for the lower left corner of the rectangle
 // defined as a fraction of the size of the parent rectangle.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamAnchorMax() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
+func (s *RectTransform) AnchorMaxStream() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2298,11 +2298,11 @@ func (s *RectTransform) AnchorMin() (api.Tuple2[float64, float64], error) {
 	return vv, nil
 }
 
-// StreamAnchorMin - the anchor point for the upper right corner of the
+// AnchorMinStream - the anchor point for the upper right corner of the
 // rectangle defined as a fraction of the size of the parent rectangle.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamAnchorMin() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
+func (s *RectTransform) AnchorMinStream() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2399,11 +2399,11 @@ func (s *RectTransform) Pivot() (api.Tuple2[float64, float64], error) {
 	return vv, nil
 }
 
-// StreamPivot - location of the pivot point around which the rectangle rotates,
+// PivotStream - location of the pivot point around which the rectangle rotates,
 // defined as a fraction of the size of the rectangle itself.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamPivot() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
+func (s *RectTransform) PivotStream() (*krpcgo.Stream[api.Tuple2[float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2499,11 +2499,11 @@ func (s *RectTransform) Rotation() (api.Tuple4[float64, float64, float64, float6
 	return vv, nil
 }
 
-// StreamRotation - rotation, as a quaternion, of the object around its pivot
+// RotationStream - rotation, as a quaternion, of the object around its pivot
 // point.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamRotation() (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *RectTransform) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2599,11 +2599,11 @@ func (s *RectTransform) Scale() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamScale - scale factor applied to the object in the x, y and z
+// ScaleStream - scale factor applied to the object in the x, y and z
 // dimensions.
 //
 // Allowed game scenes: any.
-func (s *RectTransform) StreamScale() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *RectTransform) ScaleStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2754,10 +2754,10 @@ func (s *Text) AvailableFonts() ([]string, error) {
 	return vv, nil
 }
 
-// StreamAvailableFonts - a list of all available fonts.
+// AvailableFontsStream - a list of all available fonts.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamAvailableFonts() (*krpcgo.Stream[[]string], error) {
+func (s *Text) AvailableFontsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2819,10 +2819,10 @@ func (s *Text) Content() (string, error) {
 	return vv, nil
 }
 
-// StreamContent - the text string
+// ContentStream - the text string
 //
 // Allowed game scenes: any.
-func (s *Text) StreamContent() (*krpcgo.Stream[string], error) {
+func (s *Text) ContentStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2917,10 +2917,10 @@ func (s *Text) Font() (string, error) {
 	return vv, nil
 }
 
-// StreamFont - name of the font
+// FontStream - name of the font
 //
 // Allowed game scenes: any.
-func (s *Text) StreamFont() (*krpcgo.Stream[string], error) {
+func (s *Text) FontStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3015,10 +3015,10 @@ func (s *Text) Size() (int32, error) {
 	return vv, nil
 }
 
-// StreamSize - font size.
+// SizeStream - font size.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamSize() (*krpcgo.Stream[int32], error) {
+func (s *Text) SizeStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3113,10 +3113,10 @@ func (s *Text) Style() (FontStyle, error) {
 	return vv, nil
 }
 
-// StreamStyle - font style.
+// StyleStream - font style.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamStyle() (*krpcgo.Stream[FontStyle], error) {
+func (s *Text) StyleStream() (*krpcgo.Stream[FontStyle], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3211,10 +3211,10 @@ func (s *Text) Alignment() (TextAnchor, error) {
 	return vv, nil
 }
 
-// StreamAlignment - alignment.
+// AlignmentStream - alignment.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamAlignment() (*krpcgo.Stream[TextAnchor], error) {
+func (s *Text) AlignmentStream() (*krpcgo.Stream[TextAnchor], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3309,10 +3309,10 @@ func (s *Text) LineSpacing() (float32, error) {
 	return vv, nil
 }
 
-// StreamLineSpacing - line spacing.
+// LineSpacingStream - line spacing.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamLineSpacing() (*krpcgo.Stream[float32], error) {
+func (s *Text) LineSpacingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3407,10 +3407,10 @@ func (s *Text) Color() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamColor - set the color
+// ColorStream - set the color
 //
 // Allowed game scenes: any.
-func (s *Text) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Text) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3505,10 +3505,10 @@ func (s *Text) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible - whether the UI object is visible.
+// VisibleStream - whether the UI object is visible.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamVisible() (*krpcgo.Stream[bool], error) {
+func (s *Text) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

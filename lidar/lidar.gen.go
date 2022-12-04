@@ -86,10 +86,10 @@ func (s *LiDAR) Available() (bool, error) {
 	return vv, nil
 }
 
-// StreamAvailable - check if the LaserDist API is avaiable
+// AvailableStream - check if the LaserDist API is avaiable
 //
 // Allowed game scenes: any.
-func (s *LiDAR) StreamAvailable() (*krpcgo.Stream[bool], error) {
+func (s *LiDAR) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Available",
@@ -173,10 +173,10 @@ func (s *Laser) Cloud() ([]float64, error) {
 	return vv, nil
 }
 
-// StreamCloud - get the pointcloud.
+// CloudStream - get the pointcloud.
 //
 // Allowed game scenes: any.
-func (s *Laser) StreamCloud() (*krpcgo.Stream[[]float64], error) {
+func (s *Laser) CloudStream() (*krpcgo.Stream[[]float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

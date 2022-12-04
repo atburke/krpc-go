@@ -416,10 +416,10 @@ func (s *Line) Start() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamStart - start position of the line.
+// StartStream - start position of the line.
 //
 // Allowed game scenes: any.
-func (s *Line) StreamStart() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Line) StartStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -514,10 +514,10 @@ func (s *Line) End() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamEnd - end position of the line.
+// EndStream - end position of the line.
 //
 // Allowed game scenes: any.
-func (s *Line) StreamEnd() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Line) EndStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -612,10 +612,10 @@ func (s *Line) Color() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamColor - set the color
+// ColorStream - set the color
 //
 // Allowed game scenes: any.
-func (s *Line) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Line) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -710,10 +710,10 @@ func (s *Line) Thickness() (float32, error) {
 	return vv, nil
 }
 
-// StreamThickness - set the thickness
+// ThicknessStream - set the thickness
 //
 // Allowed game scenes: any.
-func (s *Line) StreamThickness() (*krpcgo.Stream[float32], error) {
+func (s *Line) ThicknessStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -872,10 +872,10 @@ func (s *Line) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible - whether the object is visible.
+// VisibleStream - whether the object is visible.
 //
 // Allowed game scenes: any.
-func (s *Line) StreamVisible() (*krpcgo.Stream[bool], error) {
+func (s *Line) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -971,11 +971,11 @@ func (s *Line) Material() (string, error) {
 	return vv, nil
 }
 
-// StreamMaterial - material used to render the object. Creates the material
+// MaterialStream - material used to render the object. Creates the material
 // from a shader with the given name.
 //
 // Allowed game scenes: any.
-func (s *Line) StreamMaterial() (*krpcgo.Stream[string], error) {
+func (s *Line) MaterialStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1096,10 +1096,10 @@ func (s *Polygon) Vertices() ([]api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamVertices - vertices for the polygon.
+// VerticesStream - vertices for the polygon.
 //
 // Allowed game scenes: any.
-func (s *Polygon) StreamVertices() (*krpcgo.Stream[[]api.Tuple3[float64, float64, float64]], error) {
+func (s *Polygon) VerticesStream() (*krpcgo.Stream[[]api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1194,10 +1194,10 @@ func (s *Polygon) Color() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamColor - set the color
+// ColorStream - set the color
 //
 // Allowed game scenes: any.
-func (s *Polygon) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Polygon) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1292,10 +1292,10 @@ func (s *Polygon) Thickness() (float32, error) {
 	return vv, nil
 }
 
-// StreamThickness - set the thickness
+// ThicknessStream - set the thickness
 //
 // Allowed game scenes: any.
-func (s *Polygon) StreamThickness() (*krpcgo.Stream[float32], error) {
+func (s *Polygon) ThicknessStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1454,10 +1454,10 @@ func (s *Polygon) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible - whether the object is visible.
+// VisibleStream - whether the object is visible.
 //
 // Allowed game scenes: any.
-func (s *Polygon) StreamVisible() (*krpcgo.Stream[bool], error) {
+func (s *Polygon) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1553,11 +1553,11 @@ func (s *Polygon) Material() (string, error) {
 	return vv, nil
 }
 
-// StreamMaterial - material used to render the object. Creates the material
+// MaterialStream - material used to render the object. Creates the material
 // from a shader with the given name.
 //
 // Allowed game scenes: any.
-func (s *Polygon) StreamMaterial() (*krpcgo.Stream[string], error) {
+func (s *Polygon) MaterialStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1644,10 +1644,10 @@ func (s *Text) AvailableFonts() ([]string, error) {
 	return vv, nil
 }
 
-// StreamAvailableFonts - a list of all available fonts.
+// AvailableFontsStream - a list of all available fonts.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamAvailableFonts() (*krpcgo.Stream[[]string], error) {
+func (s *Text) AvailableFontsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "Text_static_AvailableFonts",
@@ -1725,10 +1725,10 @@ func (s *Text) Position() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamPosition - position of the text.
+// PositionStream - position of the text.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamPosition() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Text) PositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1823,10 +1823,10 @@ func (s *Text) Rotation() (api.Tuple4[float64, float64, float64, float64], error
 	return vv, nil
 }
 
-// StreamRotation - rotation of the text as a quaternion.
+// RotationStream - rotation of the text as a quaternion.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamRotation() (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *Text) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1921,10 +1921,10 @@ func (s *Text) Content() (string, error) {
 	return vv, nil
 }
 
-// StreamContent - the text string
+// ContentStream - the text string
 //
 // Allowed game scenes: any.
-func (s *Text) StreamContent() (*krpcgo.Stream[string], error) {
+func (s *Text) ContentStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2019,10 +2019,10 @@ func (s *Text) Font() (string, error) {
 	return vv, nil
 }
 
-// StreamFont - name of the font
+// FontStream - name of the font
 //
 // Allowed game scenes: any.
-func (s *Text) StreamFont() (*krpcgo.Stream[string], error) {
+func (s *Text) FontStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2117,10 +2117,10 @@ func (s *Text) Size() (int32, error) {
 	return vv, nil
 }
 
-// StreamSize - font size.
+// SizeStream - font size.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamSize() (*krpcgo.Stream[int32], error) {
+func (s *Text) SizeStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2215,10 +2215,10 @@ func (s *Text) CharacterSize() (float32, error) {
 	return vv, nil
 }
 
-// StreamCharacterSize - character size.
+// CharacterSizeStream - character size.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamCharacterSize() (*krpcgo.Stream[float32], error) {
+func (s *Text) CharacterSizeStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2313,10 +2313,10 @@ func (s *Text) Style() (ui.FontStyle, error) {
 	return vv, nil
 }
 
-// StreamStyle - font style.
+// StyleStream - font style.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamStyle() (*krpcgo.Stream[ui.FontStyle], error) {
+func (s *Text) StyleStream() (*krpcgo.Stream[ui.FontStyle], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2411,10 +2411,10 @@ func (s *Text) Alignment() (ui.TextAlignment, error) {
 	return vv, nil
 }
 
-// StreamAlignment - alignment.
+// AlignmentStream - alignment.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamAlignment() (*krpcgo.Stream[ui.TextAlignment], error) {
+func (s *Text) AlignmentStream() (*krpcgo.Stream[ui.TextAlignment], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2509,10 +2509,10 @@ func (s *Text) LineSpacing() (float32, error) {
 	return vv, nil
 }
 
-// StreamLineSpacing - line spacing.
+// LineSpacingStream - line spacing.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamLineSpacing() (*krpcgo.Stream[float32], error) {
+func (s *Text) LineSpacingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2607,10 +2607,10 @@ func (s *Text) Anchor() (ui.TextAnchor, error) {
 	return vv, nil
 }
 
-// StreamAnchor - anchor.
+// AnchorStream - anchor.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamAnchor() (*krpcgo.Stream[ui.TextAnchor], error) {
+func (s *Text) AnchorStream() (*krpcgo.Stream[ui.TextAnchor], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2705,10 +2705,10 @@ func (s *Text) Color() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamColor - set the color
+// ColorStream - set the color
 //
 // Allowed game scenes: any.
-func (s *Text) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Text) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2867,10 +2867,10 @@ func (s *Text) Visible() (bool, error) {
 	return vv, nil
 }
 
-// StreamVisible - whether the object is visible.
+// VisibleStream - whether the object is visible.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamVisible() (*krpcgo.Stream[bool], error) {
+func (s *Text) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2966,11 +2966,11 @@ func (s *Text) Material() (string, error) {
 	return vv, nil
 }
 
-// StreamMaterial - material used to render the object. Creates the material
+// MaterialStream - material used to render the object. Creates the material
 // from a shader with the given name.
 //
 // Allowed game scenes: any.
-func (s *Text) StreamMaterial() (*krpcgo.Stream[string], error) {
+func (s *Text) MaterialStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

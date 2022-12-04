@@ -1568,11 +1568,11 @@ func (s *SpaceCenter) LaunchableVessels(craftDirectory string) ([]string, error)
 	return vv, nil
 }
 
-// StreamLaunchableVessels - returns a list of vessels from the given <paramref
+// LaunchableVesselsStream - returns a list of vessels from the given <paramref
 // name="craftDirectory" /> that can be launched.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamLaunchableVessels(craftDirectory string) (*krpcgo.Stream[[]string], error) {
+func (s *SpaceCenter) LaunchableVesselsStream(craftDirectory string) (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1837,7 +1837,7 @@ func (s *SpaceCenter) CanRailsWarpAt(factor int32) (bool, error) {
 	return vv, nil
 }
 
-// StreamCanRailsWarpAt - returns true if regular "on-rails" time warp can be
+// CanRailsWarpAtStream - returns true if regular "on-rails" time warp can be
 // used, at the specified warp <paramref name="factor" />. The maximum time warp
 // rate is limited by various things, including how close the active vessel is
 // to a planet. See <a
@@ -1845,7 +1845,7 @@ func (s *SpaceCenter) CanRailsWarpAt(factor int32) (bool, error) {
 // for details.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamCanRailsWarpAt(factor int32) (*krpcgo.Stream[bool], error) {
+func (s *SpaceCenter) CanRailsWarpAtStream(factor int32) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1971,11 +1971,11 @@ func (s *SpaceCenter) TransformPosition(position api.Tuple3[float64, float64, fl
 	return vv, nil
 }
 
-// StreamTransformPosition - converts a position from one reference frame to
+// TransformPositionStream - converts a position from one reference frame to
 // another.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamTransformPosition(position api.Tuple3[float64, float64, float64], from *ReferenceFrame, to *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *SpaceCenter) TransformPositionStream(position api.Tuple3[float64, float64, float64], from *ReferenceFrame, to *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2070,11 +2070,11 @@ func (s *SpaceCenter) TransformDirection(direction api.Tuple3[float64, float64, 
 	return vv, nil
 }
 
-// StreamTransformDirection - converts a direction from one reference frame to
+// TransformDirectionStream - converts a direction from one reference frame to
 // another.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamTransformDirection(direction api.Tuple3[float64, float64, float64], from *ReferenceFrame, to *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *SpaceCenter) TransformDirectionStream(direction api.Tuple3[float64, float64, float64], from *ReferenceFrame, to *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2168,11 +2168,11 @@ func (s *SpaceCenter) TransformRotation(rotation api.Tuple4[float64, float64, fl
 	return vv, nil
 }
 
-// StreamTransformRotation - converts a rotation from one reference frame to
+// TransformRotationStream - converts a rotation from one reference frame to
 // another.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamTransformRotation(rotation api.Tuple4[float64, float64, float64, float64], from *ReferenceFrame, to *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *SpaceCenter) TransformRotationStream(rotation api.Tuple4[float64, float64, float64, float64], from *ReferenceFrame, to *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2276,12 +2276,12 @@ func (s *SpaceCenter) TransformVelocity(position api.Tuple3[float64, float64, fl
 	return vv, nil
 }
 
-// StreamTransformVelocity - converts a velocity (acting at the specified
+// TransformVelocityStream - converts a velocity (acting at the specified
 // position) from one reference frame to another. The position is required to
 // take the relative angular velocity of the reference frames into account.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamTransformVelocity(position api.Tuple3[float64, float64, float64], velocity api.Tuple3[float64, float64, float64], from *ReferenceFrame, to *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *SpaceCenter) TransformVelocityStream(position api.Tuple3[float64, float64, float64], velocity api.Tuple3[float64, float64, float64], from *ReferenceFrame, to *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2384,12 +2384,12 @@ func (s *SpaceCenter) RaycastDistance(position api.Tuple3[float64, float64, floa
 	return vv, nil
 }
 
-// StreamRaycastDistance - cast a ray from a given position in a given
+// RaycastDistanceStream - cast a ray from a given position in a given
 // direction, and return the distance to the hit point. If no hit occurs,
 // returns infinity.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamRaycastDistance(position api.Tuple3[float64, float64, float64], direction api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
+func (s *SpaceCenter) RaycastDistanceStream(position api.Tuple3[float64, float64, float64], direction api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2506,10 +2506,10 @@ func (s *SpaceCenter) GameMode() (GameMode, error) {
 	return vv, nil
 }
 
-// StreamGameMode - the current mode the game is in.
+// GameModeStream - the current mode the game is in.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamGameMode() (*krpcgo.Stream[GameMode], error) {
+func (s *SpaceCenter) GameModeStream() (*krpcgo.Stream[GameMode], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_GameMode",
@@ -2553,10 +2553,10 @@ func (s *SpaceCenter) Science() (float32, error) {
 	return vv, nil
 }
 
-// StreamScience - the current amount of science.
+// ScienceStream - the current amount of science.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamScience() (*krpcgo.Stream[float32], error) {
+func (s *SpaceCenter) ScienceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Science",
@@ -2600,10 +2600,10 @@ func (s *SpaceCenter) Funds() (float64, error) {
 	return vv, nil
 }
 
-// StreamFunds - the current amount of funds.
+// FundsStream - the current amount of funds.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamFunds() (*krpcgo.Stream[float64], error) {
+func (s *SpaceCenter) FundsStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Funds",
@@ -2647,10 +2647,10 @@ func (s *SpaceCenter) Reputation() (float32, error) {
 	return vv, nil
 }
 
-// StreamReputation - the current amount of reputation.
+// ReputationStream - the current amount of reputation.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamReputation() (*krpcgo.Stream[float32], error) {
+func (s *SpaceCenter) ReputationStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Reputation",
@@ -2741,10 +2741,10 @@ func (s *SpaceCenter) Vessels() ([]*Vessel, error) {
 	return vv, nil
 }
 
-// StreamVessels - a list of all the vessels in the game.
+// VesselsStream - a list of all the vessels in the game.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamVessels() (*krpcgo.Stream[[]*Vessel], error) {
+func (s *SpaceCenter) VesselsStream() (*krpcgo.Stream[[]*Vessel], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Vessels",
@@ -2789,11 +2789,11 @@ func (s *SpaceCenter) Bodies() (map[string]*CelestialBody, error) {
 	return vv, nil
 }
 
-// StreamBodies - a dictionary of all celestial bodies (planets, moons, etc.) in
+// BodiesStream - a dictionary of all celestial bodies (planets, moons, etc.) in
 // the game, keyed by the name of the body.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamBodies() (*krpcgo.Stream[map[string]*CelestialBody], error) {
+func (s *SpaceCenter) BodiesStream() (*krpcgo.Stream[map[string]*CelestialBody], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Bodies",
@@ -3066,10 +3066,10 @@ func (s *SpaceCenter) UIVisible() (bool, error) {
 	return vv, nil
 }
 
-// StreamUIVisible - whether the UI is visible.
+// UIVisibleStream - whether the UI is visible.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamUIVisible() (*krpcgo.Stream[bool], error) {
+func (s *SpaceCenter) UIVisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_UIVisible",
@@ -3138,10 +3138,10 @@ func (s *SpaceCenter) Navball() (bool, error) {
 	return vv, nil
 }
 
-// StreamNavball - whether the navball is visible.
+// NavballStream - whether the navball is visible.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamNavball() (*krpcgo.Stream[bool], error) {
+func (s *SpaceCenter) NavballStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Navball",
@@ -3210,10 +3210,10 @@ func (s *SpaceCenter) UT() (float64, error) {
 	return vv, nil
 }
 
-// StreamUT - the current universal time in seconds.
+// UTStream - the current universal time in seconds.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamUT() (*krpcgo.Stream[float64], error) {
+func (s *SpaceCenter) UTStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_UT",
@@ -3259,12 +3259,12 @@ func (s *SpaceCenter) G() (float64, error) {
 	return vv, nil
 }
 
-// StreamG - the value of the <a
-// href="https://en.wikipedia.org/wiki/Gravitational_constant"> gravitational
-// constant</a> G in <math>N(m/kg)^2</math>.
+// GStream - the value of the <a
+// href="https://en.wikipedia.org/wiki/GStreamravitational_constant">
+// gravitational constant</a> GStream in <math>N(m/kg)^2</math>.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamG() (*krpcgo.Stream[float64], error) {
+func (s *SpaceCenter) GStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_G",
@@ -3312,14 +3312,14 @@ func (s *SpaceCenter) WarpMode() (WarpMode, error) {
 	return vv, nil
 }
 
-// StreamWarpMode - the current time warp mode. Returns <see
-// cref="M:SpaceCenter.WarpMode.None" /> if time warp is not active, <see
-// cref="M:SpaceCenter.WarpMode.Rails" /> if regular "on-rails" time warp is
-// active, or <see cref="M:SpaceCenter.WarpMode.Physics" /> if physical time
-// warp is active.
+// WarpModeStream - the current time warp mode. Returns <see
+// cref="M:SpaceCenter.WarpModeStream.None" /> if time warp is not active, <see
+// cref="M:SpaceCenter.WarpModeStream.Rails" /> if regular "on-rails" time warp
+// is active, or <see cref="M:SpaceCenter.WarpModeStream.Physics" /> if physical
+// time warp is active.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamWarpMode() (*krpcgo.Stream[WarpMode], error) {
+func (s *SpaceCenter) WarpModeStream() (*krpcgo.Stream[WarpMode], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_WarpMode",
@@ -3365,13 +3365,13 @@ func (s *SpaceCenter) WarpRate() (float32, error) {
 	return vv, nil
 }
 
-// StreamWarpRate - the current warp rate. This is the rate at which time is
+// WarpRateStream - the current warp rate. This is the rate at which time is
 // passing for either on-rails or physical time warp. For example, a value of 10
 // means time is passing 10x faster than normal. Returns 1 if time warp is not
 // active.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamWarpRate() (*krpcgo.Stream[float32], error) {
+func (s *SpaceCenter) WarpRateStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_WarpRate",
@@ -3419,14 +3419,15 @@ func (s *SpaceCenter) WarpFactor() (float32, error) {
 	return vv, nil
 }
 
-// StreamWarpFactor - the current warp factor. This is the index of the rate at
+// WarpFactorStream - the current warp factor. This is the index of the rate at
 // which time is passing for either regular "on-rails" or physical time warp.
 // Returns 0 if time warp is not active. When in on-rails time warp, this is
-// equal to <see cref="M:SpaceCenter.RailsWarpFactor" />, and in physics time
-// warp, this is equal to <see cref="M:SpaceCenter.PhysicsWarpFactor" />.
+// equal to <see cref="M:SpaceCenter.RailsWarpFactorStream" />, and in physics
+// time warp, this is equal to <see cref="M:SpaceCenter.PhysicsWarpFactorStream"
+// />.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamWarpFactor() (*krpcgo.Stream[float32], error) {
+func (s *SpaceCenter) WarpFactorStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_WarpFactor",
@@ -3476,7 +3477,7 @@ func (s *SpaceCenter) RailsWarpFactor() (int32, error) {
 	return vv, nil
 }
 
-// StreamRailsWarpFactor - the time warp rate, using regular "on-rails" time
+// RailsWarpFactorStream - the time warp rate, using regular "on-rails" time
 // warp. A value between 0 and 7 inclusive. 0 means no time warp. Returns 0 if
 // physical time warp is active.  If requested time warp factor cannot be set,
 // it will be set to the next lowest possible value. For example, if the vessel
@@ -3485,7 +3486,7 @@ func (s *SpaceCenter) RailsWarpFactor() (int32, error) {
 // for details.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamRailsWarpFactor() (*krpcgo.Stream[int32], error) {
+func (s *SpaceCenter) RailsWarpFactorStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_RailsWarpFactor",
@@ -3562,12 +3563,12 @@ func (s *SpaceCenter) PhysicsWarpFactor() (int32, error) {
 	return vv, nil
 }
 
-// StreamPhysicsWarpFactor - the physical time warp rate. A value between 0 and
+// PhysicsWarpFactorStream - the physical time warp rate. A value between 0 and
 // 3 inclusive. 0 means no time warp. Returns 0 if regular "on-rails" time warp
 // is active.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamPhysicsWarpFactor() (*krpcgo.Stream[int32], error) {
+func (s *SpaceCenter) PhysicsWarpFactorStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_PhysicsWarpFactor",
@@ -3641,13 +3642,13 @@ func (s *SpaceCenter) MaximumRailsWarpFactor() (int32, error) {
 	return vv, nil
 }
 
-// StreamMaximumRailsWarpFactor - the current maximum regular "on-rails" warp
+// MaximumRailsWarpFactorStream - the current maximum regular "on-rails" warp
 // factor that can be set. A value between 0 and 7 inclusive. See <a
 // href="https://wiki.kerbalspaceprogram.com/wiki/Time_warp">the KSP wiki</a>
 // for details.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamMaximumRailsWarpFactor() (*krpcgo.Stream[int32], error) {
+func (s *SpaceCenter) MaximumRailsWarpFactorStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_MaximumRailsWarpFactor",
@@ -3693,12 +3694,12 @@ func (s *SpaceCenter) FARAvailable() (bool, error) {
 	return vv, nil
 }
 
-// StreamFARAvailable - whether <a
+// FARAvailableStream - whether <a
 // href="https://forum.kerbalspaceprogram.com/index.php?/topic/19321-130-ferram-aerospace-research-v0159-liebe-82117/">Ferram
 // Aerospace Research</a> is installed.
 //
 // Allowed game scenes: any.
-func (s *SpaceCenter) StreamFARAvailable() (*krpcgo.Stream[bool], error) {
+func (s *SpaceCenter) FARAvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_FARAvailable",
@@ -3751,10 +3752,10 @@ func (s *Alarm) Type() (string, error) {
 	return vv, nil
 }
 
-// StreamType - type of Alarm
+// TypeStream - type of Alarm
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamType() (*krpcgo.Stream[string], error) {
+func (s *Alarm) TypeStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3816,10 +3817,10 @@ func (s *Alarm) Title() (string, error) {
 	return vv, nil
 }
 
-// StreamTitle - title of the Alarm
+// TitleStream - title of the Alarm
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamTitle() (*krpcgo.Stream[string], error) {
+func (s *Alarm) TitleStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3881,10 +3882,10 @@ func (s *Alarm) Description() (string, error) {
 	return vv, nil
 }
 
-// StreamDescription - description of the contract.
+// DescriptionStream - description of the contract.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamDescription() (*krpcgo.Stream[string], error) {
+func (s *Alarm) DescriptionStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -3946,10 +3947,10 @@ func (s *Alarm) UT() (float64, error) {
 	return vv, nil
 }
 
-// StreamUT - time the Alarm will trigger
+// UTStream - time the Alarm will trigger
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamUT() (*krpcgo.Stream[float64], error) {
+func (s *Alarm) UTStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4011,10 +4012,10 @@ func (s *Alarm) TimeTill() (float64, error) {
 	return vv, nil
 }
 
-// StreamTimeTill - time until the alarm triggers
+// TimeTillStream - time until the alarm triggers
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamTimeTill() (*krpcgo.Stream[float64], error) {
+func (s *Alarm) TimeTillStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4076,11 +4077,11 @@ func (s *Alarm) EventOffset() (float64, error) {
 	return vv, nil
 }
 
-// StreamEventOffset - seconds betwen the alarm going off and the event it
+// EventOffsetStream - seconds betwen the alarm going off and the event it
 // references
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamEventOffset() (*krpcgo.Stream[float64], error) {
+func (s *Alarm) EventOffsetStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4176,14 +4177,14 @@ func (s *Alarm) ID() (int32, error) {
 	return vv, nil
 }
 
-// StreamID - unique ID of alarm KSP destroys an old alarm and creates a new one
-// each time an alarm is edited. This ID will remain constant between the old
-// and new alarms though, so this is the value you want to store and each time
-// you want to access an alarm, get the current alarm with the  correct ID
-// value.
+// IDStream - unique IDStream of alarm KSP destroys an old alarm and creates a
+// new one each time an alarm is edited. This IDStream will remain constant
+// between the old and new alarms though, so this is the value you want to store
+// and each time you want to access an alarm, get the current alarm with the
+// correct IDStream value.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamID() (*krpcgo.Stream[int32], error) {
+func (s *Alarm) IDStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4633,10 +4634,10 @@ func (s *AlarmClock) GetAlarms() ([]*Alarm, error) {
 	return vv, nil
 }
 
-// StreamGetAlarms - returns a list of all alarms
+// GetAlarmsStream - returns a list of all alarms
 //
 // Allowed game scenes: any.
-func (s *AlarmClock) StreamGetAlarms() (*krpcgo.Stream[[]*Alarm], error) {
+func (s *AlarmClock) GetAlarmsStream() (*krpcgo.Stream[[]*Alarm], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4819,13 +4820,13 @@ func (s *AutoPilot) Error() (float32, error) {
 	return vv, nil
 }
 
-// StreamError - the error, in degrees, between the direction the ship has been
+// ErrorStream - the error, in degrees, between the direction the ship has been
 // asked to point in and the direction it is pointing in. Throws an exception if
 // the auto-pilot has not been engaged and SAS is not enabled or is in stability
 // assist mode.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamError() (*krpcgo.Stream[float32], error) {
+func (s *AutoPilot) ErrorStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4888,11 +4889,11 @@ func (s *AutoPilot) PitchError() (float32, error) {
 	return vv, nil
 }
 
-// StreamPitchError - the error, in degrees, between the vessels current and
+// PitchErrorStream - the error, in degrees, between the vessels current and
 // target pitch. Throws an exception if the auto-pilot has not been engaged.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamPitchError() (*krpcgo.Stream[float32], error) {
+func (s *AutoPilot) PitchErrorStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -4955,11 +4956,11 @@ func (s *AutoPilot) HeadingError() (float32, error) {
 	return vv, nil
 }
 
-// StreamHeadingError - the error, in degrees, between the vessels current and
+// HeadingErrorStream - the error, in degrees, between the vessels current and
 // target heading. Throws an exception if the auto-pilot has not been engaged.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamHeadingError() (*krpcgo.Stream[float32], error) {
+func (s *AutoPilot) HeadingErrorStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5023,12 +5024,12 @@ func (s *AutoPilot) RollError() (float32, error) {
 	return vv, nil
 }
 
-// StreamRollError - the error, in degrees, between the vessels current and
+// RollErrorStream - the error, in degrees, between the vessels current and
 // target roll. Throws an exception if the auto-pilot has not been engaged or no
 // target roll is set.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamRollError() (*krpcgo.Stream[float32], error) {
+func (s *AutoPilot) RollErrorStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5156,10 +5157,10 @@ func (s *AutoPilot) TargetPitch() (float32, error) {
 	return vv, nil
 }
 
-// StreamTargetPitch - the target pitch, in degrees, between -90° and +90°.
+// TargetPitchStream - the target pitch, in degrees, between -90° and +90°.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamTargetPitch() (*krpcgo.Stream[float32], error) {
+func (s *AutoPilot) TargetPitchStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5254,10 +5255,10 @@ func (s *AutoPilot) TargetHeading() (float32, error) {
 	return vv, nil
 }
 
-// StreamTargetHeading - the target heading, in degrees, between 0° and 360°.
+// TargetHeadingStream - the target heading, in degrees, between 0° and 360°.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamTargetHeading() (*krpcgo.Stream[float32], error) {
+func (s *AutoPilot) TargetHeadingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5352,10 +5353,10 @@ func (s *AutoPilot) TargetRoll() (float32, error) {
 	return vv, nil
 }
 
-// StreamTargetRoll - the target roll, in degrees. NaN if no target roll is set.
+// TargetRollStream - the target roll, in degrees. NaN if no target roll is set.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamTargetRoll() (*krpcgo.Stream[float32], error) {
+func (s *AutoPilot) TargetRollStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5452,12 +5453,12 @@ func (s *AutoPilot) TargetDirection() (api.Tuple3[float64, float64, float64], er
 	return vv, nil
 }
 
-// StreamTargetDirection - direction vector corresponding to the target pitch
+// TargetDirectionStream - direction vector corresponding to the target pitch
 // and heading. This is in the reference frame specified by <see
 // cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamTargetDirection() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) TargetDirectionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5554,10 +5555,10 @@ func (s *AutoPilot) SAS() (bool, error) {
 	return vv, nil
 }
 
-// StreamSAS - the state of SAS.
+// SASStream - the state of SASStream.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamSAS() (*krpcgo.Stream[bool], error) {
+func (s *AutoPilot) SASStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5654,12 +5655,12 @@ func (s *AutoPilot) SASMode() (SASMode, error) {
 	return vv, nil
 }
 
-// StreamSASMode - the current <see cref="T:SpaceCenter.SASMode" />. These modes
-// are equivalent to the mode buttons to the left of the navball that appear
-// when SAS is enabled.
+// SASModeStream - the current <see cref="T:SpaceCenter.SASModeStream" />. These
+// modes are equivalent to the mode buttons to the left of the navball that
+// appear when SAS is enabled.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamSASMode() (*krpcgo.Stream[SASMode], error) {
+func (s *AutoPilot) SASModeStream() (*krpcgo.Stream[SASMode], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5757,11 +5758,11 @@ func (s *AutoPilot) RollThreshold() (float64, error) {
 	return vv, nil
 }
 
-// StreamRollThreshold - the threshold at which the autopilot will try to match
+// RollThresholdStream - the threshold at which the autopilot will try to match
 // the target roll angle, if any. Defaults to 5 degrees.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamRollThreshold() (*krpcgo.Stream[float64], error) {
+func (s *AutoPilot) RollThresholdStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5860,13 +5861,13 @@ func (s *AutoPilot) StoppingTime() (api.Tuple3[float64, float64, float64], error
 	return vv, nil
 }
 
-// StreamStoppingTime - the maximum amount of time that the vessel should need
+// StoppingTimeStream - the maximum amount of time that the vessel should need
 // to come to a complete stop. This determines the maximum angular velocity of
 // the vessel. A vector of three stopping times, in seconds, one for each of the
 // pitch, roll and yaw axes. Defaults to 0.5 seconds for each axis.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamStoppingTime() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) StoppingTimeStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -5967,13 +5968,13 @@ func (s *AutoPilot) DecelerationTime() (api.Tuple3[float64, float64, float64], e
 	return vv, nil
 }
 
-// StreamDecelerationTime - the time the vessel should take to come to a stop
+// DecelerationTimeStream - the time the vessel should take to come to a stop
 // pointing in the target direction. This determines the angular acceleration
 // used to decelerate the vessel. A vector of three times, in seconds, one for
 // each of the pitch, roll and yaw axes. Defaults to 5 seconds for each axis.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamDecelerationTime() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) DecelerationTimeStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6074,14 +6075,14 @@ func (s *AutoPilot) AttenuationAngle() (api.Tuple3[float64, float64, float64], e
 	return vv, nil
 }
 
-// StreamAttenuationAngle - the angle at which the autopilot considers the
+// AttenuationAngleStream - the angle at which the autopilot considers the
 // vessel to be pointing close to the target. This determines the midpoint of
 // the target velocity attenuation function. A vector of three angles, in
 // degrees, one for each of the pitch, roll and yaw axes. Defaults to 1° for
 // each axis.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamAttenuationAngle() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) AttenuationAngleStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6182,13 +6183,13 @@ func (s *AutoPilot) AutoTune() (bool, error) {
 	return vv, nil
 }
 
-// StreamAutoTune - whether the rotation rate controllers PID parameters should
+// AutoTuneStream - whether the rotation rate controllers PID parameters should
 // be automatically tuned using the vessels moment of inertia and available
 // torque. Defaults to true. See <see cref="M:SpaceCenter.AutoPilot.TimeToPeak"
 // /> and <see cref="M:SpaceCenter.AutoPilot.Overshoot" />.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamAutoTune() (*krpcgo.Stream[bool], error) {
+func (s *AutoPilot) AutoTuneStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6288,12 +6289,12 @@ func (s *AutoPilot) TimeToPeak() (api.Tuple3[float64, float64, float64], error) 
 	return vv, nil
 }
 
-// StreamTimeToPeak - the target time to peak used to autotune the PID
+// TimeToPeakStream - the target time to peak used to autotune the PID
 // controllers. A vector of three times, in seconds, for each of the pitch, roll
 // and yaw axes. Defaults to 3 seconds for each axis.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamTimeToPeak() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) TimeToPeakStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6392,12 +6393,12 @@ func (s *AutoPilot) Overshoot() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamOvershoot - the target overshoot percentage used to autotune the PID
+// OvershootStream - the target overshoot percentage used to autotune the PID
 // controllers. A vector of three values, between 0 and 1, for each of the
 // pitch, roll and yaw axes. Defaults to 0.01 for each axis.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamOvershoot() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) OvershootStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6494,10 +6495,10 @@ func (s *AutoPilot) PitchPIDGains() (api.Tuple3[float64, float64, float64], erro
 	return vv, nil
 }
 
-// StreamPitchPIDGains - gains for the pitch PID controller.
+// PitchPIDGainsStream - gains for the pitch PID controller.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamPitchPIDGains() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) PitchPIDGainsStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6592,10 +6593,10 @@ func (s *AutoPilot) RollPIDGains() (api.Tuple3[float64, float64, float64], error
 	return vv, nil
 }
 
-// StreamRollPIDGains - gains for the roll PID controller.
+// RollPIDGainsStream - gains for the roll PID controller.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamRollPIDGains() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) RollPIDGainsStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6690,10 +6691,10 @@ func (s *AutoPilot) YawPIDGains() (api.Tuple3[float64, float64, float64], error)
 	return vv, nil
 }
 
-// StreamYawPIDGains - gains for the yaw PID controller.
+// YawPIDGainsStream - gains for the yaw PID controller.
 //
 // Allowed game scenes: any.
-func (s *AutoPilot) StreamYawPIDGains() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *AutoPilot) YawPIDGainsStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6788,10 +6789,10 @@ func (s *Camera) Mode() (CameraMode, error) {
 	return vv, nil
 }
 
-// StreamMode - the current mode of the camera.
+// ModeStream - the current mode of the camera.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamMode() (*krpcgo.Stream[CameraMode], error) {
+func (s *Camera) ModeStream() (*krpcgo.Stream[CameraMode], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6888,12 +6889,12 @@ func (s *Camera) Pitch() (float32, error) {
 	return vv, nil
 }
 
-// StreamPitch - the pitch of the camera, in degrees. A value between <see
-// cref="M:SpaceCenter.Camera.MinPitch" /> and <see
-// cref="M:SpaceCenter.Camera.MaxPitch" />
+// PitchStream - the pitch of the camera, in degrees. A value between <see
+// cref="M:SpaceCenter.Camera.MinPitchStream" /> and <see
+// cref="M:SpaceCenter.Camera.MaxPitchStream" />
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamPitch() (*krpcgo.Stream[float32], error) {
+func (s *Camera) PitchStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -6990,10 +6991,10 @@ func (s *Camera) Heading() (float32, error) {
 	return vv, nil
 }
 
-// StreamHeading - the heading of the camera, in degrees.
+// HeadingStream - the heading of the camera, in degrees.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamHeading() (*krpcgo.Stream[float32], error) {
+func (s *Camera) HeadingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7090,12 +7091,12 @@ func (s *Camera) Distance() (float32, error) {
 	return vv, nil
 }
 
-// StreamDistance - the distance from the camera to the subject, in meters. A
-// value between <see cref="M:SpaceCenter.Camera.MinDistance" /> and <see
-// cref="M:SpaceCenter.Camera.MaxDistance" />.
+// DistanceStream - the distance from the camera to the subject, in meters. A
+// value between <see cref="M:SpaceCenter.Camera.MinDistanceStream" /> and <see
+// cref="M:SpaceCenter.Camera.MaxDistanceStream" />.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamDistance() (*krpcgo.Stream[float32], error) {
+func (s *Camera) DistanceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7192,10 +7193,10 @@ func (s *Camera) MinPitch() (float32, error) {
 	return vv, nil
 }
 
-// StreamMinPitch - the minimum pitch of the camera.
+// MinPitchStream - the minimum pitch of the camera.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamMinPitch() (*krpcgo.Stream[float32], error) {
+func (s *Camera) MinPitchStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7257,10 +7258,10 @@ func (s *Camera) MaxPitch() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxPitch - the maximum pitch of the camera.
+// MaxPitchStream - the maximum pitch of the camera.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamMaxPitch() (*krpcgo.Stream[float32], error) {
+func (s *Camera) MaxPitchStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7322,11 +7323,11 @@ func (s *Camera) MinDistance() (float32, error) {
 	return vv, nil
 }
 
-// StreamMinDistance - minimum distance from the camera to the subject, in
+// MinDistanceStream - minimum distance from the camera to the subject, in
 // meters.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamMinDistance() (*krpcgo.Stream[float32], error) {
+func (s *Camera) MinDistanceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7388,11 +7389,11 @@ func (s *Camera) MaxDistance() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxDistance - maximum distance from the camera to the subject, in
+// MaxDistanceStream - maximum distance from the camera to the subject, in
 // meters.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamMaxDistance() (*krpcgo.Stream[float32], error) {
+func (s *Camera) MaxDistanceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7454,11 +7455,11 @@ func (s *Camera) DefaultDistance() (float32, error) {
 	return vv, nil
 }
 
-// StreamDefaultDistance - default distance from the camera to the subject, in
+// DefaultDistanceStream - default distance from the camera to the subject, in
 // meters.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamDefaultDistance() (*krpcgo.Stream[float32], error) {
+func (s *Camera) DefaultDistanceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7741,11 +7742,11 @@ func (s *CelestialBody) SurfaceHeight(latitude float64, longitude float64) (floa
 	return vv, nil
 }
 
-// StreamSurfaceHeight - the height of the surface relative to mean sea level,
+// SurfaceHeightStream - the height of the surface relative to mean sea level,
 // in meters, at the given position. When over water this is equal to 0.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamSurfaceHeight(latitude float64, longitude float64) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) SurfaceHeightStream(latitude float64, longitude float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7841,12 +7842,12 @@ func (s *CelestialBody) BedrockHeight(latitude float64, longitude float64) (floa
 	return vv, nil
 }
 
-// StreamBedrockHeight - the height of the surface relative to mean sea level,
+// BedrockHeightStream - the height of the surface relative to mean sea level,
 // in meters, at the given position. When over water, this is the height of the
 // sea-bed and is therefore  negative value.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamBedrockHeight(latitude float64, longitude float64) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) BedrockHeightStream(latitude float64, longitude float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -7949,11 +7950,11 @@ func (s *CelestialBody) MSLPosition(latitude float64, longitude float64, referen
 	return vv, nil
 }
 
-// StreamMSLPosition - the position at mean sea level at the given latitude and
+// MSLPositionStream - the position at mean sea level at the given latitude and
 // longitude, in the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamMSLPosition(latitude float64, longitude float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *CelestialBody) MSLPositionStream(latitude float64, longitude float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8065,12 +8066,12 @@ func (s *CelestialBody) SurfacePosition(latitude float64, longitude float64, ref
 	return vv, nil
 }
 
-// StreamSurfacePosition - the position of the surface at the given latitude and
+// SurfacePositionStream - the position of the surface at the given latitude and
 // longitude, in the given reference frame. When over water, this is the
 // position of the surface of the water.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamSurfacePosition(latitude float64, longitude float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *CelestialBody) SurfacePositionStream(latitude float64, longitude float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8182,12 +8183,12 @@ func (s *CelestialBody) BedrockPosition(latitude float64, longitude float64, ref
 	return vv, nil
 }
 
-// StreamBedrockPosition - the position of the surface at the given latitude and
+// BedrockPositionStream - the position of the surface at the given latitude and
 // longitude, in the given reference frame. When over water, this is the
 // position at the bottom of the sea-bed.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamBedrockPosition(latitude float64, longitude float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *CelestialBody) BedrockPositionStream(latitude float64, longitude float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8306,11 +8307,11 @@ func (s *CelestialBody) PositionAtAltitude(latitude float64, longitude float64, 
 	return vv, nil
 }
 
-// StreamPositionAtAltitude - the position at the given latitude, longitude and
+// PositionAtAltitudeStream - the position at the given latitude, longitude and
 // altitude, in the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamPositionAtAltitude(latitude float64, longitude float64, altitude float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *CelestialBody) PositionAtAltitudeStream(latitude float64, longitude float64, altitude float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8421,11 +8422,11 @@ func (s *CelestialBody) LatitudeAtPosition(position api.Tuple3[float64, float64,
 	return vv, nil
 }
 
-// StreamLatitudeAtPosition - the latitude of the given position, in the given
+// LatitudeAtPositionStream - the latitude of the given position, in the given
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamLatitudeAtPosition(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) LatitudeAtPositionStream(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8520,11 +8521,11 @@ func (s *CelestialBody) LongitudeAtPosition(position api.Tuple3[float64, float64
 	return vv, nil
 }
 
-// StreamLongitudeAtPosition - the longitude of the given position, in the given
+// LongitudeAtPositionStream - the longitude of the given position, in the given
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamLongitudeAtPosition(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) LongitudeAtPositionStream(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8619,11 +8620,11 @@ func (s *CelestialBody) AltitudeAtPosition(position api.Tuple3[float64, float64,
 	return vv, nil
 }
 
-// StreamAltitudeAtPosition - the altitude, in meters, of the given position in
+// AltitudeAtPositionStream - the altitude, in meters, of the given position in
 // the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamAltitudeAtPosition(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) AltitudeAtPositionStream(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8718,11 +8719,11 @@ func (s *CelestialBody) AtmosphericDensityAtPosition(position api.Tuple3[float64
 	return vv, nil
 }
 
-// StreamAtmosphericDensityAtPosition - the atmospheric density at the given
+// AtmosphericDensityAtPositionStream - the atmospheric density at the given
 // position, in <math>kg/m^3</math>, in the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamAtmosphericDensityAtPosition(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) AtmosphericDensityAtPositionStream(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8817,11 +8818,11 @@ func (s *CelestialBody) TemperatureAt(position api.Tuple3[float64, float64, floa
 	return vv, nil
 }
 
-// StreamTemperatureAt - the temperature on the body at the given position, in
+// TemperatureAtStream - the temperature on the body at the given position, in
 // the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamTemperatureAt(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) TemperatureAtStream(position api.Tuple3[float64, float64, float64], referenceFrame *ReferenceFrame) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8908,11 +8909,11 @@ func (s *CelestialBody) DensityAt(altitude float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamDensityAt - gets the air density, in <math>kg/m^3</math>, for the
+// DensityAtStream - gets the air density, in <math>kg/m^3</math>, for the
 // specified altitude above sea level, in meters.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamDensityAt(altitude float64) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) DensityAtStream(altitude float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -8991,11 +8992,11 @@ func (s *CelestialBody) PressureAt(altitude float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamPressureAt - gets the air pressure, in Pascals, for the specified
+// PressureAtStream - gets the air pressure, in Pascals, for the specified
 // altitude above sea level, in meters.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamPressureAt(altitude float64) (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) PressureAtStream(altitude float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9081,10 +9082,10 @@ func (s *CelestialBody) BiomeAt(latitude float64, longitude float64) (string, er
 	return vv, nil
 }
 
-// StreamBiomeAt - the biome at the given latitude and longitude, in degrees.
+// BiomeAtStream - the biome at the given latitude and longitude, in degrees.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamBiomeAt(latitude float64, longitude float64) (*krpcgo.Stream[string], error) {
+func (s *CelestialBody) BiomeAtStream(latitude float64, longitude float64) (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9171,11 +9172,11 @@ func (s *CelestialBody) Position(referenceFrame *ReferenceFrame) (api.Tuple3[flo
 	return vv, nil
 }
 
-// StreamPosition - the position of the center of the body, in the specified
+// PositionStream - the position of the center of the body, in the specified
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamPosition(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *CelestialBody) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9253,11 +9254,11 @@ func (s *CelestialBody) Velocity(referenceFrame *ReferenceFrame) (api.Tuple3[flo
 	return vv, nil
 }
 
-// StreamVelocity - the linear velocity of the body, in the specified reference
+// VelocityStream - the linear velocity of the body, in the specified reference
 // frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamVelocity(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *CelestialBody) VelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9335,10 +9336,10 @@ func (s *CelestialBody) Rotation(referenceFrame *ReferenceFrame) (api.Tuple4[flo
 	return vv, nil
 }
 
-// StreamRotation - the rotation of the body, in the specified reference frame.
+// RotationStream - the rotation of the body, in the specified reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamRotation(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *CelestialBody) RotationStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9417,11 +9418,11 @@ func (s *CelestialBody) Direction(referenceFrame *ReferenceFrame) (api.Tuple3[fl
 	return vv, nil
 }
 
-// StreamDirection - the direction in which the north pole of the celestial body
+// DirectionStream - the direction in which the north pole of the celestial body
 // is pointing, in the specified reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamDirection(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *CelestialBody) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9500,11 +9501,11 @@ func (s *CelestialBody) AngularVelocity(referenceFrame *ReferenceFrame) (api.Tup
 	return vv, nil
 }
 
-// StreamAngularVelocity - the angular velocity of the body in the specified
+// AngularVelocityStream - the angular velocity of the body in the specified
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamAngularVelocity(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *CelestialBody) AngularVelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9574,10 +9575,10 @@ func (s *CelestialBody) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the name of the body.
+// NameStream - the name of the body.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamName() (*krpcgo.Stream[string], error) {
+func (s *CelestialBody) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9640,11 +9641,11 @@ func (s *CelestialBody) Satellites() ([]*CelestialBody, error) {
 	return vv, nil
 }
 
-// StreamSatellites - a list of celestial bodies that are in orbit around this
+// SatellitesStream - a list of celestial bodies that are in orbit around this
 // celestial body.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamSatellites() (*krpcgo.Stream[[]*CelestialBody], error) {
+func (s *CelestialBody) SatellitesStream() (*krpcgo.Stream[[]*CelestialBody], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9706,10 +9707,10 @@ func (s *CelestialBody) Mass() (float32, error) {
 	return vv, nil
 }
 
-// StreamMass - the mass of the body, in kilograms.
+// MassStream - the mass of the body, in kilograms.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamMass() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) MassStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9773,12 +9774,12 @@ func (s *CelestialBody) GravitationalParameter() (float32, error) {
 	return vv, nil
 }
 
-// StreamGravitationalParameter - the <a
+// GravitationalParameterStream - the <a
 // href="https://en.wikipedia.org/wiki/Standard_gravitational_parameter">standard
 // gravitational parameter</a> of the body in <math>m^3s^{-2}</math>.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamGravitationalParameter() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) GravitationalParameterStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9841,11 +9842,11 @@ func (s *CelestialBody) SurfaceGravity() (float32, error) {
 	return vv, nil
 }
 
-// StreamSurfaceGravity - the acceleration due to gravity at sea level (mean
+// SurfaceGravityStream - the acceleration due to gravity at sea level (mean
 // altitude) on the body, in <math>m/s^2</math>.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamSurfaceGravity() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) SurfaceGravityStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9907,11 +9908,11 @@ func (s *CelestialBody) RotationalPeriod() (float32, error) {
 	return vv, nil
 }
 
-// StreamRotationalPeriod - the sidereal rotational period of the body, in
+// RotationalPeriodStream - the sidereal rotational period of the body, in
 // seconds.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamRotationalPeriod() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) RotationalPeriodStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -9973,11 +9974,11 @@ func (s *CelestialBody) RotationalSpeed() (float32, error) {
 	return vv, nil
 }
 
-// StreamRotationalSpeed - the rotational speed of the body, in radians per
+// RotationalSpeedStream - the rotational speed of the body, in radians per
 // second.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamRotationalSpeed() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) RotationalSpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10040,11 +10041,11 @@ func (s *CelestialBody) RotationAngle() (float64, error) {
 	return vv, nil
 }
 
-// StreamRotationAngle - the current rotation angle of the body, in radians. A
+// RotationAngleStream - the current rotation angle of the body, in radians. A
 // value between 0 and <math>2\pi</math>
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamRotationAngle() (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) RotationAngleStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10107,11 +10108,11 @@ func (s *CelestialBody) InitialRotation() (float64, error) {
 	return vv, nil
 }
 
-// StreamInitialRotation - the initial rotation angle of the body (at UT 0), in
+// InitialRotationStream - the initial rotation angle of the body (at UT 0), in
 // radians. A value between 0 and <math>2\pi</math>
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamInitialRotation() (*krpcgo.Stream[float64], error) {
+func (s *CelestialBody) InitialRotationStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10173,10 +10174,10 @@ func (s *CelestialBody) EquatorialRadius() (float32, error) {
 	return vv, nil
 }
 
-// StreamEquatorialRadius - the equatorial radius of the body, in meters.
+// EquatorialRadiusStream - the equatorial radius of the body, in meters.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamEquatorialRadius() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) EquatorialRadiusStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10239,11 +10240,11 @@ func (s *CelestialBody) SphereOfInfluence() (float32, error) {
 	return vv, nil
 }
 
-// StreamSphereOfInfluence - the radius of the sphere of influence of the body,
+// SphereOfInfluenceStream - the radius of the sphere of influence of the body,
 // in meters.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamSphereOfInfluence() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) SphereOfInfluenceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10336,10 +10337,10 @@ func (s *CelestialBody) HasAtmosphere() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasAtmosphere - true if the body has an atmosphere.
+// HasAtmosphereStream - true if the body has an atmosphere.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamHasAtmosphere() (*krpcgo.Stream[bool], error) {
+func (s *CelestialBody) HasAtmosphereStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10401,10 +10402,10 @@ func (s *CelestialBody) AtmosphereDepth() (float32, error) {
 	return vv, nil
 }
 
-// StreamAtmosphereDepth - the depth of the atmosphere, in meters.
+// AtmosphereDepthStream - the depth of the atmosphere, in meters.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamAtmosphereDepth() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) AtmosphereDepthStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10467,11 +10468,11 @@ func (s *CelestialBody) HasAtmosphericOxygen() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasAtmosphericOxygen - true if there is oxygen in the atmosphere,
+// HasAtmosphericOxygenStream - true if there is oxygen in the atmosphere,
 // required for air-breathing engines.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamHasAtmosphericOxygen() (*krpcgo.Stream[bool], error) {
+func (s *CelestialBody) HasAtmosphericOxygenStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10533,10 +10534,10 @@ func (s *CelestialBody) Biomes() (map[string]struct{}, error) {
 	return vv, nil
 }
 
-// StreamBiomes - the biomes present on this body.
+// BiomesStream - the biomes present on this body.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamBiomes() (*krpcgo.Stream[map[string]struct{}], error) {
+func (s *CelestialBody) BiomesStream() (*krpcgo.Stream[map[string]struct{}], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10599,11 +10600,11 @@ func (s *CelestialBody) FlyingHighAltitudeThreshold() (float32, error) {
 	return vv, nil
 }
 
-// StreamFlyingHighAltitudeThreshold - the altitude, in meters, above which a
+// FlyingHighAltitudeThresholdStream - the altitude, in meters, above which a
 // vessel is considered to be flying "high" when doing science.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamFlyingHighAltitudeThreshold() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) FlyingHighAltitudeThresholdStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10666,11 +10667,11 @@ func (s *CelestialBody) SpaceHighAltitudeThreshold() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpaceHighAltitudeThreshold - the altitude, in meters, above which a
+// SpaceHighAltitudeThresholdStream - the altitude, in meters, above which a
 // vessel is considered to be in "high" space when doing science.
 //
 // Allowed game scenes: any.
-func (s *CelestialBody) StreamSpaceHighAltitudeThreshold() (*krpcgo.Stream[float32], error) {
+func (s *CelestialBody) SpaceHighAltitudeThresholdStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10853,10 +10854,10 @@ func (s *CommLink) Type() (CommLinkType, error) {
 	return vv, nil
 }
 
-// StreamType - the type of link.
+// TypeStream - the type of link.
 //
 // Allowed game scenes: any.
-func (s *CommLink) StreamType() (*krpcgo.Stream[CommLinkType], error) {
+func (s *CommLink) TypeStream() (*krpcgo.Stream[CommLinkType], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -10918,10 +10919,10 @@ func (s *CommLink) SignalStrength() (float64, error) {
 	return vv, nil
 }
 
-// StreamSignalStrength - signal strength of the link.
+// SignalStrengthStream - signal strength of the link.
 //
 // Allowed game scenes: any.
-func (s *CommLink) StreamSignalStrength() (*krpcgo.Stream[float64], error) {
+func (s *CommLink) SignalStrengthStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11045,10 +11046,10 @@ func (s *CommNode) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - name of the communication node.
+// NameStream - name of the communication node.
 //
 // Allowed game scenes: any.
-func (s *CommNode) StreamName() (*krpcgo.Stream[string], error) {
+func (s *CommNode) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11110,10 +11111,10 @@ func (s *CommNode) IsHome() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsHome - whether the communication node is on Kerbin.
+// IsHomeStream - whether the communication node is on Kerbin.
 //
 // Allowed game scenes: any.
-func (s *CommNode) StreamIsHome() (*krpcgo.Stream[bool], error) {
+func (s *CommNode) IsHomeStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11176,11 +11177,11 @@ func (s *CommNode) IsControlPoint() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsControlPoint - whether the communication node is a control point, for
+// IsControlPointStream - whether the communication node is a control point, for
 // example a manned vessel.
 //
 // Allowed game scenes: any.
-func (s *CommNode) StreamIsControlPoint() (*krpcgo.Stream[bool], error) {
+func (s *CommNode) IsControlPointStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11242,10 +11243,10 @@ func (s *CommNode) IsVessel() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsVessel - whether the communication node is a vessel.
+// IsVesselStream - whether the communication node is a vessel.
 //
 // Allowed game scenes: any.
-func (s *CommNode) StreamIsVessel() (*krpcgo.Stream[bool], error) {
+func (s *CommNode) IsVesselStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11338,10 +11339,10 @@ func (s *Comms) CanCommunicate() (bool, error) {
 	return vv, nil
 }
 
-// StreamCanCommunicate - whether the vessel can communicate with KSC.
+// CanCommunicateStream - whether the vessel can communicate with KSC.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamCanCommunicate() (*krpcgo.Stream[bool], error) {
+func (s *Comms) CanCommunicateStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11403,11 +11404,11 @@ func (s *Comms) CanTransmitScience() (bool, error) {
 	return vv, nil
 }
 
-// StreamCanTransmitScience - whether the vessel can transmit science data to
+// CanTransmitScienceStream - whether the vessel can transmit science data to
 // KSC.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamCanTransmitScience() (*krpcgo.Stream[bool], error) {
+func (s *Comms) CanTransmitScienceStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11469,10 +11470,10 @@ func (s *Comms) SignalStrength() (float64, error) {
 	return vv, nil
 }
 
-// StreamSignalStrength - signal strength to KSC.
+// SignalStrengthStream - signal strength to KSC.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamSignalStrength() (*krpcgo.Stream[float64], error) {
+func (s *Comms) SignalStrengthStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11534,10 +11535,10 @@ func (s *Comms) SignalDelay() (float64, error) {
 	return vv, nil
 }
 
-// StreamSignalDelay - signal delay to KSC in seconds.
+// SignalDelayStream - signal delay to KSC in seconds.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamSignalDelay() (*krpcgo.Stream[float64], error) {
+func (s *Comms) SignalDelayStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11599,10 +11600,10 @@ func (s *Comms) Power() (float64, error) {
 	return vv, nil
 }
 
-// StreamPower - the combined power of all active antennae on the vessel.
+// PowerStream - the combined power of all active antennae on the vessel.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamPower() (*krpcgo.Stream[float64], error) {
+func (s *Comms) PowerStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11664,10 +11665,10 @@ func (s *Comms) ControlPath() ([]*CommLink, error) {
 	return vv, nil
 }
 
-// StreamControlPath - the communication path used to control the vessel.
+// ControlPathStream - the communication path used to control the vessel.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamControlPath() (*krpcgo.Stream[[]*CommLink], error) {
+func (s *Comms) ControlPathStream() (*krpcgo.Stream[[]*CommLink], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11804,10 +11805,10 @@ func (s *Contract) Type() (string, error) {
 	return vv, nil
 }
 
-// StreamType - type of the contract.
+// TypeStream - type of the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamType() (*krpcgo.Stream[string], error) {
+func (s *Contract) TypeStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11869,10 +11870,10 @@ func (s *Contract) Title() (string, error) {
 	return vv, nil
 }
 
-// StreamTitle - title of the contract.
+// TitleStream - title of the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamTitle() (*krpcgo.Stream[string], error) {
+func (s *Contract) TitleStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11934,10 +11935,10 @@ func (s *Contract) Description() (string, error) {
 	return vv, nil
 }
 
-// StreamDescription - description of the contract.
+// DescriptionStream - description of the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamDescription() (*krpcgo.Stream[string], error) {
+func (s *Contract) DescriptionStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -11999,10 +12000,10 @@ func (s *Contract) Notes() (string, error) {
 	return vv, nil
 }
 
-// StreamNotes - notes for the contract.
+// NotesStream - notes for the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamNotes() (*krpcgo.Stream[string], error) {
+func (s *Contract) NotesStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12064,10 +12065,10 @@ func (s *Contract) Synopsis() (string, error) {
 	return vv, nil
 }
 
-// StreamSynopsis - synopsis for the contract.
+// SynopsisStream - synopsis for the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamSynopsis() (*krpcgo.Stream[string], error) {
+func (s *Contract) SynopsisStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12129,10 +12130,10 @@ func (s *Contract) Keywords() ([]string, error) {
 	return vv, nil
 }
 
-// StreamKeywords - keywords for the contract.
+// KeywordsStream - keywords for the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamKeywords() (*krpcgo.Stream[[]string], error) {
+func (s *Contract) KeywordsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12194,10 +12195,10 @@ func (s *Contract) State() (ContractState, error) {
 	return vv, nil
 }
 
-// StreamState - state of the contract.
+// StateStream - state of the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamState() (*krpcgo.Stream[ContractState], error) {
+func (s *Contract) StateStream() (*krpcgo.Stream[ContractState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12259,10 +12260,10 @@ func (s *Contract) Active() (bool, error) {
 	return vv, nil
 }
 
-// StreamActive - whether the contract is active.
+// ActiveStream - whether the contract is active.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamActive() (*krpcgo.Stream[bool], error) {
+func (s *Contract) ActiveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12324,10 +12325,10 @@ func (s *Contract) Failed() (bool, error) {
 	return vv, nil
 }
 
-// StreamFailed - whether the contract has been failed.
+// FailedStream - whether the contract has been failed.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamFailed() (*krpcgo.Stream[bool], error) {
+func (s *Contract) FailedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12389,10 +12390,10 @@ func (s *Contract) Seen() (bool, error) {
 	return vv, nil
 }
 
-// StreamSeen - whether the contract has been seen.
+// SeenStream - whether the contract has been seen.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamSeen() (*krpcgo.Stream[bool], error) {
+func (s *Contract) SeenStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12454,10 +12455,10 @@ func (s *Contract) Read() (bool, error) {
 	return vv, nil
 }
 
-// StreamRead - whether the contract has been read.
+// ReadStream - whether the contract has been read.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamRead() (*krpcgo.Stream[bool], error) {
+func (s *Contract) ReadStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12519,10 +12520,10 @@ func (s *Contract) CanBeCanceled() (bool, error) {
 	return vv, nil
 }
 
-// StreamCanBeCanceled - whether the contract can be canceled.
+// CanBeCanceledStream - whether the contract can be canceled.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamCanBeCanceled() (*krpcgo.Stream[bool], error) {
+func (s *Contract) CanBeCanceledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12584,10 +12585,10 @@ func (s *Contract) CanBeDeclined() (bool, error) {
 	return vv, nil
 }
 
-// StreamCanBeDeclined - whether the contract can be declined.
+// CanBeDeclinedStream - whether the contract can be declined.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamCanBeDeclined() (*krpcgo.Stream[bool], error) {
+func (s *Contract) CanBeDeclinedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12649,10 +12650,10 @@ func (s *Contract) CanBeFailed() (bool, error) {
 	return vv, nil
 }
 
-// StreamCanBeFailed - whether the contract can be failed.
+// CanBeFailedStream - whether the contract can be failed.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamCanBeFailed() (*krpcgo.Stream[bool], error) {
+func (s *Contract) CanBeFailedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12714,10 +12715,10 @@ func (s *Contract) FundsAdvance() (float64, error) {
 	return vv, nil
 }
 
-// StreamFundsAdvance - funds received when accepting the contract.
+// FundsAdvanceStream - funds received when accepting the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamFundsAdvance() (*krpcgo.Stream[float64], error) {
+func (s *Contract) FundsAdvanceStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12779,10 +12780,10 @@ func (s *Contract) FundsCompletion() (float64, error) {
 	return vv, nil
 }
 
-// StreamFundsCompletion - funds received on completion of the contract.
+// FundsCompletionStream - funds received on completion of the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamFundsCompletion() (*krpcgo.Stream[float64], error) {
+func (s *Contract) FundsCompletionStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12844,10 +12845,10 @@ func (s *Contract) FundsFailure() (float64, error) {
 	return vv, nil
 }
 
-// StreamFundsFailure - funds lost if the contract is failed.
+// FundsFailureStream - funds lost if the contract is failed.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamFundsFailure() (*krpcgo.Stream[float64], error) {
+func (s *Contract) FundsFailureStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12909,10 +12910,10 @@ func (s *Contract) ReputationCompletion() (float64, error) {
 	return vv, nil
 }
 
-// StreamReputationCompletion - reputation gained on completion of the contract.
+// ReputationCompletionStream - reputation gained on completion of the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamReputationCompletion() (*krpcgo.Stream[float64], error) {
+func (s *Contract) ReputationCompletionStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -12974,10 +12975,10 @@ func (s *Contract) ReputationFailure() (float64, error) {
 	return vv, nil
 }
 
-// StreamReputationFailure - reputation lost if the contract is failed.
+// ReputationFailureStream - reputation lost if the contract is failed.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamReputationFailure() (*krpcgo.Stream[float64], error) {
+func (s *Contract) ReputationFailureStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13039,10 +13040,10 @@ func (s *Contract) ScienceCompletion() (float64, error) {
 	return vv, nil
 }
 
-// StreamScienceCompletion - science gained on completion of the contract.
+// ScienceCompletionStream - science gained on completion of the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamScienceCompletion() (*krpcgo.Stream[float64], error) {
+func (s *Contract) ScienceCompletionStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13104,10 +13105,10 @@ func (s *Contract) Parameters() ([]*ContractParameter, error) {
 	return vv, nil
 }
 
-// StreamParameters - parameters for the contract.
+// ParametersStream - parameters for the contract.
 //
 // Allowed game scenes: any.
-func (s *Contract) StreamParameters() (*krpcgo.Stream[[]*ContractParameter], error) {
+func (s *Contract) ParametersStream() (*krpcgo.Stream[[]*ContractParameter], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13169,10 +13170,10 @@ func (s *ContractManager) Types() (map[string]struct{}, error) {
 	return vv, nil
 }
 
-// StreamTypes - a list of all contract types.
+// TypesStream - a list of all contract types.
 //
 // Allowed game scenes: any.
-func (s *ContractManager) StreamTypes() (*krpcgo.Stream[map[string]struct{}], error) {
+func (s *ContractManager) TypesStream() (*krpcgo.Stream[map[string]struct{}], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13234,10 +13235,10 @@ func (s *ContractManager) AllContracts() ([]*Contract, error) {
 	return vv, nil
 }
 
-// StreamAllContracts - a list of all contracts.
+// AllContractsStream - a list of all contracts.
 //
 // Allowed game scenes: any.
-func (s *ContractManager) StreamAllContracts() (*krpcgo.Stream[[]*Contract], error) {
+func (s *ContractManager) AllContractsStream() (*krpcgo.Stream[[]*Contract], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13299,10 +13300,10 @@ func (s *ContractManager) ActiveContracts() ([]*Contract, error) {
 	return vv, nil
 }
 
-// StreamActiveContracts - a list of all active contracts.
+// ActiveContractsStream - a list of all active contracts.
 //
 // Allowed game scenes: any.
-func (s *ContractManager) StreamActiveContracts() (*krpcgo.Stream[[]*Contract], error) {
+func (s *ContractManager) ActiveContractsStream() (*krpcgo.Stream[[]*Contract], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13364,10 +13365,10 @@ func (s *ContractManager) OfferedContracts() ([]*Contract, error) {
 	return vv, nil
 }
 
-// StreamOfferedContracts - a list of all offered, but unaccepted, contracts.
+// OfferedContractsStream - a list of all offered, but unaccepted, contracts.
 //
 // Allowed game scenes: any.
-func (s *ContractManager) StreamOfferedContracts() (*krpcgo.Stream[[]*Contract], error) {
+func (s *ContractManager) OfferedContractsStream() (*krpcgo.Stream[[]*Contract], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13429,10 +13430,10 @@ func (s *ContractManager) CompletedContracts() ([]*Contract, error) {
 	return vv, nil
 }
 
-// StreamCompletedContracts - a list of all completed contracts.
+// CompletedContractsStream - a list of all completed contracts.
 //
 // Allowed game scenes: any.
-func (s *ContractManager) StreamCompletedContracts() (*krpcgo.Stream[[]*Contract], error) {
+func (s *ContractManager) CompletedContractsStream() (*krpcgo.Stream[[]*Contract], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13494,10 +13495,10 @@ func (s *ContractManager) FailedContracts() ([]*Contract, error) {
 	return vv, nil
 }
 
-// StreamFailedContracts - a list of all failed contracts.
+// FailedContractsStream - a list of all failed contracts.
 //
 // Allowed game scenes: any.
-func (s *ContractManager) StreamFailedContracts() (*krpcgo.Stream[[]*Contract], error) {
+func (s *ContractManager) FailedContractsStream() (*krpcgo.Stream[[]*Contract], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13559,10 +13560,10 @@ func (s *ContractParameter) Title() (string, error) {
 	return vv, nil
 }
 
-// StreamTitle - title of the parameter.
+// TitleStream - title of the parameter.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamTitle() (*krpcgo.Stream[string], error) {
+func (s *ContractParameter) TitleStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13624,10 +13625,10 @@ func (s *ContractParameter) Notes() (string, error) {
 	return vv, nil
 }
 
-// StreamNotes - notes for the parameter.
+// NotesStream - notes for the parameter.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamNotes() (*krpcgo.Stream[string], error) {
+func (s *ContractParameter) NotesStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13689,10 +13690,10 @@ func (s *ContractParameter) Children() ([]*ContractParameter, error) {
 	return vv, nil
 }
 
-// StreamChildren - child contract parameters.
+// ChildrenStream - child contract parameters.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamChildren() (*krpcgo.Stream[[]*ContractParameter], error) {
+func (s *ContractParameter) ChildrenStream() (*krpcgo.Stream[[]*ContractParameter], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13754,10 +13755,10 @@ func (s *ContractParameter) Completed() (bool, error) {
 	return vv, nil
 }
 
-// StreamCompleted - whether the parameter has been completed.
+// CompletedStream - whether the parameter has been completed.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamCompleted() (*krpcgo.Stream[bool], error) {
+func (s *ContractParameter) CompletedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13819,10 +13820,10 @@ func (s *ContractParameter) Failed() (bool, error) {
 	return vv, nil
 }
 
-// StreamFailed - whether the parameter has been failed.
+// FailedStream - whether the parameter has been failed.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamFailed() (*krpcgo.Stream[bool], error) {
+func (s *ContractParameter) FailedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13884,10 +13885,10 @@ func (s *ContractParameter) Optional() (bool, error) {
 	return vv, nil
 }
 
-// StreamOptional - whether the contract parameter is optional.
+// OptionalStream - whether the contract parameter is optional.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamOptional() (*krpcgo.Stream[bool], error) {
+func (s *ContractParameter) OptionalStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -13949,11 +13950,11 @@ func (s *ContractParameter) FundsCompletion() (float64, error) {
 	return vv, nil
 }
 
-// StreamFundsCompletion - funds received on completion of the contract
+// FundsCompletionStream - funds received on completion of the contract
 // parameter.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamFundsCompletion() (*krpcgo.Stream[float64], error) {
+func (s *ContractParameter) FundsCompletionStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14015,10 +14016,10 @@ func (s *ContractParameter) FundsFailure() (float64, error) {
 	return vv, nil
 }
 
-// StreamFundsFailure - funds lost if the contract parameter is failed.
+// FundsFailureStream - funds lost if the contract parameter is failed.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamFundsFailure() (*krpcgo.Stream[float64], error) {
+func (s *ContractParameter) FundsFailureStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14081,11 +14082,11 @@ func (s *ContractParameter) ReputationCompletion() (float64, error) {
 	return vv, nil
 }
 
-// StreamReputationCompletion - reputation gained on completion of the contract
+// ReputationCompletionStream - reputation gained on completion of the contract
 // parameter.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamReputationCompletion() (*krpcgo.Stream[float64], error) {
+func (s *ContractParameter) ReputationCompletionStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14147,11 +14148,11 @@ func (s *ContractParameter) ReputationFailure() (float64, error) {
 	return vv, nil
 }
 
-// StreamReputationFailure - reputation lost if the contract parameter is
+// ReputationFailureStream - reputation lost if the contract parameter is
 // failed.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamReputationFailure() (*krpcgo.Stream[float64], error) {
+func (s *ContractParameter) ReputationFailureStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14213,11 +14214,11 @@ func (s *ContractParameter) ScienceCompletion() (float64, error) {
 	return vv, nil
 }
 
-// StreamScienceCompletion - science gained on completion of the contract
+// ScienceCompletionStream - science gained on completion of the contract
 // parameter.
 //
 // Allowed game scenes: any.
-func (s *ContractParameter) StreamScienceCompletion() (*krpcgo.Stream[float64], error) {
+func (s *ContractParameter) ScienceCompletionStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14280,11 +14281,11 @@ func (s *Control) ActivateNextStage() ([]*Vessel, error) {
 	return vv, nil
 }
 
-// StreamActivateNextStage - activates the next stage. Equivalent to pressing
+// ActivateNextStageStream - activates the next stage. Equivalent to pressing
 // the space bar in-game.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamActivateNextStage() (*krpcgo.Stream[[]*Vessel], error) {
+func (s *Control) ActivateNextStageStream() (*krpcgo.Stream[[]*Vessel], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14354,10 +14355,10 @@ func (s *Control) GetActionGroup(group uint32) (bool, error) {
 	return vv, nil
 }
 
-// StreamGetActionGroup - returns true if the given action group is enabled.
+// GetActionGroupStream - returns true if the given action group is enabled.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamGetActionGroup(group uint32) (*krpcgo.Stream[bool], error) {
+func (s *Control) GetActionGroupStream(group uint32) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14592,10 +14593,10 @@ func (s *Control) State() (ControlState, error) {
 	return vv, nil
 }
 
-// StreamState - the control state of the vessel.
+// StateStream - the control state of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamState() (*krpcgo.Stream[ControlState], error) {
+func (s *Control) StateStream() (*krpcgo.Stream[ControlState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14658,11 +14659,11 @@ func (s *Control) Source() (ControlSource, error) {
 	return vv, nil
 }
 
-// StreamSource - the source of the vessels control, for example by a kerbal or
+// SourceStream - the source of the vessels control, for example by a kerbal or
 // a probe core.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamSource() (*krpcgo.Stream[ControlSource], error) {
+func (s *Control) SourceStream() (*krpcgo.Stream[ControlSource], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14724,10 +14725,10 @@ func (s *Control) SAS() (bool, error) {
 	return vv, nil
 }
 
-// StreamSAS - the state of SAS.
+// SASStream - the state of SASStream.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamSAS() (*krpcgo.Stream[bool], error) {
+func (s *Control) SASStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14824,12 +14825,12 @@ func (s *Control) SASMode() (SASMode, error) {
 	return vv, nil
 }
 
-// StreamSASMode - the current <see cref="T:SpaceCenter.SASMode" />. These modes
-// are equivalent to the mode buttons to the left of the navball that appear
-// when SAS is enabled.
+// SASModeStream - the current <see cref="T:SpaceCenter.SASModeStream" />. These
+// modes are equivalent to the mode buttons to the left of the navball that
+// appear when SAS is enabled.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamSASMode() (*krpcgo.Stream[SASMode], error) {
+func (s *Control) SASModeStream() (*krpcgo.Stream[SASMode], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -14928,12 +14929,12 @@ func (s *Control) SpeedMode() (SpeedMode, error) {
 	return vv, nil
 }
 
-// StreamSpeedMode - the current <see cref="T:SpaceCenter.SpeedMode" /> of the
-// navball. This is the mode displayed next to the speed at the top of the
+// SpeedModeStream - the current <see cref="T:SpaceCenter.SpeedModeStream" /> of
+// the navball. This is the mode displayed next to the speed at the top of the
 // navball.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamSpeedMode() (*krpcgo.Stream[SpeedMode], error) {
+func (s *Control) SpeedModeStream() (*krpcgo.Stream[SpeedMode], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15030,10 +15031,10 @@ func (s *Control) RCS() (bool, error) {
 	return vv, nil
 }
 
-// StreamRCS - the state of RCS.
+// RCSStream - the state of RCSStream.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamRCS() (*krpcgo.Stream[bool], error) {
+func (s *Control) RCSStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15130,12 +15131,12 @@ func (s *Control) ReactionWheels() (bool, error) {
 	return vv, nil
 }
 
-// StreamReactionWheels - returns whether all reactive wheels on the vessel are
+// ReactionWheelsStream - returns whether all reactive wheels on the vessel are
 // active, and sets the active state of all reaction wheels. See <see
 // cref="M:SpaceCenter.ReactionWheel.Active" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamReactionWheels() (*krpcgo.Stream[bool], error) {
+func (s *Control) ReactionWheelsStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15232,10 +15233,10 @@ func (s *Control) Gear() (bool, error) {
 	return vv, nil
 }
 
-// StreamGear - the state of the landing gear/legs.
+// GearStream - the state of the landing gear/legs.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamGear() (*krpcgo.Stream[bool], error) {
+func (s *Control) GearStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15332,12 +15333,12 @@ func (s *Control) Legs() (bool, error) {
 	return vv, nil
 }
 
-// StreamLegs - returns whether all landing legs on the vessel are deployed, and
+// LegsStream - returns whether all landing legs on the vessel are deployed, and
 // sets the deployment state of all landing legs. Does not include wheels (for
 // example landing gear). See <see cref="M:SpaceCenter.Leg.Deployed" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamLegs() (*krpcgo.Stream[bool], error) {
+func (s *Control) LegsStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15436,12 +15437,12 @@ func (s *Control) Wheels() (bool, error) {
 	return vv, nil
 }
 
-// StreamWheels - returns whether all wheels on the vessel are deployed, and
+// WheelsStream - returns whether all wheels on the vessel are deployed, and
 // sets the deployment state of all wheels. Does not include landing legs. See
 // <see cref="M:SpaceCenter.Wheel.Deployed" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamWheels() (*krpcgo.Stream[bool], error) {
+func (s *Control) WheelsStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15538,10 +15539,10 @@ func (s *Control) Lights() (bool, error) {
 	return vv, nil
 }
 
-// StreamLights - the state of the lights.
+// LightsStream - the state of the lights.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamLights() (*krpcgo.Stream[bool], error) {
+func (s *Control) LightsStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15636,10 +15637,10 @@ func (s *Control) Brakes() (bool, error) {
 	return vv, nil
 }
 
-// StreamBrakes - the state of the wheel brakes.
+// BrakesStream - the state of the wheel brakes.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamBrakes() (*krpcgo.Stream[bool], error) {
+func (s *Control) BrakesStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15736,12 +15737,12 @@ func (s *Control) Antennas() (bool, error) {
 	return vv, nil
 }
 
-// StreamAntennas - returns whether all antennas on the vessel are deployed, and
+// AntennasStream - returns whether all antennas on the vessel are deployed, and
 // sets the deployment state of all antennas. See <see
 // cref="M:SpaceCenter.Antenna.Deployed" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamAntennas() (*krpcgo.Stream[bool], error) {
+func (s *Control) AntennasStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15840,12 +15841,12 @@ func (s *Control) CargoBays() (bool, error) {
 	return vv, nil
 }
 
-// StreamCargoBays - returns whether any of the cargo bays on the vessel are
+// CargoBaysStream - returns whether any of the cargo bays on the vessel are
 // open, and sets the open state of all cargo bays. See <see
 // cref="M:SpaceCenter.CargoBay.Open" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamCargoBays() (*krpcgo.Stream[bool], error) {
+func (s *Control) CargoBaysStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -15944,12 +15945,12 @@ func (s *Control) Intakes() (bool, error) {
 	return vv, nil
 }
 
-// StreamIntakes - returns whether all of the air intakes on the vessel are
+// IntakesStream - returns whether all of the air intakes on the vessel are
 // open, and sets the open state of all air intakes. See <see
 // cref="M:SpaceCenter.Intake.Open" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamIntakes() (*krpcgo.Stream[bool], error) {
+func (s *Control) IntakesStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16048,12 +16049,12 @@ func (s *Control) Parachutes() (bool, error) {
 	return vv, nil
 }
 
-// StreamParachutes - returns whether all parachutes on the vessel are deployed,
+// ParachutesStream - returns whether all parachutes on the vessel are deployed,
 // and sets the deployment state of all parachutes. Cannot be set to false. See
 // <see cref="M:SpaceCenter.Parachute.Deployed" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamParachutes() (*krpcgo.Stream[bool], error) {
+func (s *Control) ParachutesStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16152,12 +16153,12 @@ func (s *Control) Radiators() (bool, error) {
 	return vv, nil
 }
 
-// StreamRadiators - returns whether all radiators on the vessel are deployed,
+// RadiatorsStream - returns whether all radiators on the vessel are deployed,
 // and sets the deployment state of all radiators. See <see
 // cref="M:SpaceCenter.Radiator.Deployed" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamRadiators() (*krpcgo.Stream[bool], error) {
+func (s *Control) RadiatorsStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16256,12 +16257,12 @@ func (s *Control) ResourceHarvesters() (bool, error) {
 	return vv, nil
 }
 
-// StreamResourceHarvesters - returns whether all of the resource harvesters on
+// ResourceHarvestersStream - returns whether all of the resource harvesters on
 // the vessel are deployed, and sets the deployment state of all resource
 // harvesters. See <see cref="M:SpaceCenter.ResourceHarvester.Deployed" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamResourceHarvesters() (*krpcgo.Stream[bool], error) {
+func (s *Control) ResourceHarvestersStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16360,13 +16361,13 @@ func (s *Control) ResourceHarvestersActive() (bool, error) {
 	return vv, nil
 }
 
-// StreamResourceHarvestersActive - returns whether any of the resource
+// ResourceHarvestersActiveStream - returns whether any of the resource
 // harvesters on the vessel are active, and sets the active state of all
 // resource harvesters. See <see cref="M:SpaceCenter.ResourceHarvester.Active"
 // />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamResourceHarvestersActive() (*krpcgo.Stream[bool], error) {
+func (s *Control) ResourceHarvestersActiveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16465,12 +16466,12 @@ func (s *Control) SolarPanels() (bool, error) {
 	return vv, nil
 }
 
-// StreamSolarPanels - returns whether all solar panels on the vessel are
+// SolarPanelsStream - returns whether all solar panels on the vessel are
 // deployed, and sets the deployment state of all solar panels. See <see
 // cref="M:SpaceCenter.SolarPanel.Deployed" />.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamSolarPanels() (*krpcgo.Stream[bool], error) {
+func (s *Control) SolarPanelsStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16567,10 +16568,10 @@ func (s *Control) Abort() (bool, error) {
 	return vv, nil
 }
 
-// StreamAbort - the state of the abort action group.
+// AbortStream - the state of the abort action group.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamAbort() (*krpcgo.Stream[bool], error) {
+func (s *Control) AbortStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16665,10 +16666,10 @@ func (s *Control) Throttle() (float32, error) {
 	return vv, nil
 }
 
-// StreamThrottle - the state of the throttle. A value between 0 and 1.
+// ThrottleStream - the state of the throttle. A value between 0 and 1.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamThrottle() (*krpcgo.Stream[float32], error) {
+func (s *Control) ThrottleStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16767,14 +16768,14 @@ func (s *Control) InputMode() (ControlInputMode, error) {
 	return vv, nil
 }
 
-// StreamInputMode - sets the behavior of the pitch, yaw, roll and translation
+// InputModeStream - sets the behavior of the pitch, yaw, roll and translation
 // control inputs. When set to additive, these inputs are added to the vessels
 // current inputs. This mode is the default. When set to override, these inputs
 // (if non-zero) override the vessels inputs. This mode prevents keyboard
 // control, or SAS, from interfering with the controls when they are set.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamInputMode() (*krpcgo.Stream[ControlInputMode], error) {
+func (s *Control) InputModeStream() (*krpcgo.Stream[ControlInputMode], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16874,11 +16875,11 @@ func (s *Control) Pitch() (float32, error) {
 	return vv, nil
 }
 
-// StreamPitch - the state of the pitch control. A value between -1 and 1.
+// PitchStream - the state of the pitch control. A value between -1 and 1.
 // Equivalent to the w and s keys.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamPitch() (*krpcgo.Stream[float32], error) {
+func (s *Control) PitchStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -16975,11 +16976,11 @@ func (s *Control) Yaw() (float32, error) {
 	return vv, nil
 }
 
-// StreamYaw - the state of the yaw control. A value between -1 and 1.
+// YawStream - the state of the yaw control. A value between -1 and 1.
 // Equivalent to the a and d keys.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamYaw() (*krpcgo.Stream[float32], error) {
+func (s *Control) YawStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17076,11 +17077,11 @@ func (s *Control) Roll() (float32, error) {
 	return vv, nil
 }
 
-// StreamRoll - the state of the roll control. A value between -1 and 1.
+// RollStream - the state of the roll control. A value between -1 and 1.
 // Equivalent to the q and e keys.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamRoll() (*krpcgo.Stream[float32], error) {
+func (s *Control) RollStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17177,11 +17178,11 @@ func (s *Control) Forward() (float32, error) {
 	return vv, nil
 }
 
-// StreamForward - the state of the forward translational control. A value
+// ForwardStream - the state of the forward translational control. A value
 // between -1 and 1. Equivalent to the h and n keys.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamForward() (*krpcgo.Stream[float32], error) {
+func (s *Control) ForwardStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17278,11 +17279,11 @@ func (s *Control) Up() (float32, error) {
 	return vv, nil
 }
 
-// StreamUp - the state of the up translational control. A value between -1 and
+// UpStream - the state of the up translational control. A value between -1 and
 // 1. Equivalent to the i and k keys.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamUp() (*krpcgo.Stream[float32], error) {
+func (s *Control) UpStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17379,11 +17380,11 @@ func (s *Control) Right() (float32, error) {
 	return vv, nil
 }
 
-// StreamRight - the state of the right translational control. A value between
+// RightStream - the state of the right translational control. A value between
 // -1 and 1. Equivalent to the j and l keys.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamRight() (*krpcgo.Stream[float32], error) {
+func (s *Control) RightStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17481,12 +17482,12 @@ func (s *Control) WheelThrottle() (float32, error) {
 	return vv, nil
 }
 
-// StreamWheelThrottle - the state of the wheel throttle. A value between -1 and
+// WheelThrottleStream - the state of the wheel throttle. A value between -1 and
 // 1. A value of 1 rotates the wheels forwards, a value of -1 rotates the wheels
 // backwards.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamWheelThrottle() (*krpcgo.Stream[float32], error) {
+func (s *Control) WheelThrottleStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17584,11 +17585,11 @@ func (s *Control) WheelSteering() (float32, error) {
 	return vv, nil
 }
 
-// StreamWheelSteering - the state of the wheel steering. A value between -1 and
+// WheelSteeringStream - the state of the wheel steering. A value between -1 and
 // 1. A value of 1 steers to the left, and a value of -1 steers to the right.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamWheelSteering() (*krpcgo.Stream[float32], error) {
+func (s *Control) WheelSteeringStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17685,11 +17686,11 @@ func (s *Control) CurrentStage() (int32, error) {
 	return vv, nil
 }
 
-// StreamCurrentStage - the current stage of the vessel. Corresponds to the
+// CurrentStageStream - the current stage of the vessel. Corresponds to the
 // stage number in the in-game UI.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamCurrentStage() (*krpcgo.Stream[int32], error) {
+func (s *Control) CurrentStageStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17751,10 +17752,10 @@ func (s *Control) StageLock() (bool, error) {
 	return vv, nil
 }
 
-// StreamStageLock - whether staging is locked on the vessel.
+// StageLockStream - whether staging is locked on the vessel.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamStageLock() (*krpcgo.Stream[bool], error) {
+func (s *Control) StageLockStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17850,11 +17851,11 @@ func (s *Control) Nodes() ([]*Node, error) {
 	return vv, nil
 }
 
-// StreamNodes - returns a list of all existing maneuver nodes, ordered by time
+// NodesStream - returns a list of all existing maneuver nodes, ordered by time
 // from first to last.
 //
 // Allowed game scenes: any.
-func (s *Control) StreamNodes() (*krpcgo.Stream[[]*Node], error) {
+func (s *Control) NodesStream() (*krpcgo.Stream[[]*Node], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -17916,10 +17917,10 @@ func (s *CrewMember) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the crew members name.
+// NameStream - the crew members name.
 //
 // Allowed game scenes: any.
-func (s *CrewMember) StreamName() (*krpcgo.Stream[string], error) {
+func (s *CrewMember) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18014,10 +18015,10 @@ func (s *CrewMember) Type() (CrewMemberType, error) {
 	return vv, nil
 }
 
-// StreamType - the type of crew member.
+// TypeStream - the type of crew member.
 //
 // Allowed game scenes: any.
-func (s *CrewMember) StreamType() (*krpcgo.Stream[CrewMemberType], error) {
+func (s *CrewMember) TypeStream() (*krpcgo.Stream[CrewMemberType], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18079,10 +18080,10 @@ func (s *CrewMember) OnMission() (bool, error) {
 	return vv, nil
 }
 
-// StreamOnMission - whether the crew member is on a mission.
+// OnMissionStream - whether the crew member is on a mission.
 //
 // Allowed game scenes: any.
-func (s *CrewMember) StreamOnMission() (*krpcgo.Stream[bool], error) {
+func (s *CrewMember) OnMissionStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18144,10 +18145,10 @@ func (s *CrewMember) Courage() (float32, error) {
 	return vv, nil
 }
 
-// StreamCourage - the crew members courage.
+// CourageStream - the crew members courage.
 //
 // Allowed game scenes: any.
-func (s *CrewMember) StreamCourage() (*krpcgo.Stream[float32], error) {
+func (s *CrewMember) CourageStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18242,10 +18243,10 @@ func (s *CrewMember) Stupidity() (float32, error) {
 	return vv, nil
 }
 
-// StreamStupidity - the crew members stupidity.
+// StupidityStream - the crew members stupidity.
 //
 // Allowed game scenes: any.
-func (s *CrewMember) StreamStupidity() (*krpcgo.Stream[float32], error) {
+func (s *CrewMember) StupidityStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18340,10 +18341,10 @@ func (s *CrewMember) Experience() (float32, error) {
 	return vv, nil
 }
 
-// StreamExperience - the crew members experience.
+// ExperienceStream - the crew members experience.
 //
 // Allowed game scenes: any.
-func (s *CrewMember) StreamExperience() (*krpcgo.Stream[float32], error) {
+func (s *CrewMember) ExperienceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18438,10 +18439,10 @@ func (s *CrewMember) Badass() (bool, error) {
 	return vv, nil
 }
 
-// StreamBadass - whether the crew member is a badass.
+// BadassStream - whether the crew member is a badass.
 //
 // Allowed game scenes: any.
-func (s *CrewMember) StreamBadass() (*krpcgo.Stream[bool], error) {
+func (s *CrewMember) BadassStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18536,10 +18537,10 @@ func (s *CrewMember) Veteran() (bool, error) {
 	return vv, nil
 }
 
-// StreamVeteran - whether the crew member is a veteran.
+// VeteranStream - whether the crew member is a veteran.
 //
 // Allowed game scenes: any.
-func (s *CrewMember) StreamVeteran() (*krpcgo.Stream[bool], error) {
+func (s *CrewMember) VeteranStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18660,12 +18661,12 @@ func (s *Flight) SimulateAerodynamicForceAt(body *CelestialBody, position api.Tu
 	return vv, nil
 }
 
-// StreamSimulateAerodynamicForceAt - simulate and return the total aerodynamic
+// SimulateAerodynamicForceAtStream - simulate and return the total aerodynamic
 // forces acting on the vessel, if it where to be traveling with the given
 // velocity at the given position in the atmosphere of the given celestial body.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamSimulateAerodynamicForceAt(body *CelestialBody, position api.Tuple3[float64, float64, float64], velocity api.Tuple3[float64, float64, float64]) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) SimulateAerodynamicForceAtStream(body *CelestialBody, position api.Tuple3[float64, float64, float64], velocity api.Tuple3[float64, float64, float64]) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18751,10 +18752,10 @@ func (s *Flight) GForce() (float32, error) {
 	return vv, nil
 }
 
-// StreamGForce - the current G force acting on the vessel in <math>g</math>.
+// GForceStream - the current G force acting on the vessel in <math>g</math>.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamGForce() (*krpcgo.Stream[float32], error) {
+func (s *Flight) GForceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18817,11 +18818,11 @@ func (s *Flight) MeanAltitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamMeanAltitude - the altitude above sea level, in meters. Measured from
+// MeanAltitudeStream - the altitude above sea level, in meters. Measured from
 // the center of mass of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamMeanAltitude() (*krpcgo.Stream[float64], error) {
+func (s *Flight) MeanAltitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18885,12 +18886,12 @@ func (s *Flight) SurfaceAltitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamSurfaceAltitude - the altitude above the surface of the body or sea
+// SurfaceAltitudeStream - the altitude above the surface of the body or sea
 // level, whichever is closer, in meters. Measured from the center of mass of
 // the vessel.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamSurfaceAltitude() (*krpcgo.Stream[float64], error) {
+func (s *Flight) SurfaceAltitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -18954,12 +18955,12 @@ func (s *Flight) BedrockAltitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamBedrockAltitude - the altitude above the surface of the body, in
+// BedrockAltitudeStream - the altitude above the surface of the body, in
 // meters. When over water, this is the altitude above the sea floor. Measured
 // from the center of mass of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamBedrockAltitude() (*krpcgo.Stream[float64], error) {
+func (s *Flight) BedrockAltitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19023,12 +19024,12 @@ func (s *Flight) Elevation() (float64, error) {
 	return vv, nil
 }
 
-// StreamElevation - the elevation of the terrain under the vessel, in meters.
+// ElevationStream - the elevation of the terrain under the vessel, in meters.
 // This is the height of the terrain above sea level, and is negative when the
 // vessel is over the sea.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamElevation() (*krpcgo.Stream[float64], error) {
+func (s *Flight) ElevationStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19091,12 +19092,12 @@ func (s *Flight) Latitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamLatitude - the <a
-// href="https://en.wikipedia.org/wiki/Latitude">latitude</a> of the vessel for
-// the body being orbited, in degrees.
+// LatitudeStream - the <a
+// href="https://en.wikipedia.org/wiki/LatitudeStream">latitude</a> of the
+// vessel for the body being orbited, in degrees.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamLatitude() (*krpcgo.Stream[float64], error) {
+func (s *Flight) LatitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19160,12 +19161,12 @@ func (s *Flight) Longitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamLongitude - the <a
-// href="https://en.wikipedia.org/wiki/Longitude">longitude</a> of the vessel
-// for the body being orbited, in degrees.
+// LongitudeStream - the <a
+// href="https://en.wikipedia.org/wiki/LongitudeStream">longitude</a> of the
+// vessel for the body being orbited, in degrees.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamLongitude() (*krpcgo.Stream[float64], error) {
+func (s *Flight) LongitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19228,11 +19229,11 @@ func (s *Flight) Velocity() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamVelocity - the velocity of the vessel, in the reference frame <see
+// VelocityStream - the velocity of the vessel, in the reference frame <see
 // cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamVelocity() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) VelocityStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19295,11 +19296,11 @@ func (s *Flight) Speed() (float64, error) {
 	return vv, nil
 }
 
-// StreamSpeed - the speed of the vessel in meters per second, in the reference
+// SpeedStream - the speed of the vessel in meters per second, in the reference
 // frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamSpeed() (*krpcgo.Stream[float64], error) {
+func (s *Flight) SpeedStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19362,11 +19363,11 @@ func (s *Flight) HorizontalSpeed() (float64, error) {
 	return vv, nil
 }
 
-// StreamHorizontalSpeed - the horizontal speed of the vessel in meters per
+// HorizontalSpeedStream - the horizontal speed of the vessel in meters per
 // second, in the reference frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamHorizontalSpeed() (*krpcgo.Stream[float64], error) {
+func (s *Flight) HorizontalSpeedStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19429,11 +19430,11 @@ func (s *Flight) VerticalSpeed() (float64, error) {
 	return vv, nil
 }
 
-// StreamVerticalSpeed - the vertical speed of the vessel in meters per second,
+// VerticalSpeedStream - the vertical speed of the vessel in meters per second,
 // in the reference frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamVerticalSpeed() (*krpcgo.Stream[float64], error) {
+func (s *Flight) VerticalSpeedStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19496,11 +19497,11 @@ func (s *Flight) CenterOfMass() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamCenterOfMass - the position of the center of mass of the vessel, in the
+// CenterOfMassStream - the position of the center of mass of the vessel, in the
 // reference frame <see cref="T:SpaceCenter.ReferenceFrame" />
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamCenterOfMass() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) CenterOfMassStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19563,11 +19564,11 @@ func (s *Flight) Rotation() (api.Tuple4[float64, float64, float64, float64], err
 	return vv, nil
 }
 
-// StreamRotation - the rotation of the vessel, in the reference frame <see
+// RotationStream - the rotation of the vessel, in the reference frame <see
 // cref="T:SpaceCenter.ReferenceFrame" />
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamRotation() (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *Flight) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19630,11 +19631,11 @@ func (s *Flight) Direction() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamDirection - the direction that the vessel is pointing in, in the
+// DirectionStream - the direction that the vessel is pointing in, in the
 // reference frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamDirection() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) DirectionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19697,11 +19698,11 @@ func (s *Flight) Pitch() (float32, error) {
 	return vv, nil
 }
 
-// StreamPitch - the pitch of the vessel relative to the horizon, in degrees. A
+// PitchStream - the pitch of the vessel relative to the horizon, in degrees. A
 // value between -90° and +90°.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamPitch() (*krpcgo.Stream[float32], error) {
+func (s *Flight) PitchStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19764,11 +19765,11 @@ func (s *Flight) Heading() (float32, error) {
 	return vv, nil
 }
 
-// StreamHeading - the heading of the vessel (its angle relative to north), in
+// HeadingStream - the heading of the vessel (its angle relative to north), in
 // degrees. A value between 0° and 360°.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamHeading() (*krpcgo.Stream[float32], error) {
+func (s *Flight) HeadingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19831,11 +19832,11 @@ func (s *Flight) Roll() (float32, error) {
 	return vv, nil
 }
 
-// StreamRoll - the roll of the vessel relative to the horizon, in degrees. A
+// RollStream - the roll of the vessel relative to the horizon, in degrees. A
 // value between -180° and +180°.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamRoll() (*krpcgo.Stream[float32], error) {
+func (s *Flight) RollStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19898,11 +19899,11 @@ func (s *Flight) Prograde() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamPrograde - the prograde direction of the vessels orbit, in the
+// ProgradeStream - the prograde direction of the vessels orbit, in the
 // reference frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamPrograde() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) ProgradeStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -19965,11 +19966,11 @@ func (s *Flight) Retrograde() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamRetrograde - the retrograde direction of the vessels orbit, in the
+// RetrogradeStream - the retrograde direction of the vessels orbit, in the
 // reference frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamRetrograde() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) RetrogradeStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20032,11 +20033,11 @@ func (s *Flight) Normal() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamNormal - the direction normal to the vessels orbit, in the reference
+// NormalStream - the direction normal to the vessels orbit, in the reference
 // frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamNormal() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) NormalStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20099,11 +20100,11 @@ func (s *Flight) AntiNormal() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamAntiNormal - the direction opposite to the normal of the vessels orbit,
+// AntiNormalStream - the direction opposite to the normal of the vessels orbit,
 // in the reference frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamAntiNormal() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) AntiNormalStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20166,11 +20167,11 @@ func (s *Flight) Radial() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamRadial - the radial direction of the vessels orbit, in the reference
+// RadialStream - the radial direction of the vessels orbit, in the reference
 // frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamRadial() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) RadialStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20233,12 +20234,12 @@ func (s *Flight) AntiRadial() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamAntiRadial - the direction opposite to the radial direction of the
+// AntiRadialStream - the direction opposite to the radial direction of the
 // vessels orbit, in the reference frame <see
 // cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamAntiRadial() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) AntiRadialStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20301,11 +20302,11 @@ func (s *Flight) AtmosphereDensity() (float32, error) {
 	return vv, nil
 }
 
-// StreamAtmosphereDensity - the current density of the atmosphere around the
+// AtmosphereDensityStream - the current density of the atmosphere around the
 // vessel, in <math>kg/m^3</math>.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamAtmosphereDensity() (*krpcgo.Stream[float32], error) {
+func (s *Flight) AtmosphereDensityStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20370,13 +20371,13 @@ func (s *Flight) DynamicPressure() (float32, error) {
 	return vv, nil
 }
 
-// StreamDynamicPressure - the dynamic pressure acting on the vessel, in
+// DynamicPressureStream - the dynamic pressure acting on the vessel, in
 // Pascals. This is a measure of the strength of the aerodynamic forces. It is
 // equal to <math>\frac{1}{2} . \mbox{air density} . \mbox{velocity}^2</math>.
 // It is commonly denoted <math>Q</math>.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamDynamicPressure() (*krpcgo.Stream[float32], error) {
+func (s *Flight) DynamicPressureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20439,11 +20440,11 @@ func (s *Flight) StaticPressureAtMSL() (float32, error) {
 	return vv, nil
 }
 
-// StreamStaticPressureAtMSL - the static atmospheric pressure at mean sea
+// StaticPressureAtMSLStream - the static atmospheric pressure at mean sea
 // level, in Pascals.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamStaticPressureAtMSL() (*krpcgo.Stream[float32], error) {
+func (s *Flight) StaticPressureAtMSLStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20506,11 +20507,11 @@ func (s *Flight) StaticPressure() (float32, error) {
 	return vv, nil
 }
 
-// StreamStaticPressure - the static atmospheric pressure acting on the vessel,
+// StaticPressureStream - the static atmospheric pressure acting on the vessel,
 // in Pascals.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamStaticPressure() (*krpcgo.Stream[float32], error) {
+func (s *Flight) StaticPressureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20573,11 +20574,11 @@ func (s *Flight) AerodynamicForce() (api.Tuple3[float64, float64, float64], erro
 	return vv, nil
 }
 
-// StreamAerodynamicForce - the total aerodynamic forces acting on the vessel,
+// AerodynamicForceStream - the total aerodynamic forces acting on the vessel,
 // in reference frame <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamAerodynamicForce() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) AerodynamicForceStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20641,12 +20642,12 @@ func (s *Flight) Lift() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamLift - the <a
+// LiftStream - the <a
 // href="https://en.wikipedia.org/wiki/Aerodynamic_force">aerodynamic lift</a>
 // currently acting on the vessel.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamLift() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) LiftStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20710,12 +20711,12 @@ func (s *Flight) Drag() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamDrag - the <a
+// DragStream - the <a
 // href="https://en.wikipedia.org/wiki/Aerodynamic_force">aerodynamic drag</a>
 // currently acting on the vessel.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamDrag() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Flight) DragStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20778,11 +20779,11 @@ func (s *Flight) SpeedOfSound() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpeedOfSound - the speed of sound, in the atmosphere around the vessel,
+// SpeedOfSoundStream - the speed of sound, in the atmosphere around the vessel,
 // in <math>m/s</math>.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamSpeedOfSound() (*krpcgo.Stream[float32], error) {
+func (s *Flight) SpeedOfSoundStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20844,10 +20845,10 @@ func (s *Flight) Mach() (float32, error) {
 	return vv, nil
 }
 
-// StreamMach - the speed of the vessel, in multiples of the speed of sound.
+// MachStream - the speed of the vessel, in multiples of the speed of sound.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamMach() (*krpcgo.Stream[float32], error) {
+func (s *Flight) MachStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20909,10 +20910,10 @@ func (s *Flight) ReynoldsNumber() (float32, error) {
 	return vv, nil
 }
 
-// StreamReynoldsNumber - the vessels Reynolds number.
+// ReynoldsNumberStream - the vessels Reynolds number.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamReynoldsNumber() (*krpcgo.Stream[float32], error) {
+func (s *Flight) ReynoldsNumberStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -20975,12 +20976,12 @@ func (s *Flight) TrueAirSpeed() (float32, error) {
 	return vv, nil
 }
 
-// StreamTrueAirSpeed - the <a
+// TrueAirSpeedStream - the <a
 // href="https://en.wikipedia.org/wiki/True_airspeed">true air speed</a> of the
 // vessel, in meters per second.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamTrueAirSpeed() (*krpcgo.Stream[float32], error) {
+func (s *Flight) TrueAirSpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21044,12 +21045,12 @@ func (s *Flight) EquivalentAirSpeed() (float32, error) {
 	return vv, nil
 }
 
-// StreamEquivalentAirSpeed - the <a
+// EquivalentAirSpeedStream - the <a
 // href="https://en.wikipedia.org/wiki/Equivalent_airspeed">equivalent air
 // speed</a> of the vessel, in meters per second.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamEquivalentAirSpeed() (*krpcgo.Stream[float32], error) {
+func (s *Flight) EquivalentAirSpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21113,12 +21114,12 @@ func (s *Flight) TerminalVelocity() (float32, error) {
 	return vv, nil
 }
 
-// StreamTerminalVelocity - an estimate of the current terminal velocity of the
+// TerminalVelocityStream - an estimate of the current terminal velocity of the
 // vessel, in meters per second. This is the speed at which the drag forces
 // cancel out the force of gravity.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamTerminalVelocity() (*krpcgo.Stream[float32], error) {
+func (s *Flight) TerminalVelocityStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21181,11 +21182,11 @@ func (s *Flight) AngleOfAttack() (float32, error) {
 	return vv, nil
 }
 
-// StreamAngleOfAttack - the pitch angle between the orientation of the vessel
+// AngleOfAttackStream - the pitch angle between the orientation of the vessel
 // and its velocity vector, in degrees.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamAngleOfAttack() (*krpcgo.Stream[float32], error) {
+func (s *Flight) AngleOfAttackStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21248,11 +21249,11 @@ func (s *Flight) SideslipAngle() (float32, error) {
 	return vv, nil
 }
 
-// StreamSideslipAngle - the yaw angle between the orientation of the vessel and
+// SideslipAngleStream - the yaw angle between the orientation of the vessel and
 // its velocity vector, in degrees.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamSideslipAngle() (*krpcgo.Stream[float32], error) {
+func (s *Flight) SideslipAngleStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21318,14 +21319,14 @@ func (s *Flight) TotalAirTemperature() (float32, error) {
 	return vv, nil
 }
 
-// StreamTotalAirTemperature - the <a
+// TotalAirTemperatureStream - the <a
 // href="https://en.wikipedia.org/wiki/Total_air_temperature">total air
 // temperature</a> of the atmosphere around the vessel, in Kelvin. This includes
 // the <see cref="M:SpaceCenter.Flight.StaticAirTemperature" /> and the vessel's
 // kinetic energy.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamTotalAirTemperature() (*krpcgo.Stream[float32], error) {
+func (s *Flight) TotalAirTemperatureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21389,12 +21390,12 @@ func (s *Flight) StaticAirTemperature() (float32, error) {
 	return vv, nil
 }
 
-// StreamStaticAirTemperature - the <a
+// StaticAirTemperatureStream - the <a
 // href="https://en.wikipedia.org/wiki/Total_air_temperature">static (ambient)
 // temperature</a> of the atmosphere around the vessel, in Kelvin.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamStaticAirTemperature() (*krpcgo.Stream[float32], error) {
+func (s *Flight) StaticAirTemperatureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21458,12 +21459,12 @@ func (s *Flight) StallFraction() (float32, error) {
 	return vv, nil
 }
 
-// StreamStallFraction - the current amount of stall, between 0 and 1. A value
+// StallFractionStream - the current amount of stall, between 0 and 1. A value
 // greater than 0.005 indicates a minor stall and a value greater than 0.5
 // indicates a large-scale stall.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamStallFraction() (*krpcgo.Stream[float32], error) {
+func (s *Flight) StallFractionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21526,11 +21527,11 @@ func (s *Flight) DragCoefficient() (float32, error) {
 	return vv, nil
 }
 
-// StreamDragCoefficient - the coefficient of drag. This is the amount of drag
+// DragCoefficientStream - the coefficient of drag. This is the amount of drag
 // produced by the vessel. It depends on air speed, air density and wing area.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamDragCoefficient() (*krpcgo.Stream[float32], error) {
+func (s *Flight) DragCoefficientStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21593,11 +21594,11 @@ func (s *Flight) LiftCoefficient() (float32, error) {
 	return vv, nil
 }
 
-// StreamLiftCoefficient - the coefficient of lift. This is the amount of lift
+// LiftCoefficientStream - the coefficient of lift. This is the amount of lift
 // produced by the vessel, and depends on air speed, air density and wing area.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamLiftCoefficient() (*krpcgo.Stream[float32], error) {
+func (s *Flight) LiftCoefficientStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21661,12 +21662,12 @@ func (s *Flight) BallisticCoefficient() (float32, error) {
 	return vv, nil
 }
 
-// StreamBallisticCoefficient - the <a
+// BallisticCoefficientStream - the <a
 // href="https://en.wikipedia.org/wiki/Ballistic_coefficient">ballistic
 // coefficient</a>.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamBallisticCoefficient() (*krpcgo.Stream[float32], error) {
+func (s *Flight) BallisticCoefficientStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21732,14 +21733,14 @@ func (s *Flight) ThrustSpecificFuelConsumption() (float32, error) {
 	return vv, nil
 }
 
-// StreamThrustSpecificFuelConsumption - the thrust specific fuel consumption
+// ThrustSpecificFuelConsumptionStream - the thrust specific fuel consumption
 // for the jet engines on the vessel. This is a measure of the efficiency of the
 // engines, with a lower value indicating a more efficient vessel. This value is
 // the number of Newtons of fuel that are burned, per hour, to produce one
 // newton of thrust.
 //
 // Allowed game scenes: any.
-func (s *Flight) StreamThrustSpecificFuelConsumption() (*krpcgo.Stream[float32], error) {
+func (s *Flight) ThrustSpecificFuelConsumptionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21809,10 +21810,10 @@ func (s *Node) BurnVector(referenceFrame *ReferenceFrame) (api.Tuple3[float64, f
 	return vv, nil
 }
 
-// StreamBurnVector - returns the burn vector for the maneuver node.
+// BurnVectorStream - returns the burn vector for the maneuver node.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamBurnVector(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Node) BurnVectorStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21891,11 +21892,11 @@ func (s *Node) RemainingBurnVector(referenceFrame *ReferenceFrame) (api.Tuple3[f
 	return vv, nil
 }
 
-// StreamRemainingBurnVector - returns the remaining burn vector for the
+// RemainingBurnVectorStream - returns the remaining burn vector for the
 // maneuver node.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamRemainingBurnVector(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Node) RemainingBurnVectorStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -21999,11 +22000,11 @@ func (s *Node) Position(referenceFrame *ReferenceFrame) (api.Tuple3[float64, flo
 	return vv, nil
 }
 
-// StreamPosition - the position vector of the maneuver node in the given
+// PositionStream - the position vector of the maneuver node in the given
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamPosition(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Node) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22081,10 +22082,10 @@ func (s *Node) Direction(referenceFrame *ReferenceFrame) (api.Tuple3[float64, fl
 	return vv, nil
 }
 
-// StreamDirection - the direction of the maneuver nodes burn.
+// DirectionStream - the direction of the maneuver nodes burn.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamDirection(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Node) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22155,11 +22156,11 @@ func (s *Node) Prograde() (float64, error) {
 	return vv, nil
 }
 
-// StreamPrograde - the magnitude of the maneuver nodes delta-v in the prograde
+// ProgradeStream - the magnitude of the maneuver nodes delta-v in the prograde
 // direction, in meters per second.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamPrograde() (*krpcgo.Stream[float64], error) {
+func (s *Node) ProgradeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22256,11 +22257,11 @@ func (s *Node) Normal() (float64, error) {
 	return vv, nil
 }
 
-// StreamNormal - the magnitude of the maneuver nodes delta-v in the normal
+// NormalStream - the magnitude of the maneuver nodes delta-v in the normal
 // direction, in meters per second.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamNormal() (*krpcgo.Stream[float64], error) {
+func (s *Node) NormalStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22357,11 +22358,11 @@ func (s *Node) Radial() (float64, error) {
 	return vv, nil
 }
 
-// StreamRadial - the magnitude of the maneuver nodes delta-v in the radial
+// RadialStream - the magnitude of the maneuver nodes delta-v in the radial
 // direction, in meters per second.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamRadial() (*krpcgo.Stream[float64], error) {
+func (s *Node) RadialStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22457,10 +22458,10 @@ func (s *Node) DeltaV() (float64, error) {
 	return vv, nil
 }
 
-// StreamDeltaV - the delta-v of the maneuver node, in meters per second.
+// DeltaVStream - the delta-v of the maneuver node, in meters per second.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamDeltaV() (*krpcgo.Stream[float64], error) {
+func (s *Node) DeltaVStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22557,12 +22558,12 @@ func (s *Node) RemainingDeltaV() (float64, error) {
 	return vv, nil
 }
 
-// StreamRemainingDeltaV - gets the remaining delta-v of the maneuver node, in
+// RemainingDeltaVStream - gets the remaining delta-v of the maneuver node, in
 // meters per second. Changes as the node is executed. This is equivalent to the
 // delta-v reported in-game.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamRemainingDeltaV() (*krpcgo.Stream[float64], error) {
+func (s *Node) RemainingDeltaVStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22624,10 +22625,10 @@ func (s *Node) UT() (float64, error) {
 	return vv, nil
 }
 
-// StreamUT - the universal time at which the maneuver will occur, in seconds.
+// UTStream - the universal time at which the maneuver will occur, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamUT() (*krpcgo.Stream[float64], error) {
+func (s *Node) UTStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22722,11 +22723,11 @@ func (s *Node) TimeTo() (float64, error) {
 	return vv, nil
 }
 
-// StreamTimeTo - the time until the maneuver node will be encountered, in
+// TimeToStream - the time until the maneuver node will be encountered, in
 // seconds.
 //
 // Allowed game scenes: any.
-func (s *Node) StreamTimeTo() (*krpcgo.Stream[float64], error) {
+func (s *Node) TimeToStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22898,12 +22899,12 @@ func (s *Orbit) ReferencePlaneNormal() (api.Tuple3[float64, float64, float64], e
 	return vv, nil
 }
 
-// StreamReferencePlaneNormal - the direction that is normal to the orbits
+// ReferencePlaneNormalStream - the direction that is normal to the orbits
 // reference plane, in the given reference frame. The reference plane is the
 // plane from which the orbits inclination is measured.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamReferencePlaneNormal() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Orbit) ReferencePlaneNormalStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -22966,11 +22967,11 @@ func (s *Orbit) ReferencePlaneDirection() (api.Tuple3[float64, float64, float64]
 	return vv, nil
 }
 
-// StreamReferencePlaneDirection - the direction from which the orbits longitude
+// ReferencePlaneDirectionStream - the direction from which the orbits longitude
 // of ascending node is measured, in the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamReferencePlaneDirection() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Orbit) ReferencePlaneDirectionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23040,10 +23041,10 @@ func (s *Orbit) MeanAnomalyAtUT(ut float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamMeanAnomalyAtUT - the mean anomaly at the given time.
+// MeanAnomalyAtUTStream - the mean anomaly at the given time.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamMeanAnomalyAtUT(ut float64) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) MeanAnomalyAtUTStream(ut float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23122,11 +23123,11 @@ func (s *Orbit) RadiusAtTrueAnomaly(trueAnomaly float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamRadiusAtTrueAnomaly - the orbital radius at the point in the orbit
+// RadiusAtTrueAnomalyStream - the orbital radius at the point in the orbit
 // given by the true anomaly.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamRadiusAtTrueAnomaly(trueAnomaly float64) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) RadiusAtTrueAnomalyStream(trueAnomaly float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23204,10 +23205,10 @@ func (s *Orbit) TrueAnomalyAtRadius(radius float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamTrueAnomalyAtRadius - the true anomaly at the given orbital radius.
+// TrueAnomalyAtRadiusStream - the true anomaly at the given orbital radius.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTrueAnomalyAtRadius(radius float64) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TrueAnomalyAtRadiusStream(radius float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23285,10 +23286,10 @@ func (s *Orbit) TrueAnomalyAtUT(ut float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamTrueAnomalyAtUT - the true anomaly at the given time.
+// TrueAnomalyAtUTStream - the true anomaly at the given time.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTrueAnomalyAtUT(ut float64) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TrueAnomalyAtUTStream(ut float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23367,11 +23368,11 @@ func (s *Orbit) UTAtTrueAnomaly(trueAnomaly float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamUTAtTrueAnomaly - the universal time, in seconds, corresponding to the
+// UTAtTrueAnomalyStream - the universal time, in seconds, corresponding to the
 // given true anomaly.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamUTAtTrueAnomaly(trueAnomaly float64) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) UTAtTrueAnomalyStream(trueAnomaly float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23449,11 +23450,11 @@ func (s *Orbit) EccentricAnomalyAtUT(ut float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamEccentricAnomalyAtUT - the eccentric anomaly at the given universal
+// EccentricAnomalyAtUTStream - the eccentric anomaly at the given universal
 // time.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamEccentricAnomalyAtUT(ut float64) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) EccentricAnomalyAtUTStream(ut float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23531,11 +23532,11 @@ func (s *Orbit) OrbitalSpeedAt(time float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamOrbitalSpeedAt - the orbital speed at the given time, in meters per
+// OrbitalSpeedAtStream - the orbital speed at the given time, in meters per
 // second.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamOrbitalSpeedAt(time float64) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) OrbitalSpeedAtStream(time float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23613,10 +23614,10 @@ func (s *Orbit) RadiusAt(ut float64) (float64, error) {
 	return vv, nil
 }
 
-// StreamRadiusAt - the orbital radius at the given time, in meters.
+// RadiusAtStream - the orbital radius at the given time, in meters.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamRadiusAt(ut float64) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) RadiusAtStream(ut float64) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23702,11 +23703,11 @@ func (s *Orbit) PositionAt(ut float64, referenceFrame *ReferenceFrame) (api.Tupl
 	return vv, nil
 }
 
-// StreamPositionAt - the position at a given time, in the specified reference
+// PositionAtStream - the position at a given time, in the specified reference
 // frame.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamPositionAt(ut float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Orbit) PositionAtStream(ut float64, referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23793,11 +23794,11 @@ func (s *Orbit) TimeOfClosestApproach(target *Orbit) (float64, error) {
 	return vv, nil
 }
 
-// StreamTimeOfClosestApproach - estimates and returns the time at closest
+// TimeOfClosestApproachStream - estimates and returns the time at closest
 // approach to a target orbit.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTimeOfClosestApproach(target *Orbit) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TimeOfClosestApproachStream(target *Orbit) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23876,11 +23877,11 @@ func (s *Orbit) DistanceAtClosestApproach(target *Orbit) (float64, error) {
 	return vv, nil
 }
 
-// StreamDistanceAtClosestApproach - estimates and returns the distance at
+// DistanceAtClosestApproachStream - estimates and returns the distance at
 // closest approach to a target orbit, in meters.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamDistanceAtClosestApproach(target *Orbit) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) DistanceAtClosestApproachStream(target *Orbit) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -23967,11 +23968,11 @@ func (s *Orbit) ListClosestApproaches(target *Orbit, orbits int32) ([][]float64,
 	return vv, nil
 }
 
-// StreamListClosestApproaches - returns the times at closest approach and
+// ListClosestApproachesStream - returns the times at closest approach and
 // corresponding distances, to a target orbit.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamListClosestApproaches(target *Orbit, orbits int32) (*krpcgo.Stream[[][]float64], error) {
+func (s *Orbit) ListClosestApproachesStream(target *Orbit, orbits int32) (*krpcgo.Stream[[][]float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24058,11 +24059,11 @@ func (s *Orbit) TrueAnomalyAtAN(target *Orbit) (float64, error) {
 	return vv, nil
 }
 
-// StreamTrueAnomalyAtAN - the true anomaly of the ascending node with the given
+// TrueAnomalyAtANStream - the true anomaly of the ascending node with the given
 // target orbit.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTrueAnomalyAtAN(target *Orbit) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TrueAnomalyAtANStream(target *Orbit) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24141,11 +24142,11 @@ func (s *Orbit) TrueAnomalyAtDN(target *Orbit) (float64, error) {
 	return vv, nil
 }
 
-// StreamTrueAnomalyAtDN - the true anomaly of the descending node with the
+// TrueAnomalyAtDNStream - the true anomaly of the descending node with the
 // given target orbit.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTrueAnomalyAtDN(target *Orbit) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TrueAnomalyAtDNStream(target *Orbit) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24224,11 +24225,11 @@ func (s *Orbit) RelativeInclination(target *Orbit) (float64, error) {
 	return vv, nil
 }
 
-// StreamRelativeInclination - relative inclination of this orbit and the target
+// RelativeInclinationStream - relative inclination of this orbit and the target
 // orbit, in radians.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamRelativeInclination(target *Orbit) (*krpcgo.Stream[float64], error) {
+func (s *Orbit) RelativeInclinationStream(target *Orbit) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24331,11 +24332,11 @@ func (s *Orbit) Apoapsis() (float64, error) {
 	return vv, nil
 }
 
-// StreamApoapsis - gets the apoapsis of the orbit, in meters, from the center
+// ApoapsisStream - gets the apoapsis of the orbit, in meters, from the center
 // of mass of the body being orbited.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamApoapsis() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) ApoapsisStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24398,11 +24399,11 @@ func (s *Orbit) Periapsis() (float64, error) {
 	return vv, nil
 }
 
-// StreamPeriapsis - the periapsis of the orbit, in meters, from the center of
+// PeriapsisStream - the periapsis of the orbit, in meters, from the center of
 // mass of the body being orbited.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamPeriapsis() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) PeriapsisStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24465,11 +24466,11 @@ func (s *Orbit) ApoapsisAltitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamApoapsisAltitude - the apoapsis of the orbit, in meters, above the sea
+// ApoapsisAltitudeStream - the apoapsis of the orbit, in meters, above the sea
 // level of the body being orbited.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamApoapsisAltitude() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) ApoapsisAltitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24532,11 +24533,11 @@ func (s *Orbit) PeriapsisAltitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamPeriapsisAltitude - the periapsis of the orbit, in meters, above the
+// PeriapsisAltitudeStream - the periapsis of the orbit, in meters, above the
 // sea level of the body being orbited.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamPeriapsisAltitude() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) PeriapsisAltitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24598,10 +24599,10 @@ func (s *Orbit) SemiMajorAxis() (float64, error) {
 	return vv, nil
 }
 
-// StreamSemiMajorAxis - the semi-major axis of the orbit, in meters.
+// SemiMajorAxisStream - the semi-major axis of the orbit, in meters.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamSemiMajorAxis() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) SemiMajorAxisStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24663,10 +24664,10 @@ func (s *Orbit) SemiMinorAxis() (float64, error) {
 	return vv, nil
 }
 
-// StreamSemiMinorAxis - the semi-minor axis of the orbit, in meters.
+// SemiMinorAxisStream - the semi-minor axis of the orbit, in meters.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamSemiMinorAxis() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) SemiMinorAxisStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24730,12 +24731,12 @@ func (s *Orbit) Radius() (float64, error) {
 	return vv, nil
 }
 
-// StreamRadius - the current radius of the orbit, in meters. This is the
+// RadiusStream - the current radius of the orbit, in meters. This is the
 // distance between the center of mass of the object in orbit, and the center of
 // mass of the body around which it is orbiting.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamRadius() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) RadiusStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24797,10 +24798,10 @@ func (s *Orbit) Speed() (float64, error) {
 	return vv, nil
 }
 
-// StreamSpeed - the current orbital speed of the object in meters per second.
+// SpeedStream - the current orbital speed of the object in meters per second.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamSpeed() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) SpeedStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24862,10 +24863,10 @@ func (s *Orbit) Period() (float64, error) {
 	return vv, nil
 }
 
-// StreamPeriod - the orbital period, in seconds.
+// PeriodStream - the orbital period, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamPeriod() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) PeriodStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24927,11 +24928,11 @@ func (s *Orbit) TimeToApoapsis() (float64, error) {
 	return vv, nil
 }
 
-// StreamTimeToApoapsis - the time until the object reaches apoapsis, in
+// TimeToApoapsisStream - the time until the object reaches apoapsis, in
 // seconds.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTimeToApoapsis() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TimeToApoapsisStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -24993,11 +24994,11 @@ func (s *Orbit) TimeToPeriapsis() (float64, error) {
 	return vv, nil
 }
 
-// StreamTimeToPeriapsis - the time until the object reaches periapsis, in
+// TimeToPeriapsisStream - the time until the object reaches periapsis, in
 // seconds.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTimeToPeriapsis() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TimeToPeriapsisStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25061,12 +25062,12 @@ func (s *Orbit) Eccentricity() (float64, error) {
 	return vv, nil
 }
 
-// StreamEccentricity - the <a
+// EccentricityStream - the <a
 // href="https://en.wikipedia.org/wiki/Orbital_eccentricity">eccentricity</a> of
 // the orbit.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamEccentricity() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) EccentricityStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25130,12 +25131,12 @@ func (s *Orbit) Inclination() (float64, error) {
 	return vv, nil
 }
 
-// StreamInclination - the <a
+// InclinationStream - the <a
 // href="https://en.wikipedia.org/wiki/Orbital_inclination">inclination</a> of
 // the orbit, in radians.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamInclination() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) InclinationStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25199,12 +25200,12 @@ func (s *Orbit) LongitudeOfAscendingNode() (float64, error) {
 	return vv, nil
 }
 
-// StreamLongitudeOfAscendingNode - the <a
+// LongitudeOfAscendingNodeStream - the <a
 // href="https://en.wikipedia.org/wiki/Longitude_of_the_ascending_node">longitude
 // of the ascending node</a>, in radians.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamLongitudeOfAscendingNode() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) LongitudeOfAscendingNodeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25268,12 +25269,12 @@ func (s *Orbit) ArgumentOfPeriapsis() (float64, error) {
 	return vv, nil
 }
 
-// StreamArgumentOfPeriapsis - the <a
+// ArgumentOfPeriapsisStream - the <a
 // href="https://en.wikipedia.org/wiki/Argument_of_periapsis">argument of
 // periapsis</a>, in radians.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamArgumentOfPeriapsis() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) ArgumentOfPeriapsisStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25336,11 +25337,11 @@ func (s *Orbit) MeanAnomalyAtEpoch() (float64, error) {
 	return vv, nil
 }
 
-// StreamMeanAnomalyAtEpoch - the <a
+// MeanAnomalyAtEpochStream - the <a
 // href="https://en.wikipedia.org/wiki/Mean_anomaly">mean anomaly at epoch</a>.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamMeanAnomalyAtEpoch() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) MeanAnomalyAtEpochStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25404,12 +25405,12 @@ func (s *Orbit) Epoch() (float64, error) {
 	return vv, nil
 }
 
-// StreamEpoch - the time since the epoch (the point at which the <a
+// EpochStream - the time since the epoch (the point at which the <a
 // href="https://en.wikipedia.org/wiki/Mean_anomaly">mean anomaly at epoch</a>
 // was measured, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamEpoch() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) EpochStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25472,11 +25473,11 @@ func (s *Orbit) MeanAnomaly() (float64, error) {
 	return vv, nil
 }
 
-// StreamMeanAnomaly - the <a
+// MeanAnomalyStream - the <a
 // href="https://en.wikipedia.org/wiki/Mean_anomaly">mean anomaly</a>.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamMeanAnomaly() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) MeanAnomalyStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25539,11 +25540,11 @@ func (s *Orbit) EccentricAnomaly() (float64, error) {
 	return vv, nil
 }
 
-// StreamEccentricAnomaly - the <a
+// EccentricAnomalyStream - the <a
 // href="https://en.wikipedia.org/wiki/Eccentric_anomaly">eccentric anomaly</a>.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamEccentricAnomaly() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) EccentricAnomalyStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25606,11 +25607,11 @@ func (s *Orbit) TrueAnomaly() (float64, error) {
 	return vv, nil
 }
 
-// StreamTrueAnomaly - the <a
+// TrueAnomalyStream - the <a
 // href="https://en.wikipedia.org/wiki/True_anomaly">true anomaly</a>.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTrueAnomaly() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TrueAnomalyStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25706,12 +25707,12 @@ func (s *Orbit) TimeToSOIChange() (float64, error) {
 	return vv, nil
 }
 
-// StreamTimeToSOIChange - the time until the object changes sphere of
+// TimeToSOIChangeStream - the time until the object changes sphere of
 // influence, in seconds. Returns NaN if the object is not going to change
 // sphere of influence.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamTimeToSOIChange() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) TimeToSOIChangeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25773,10 +25774,10 @@ func (s *Orbit) OrbitalSpeed() (float64, error) {
 	return vv, nil
 }
 
-// StreamOrbitalSpeed - the current orbital speed in meters per second.
+// OrbitalSpeedStream - the current orbital speed in meters per second.
 //
 // Allowed game scenes: any.
-func (s *Orbit) StreamOrbitalSpeed() (*krpcgo.Stream[float64], error) {
+func (s *Orbit) OrbitalSpeedStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25919,10 +25920,10 @@ func (s *Antenna) State() (AntennaState, error) {
 	return vv, nil
 }
 
-// StreamState - the current state of the antenna.
+// StateStream - the current state of the antenna.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamState() (*krpcgo.Stream[AntennaState], error) {
+func (s *Antenna) StateStream() (*krpcgo.Stream[AntennaState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -25984,10 +25985,10 @@ func (s *Antenna) Deployable() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployable - whether the antenna is deployable.
+// DeployableStream - whether the antenna is deployable.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamDeployable() (*krpcgo.Stream[bool], error) {
+func (s *Antenna) DeployableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26049,10 +26050,10 @@ func (s *Antenna) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - whether the antenna is deployed.
+// DeployedStream - whether the antenna is deployed.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *Antenna) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26147,10 +26148,10 @@ func (s *Antenna) CanTransmit() (bool, error) {
 	return vv, nil
 }
 
-// StreamCanTransmit - whether data can be transmitted by this antenna.
+// CanTransmitStream - whether data can be transmitted by this antenna.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamCanTransmit() (*krpcgo.Stream[bool], error) {
+func (s *Antenna) CanTransmitStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26212,10 +26213,10 @@ func (s *Antenna) AllowPartial() (bool, error) {
 	return vv, nil
 }
 
-// StreamAllowPartial - whether partial data transmission is permitted.
+// AllowPartialStream - whether partial data transmission is permitted.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamAllowPartial() (*krpcgo.Stream[bool], error) {
+func (s *Antenna) AllowPartialStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26310,10 +26311,10 @@ func (s *Antenna) Power() (float64, error) {
 	return vv, nil
 }
 
-// StreamPower - the power of the antenna.
+// PowerStream - the power of the antenna.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamPower() (*krpcgo.Stream[float64], error) {
+func (s *Antenna) PowerStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26376,11 +26377,11 @@ func (s *Antenna) Combinable() (bool, error) {
 	return vv, nil
 }
 
-// StreamCombinable - whether the antenna can be combined with other antennae on
+// CombinableStream - whether the antenna can be combined with other antennae on
 // the vessel to boost the power.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamCombinable() (*krpcgo.Stream[bool], error) {
+func (s *Antenna) CombinableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26443,11 +26444,11 @@ func (s *Antenna) CombinableExponent() (float64, error) {
 	return vv, nil
 }
 
-// StreamCombinableExponent - exponent used to calculate the combined power of
+// CombinableExponentStream - exponent used to calculate the combined power of
 // multiple antennae on a vessel.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamCombinableExponent() (*krpcgo.Stream[float64], error) {
+func (s *Antenna) CombinableExponentStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26509,10 +26510,10 @@ func (s *Antenna) PacketInterval() (float32, error) {
 	return vv, nil
 }
 
-// StreamPacketInterval - interval between sending packets in seconds.
+// PacketIntervalStream - interval between sending packets in seconds.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamPacketInterval() (*krpcgo.Stream[float32], error) {
+func (s *Antenna) PacketIntervalStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26574,10 +26575,10 @@ func (s *Antenna) PacketSize() (float32, error) {
 	return vv, nil
 }
 
-// StreamPacketSize - amount of data sent per packet in Mits.
+// PacketSizeStream - amount of data sent per packet in Mits.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamPacketSize() (*krpcgo.Stream[float32], error) {
+func (s *Antenna) PacketSizeStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26639,10 +26640,10 @@ func (s *Antenna) PacketResourceCost() (float64, error) {
 	return vv, nil
 }
 
-// StreamPacketResourceCost - units of electric charge consumed per packet sent.
+// PacketResourceCostStream - units of electric charge consumed per packet sent.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamPacketResourceCost() (*krpcgo.Stream[float64], error) {
+func (s *Antenna) PacketResourceCostStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26735,10 +26736,10 @@ func (s *CargoBay) State() (CargoBayState, error) {
 	return vv, nil
 }
 
-// StreamState - the state of the cargo bay.
+// StateStream - the state of the cargo bay.
 //
 // Allowed game scenes: any.
-func (s *CargoBay) StreamState() (*krpcgo.Stream[CargoBayState], error) {
+func (s *CargoBay) StateStream() (*krpcgo.Stream[CargoBayState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26800,10 +26801,10 @@ func (s *CargoBay) Open() (bool, error) {
 	return vv, nil
 }
 
-// StreamOpen - whether the cargo bay is open.
+// OpenStream - whether the cargo bay is open.
 //
 // Allowed game scenes: any.
-func (s *CargoBay) StreamOpen() (*krpcgo.Stream[bool], error) {
+func (s *CargoBay) OpenStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -26929,10 +26930,10 @@ func (s *ControlSurface) PitchEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamPitchEnabled - whether the control surface has pitch control enabled.
+// PitchEnabledStream - whether the control surface has pitch control enabled.
 //
 // Allowed game scenes: any.
-func (s *ControlSurface) StreamPitchEnabled() (*krpcgo.Stream[bool], error) {
+func (s *ControlSurface) PitchEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27027,10 +27028,10 @@ func (s *ControlSurface) YawEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamYawEnabled - whether the control surface has yaw control enabled.
+// YawEnabledStream - whether the control surface has yaw control enabled.
 //
 // Allowed game scenes: any.
-func (s *ControlSurface) StreamYawEnabled() (*krpcgo.Stream[bool], error) {
+func (s *ControlSurface) YawEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27125,10 +27126,10 @@ func (s *ControlSurface) RollEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamRollEnabled - whether the control surface has roll control enabled.
+// RollEnabledStream - whether the control surface has roll control enabled.
 //
 // Allowed game scenes: any.
-func (s *ControlSurface) StreamRollEnabled() (*krpcgo.Stream[bool], error) {
+func (s *ControlSurface) RollEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27224,11 +27225,11 @@ func (s *ControlSurface) AuthorityLimiter() (float32, error) {
 	return vv, nil
 }
 
-// StreamAuthorityLimiter - the authority limiter for the control surface, which
+// AuthorityLimiterStream - the authority limiter for the control surface, which
 // controls how far the control surface will move.
 //
 // Allowed game scenes: any.
-func (s *ControlSurface) StreamAuthorityLimiter() (*krpcgo.Stream[float32], error) {
+func (s *ControlSurface) AuthorityLimiterStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27324,10 +27325,10 @@ func (s *ControlSurface) Inverted() (bool, error) {
 	return vv, nil
 }
 
-// StreamInverted - whether the control surface movement is inverted.
+// InvertedStream - whether the control surface movement is inverted.
 //
 // Allowed game scenes: any.
-func (s *ControlSurface) StreamInverted() (*krpcgo.Stream[bool], error) {
+func (s *ControlSurface) InvertedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27422,10 +27423,10 @@ func (s *ControlSurface) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - whether the control surface has been fully deployed.
+// DeployedStream - whether the control surface has been fully deployed.
 //
 // Allowed game scenes: any.
-func (s *ControlSurface) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *ControlSurface) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27520,10 +27521,10 @@ func (s *ControlSurface) SurfaceArea() (float32, error) {
 	return vv, nil
 }
 
-// StreamSurfaceArea - surface area of the control surface in <math>m^2</math>.
+// SurfaceAreaStream - surface area of the control surface in <math>m^2</math>.
 //
 // Allowed game scenes: any.
-func (s *ControlSurface) StreamSurfaceArea() (*krpcgo.Stream[float32], error) {
+func (s *ControlSurface) SurfaceAreaStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27588,13 +27589,13 @@ func (s *ControlSurface) AvailableTorque() (api.Tuple2[api.Tuple3[float64, float
 	return vv, nil
 }
 
-// StreamAvailableTorque - the available torque, in Newton meters, that can be
+// AvailableTorqueStream - the available torque, in Newton meters, that can be
 // produced by this control surface, in the positive and negative pitch, roll
 // and yaw axes of the vessel. These axes correspond to the coordinate axes of
 // the <see cref="M:SpaceCenter.Vessel.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *ControlSurface) StreamAvailableTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *ControlSurface) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27719,10 +27720,10 @@ func (s *Decoupler) Decoupled() (bool, error) {
 	return vv, nil
 }
 
-// StreamDecoupled - whether the decoupler has fired.
+// DecoupledStream - whether the decoupler has fired.
 //
 // Allowed game scenes: any.
-func (s *Decoupler) StreamDecoupled() (*krpcgo.Stream[bool], error) {
+func (s *Decoupler) DecoupledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27784,10 +27785,10 @@ func (s *Decoupler) Staged() (bool, error) {
 	return vv, nil
 }
 
-// StreamStaged - whether the decoupler is enabled in the staging sequence.
+// StagedStream - whether the decoupler is enabled in the staging sequence.
 //
 // Allowed game scenes: any.
-func (s *Decoupler) StreamStaged() (*krpcgo.Stream[bool], error) {
+func (s *Decoupler) StagedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27850,11 +27851,11 @@ func (s *Decoupler) Impulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamImpulse - the impulse that the decoupler imparts when it is fired, in
+// ImpulseStream - the impulse that the decoupler imparts when it is fired, in
 // Newton seconds.
 //
 // Allowed game scenes: any.
-func (s *Decoupler) StreamImpulse() (*krpcgo.Stream[float32], error) {
+func (s *Decoupler) ImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -27958,11 +27959,11 @@ func (s *DockingPort) Position(referenceFrame *ReferenceFrame) (api.Tuple3[float
 	return vv, nil
 }
 
-// StreamPosition - the position of the docking port, in the given reference
+// PositionStream - the position of the docking port, in the given reference
 // frame.
 //
 // Allowed game scenes: any.
-func (s *DockingPort) StreamPosition(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *DockingPort) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28041,11 +28042,11 @@ func (s *DockingPort) Direction(referenceFrame *ReferenceFrame) (api.Tuple3[floa
 	return vv, nil
 }
 
-// StreamDirection - the direction that docking port points in, in the given
+// DirectionStream - the direction that docking port points in, in the given
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *DockingPort) StreamDirection(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *DockingPort) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28123,11 +28124,11 @@ func (s *DockingPort) Rotation(referenceFrame *ReferenceFrame) (api.Tuple4[float
 	return vv, nil
 }
 
-// StreamRotation - the rotation of the docking port, in the given reference
+// RotationStream - the rotation of the docking port, in the given reference
 // frame.
 //
 // Allowed game scenes: any.
-func (s *DockingPort) StreamRotation(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *DockingPort) RotationStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28228,10 +28229,10 @@ func (s *DockingPort) State() (DockingPortState, error) {
 	return vv, nil
 }
 
-// StreamState - the current state of the docking port.
+// StateStream - the current state of the docking port.
 //
 // Allowed game scenes: any.
-func (s *DockingPort) StreamState() (*krpcgo.Stream[DockingPortState], error) {
+func (s *DockingPort) StateStream() (*krpcgo.Stream[DockingPortState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28326,11 +28327,11 @@ func (s *DockingPort) ReengageDistance() (float32, error) {
 	return vv, nil
 }
 
-// StreamReengageDistance - the distance a docking port must move away when it
+// ReengageDistanceStream - the distance a docking port must move away when it
 // undocks before it becomes ready to dock with another port, in meters.
 //
 // Allowed game scenes: any.
-func (s *DockingPort) StreamReengageDistance() (*krpcgo.Stream[float32], error) {
+func (s *DockingPort) ReengageDistanceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28392,10 +28393,10 @@ func (s *DockingPort) HasShield() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasShield - whether the docking port has a shield.
+// HasShieldStream - whether the docking port has a shield.
 //
 // Allowed game scenes: any.
-func (s *DockingPort) StreamHasShield() (*krpcgo.Stream[bool], error) {
+func (s *DockingPort) HasShieldStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28461,14 +28462,14 @@ func (s *DockingPort) Shielded() (bool, error) {
 	return vv, nil
 }
 
-// StreamShielded - the state of the docking ports shield, if it has one.
+// ShieldedStream - the state of the docking ports shield, if it has one.
 // Returns true if the docking port has a shield, and the shield is closed.
 // Otherwise returns false. When set to true, the shield is closed, and when set
 // to false the shield is opened. If the docking port does not have a shield,
 // setting this attribute has no effect.
 //
 // Allowed game scenes: any.
-func (s *DockingPort) StreamShielded() (*krpcgo.Stream[bool], error) {
+func (s *DockingPort) ShieldedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28664,12 +28665,12 @@ func (s *Engine) Active() (bool, error) {
 	return vv, nil
 }
 
-// StreamActive - whether the engine is active. Setting this attribute may have
+// ActiveStream - whether the engine is active. Setting this attribute may have
 // no effect, depending on <see cref="M:SpaceCenter.Engine.CanShutdown" /> and
 // <see cref="M:SpaceCenter.Engine.CanRestart" />.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamActive() (*krpcgo.Stream[bool], error) {
+func (s *Engine) ActiveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28767,11 +28768,11 @@ func (s *Engine) Thrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamThrust - the current amount of thrust being produced by the engine, in
+// ThrustStream - the current amount of thrust being produced by the engine, in
 // Newtons.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamThrust() (*krpcgo.Stream[float32], error) {
+func (s *Engine) ThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28837,14 +28838,14 @@ func (s *Engine) AvailableThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamAvailableThrust - the amount of thrust, in Newtons, that would be
+// AvailableThrustStream - the amount of thrust, in Newtons, that would be
 // produced by the engine when activated and with its throttle set to 100%.
 // Returns zero if the engine does not have any fuel. Takes the engine's current
 // <see cref="M:SpaceCenter.Engine.ThrustLimit" /> and atmospheric conditions
 // into account.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamAvailableThrust() (*krpcgo.Stream[float32], error) {
+func (s *Engine) AvailableThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28908,12 +28909,12 @@ func (s *Engine) MaxThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxThrust - the amount of thrust, in Newtons, that would be produced by
+// MaxThrustStream - the amount of thrust, in Newtons, that would be produced by
 // the engine when activated and fueled, with its throttle and throttle limiter
 // set to 100%.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamMaxThrust() (*krpcgo.Stream[float32], error) {
+func (s *Engine) MaxThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -28979,14 +28980,14 @@ func (s *Engine) MaxVacuumThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxVacuumThrust - the maximum amount of thrust that can be produced by
+// MaxVacuumThrustStream - the maximum amount of thrust that can be produced by
 // the engine in a vacuum, in Newtons. This is the amount of thrust produced by
 // the engine when activated, <see cref="M:SpaceCenter.Engine.ThrustLimit" /> is
 // set to 100%, the main vessel's throttle is set to 100% and the engine is in a
 // vacuum.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamMaxVacuumThrust() (*krpcgo.Stream[float32], error) {
+func (s *Engine) MaxVacuumThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29050,12 +29051,12 @@ func (s *Engine) ThrustLimit() (float32, error) {
 	return vv, nil
 }
 
-// StreamThrustLimit - the thrust limiter of the engine. A value between 0 and
+// ThrustLimitStream - the thrust limiter of the engine. A value between 0 and
 // 1. Setting this attribute may have no effect, for example the thrust limit
 // for a solid rocket booster cannot be changed in flight.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamThrustLimit() (*krpcgo.Stream[float32], error) {
+func (s *Engine) ThrustLimitStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29152,10 +29153,10 @@ func (s *Engine) Thrusters() ([]*Thruster, error) {
 	return vv, nil
 }
 
-// StreamThrusters - the components of the engine that generate thrust.
+// ThrustersStream - the components of the engine that generate thrust.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamThrusters() (*krpcgo.Stream[[]*Thruster], error) {
+func (s *Engine) ThrustersStream() (*krpcgo.Stream[[]*Thruster], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29218,11 +29219,11 @@ func (s *Engine) SpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpecificImpulse - the current specific impulse of the engine, in
+// SpecificImpulseStream - the current specific impulse of the engine, in
 // seconds. Returns zero if the engine is not active.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *Engine) SpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29285,11 +29286,11 @@ func (s *Engine) VacuumSpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamVacuumSpecificImpulse - the vacuum specific impulse of the engine, in
+// VacuumSpecificImpulseStream - the vacuum specific impulse of the engine, in
 // seconds.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamVacuumSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *Engine) VacuumSpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29352,11 +29353,11 @@ func (s *Engine) KerbinSeaLevelSpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamKerbinSeaLevelSpecificImpulse - the specific impulse of the engine at
+// KerbinSeaLevelSpecificImpulseStream - the specific impulse of the engine at
 // sea level on Kerbin, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamKerbinSeaLevelSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *Engine) KerbinSeaLevelSpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29418,11 +29419,11 @@ func (s *Engine) PropellantNames() ([]string, error) {
 	return vv, nil
 }
 
-// StreamPropellantNames - the names of the propellants that the engine
+// PropellantNamesStream - the names of the propellants that the engine
 // consumes.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamPropellantNames() (*krpcgo.Stream[[]string], error) {
+func (s *Engine) PropellantNamesStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29484,10 +29485,10 @@ func (s *Engine) Propellants() ([]*Propellant, error) {
 	return vv, nil
 }
 
-// StreamPropellants - the propellants that the engine consumes.
+// PropellantsStream - the propellants that the engine consumes.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamPropellants() (*krpcgo.Stream[[]*Propellant], error) {
+func (s *Engine) PropellantsStream() (*krpcgo.Stream[[]*Propellant], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29551,12 +29552,12 @@ func (s *Engine) PropellantRatios() (map[string]float32, error) {
 	return vv, nil
 }
 
-// StreamPropellantRatios - the ratio of resources that the engine consumes. A
+// PropellantRatiosStream - the ratio of resources that the engine consumes. A
 // dictionary mapping resource names to the ratio at which they are consumed by
 // the engine.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamPropellantRatios() (*krpcgo.Stream[map[string]float32], error) {
+func (s *Engine) PropellantRatiosStream() (*krpcgo.Stream[map[string]float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29618,10 +29619,10 @@ func (s *Engine) HasFuel() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasFuel - whether the engine has any fuel available.
+// HasFuelStream - whether the engine has any fuel available.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamHasFuel() (*krpcgo.Stream[bool], error) {
+func (s *Engine) HasFuelStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29685,13 +29686,13 @@ func (s *Engine) Throttle() (float32, error) {
 	return vv, nil
 }
 
-// StreamThrottle - the current throttle setting for the engine. A value between
+// ThrottleStream - the current throttle setting for the engine. A value between
 // 0 and 1. This is not necessarily the same as the vessel's main throttle
 // setting, as some engines take time to adjust their throttle (such as jet
 // engines).
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamThrottle() (*krpcgo.Stream[float32], error) {
+func (s *Engine) ThrottleStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29755,12 +29756,12 @@ func (s *Engine) ThrottleLocked() (bool, error) {
 	return vv, nil
 }
 
-// StreamThrottleLocked - whether the <see cref="M:SpaceCenter.Control.Throttle"
+// ThrottleLockedStream - whether the <see cref="M:SpaceCenter.Control.Throttle"
 // /> affects the engine. For example, this is true for liquid fueled rockets,
 // and false for solid rocket boosters.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamThrottleLocked() (*krpcgo.Stream[bool], error) {
+func (s *Engine) ThrottleLockedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29824,12 +29825,12 @@ func (s *Engine) CanRestart() (bool, error) {
 	return vv, nil
 }
 
-// StreamCanRestart - whether the engine can be restarted once shutdown. If the
+// CanRestartStream - whether the engine can be restarted once shutdown. If the
 // engine cannot be shutdown, returns false. For example, this is true for
 // liquid fueled rockets and false for solid rocket boosters.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamCanRestart() (*krpcgo.Stream[bool], error) {
+func (s *Engine) CanRestartStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29892,12 +29893,12 @@ func (s *Engine) CanShutdown() (bool, error) {
 	return vv, nil
 }
 
-// StreamCanShutdown - whether the engine can be shutdown once activated. For
+// CanShutdownStream - whether the engine can be shutdown once activated. For
 // example, this is true for liquid fueled rockets and false for solid rocket
 // boosters.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamCanShutdown() (*krpcgo.Stream[bool], error) {
+func (s *Engine) CanShutdownStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -29959,10 +29960,10 @@ func (s *Engine) HasModes() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasModes - whether the engine has multiple modes of operation.
+// HasModesStream - whether the engine has multiple modes of operation.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamHasModes() (*krpcgo.Stream[bool], error) {
+func (s *Engine) HasModesStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30024,10 +30025,10 @@ func (s *Engine) Mode() (string, error) {
 	return vv, nil
 }
 
-// StreamMode - the name of the current engine mode.
+// ModeStream - the name of the current engine mode.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamMode() (*krpcgo.Stream[string], error) {
+func (s *Engine) ModeStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30123,11 +30124,11 @@ func (s *Engine) Modes() (map[string]*Engine, error) {
 	return vv, nil
 }
 
-// StreamModes - the available modes for the engine. A dictionary mapping mode
+// ModesStream - the available modes for the engine. A dictionary mapping mode
 // names to <see cref="T:SpaceCenter.Engine" /> objects.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamModes() (*krpcgo.Stream[map[string]*Engine], error) {
+func (s *Engine) ModesStream() (*krpcgo.Stream[map[string]*Engine], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30189,10 +30190,10 @@ func (s *Engine) AutoModeSwitch() (bool, error) {
 	return vv, nil
 }
 
-// StreamAutoModeSwitch - whether the engine will automatically switch modes.
+// AutoModeSwitchStream - whether the engine will automatically switch modes.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamAutoModeSwitch() (*krpcgo.Stream[bool], error) {
+func (s *Engine) AutoModeSwitchStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30287,10 +30288,10 @@ func (s *Engine) Gimballed() (bool, error) {
 	return vv, nil
 }
 
-// StreamGimballed - whether the engine is gimballed.
+// GimballedStream - whether the engine is gimballed.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamGimballed() (*krpcgo.Stream[bool], error) {
+func (s *Engine) GimballedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30353,11 +30354,11 @@ func (s *Engine) GimbalRange() (float32, error) {
 	return vv, nil
 }
 
-// StreamGimbalRange - the range over which the gimbal can move, in degrees.
+// GimbalRangeStream - the range over which the gimbal can move, in degrees.
 // Returns 0 if the engine is not gimballed.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamGimbalRange() (*krpcgo.Stream[float32], error) {
+func (s *Engine) GimbalRangeStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30420,11 +30421,11 @@ func (s *Engine) GimbalLocked() (bool, error) {
 	return vv, nil
 }
 
-// StreamGimbalLocked - whether the engines gimbal is locked in place. Setting
+// GimbalLockedStream - whether the engines gimbal is locked in place. Setting
 // this attribute has no effect if the engine is not gimballed.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamGimbalLocked() (*krpcgo.Stream[bool], error) {
+func (s *Engine) GimbalLockedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30521,11 +30522,11 @@ func (s *Engine) GimbalLimit() (float32, error) {
 	return vv, nil
 }
 
-// StreamGimbalLimit - the gimbal limiter of the engine. A value between 0 and
+// GimbalLimitStream - the gimbal limiter of the engine. A value between 0 and
 // 1. Returns 0 if the gimbal is locked.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamGimbalLimit() (*krpcgo.Stream[float32], error) {
+func (s *Engine) GimbalLimitStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30625,14 +30626,14 @@ func (s *Engine) AvailableTorque() (api.Tuple2[api.Tuple3[float64, float64, floa
 	return vv, nil
 }
 
-// StreamAvailableTorque - the available torque, in Newton meters, that can be
+// AvailableTorqueStream - the available torque, in Newton meters, that can be
 // produced by this engine, in the positive and negative pitch, roll and yaw
 // axes of the vessel. These axes correspond to the coordinate axes of the <see
 // cref="M:SpaceCenter.Vessel.ReferenceFrame" />. Returns zero if the engine is
 // inactive, or not gimballed.
 //
 // Allowed game scenes: any.
-func (s *Engine) StreamAvailableTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Engine) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30827,12 +30828,12 @@ func (s *Experiment) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - internal name of the experiment, as used in <a
+// NameStream - internal name of the experiment, as used in <a
 // href="https://wiki.kerbalspaceprogram.com/wiki/CFG_File_Documentation">part
 // cfg files</a>.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Experiment) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30894,10 +30895,10 @@ func (s *Experiment) Title() (string, error) {
 	return vv, nil
 }
 
-// StreamTitle - title of the experiment, as shown on the in-game UI.
+// TitleStream - title of the experiment, as shown on the in-game UI.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamTitle() (*krpcgo.Stream[string], error) {
+func (s *Experiment) TitleStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -30959,10 +30960,10 @@ func (s *Experiment) Inoperable() (bool, error) {
 	return vv, nil
 }
 
-// StreamInoperable - whether the experiment is inoperable.
+// InoperableStream - whether the experiment is inoperable.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamInoperable() (*krpcgo.Stream[bool], error) {
+func (s *Experiment) InoperableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31024,10 +31025,10 @@ func (s *Experiment) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - whether the experiment has been deployed.
+// DeployedStream - whether the experiment has been deployed.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *Experiment) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31089,10 +31090,10 @@ func (s *Experiment) Rerunnable() (bool, error) {
 	return vv, nil
 }
 
-// StreamRerunnable - whether the experiment can be re-run.
+// RerunnableStream - whether the experiment can be re-run.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamRerunnable() (*krpcgo.Stream[bool], error) {
+func (s *Experiment) RerunnableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31154,10 +31155,10 @@ func (s *Experiment) HasData() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasData - whether the experiment contains data.
+// HasDataStream - whether the experiment contains data.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamHasData() (*krpcgo.Stream[bool], error) {
+func (s *Experiment) HasDataStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31219,10 +31220,10 @@ func (s *Experiment) Data() ([]*ScienceData, error) {
 	return vv, nil
 }
 
-// StreamData - the data contained in this experiment.
+// DataStream - the data contained in this experiment.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamData() (*krpcgo.Stream[[]*ScienceData], error) {
+func (s *Experiment) DataStream() (*krpcgo.Stream[[]*ScienceData], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31285,11 +31286,11 @@ func (s *Experiment) Available() (bool, error) {
 	return vv, nil
 }
 
-// StreamAvailable - determines if the experiment is available given the current
+// AvailableStream - determines if the experiment is available given the current
 // conditions.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamAvailable() (*krpcgo.Stream[bool], error) {
+func (s *Experiment) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31351,10 +31352,10 @@ func (s *Experiment) Biome() (string, error) {
 	return vv, nil
 }
 
-// StreamBiome - the name of the biome the experiment is currently in.
+// BiomeStream - the name of the biome the experiment is currently in.
 //
 // Allowed game scenes: any.
-func (s *Experiment) StreamBiome() (*krpcgo.Stream[string], error) {
+func (s *Experiment) BiomeStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31506,10 +31507,10 @@ func (s *Fairing) Jettisoned() (bool, error) {
 	return vv, nil
 }
 
-// StreamJettisoned - whether the fairing has been jettisoned.
+// JettisonedStream - whether the fairing has been jettisoned.
 //
 // Allowed game scenes: any.
-func (s *Fairing) StreamJettisoned() (*krpcgo.Stream[bool], error) {
+func (s *Fairing) JettisonedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31627,10 +31628,10 @@ func (s *Force) ForceVector() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamForceVector - the force vector, in Newtons.
+// ForceVectorStream - the force vector, in Newtons.
 //
 // Allowed game scenes: any.
-func (s *Force) StreamForceVector() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Force) ForceVectorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31726,11 +31727,11 @@ func (s *Force) Position() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamPosition - the position at which the force acts, in reference frame
+// PositionStream - the position at which the force acts, in reference frame
 // <see cref="T:SpaceCenter.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *Force) StreamPosition() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Force) PositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -31921,10 +31922,10 @@ func (s *Intake) Open() (bool, error) {
 	return vv, nil
 }
 
-// StreamOpen - whether the intake is open.
+// OpenStream - whether the intake is open.
 //
 // Allowed game scenes: any.
-func (s *Intake) StreamOpen() (*krpcgo.Stream[bool], error) {
+func (s *Intake) OpenStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32019,10 +32020,10 @@ func (s *Intake) Speed() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpeed - speed of the flow into the intake, in <math>m/s</math>.
+// SpeedStream - speed of the flow into the intake, in <math>m/s</math>.
 //
 // Allowed game scenes: any.
-func (s *Intake) StreamSpeed() (*krpcgo.Stream[float32], error) {
+func (s *Intake) SpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32084,11 +32085,11 @@ func (s *Intake) Flow() (float32, error) {
 	return vv, nil
 }
 
-// StreamFlow - the rate of flow into the intake, in units of resource per
+// FlowStream - the rate of flow into the intake, in units of resource per
 // second.
 //
 // Allowed game scenes: any.
-func (s *Intake) StreamFlow() (*krpcgo.Stream[float32], error) {
+func (s *Intake) FlowStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32150,10 +32151,10 @@ func (s *Intake) Area() (float32, error) {
 	return vv, nil
 }
 
-// StreamArea - the area of the intake's opening, in square meters.
+// AreaStream - the area of the intake's opening, in square meters.
 //
 // Allowed game scenes: any.
-func (s *Intake) StreamArea() (*krpcgo.Stream[float32], error) {
+func (s *Intake) AreaStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32303,10 +32304,10 @@ func (s *Leg) State() (LegState, error) {
 	return vv, nil
 }
 
-// StreamState - the current state of the landing leg.
+// StateStream - the current state of the landing leg.
 //
 // Allowed game scenes: any.
-func (s *Leg) StreamState() (*krpcgo.Stream[LegState], error) {
+func (s *Leg) StateStream() (*krpcgo.Stream[LegState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32368,10 +32369,10 @@ func (s *Leg) Deployable() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployable - whether the leg is deployable.
+// DeployableStream - whether the leg is deployable.
 //
 // Allowed game scenes: any.
-func (s *Leg) StreamDeployable() (*krpcgo.Stream[bool], error) {
+func (s *Leg) DeployableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32433,10 +32434,10 @@ func (s *Leg) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - whether the landing leg is deployed.
+// DeployedStream - whether the landing leg is deployed.
 //
 // Allowed game scenes: any.
-func (s *Leg) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *Leg) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32531,10 +32532,10 @@ func (s *Leg) IsGrounded() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsGrounded - returns whether the leg is touching the ground.
+// IsGroundedStream - returns whether the leg is touching the ground.
 //
 // Allowed game scenes: any.
-func (s *Leg) StreamIsGrounded() (*krpcgo.Stream[bool], error) {
+func (s *Leg) IsGroundedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32627,10 +32628,10 @@ func (s *Light) Active() (bool, error) {
 	return vv, nil
 }
 
-// StreamActive - whether the light is switched on.
+// ActiveStream - whether the light is switched on.
 //
 // Allowed game scenes: any.
-func (s *Light) StreamActive() (*krpcgo.Stream[bool], error) {
+func (s *Light) ActiveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32725,10 +32726,10 @@ func (s *Light) Color() (api.Tuple3[float32, float32, float32], error) {
 	return vv, nil
 }
 
-// StreamColor - the color of the light, as an RGB triple.
+// ColorStream - the color of the light, as an RGB triple.
 //
 // Allowed game scenes: any.
-func (s *Light) StreamColor() (*krpcgo.Stream[api.Tuple3[float32, float32, float32]], error) {
+func (s *Light) ColorStream() (*krpcgo.Stream[api.Tuple3[float32, float32, float32]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32823,10 +32824,10 @@ func (s *Light) PowerUsage() (float32, error) {
 	return vv, nil
 }
 
-// StreamPowerUsage - the current power usage, in units of charge per second.
+// PowerUsageStream - the current power usage, in units of charge per second.
 //
 // Allowed game scenes: any.
-func (s *Light) StreamPowerUsage() (*krpcgo.Stream[float32], error) {
+func (s *Light) PowerUsageStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32896,10 +32897,10 @@ func (s *Module) HasField(name string) (bool, error) {
 	return vv, nil
 }
 
-// StreamHasField - returns true if the module has a field with the given name.
+// HasFieldStream - returns true if the module has a field with the given name.
 //
 // Allowed game scenes: any.
-func (s *Module) StreamHasField(name string) (*krpcgo.Stream[bool], error) {
+func (s *Module) HasFieldStream(name string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -32977,10 +32978,10 @@ func (s *Module) GetField(name string) (string, error) {
 	return vv, nil
 }
 
-// StreamGetField - returns the value of a field.
+// GetFieldStream - returns the value of a field.
 //
 // Allowed game scenes: any.
-func (s *Module) StreamGetField(name string) (*krpcgo.Stream[string], error) {
+func (s *Module) GetFieldStream(name string) (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33214,10 +33215,10 @@ func (s *Module) HasEvent(name string) (bool, error) {
 	return vv, nil
 }
 
-// StreamHasEvent - true if the module has an event with the given name.
+// HasEventStream - true if the module has an event with the given name.
 //
 // Allowed game scenes: any.
-func (s *Module) StreamHasEvent(name string) (*krpcgo.Stream[bool], error) {
+func (s *Module) HasEventStream(name string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33329,10 +33330,10 @@ func (s *Module) HasAction(name string) (bool, error) {
 	return vv, nil
 }
 
-// StreamHasAction - true if the part has an action with the given name.
+// HasActionStream - true if the part has an action with the given name.
 //
 // Allowed game scenes: any.
-func (s *Module) StreamHasAction(name string) (*krpcgo.Stream[bool], error) {
+func (s *Module) HasActionStream(name string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33443,10 +33444,10 @@ func (s *Module) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - name of the PartModule. For example, "ModuleEngines".
+// NameStream - name of the PartModule. For example, "ModuleEngines".
 //
 // Allowed game scenes: any.
-func (s *Module) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Module) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33540,11 +33541,11 @@ func (s *Module) Fields() (map[string]string, error) {
 	return vv, nil
 }
 
-// StreamFields - the modules field names and their associated values, as a
+// FieldsStream - the modules field names and their associated values, as a
 // dictionary. These are the values visible in the right-click menu of the part.
 //
 // Allowed game scenes: any.
-func (s *Module) StreamFields() (*krpcgo.Stream[map[string]string], error) {
+func (s *Module) FieldsStream() (*krpcgo.Stream[map[string]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33607,11 +33608,11 @@ func (s *Module) Events() ([]string, error) {
 	return vv, nil
 }
 
-// StreamEvents - a list of the names of all of the modules events. Events are
-// the clickable buttons visible in the right-click menu of the part.
+// EventsStream - a list of the names of all of the modules events. EventsStream
+// are the clickable buttons visible in the right-click menu of the part.
 //
 // Allowed game scenes: any.
-func (s *Module) StreamEvents() (*krpcgo.Stream[[]string], error) {
+func (s *Module) EventsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33674,11 +33675,11 @@ func (s *Module) Actions() ([]string, error) {
 	return vv, nil
 }
 
-// StreamActions - a list of all the names of the modules actions. These are the
+// ActionsStream - a list of all the names of the modules actions. These are the
 // parts actions that can be assigned to action groups in the in-game editor.
 //
 // Allowed game scenes: any.
-func (s *Module) StreamActions() (*krpcgo.Stream[[]string], error) {
+func (s *Module) ActionsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33823,10 +33824,10 @@ func (s *Parachute) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - whether the parachute has been deployed.
+// DeployedStream - whether the parachute has been deployed.
 //
 // Allowed game scenes: any.
-func (s *Parachute) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *Parachute) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33889,11 +33890,11 @@ func (s *Parachute) Armed() (bool, error) {
 	return vv, nil
 }
 
-// StreamArmed - whether the parachute has been armed or deployed. Only
+// ArmedStream - whether the parachute has been armed or deployed. Only
 // applicable to RealChutes parachutes.
 //
 // Allowed game scenes: any.
-func (s *Parachute) StreamArmed() (*krpcgo.Stream[bool], error) {
+func (s *Parachute) ArmedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -33955,10 +33956,10 @@ func (s *Parachute) State() (ParachuteState, error) {
 	return vv, nil
 }
 
-// StreamState - the current state of the parachute.
+// StateStream - the current state of the parachute.
 //
 // Allowed game scenes: any.
-func (s *Parachute) StreamState() (*krpcgo.Stream[ParachuteState], error) {
+func (s *Parachute) StateStream() (*krpcgo.Stream[ParachuteState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34021,11 +34022,11 @@ func (s *Parachute) DeployAltitude() (float32, error) {
 	return vv, nil
 }
 
-// StreamDeployAltitude - the altitude at which the parachute will full deploy,
+// DeployAltitudeStream - the altitude at which the parachute will full deploy,
 // in meters. Only applicable to stock parachutes.
 //
 // Allowed game scenes: any.
-func (s *Parachute) StreamDeployAltitude() (*krpcgo.Stream[float32], error) {
+func (s *Parachute) DeployAltitudeStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34122,11 +34123,11 @@ func (s *Parachute) DeployMinPressure() (float32, error) {
 	return vv, nil
 }
 
-// StreamDeployMinPressure - the minimum pressure at which the parachute will
+// DeployMinPressureStream - the minimum pressure at which the parachute will
 // semi-deploy, in atmospheres. Only applicable to stock parachutes.
 //
 // Allowed game scenes: any.
-func (s *Parachute) StreamDeployMinPressure() (*krpcgo.Stream[float32], error) {
+func (s *Parachute) DeployMinPressureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34230,10 +34231,10 @@ func (s *Part) Position(referenceFrame *ReferenceFrame) (api.Tuple3[float64, flo
 	return vv, nil
 }
 
-// StreamPosition - the position of the part in the given reference frame.
+// PositionStream - the position of the part in the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamPosition(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Part) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34313,12 +34314,12 @@ func (s *Part) CenterOfMass(referenceFrame *ReferenceFrame) (api.Tuple3[float64,
 	return vv, nil
 }
 
-// StreamCenterOfMass - the position of the parts center of mass in the given
+// CenterOfMassStream - the position of the parts center of mass in the given
 // reference frame. If the part is physicsless, this is equivalent to <see
 // cref="M:SpaceCenter.Part.Position" />.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamCenterOfMass(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Part) CenterOfMassStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34397,11 +34398,11 @@ func (s *Part) BoundingBox(referenceFrame *ReferenceFrame) (api.Tuple2[api.Tuple
 	return vv, nil
 }
 
-// StreamBoundingBox - the axis-aligned bounding box of the part in the given
+// BoundingBoxStream - the axis-aligned bounding box of the part in the given
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamBoundingBox(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Part) BoundingBoxStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34479,11 +34480,11 @@ func (s *Part) Direction(referenceFrame *ReferenceFrame) (api.Tuple3[float64, fl
 	return vv, nil
 }
 
-// StreamDirection - the direction the part points in, in the given reference
+// DirectionStream - the direction the part points in, in the given reference
 // frame.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamDirection(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Part) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34561,11 +34562,11 @@ func (s *Part) Velocity(referenceFrame *ReferenceFrame) (api.Tuple3[float64, flo
 	return vv, nil
 }
 
-// StreamVelocity - the linear velocity of the part in the given reference
+// VelocityStream - the linear velocity of the part in the given reference
 // frame.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamVelocity(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Part) VelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34643,10 +34644,10 @@ func (s *Part) Rotation(referenceFrame *ReferenceFrame) (api.Tuple4[float64, flo
 	return vv, nil
 }
 
-// StreamRotation - the rotation of the part, in the given reference frame.
+// RotationStream - the rotation of the part, in the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamRotation(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *Part) RotationStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34823,12 +34824,12 @@ func (s *Part) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - internal name of the part, as used in <a
+// NameStream - internal name of the part, as used in <a
 // href="https://wiki.kerbalspaceprogram.com/wiki/CFG_File_Documentation">part
 // cfg files</a>. For example "Mark1-2Pod".
 //
 // Allowed game scenes: any.
-func (s *Part) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Part) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34891,11 +34892,11 @@ func (s *Part) Title() (string, error) {
 	return vv, nil
 }
 
-// StreamTitle - title of the part, as shown when the part is right clicked
+// TitleStream - title of the part, as shown when the part is right clicked
 // in-game. For example "Mk1-2 Command Pod".
 //
 // Allowed game scenes: any.
-func (s *Part) StreamTitle() (*krpcgo.Stream[string], error) {
+func (s *Part) TitleStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -34958,11 +34959,11 @@ func (s *Part) Tag() (string, error) {
 	return vv, nil
 }
 
-// StreamTag - the name tag for the part. Can be set to a custom string using
+// TagStream - the name tag for the part. Can be set to a custom string using
 // the in-game user interface.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamTag() (*krpcgo.Stream[string], error) {
+func (s *Part) TagStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35058,10 +35059,10 @@ func (s *Part) Highlighted() (bool, error) {
 	return vv, nil
 }
 
-// StreamHighlighted - whether the part is highlighted.
+// HighlightedStream - whether the part is highlighted.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamHighlighted() (*krpcgo.Stream[bool], error) {
+func (s *Part) HighlightedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35156,11 +35157,11 @@ func (s *Part) HighlightColor() (api.Tuple3[float64, float64, float64], error) {
 	return vv, nil
 }
 
-// StreamHighlightColor - the color used to highlight the part, as an RGB
+// HighlightColorStream - the color used to highlight the part, as an RGB
 // triple.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamHighlightColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Part) HighlightColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35255,10 +35256,10 @@ func (s *Part) Cost() (float64, error) {
 	return vv, nil
 }
 
-// StreamCost - the cost of the part, in units of funds.
+// CostStream - the cost of the part, in units of funds.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamCost() (*krpcgo.Stream[float64], error) {
+func (s *Part) CostStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35386,12 +35387,12 @@ func (s *Part) Children() ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamChildren - the parts children. Returns an empty list if the part has no
+// ChildrenStream - the parts children. Returns an empty list if the part has no
 // children. This, in combination with <see cref="M:SpaceCenter.Part.Parent" />,
 // can be used to traverse the vessels parts tree.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamChildren() (*krpcgo.Stream[[]*Part], error) {
+func (s *Part) ChildrenStream() (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35454,12 +35455,12 @@ func (s *Part) AxiallyAttached() (bool, error) {
 	return vv, nil
 }
 
-// StreamAxiallyAttached - whether the part is axially attached to its parent,
+// AxiallyAttachedStream - whether the part is axially attached to its parent,
 // i.e. on the top or bottom of its parent. If the part has no parent, returns
 // false.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamAxiallyAttached() (*krpcgo.Stream[bool], error) {
+func (s *Part) AxiallyAttachedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35522,11 +35523,11 @@ func (s *Part) RadiallyAttached() (bool, error) {
 	return vv, nil
 }
 
-// StreamRadiallyAttached - whether the part is radially attached to its parent,
+// RadiallyAttachedStream - whether the part is radially attached to its parent,
 // i.e. on the side of its parent. If the part has no parent, returns false.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamRadiallyAttached() (*krpcgo.Stream[bool], error) {
+func (s *Part) RadiallyAttachedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35589,11 +35590,11 @@ func (s *Part) Stage() (int32, error) {
 	return vv, nil
 }
 
-// StreamStage - the stage in which this part will be activated. Returns -1 if
+// StageStream - the stage in which this part will be activated. Returns -1 if
 // the part is not activated by staging.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamStage() (*krpcgo.Stream[int32], error) {
+func (s *Part) StageStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35656,11 +35657,11 @@ func (s *Part) DecoupleStage() (int32, error) {
 	return vv, nil
 }
 
-// StreamDecoupleStage - the stage in which this part will be decoupled. Returns
+// DecoupleStageStream - the stage in which this part will be decoupled. Returns
 // -1 if the part is never decoupled from the vessel.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamDecoupleStage() (*krpcgo.Stream[int32], error) {
+func (s *Part) DecoupleStageStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35723,11 +35724,11 @@ func (s *Part) Massless() (bool, error) {
 	return vv, nil
 }
 
-// StreamMassless - whether the part is <a
-// href="https://wiki.kerbalspaceprogram.com/wiki/Massless_part">massless</a>.
+// MasslessStream - whether the part is <a
+// href="https://wiki.kerbalspaceprogram.com/wiki/MasslessStream_part">massless</a>.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamMassless() (*krpcgo.Stream[bool], error) {
+func (s *Part) MasslessStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35790,11 +35791,11 @@ func (s *Part) Mass() (float64, error) {
 	return vv, nil
 }
 
-// StreamMass - the current mass of the part, including resources it contains,
+// MassStream - the current mass of the part, including resources it contains,
 // in kilograms. Returns zero if the part is massless.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamMass() (*krpcgo.Stream[float64], error) {
+func (s *Part) MassStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35857,11 +35858,11 @@ func (s *Part) DryMass() (float64, error) {
 	return vv, nil
 }
 
-// StreamDryMass - the mass of the part, not including any resources it
+// DryMassStream - the mass of the part, not including any resources it
 // contains, in kilograms. Returns zero if the part is massless.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamDryMass() (*krpcgo.Stream[float64], error) {
+func (s *Part) DryMassStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35924,11 +35925,11 @@ func (s *Part) Shielded() (bool, error) {
 	return vv, nil
 }
 
-// StreamShielded - whether the part is shielded from the exterior of the
+// ShieldedStream - whether the part is shielded from the exterior of the
 // vessel, for example by a fairing.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamShielded() (*krpcgo.Stream[bool], error) {
+func (s *Part) ShieldedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -35990,10 +35991,10 @@ func (s *Part) DynamicPressure() (float32, error) {
 	return vv, nil
 }
 
-// StreamDynamicPressure - the dynamic pressure acting on the part, in Pascals.
+// DynamicPressureStream - the dynamic pressure acting on the part, in Pascals.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamDynamicPressure() (*krpcgo.Stream[float32], error) {
+func (s *Part) DynamicPressureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36055,11 +36056,11 @@ func (s *Part) ImpactTolerance() (float64, error) {
 	return vv, nil
 }
 
-// StreamImpactTolerance - the impact tolerance of the part, in meters per
+// ImpactToleranceStream - the impact tolerance of the part, in meters per
 // second.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamImpactTolerance() (*krpcgo.Stream[float64], error) {
+func (s *Part) ImpactToleranceStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36121,10 +36122,10 @@ func (s *Part) Temperature() (float64, error) {
 	return vv, nil
 }
 
-// StreamTemperature - temperature of the part, in Kelvin.
+// TemperatureStream - temperature of the part, in Kelvin.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamTemperature() (*krpcgo.Stream[float64], error) {
+func (s *Part) TemperatureStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36186,10 +36187,10 @@ func (s *Part) SkinTemperature() (float64, error) {
 	return vv, nil
 }
 
-// StreamSkinTemperature - temperature of the skin of the part, in Kelvin.
+// SkinTemperatureStream - temperature of the skin of the part, in Kelvin.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamSkinTemperature() (*krpcgo.Stream[float64], error) {
+func (s *Part) SkinTemperatureStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36251,11 +36252,11 @@ func (s *Part) MaxTemperature() (float64, error) {
 	return vv, nil
 }
 
-// StreamMaxTemperature - maximum temperature that the part can survive, in
+// MaxTemperatureStream - maximum temperature that the part can survive, in
 // Kelvin.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamMaxTemperature() (*krpcgo.Stream[float64], error) {
+func (s *Part) MaxTemperatureStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36318,11 +36319,11 @@ func (s *Part) MaxSkinTemperature() (float64, error) {
 	return vv, nil
 }
 
-// StreamMaxSkinTemperature - maximum temperature that the skin of the part can
+// MaxSkinTemperatureStream - maximum temperature that the skin of the part can
 // survive, in Kelvin.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamMaxSkinTemperature() (*krpcgo.Stream[float64], error) {
+func (s *Part) MaxSkinTemperatureStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36385,11 +36386,11 @@ func (s *Part) ThermalMass() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalMass - a measure of how much energy it takes to increase the
+// ThermalMassStream - a measure of how much energy it takes to increase the
 // internal temperature of the part, in Joules per Kelvin.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamThermalMass() (*krpcgo.Stream[float32], error) {
+func (s *Part) ThermalMassStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36452,11 +36453,11 @@ func (s *Part) ThermalSkinMass() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalSkinMass - a measure of how much energy it takes to increase the
+// ThermalSkinMassStream - a measure of how much energy it takes to increase the
 // skin temperature of the part, in Joules per Kelvin.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamThermalSkinMass() (*krpcgo.Stream[float32], error) {
+func (s *Part) ThermalSkinMassStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36519,11 +36520,11 @@ func (s *Part) ThermalResourceMass() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalResourceMass - a measure of how much energy it takes to increase
+// ThermalResourceMassStream - a measure of how much energy it takes to increase
 // the temperature of the resources contained in the part, in Joules per Kelvin.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamThermalResourceMass() (*krpcgo.Stream[float32], error) {
+func (s *Part) ThermalResourceMassStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36588,13 +36589,13 @@ func (s *Part) ThermalInternalFlux() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalInternalFlux - the rate at which heat energy is begin generated
+// ThermalInternalFluxStream - the rate at which heat energy is begin generated
 // by the part. For example, some engines generate heat by combusting fuel.
 // Measured in energy per unit time, or power, in Watts. A positive value means
 // the part is gaining heat energy, and negative means it is losing heat energy.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamThermalInternalFlux() (*krpcgo.Stream[float32], error) {
+func (s *Part) ThermalInternalFluxStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36659,13 +36660,13 @@ func (s *Part) ThermalConductionFlux() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalConductionFlux - the rate at which heat energy is conducting
+// ThermalConductionFluxStream - the rate at which heat energy is conducting
 // into or out of the part via contact with other parts. Measured in energy per
 // unit time, or power, in Watts. A positive value means the part is gaining
 // heat energy, and negative means it is losing heat energy.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamThermalConductionFlux() (*krpcgo.Stream[float32], error) {
+func (s *Part) ThermalConductionFluxStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36730,13 +36731,13 @@ func (s *Part) ThermalConvectionFlux() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalConvectionFlux - the rate at which heat energy is convecting
+// ThermalConvectionFluxStream - the rate at which heat energy is convecting
 // into or out of the part from the surrounding atmosphere. Measured in energy
 // per unit time, or power, in Watts. A positive value means the part is gaining
 // heat energy, and negative means it is losing heat energy.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamThermalConvectionFlux() (*krpcgo.Stream[float32], error) {
+func (s *Part) ThermalConvectionFluxStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36801,13 +36802,13 @@ func (s *Part) ThermalRadiationFlux() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalRadiationFlux - the rate at which heat energy is radiating into
+// ThermalRadiationFluxStream - the rate at which heat energy is radiating into
 // or out of the part from the surrounding environment. Measured in energy per
 // unit time, or power, in Watts. A positive value means the part is gaining
 // heat energy, and negative means it is losing heat energy.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamThermalRadiationFlux() (*krpcgo.Stream[float32], error) {
+func (s *Part) ThermalRadiationFluxStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36872,14 +36873,14 @@ func (s *Part) ThermalSkinToInternalFlux() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalSkinToInternalFlux - the rate at which heat energy is
+// ThermalSkinToInternalFluxStream - the rate at which heat energy is
 // transferring between the part's skin and its internals. Measured in energy
 // per unit time, or power, in Watts. A positive value means the part's
 // internals are gaining heat energy, and negative means its skin is gaining
 // heat energy.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamThermalSkinToInternalFlux() (*krpcgo.Stream[float32], error) {
+func (s *Part) ThermalSkinToInternalFluxStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -36972,10 +36973,10 @@ func (s *Part) Crossfeed() (bool, error) {
 	return vv, nil
 }
 
-// StreamCrossfeed - whether this part is crossfeed capable.
+// CrossfeedStream - whether this part is crossfeed capable.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamCrossfeed() (*krpcgo.Stream[bool], error) {
+func (s *Part) CrossfeedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -37037,10 +37038,10 @@ func (s *Part) IsFuelLine() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsFuelLine - whether this part is a fuel line.
+// IsFuelLineStream - whether this part is a fuel line.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamIsFuelLine() (*krpcgo.Stream[bool], error) {
+func (s *Part) IsFuelLineStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -37103,11 +37104,11 @@ func (s *Part) FuelLinesFrom() ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamFuelLinesFrom - the parts that are connected to this part via fuel
+// FuelLinesFromStream - the parts that are connected to this part via fuel
 // lines, where the direction of the fuel line is into this part.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamFuelLinesFrom() (*krpcgo.Stream[[]*Part], error) {
+func (s *Part) FuelLinesFromStream() (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -37170,11 +37171,11 @@ func (s *Part) FuelLinesTo() ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamFuelLinesTo - the parts that are connected to this part via fuel lines,
+// FuelLinesToStream - the parts that are connected to this part via fuel lines,
 // where the direction of the fuel line is out of this part.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamFuelLinesTo() (*krpcgo.Stream[[]*Part], error) {
+func (s *Part) FuelLinesToStream() (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -37236,10 +37237,10 @@ func (s *Part) Modules() ([]*Module, error) {
 	return vv, nil
 }
 
-// StreamModules - the modules for this part.
+// ModulesStream - the modules for this part.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamModules() (*krpcgo.Stream[[]*Module], error) {
+func (s *Part) ModulesStream() (*krpcgo.Stream[[]*Module], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -37558,11 +37559,11 @@ func (s *Part) Experiments() ([]*Experiment, error) {
 	return vv, nil
 }
 
-// StreamExperiments - a list of <see cref="T:SpaceCenter.Experiment" /> objects
+// ExperimentsStream - a list of <see cref="T:SpaceCenter.Experiment" /> objects
 // that the part contains.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamExperiments() (*krpcgo.Stream[[]*Experiment], error) {
+func (s *Part) ExperimentsStream() (*krpcgo.Stream[[]*Experiment], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38234,12 +38235,12 @@ func (s *Part) MomentOfInertia() (api.Tuple3[float64, float64, float64], error) 
 	return vv, nil
 }
 
-// StreamMomentOfInertia - the moment of inertia of the part in
+// MomentOfInertiaStream - the moment of inertia of the part in
 // <math>kg.m^2</math> around its center of mass in the parts reference frame
 // (<see cref="T:SpaceCenter.ReferenceFrame" />).
 //
 // Allowed game scenes: any.
-func (s *Part) StreamMomentOfInertia() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Part) MomentOfInertiaStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38303,12 +38304,12 @@ func (s *Part) InertiaTensor() ([]float64, error) {
 	return vv, nil
 }
 
-// StreamInertiaTensor - the inertia tensor of the part in the parts reference
+// InertiaTensorStream - the inertia tensor of the part in the parts reference
 // frame (<see cref="T:SpaceCenter.ReferenceFrame" />). Returns the 3x3 matrix
 // as a list of elements, in row-major order.
 //
 // Allowed game scenes: any.
-func (s *Part) StreamInertiaTensor() (*krpcgo.Stream[[]float64], error) {
+func (s *Part) InertiaTensorStream() (*krpcgo.Stream[[]float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38486,11 +38487,11 @@ func (s *Parts) WithName(name string) ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamWithName - a list of parts whose <see cref="M:SpaceCenter.Part.Name" />
+// WithNameStream - a list of parts whose <see cref="M:SpaceCenter.Part.Name" />
 // is <paramref name="name" />.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamWithName(name string) (*krpcgo.Stream[[]*Part], error) {
+func (s *Parts) WithNameStream(name string) (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38569,11 +38570,11 @@ func (s *Parts) WithTitle(title string) ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamWithTitle - a list of all parts whose <see
+// WithTitleStream - a list of all parts whose <see
 // cref="M:SpaceCenter.Part.Title" /> is <paramref name="title" />.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamWithTitle(title string) (*krpcgo.Stream[[]*Part], error) {
+func (s *Parts) WithTitleStream(title string) (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38652,11 +38653,11 @@ func (s *Parts) WithTag(tag string) ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamWithTag - a list of all parts whose <see cref="M:SpaceCenter.Part.Tag"
+// WithTagStream - a list of all parts whose <see cref="M:SpaceCenter.Part.Tag"
 // /> is <paramref name="tag" />.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamWithTag(tag string) (*krpcgo.Stream[[]*Part], error) {
+func (s *Parts) WithTagStream(tag string) (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38736,12 +38737,12 @@ func (s *Parts) WithModule(moduleName string) ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamWithModule - a list of all parts that contain a <see
+// WithModuleStream - a list of all parts that contain a <see
 // cref="T:SpaceCenter.Module" /> whose <see cref="M:SpaceCenter.Module.Name" />
 // is <paramref name="moduleName" />.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamWithModule(moduleName string) (*krpcgo.Stream[[]*Part], error) {
+func (s *Parts) WithModuleStream(moduleName string) (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38820,11 +38821,11 @@ func (s *Parts) InStage(stage int32) ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamInStage - a list of all parts that are activated in the given <paramref
+// InStageStream - a list of all parts that are activated in the given <paramref
 // name="stage" />.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamInStage(stage int32) (*krpcgo.Stream[[]*Part], error) {
+func (s *Parts) InStageStream(stage int32) (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38903,11 +38904,11 @@ func (s *Parts) InDecoupleStage(stage int32) ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamInDecoupleStage - a list of all parts that are decoupled in the given
+// InDecoupleStageStream - a list of all parts that are decoupled in the given
 // <paramref name="stage" />.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamInDecoupleStage(stage int32) (*krpcgo.Stream[[]*Part], error) {
+func (s *Parts) InDecoupleStageStream(stage int32) (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -38987,12 +38988,12 @@ func (s *Parts) ModulesWithName(moduleName string) ([]*Module, error) {
 	return vv, nil
 }
 
-// StreamModulesWithName - a list of modules (combined across all parts in the
+// ModulesWithNameStream - a list of modules (combined across all parts in the
 // vessel) whose <see cref="M:SpaceCenter.Module.Name" /> is <paramref
 // name="moduleName" />.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamModulesWithName(moduleName string) (*krpcgo.Stream[[]*Module], error) {
+func (s *Parts) ModulesWithNameStream(moduleName string) (*krpcgo.Stream[[]*Module], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39062,10 +39063,10 @@ func (s *Parts) All() ([]*Part, error) {
 	return vv, nil
 }
 
-// StreamAll - a list of all of the vessels parts.
+// AllStream - a list of all of the vessels parts.
 //
-// Allowed game scenes: any.
-func (s *Parts) StreamAll() (*krpcgo.Stream[[]*Part], error) {
+// AllStreamowed game scenes: any.
+func (s *Parts) AllStream() (*krpcgo.Stream[[]*Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39222,10 +39223,10 @@ func (s *Parts) Antennas() ([]*Antenna, error) {
 	return vv, nil
 }
 
-// StreamAntennas - a list of all antennas in the vessel.
+// AntennasStream - a list of all antennas in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamAntennas() (*krpcgo.Stream[[]*Antenna], error) {
+func (s *Parts) AntennasStream() (*krpcgo.Stream[[]*Antenna], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39287,10 +39288,10 @@ func (s *Parts) ControlSurfaces() ([]*ControlSurface, error) {
 	return vv, nil
 }
 
-// StreamControlSurfaces - a list of all control surfaces in the vessel.
+// ControlSurfacesStream - a list of all control surfaces in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamControlSurfaces() (*krpcgo.Stream[[]*ControlSurface], error) {
+func (s *Parts) ControlSurfacesStream() (*krpcgo.Stream[[]*ControlSurface], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39352,10 +39353,10 @@ func (s *Parts) CargoBays() ([]*CargoBay, error) {
 	return vv, nil
 }
 
-// StreamCargoBays - a list of all cargo bays in the vessel.
+// CargoBaysStream - a list of all cargo bays in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamCargoBays() (*krpcgo.Stream[[]*CargoBay], error) {
+func (s *Parts) CargoBaysStream() (*krpcgo.Stream[[]*CargoBay], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39417,10 +39418,10 @@ func (s *Parts) Decouplers() ([]*Decoupler, error) {
 	return vv, nil
 }
 
-// StreamDecouplers - a list of all decouplers in the vessel.
+// DecouplersStream - a list of all decouplers in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamDecouplers() (*krpcgo.Stream[[]*Decoupler], error) {
+func (s *Parts) DecouplersStream() (*krpcgo.Stream[[]*Decoupler], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39482,10 +39483,10 @@ func (s *Parts) DockingPorts() ([]*DockingPort, error) {
 	return vv, nil
 }
 
-// StreamDockingPorts - a list of all docking ports in the vessel.
+// DockingPortsStream - a list of all docking ports in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamDockingPorts() (*krpcgo.Stream[[]*DockingPort], error) {
+func (s *Parts) DockingPortsStream() (*krpcgo.Stream[[]*DockingPort], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39547,10 +39548,10 @@ func (s *Parts) Engines() ([]*Engine, error) {
 	return vv, nil
 }
 
-// StreamEngines - a list of all engines in the vessel.
+// EnginesStream - a list of all engines in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamEngines() (*krpcgo.Stream[[]*Engine], error) {
+func (s *Parts) EnginesStream() (*krpcgo.Stream[[]*Engine], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39612,10 +39613,10 @@ func (s *Parts) Experiments() ([]*Experiment, error) {
 	return vv, nil
 }
 
-// StreamExperiments - a list of all science experiments in the vessel.
+// ExperimentsStream - a list of all science experiments in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamExperiments() (*krpcgo.Stream[[]*Experiment], error) {
+func (s *Parts) ExperimentsStream() (*krpcgo.Stream[[]*Experiment], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39677,10 +39678,10 @@ func (s *Parts) Fairings() ([]*Fairing, error) {
 	return vv, nil
 }
 
-// StreamFairings - a list of all fairings in the vessel.
+// FairingsStream - a list of all fairings in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamFairings() (*krpcgo.Stream[[]*Fairing], error) {
+func (s *Parts) FairingsStream() (*krpcgo.Stream[[]*Fairing], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39742,10 +39743,10 @@ func (s *Parts) Intakes() ([]*Intake, error) {
 	return vv, nil
 }
 
-// StreamIntakes - a list of all intakes in the vessel.
+// IntakesStream - a list of all intakes in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamIntakes() (*krpcgo.Stream[[]*Intake], error) {
+func (s *Parts) IntakesStream() (*krpcgo.Stream[[]*Intake], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39807,10 +39808,10 @@ func (s *Parts) Legs() ([]*Leg, error) {
 	return vv, nil
 }
 
-// StreamLegs - a list of all landing legs attached to the vessel.
+// LegsStream - a list of all landing legs attached to the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamLegs() (*krpcgo.Stream[[]*Leg], error) {
+func (s *Parts) LegsStream() (*krpcgo.Stream[[]*Leg], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39872,10 +39873,10 @@ func (s *Parts) LaunchClamps() ([]*LaunchClamp, error) {
 	return vv, nil
 }
 
-// StreamLaunchClamps - a list of all launch clamps attached to the vessel.
+// LaunchClampsStream - a list of all launch clamps attached to the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamLaunchClamps() (*krpcgo.Stream[[]*LaunchClamp], error) {
+func (s *Parts) LaunchClampsStream() (*krpcgo.Stream[[]*LaunchClamp], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -39937,10 +39938,10 @@ func (s *Parts) Lights() ([]*Light, error) {
 	return vv, nil
 }
 
-// StreamLights - a list of all lights in the vessel.
+// LightsStream - a list of all lights in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamLights() (*krpcgo.Stream[[]*Light], error) {
+func (s *Parts) LightsStream() (*krpcgo.Stream[[]*Light], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40002,10 +40003,10 @@ func (s *Parts) Parachutes() ([]*Parachute, error) {
 	return vv, nil
 }
 
-// StreamParachutes - a list of all parachutes in the vessel.
+// ParachutesStream - a list of all parachutes in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamParachutes() (*krpcgo.Stream[[]*Parachute], error) {
+func (s *Parts) ParachutesStream() (*krpcgo.Stream[[]*Parachute], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40067,10 +40068,10 @@ func (s *Parts) Radiators() ([]*Radiator, error) {
 	return vv, nil
 }
 
-// StreamRadiators - a list of all radiators in the vessel.
+// RadiatorsStream - a list of all radiators in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamRadiators() (*krpcgo.Stream[[]*Radiator], error) {
+func (s *Parts) RadiatorsStream() (*krpcgo.Stream[[]*Radiator], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40132,10 +40133,10 @@ func (s *Parts) RCS() ([]*RCS, error) {
 	return vv, nil
 }
 
-// StreamRCS - a list of all RCS blocks/thrusters in the vessel.
+// RCSStream - a list of all RCSStream blocks/thrusters in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamRCS() (*krpcgo.Stream[[]*RCS], error) {
+func (s *Parts) RCSStream() (*krpcgo.Stream[[]*RCS], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40197,10 +40198,10 @@ func (s *Parts) ReactionWheels() ([]*ReactionWheel, error) {
 	return vv, nil
 }
 
-// StreamReactionWheels - a list of all reaction wheels in the vessel.
+// ReactionWheelsStream - a list of all reaction wheels in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamReactionWheels() (*krpcgo.Stream[[]*ReactionWheel], error) {
+func (s *Parts) ReactionWheelsStream() (*krpcgo.Stream[[]*ReactionWheel], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40262,10 +40263,10 @@ func (s *Parts) ResourceConverters() ([]*ResourceConverter, error) {
 	return vv, nil
 }
 
-// StreamResourceConverters - a list of all resource converters in the vessel.
+// ResourceConvertersStream - a list of all resource converters in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamResourceConverters() (*krpcgo.Stream[[]*ResourceConverter], error) {
+func (s *Parts) ResourceConvertersStream() (*krpcgo.Stream[[]*ResourceConverter], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40327,10 +40328,10 @@ func (s *Parts) ResourceHarvesters() ([]*ResourceHarvester, error) {
 	return vv, nil
 }
 
-// StreamResourceHarvesters - a list of all resource harvesters in the vessel.
+// ResourceHarvestersStream - a list of all resource harvesters in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamResourceHarvesters() (*krpcgo.Stream[[]*ResourceHarvester], error) {
+func (s *Parts) ResourceHarvestersStream() (*krpcgo.Stream[[]*ResourceHarvester], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40392,10 +40393,10 @@ func (s *Parts) Sensors() ([]*Sensor, error) {
 	return vv, nil
 }
 
-// StreamSensors - a list of all sensors in the vessel.
+// SensorsStream - a list of all sensors in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamSensors() (*krpcgo.Stream[[]*Sensor], error) {
+func (s *Parts) SensorsStream() (*krpcgo.Stream[[]*Sensor], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40457,10 +40458,10 @@ func (s *Parts) SolarPanels() ([]*SolarPanel, error) {
 	return vv, nil
 }
 
-// StreamSolarPanels - a list of all solar panels in the vessel.
+// SolarPanelsStream - a list of all solar panels in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamSolarPanels() (*krpcgo.Stream[[]*SolarPanel], error) {
+func (s *Parts) SolarPanelsStream() (*krpcgo.Stream[[]*SolarPanel], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40522,10 +40523,10 @@ func (s *Parts) Wheels() ([]*Wheel, error) {
 	return vv, nil
 }
 
-// StreamWheels - a list of all wheels in the vessel.
+// WheelsStream - a list of all wheels in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamWheels() (*krpcgo.Stream[[]*Wheel], error) {
+func (s *Parts) WheelsStream() (*krpcgo.Stream[[]*Wheel], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40587,10 +40588,10 @@ func (s *Parts) RoboticHinges() ([]*RoboticHinge, error) {
 	return vv, nil
 }
 
-// StreamRoboticHinges - a list of all robotic hinges in the vessel.
+// RoboticHingesStream - a list of all robotic hinges in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamRoboticHinges() (*krpcgo.Stream[[]*RoboticHinge], error) {
+func (s *Parts) RoboticHingesStream() (*krpcgo.Stream[[]*RoboticHinge], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40652,10 +40653,10 @@ func (s *Parts) RoboticPistons() ([]*RoboticPiston, error) {
 	return vv, nil
 }
 
-// StreamRoboticPistons - a list of all robotic pistons in the vessel.
+// RoboticPistonsStream - a list of all robotic pistons in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamRoboticPistons() (*krpcgo.Stream[[]*RoboticPiston], error) {
+func (s *Parts) RoboticPistonsStream() (*krpcgo.Stream[[]*RoboticPiston], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40717,10 +40718,10 @@ func (s *Parts) RoboticRotations() ([]*RoboticRotation, error) {
 	return vv, nil
 }
 
-// StreamRoboticRotations - a list of all robotic pistons in the vessel.
+// RoboticRotationsStream - a list of all robotic pistons in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamRoboticRotations() (*krpcgo.Stream[[]*RoboticRotation], error) {
+func (s *Parts) RoboticRotationsStream() (*krpcgo.Stream[[]*RoboticRotation], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40782,10 +40783,10 @@ func (s *Parts) RoboticRotors() ([]*RoboticRotor, error) {
 	return vv, nil
 }
 
-// StreamRoboticRotors - a list of all robotic rotors in the vessel.
+// RoboticRotorsStream - a list of all robotic rotors in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamRoboticRotors() (*krpcgo.Stream[[]*RoboticRotor], error) {
+func (s *Parts) RoboticRotorsStream() (*krpcgo.Stream[[]*RoboticRotor], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40847,10 +40848,10 @@ func (s *Parts) ResourceDrains() ([]*ResourceDrain, error) {
 	return vv, nil
 }
 
-// StreamResourceDrains - a list of all resource drains in the vessel.
+// ResourceDrainsStream - a list of all resource drains in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Parts) StreamResourceDrains() (*krpcgo.Stream[[]*ResourceDrain], error) {
+func (s *Parts) ResourceDrainsStream() (*krpcgo.Stream[[]*ResourceDrain], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40912,10 +40913,10 @@ func (s *Propellant) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the name of the propellant.
+// NameStream - the name of the propellant.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Propellant) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -40977,10 +40978,10 @@ func (s *Propellant) CurrentAmount() (float64, error) {
 	return vv, nil
 }
 
-// StreamCurrentAmount - the current amount of propellant.
+// CurrentAmountStream - the current amount of propellant.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamCurrentAmount() (*krpcgo.Stream[float64], error) {
+func (s *Propellant) CurrentAmountStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41042,10 +41043,10 @@ func (s *Propellant) CurrentRequirement() (float64, error) {
 	return vv, nil
 }
 
-// StreamCurrentRequirement - the required amount of propellant.
+// CurrentRequirementStream - the required amount of propellant.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamCurrentRequirement() (*krpcgo.Stream[float64], error) {
+func (s *Propellant) CurrentRequirementStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41108,11 +41109,11 @@ func (s *Propellant) TotalResourceAvailable() (float64, error) {
 	return vv, nil
 }
 
-// StreamTotalResourceAvailable - the total amount of the underlying resource
+// TotalResourceAvailableStream - the total amount of the underlying resource
 // currently reachable given resource flow rules.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamTotalResourceAvailable() (*krpcgo.Stream[float64], error) {
+func (s *Propellant) TotalResourceAvailableStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41175,11 +41176,11 @@ func (s *Propellant) TotalResourceCapacity() (float64, error) {
 	return vv, nil
 }
 
-// StreamTotalResourceCapacity - the total vehicle capacity for the underlying
+// TotalResourceCapacityStream - the total vehicle capacity for the underlying
 // propellant resource, restricted by resource flow rules.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamTotalResourceCapacity() (*krpcgo.Stream[float64], error) {
+func (s *Propellant) TotalResourceCapacityStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41242,11 +41243,11 @@ func (s *Propellant) IgnoreForIsp() (bool, error) {
 	return vv, nil
 }
 
-// StreamIgnoreForIsp - if this propellant should be ignored when calculating
+// IgnoreForIspStream - if this propellant should be ignored when calculating
 // required mass flow given specific impulse.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamIgnoreForIsp() (*krpcgo.Stream[bool], error) {
+func (s *Propellant) IgnoreForIspStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41309,11 +41310,11 @@ func (s *Propellant) IgnoreForThrustCurve() (bool, error) {
 	return vv, nil
 }
 
-// StreamIgnoreForThrustCurve - if this propellant should be ignored for thrust
+// IgnoreForThrustCurveStream - if this propellant should be ignored for thrust
 // curve calculations.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamIgnoreForThrustCurve() (*krpcgo.Stream[bool], error) {
+func (s *Propellant) IgnoreForThrustCurveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41375,10 +41376,10 @@ func (s *Propellant) DrawStackGauge() (bool, error) {
 	return vv, nil
 }
 
-// StreamDrawStackGauge - if this propellant has a stack gauge or not.
+// DrawStackGaugeStream - if this propellant has a stack gauge or not.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamDrawStackGauge() (*krpcgo.Stream[bool], error) {
+func (s *Propellant) DrawStackGaugeStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41440,10 +41441,10 @@ func (s *Propellant) IsDeprived() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsDeprived - if this propellant is deprived.
+// IsDeprivedStream - if this propellant is deprived.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamIsDeprived() (*krpcgo.Stream[bool], error) {
+func (s *Propellant) IsDeprivedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41505,10 +41506,10 @@ func (s *Propellant) Ratio() (float32, error) {
 	return vv, nil
 }
 
-// StreamRatio - the propellant ratio.
+// RatioStream - the propellant ratio.
 //
 // Allowed game scenes: any.
-func (s *Propellant) StreamRatio() (*krpcgo.Stream[float32], error) {
+func (s *Propellant) RatioStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41605,14 +41606,14 @@ func (s *RCS) Active() (bool, error) {
 	return vv, nil
 }
 
-// StreamActive - whether the RCS thrusters are active. An RCS thruster is
+// ActiveStream - whether the RCS thrusters are active. An RCS thruster is
 // inactive if the RCS action group is disabled (<see
 // cref="M:SpaceCenter.Control.RCS" />), the RCS thruster itself is not enabled
 // (<see cref="M:SpaceCenter.RCS.Enabled" />) or it is covered by a fairing
 // (<see cref="M:SpaceCenter.Part.Shielded" />).
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamActive() (*krpcgo.Stream[bool], error) {
+func (s *RCS) ActiveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41674,10 +41675,10 @@ func (s *RCS) Enabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamEnabled - whether the RCS thrusters are enabled.
+// EnabledStream - whether the RCS thrusters are enabled.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamEnabled() (*krpcgo.Stream[bool], error) {
+func (s *RCS) EnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41773,11 +41774,11 @@ func (s *RCS) PitchEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamPitchEnabled - whether the RCS thruster will fire when pitch control
+// PitchEnabledStream - whether the RCS thruster will fire when pitch control
 // input is given.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamPitchEnabled() (*krpcgo.Stream[bool], error) {
+func (s *RCS) PitchEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41874,11 +41875,11 @@ func (s *RCS) YawEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamYawEnabled - whether the RCS thruster will fire when yaw control input
+// YawEnabledStream - whether the RCS thruster will fire when yaw control input
 // is given.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamYawEnabled() (*krpcgo.Stream[bool], error) {
+func (s *RCS) YawEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -41975,11 +41976,11 @@ func (s *RCS) RollEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamRollEnabled - whether the RCS thruster will fire when roll control
+// RollEnabledStream - whether the RCS thruster will fire when roll control
 // input is given.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamRollEnabled() (*krpcgo.Stream[bool], error) {
+func (s *RCS) RollEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42076,11 +42077,11 @@ func (s *RCS) ForwardEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamForwardEnabled - whether the RCS thruster will fire when pitch control
+// ForwardEnabledStream - whether the RCS thruster will fire when pitch control
 // input is given.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamForwardEnabled() (*krpcgo.Stream[bool], error) {
+func (s *RCS) ForwardEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42177,11 +42178,11 @@ func (s *RCS) UpEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamUpEnabled - whether the RCS thruster will fire when yaw control input
+// UpEnabledStream - whether the RCS thruster will fire when yaw control input
 // is given.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamUpEnabled() (*krpcgo.Stream[bool], error) {
+func (s *RCS) UpEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42278,11 +42279,11 @@ func (s *RCS) RightEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamRightEnabled - whether the RCS thruster will fire when roll control
+// RightEnabledStream - whether the RCS thruster will fire when roll control
 // input is given.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamRightEnabled() (*krpcgo.Stream[bool], error) {
+func (s *RCS) RightEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42382,14 +42383,14 @@ func (s *RCS) AvailableTorque() (api.Tuple2[api.Tuple3[float64, float64, float64
 	return vv, nil
 }
 
-// StreamAvailableTorque - the available torque, in Newton meters, that can be
+// AvailableTorqueStream - the available torque, in Newton meters, that can be
 // produced by this RCS, in the positive and negative pitch, roll and yaw axes
 // of the vessel. These axes correspond to the coordinate axes of the <see
 // cref="M:SpaceCenter.Vessel.ReferenceFrame" />. Returns zero if RCS is
 // disable.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamAvailableTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *RCS) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42454,14 +42455,14 @@ func (s *RCS) AvailableThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamAvailableThrust - the amount of thrust, in Newtons, that would be
+// AvailableThrustStream - the amount of thrust, in Newtons, that would be
 // produced by the thruster when activated. Returns zero if the thruster does
 // not have any fuel. Takes the thrusters current <see
 // cref="M:SpaceCenter.RCS.ThrustLimit" /> and atmospheric conditions into
 // account.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamAvailableThrust() (*krpcgo.Stream[float32], error) {
+func (s *RCS) AvailableThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42526,13 +42527,13 @@ func (s *RCS) MaxThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxThrust - the maximum amount of thrust that can be produced by the
+// MaxThrustStream - the maximum amount of thrust that can be produced by the
 // RCS thrusters when active, in Newtons. Takes the thrusters current <see
 // cref="M:SpaceCenter.RCS.ThrustLimit" /> and atmospheric conditions into
 // account.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamMaxThrust() (*krpcgo.Stream[float32], error) {
+func (s *RCS) MaxThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42595,11 +42596,11 @@ func (s *RCS) MaxVacuumThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxVacuumThrust - the maximum amount of thrust that can be produced by
+// MaxVacuumThrustStream - the maximum amount of thrust that can be produced by
 // the RCS thrusters when active in a vacuum, in Newtons.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamMaxVacuumThrust() (*krpcgo.Stream[float32], error) {
+func (s *RCS) MaxVacuumThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42661,11 +42662,11 @@ func (s *RCS) ThrustLimit() (float32, error) {
 	return vv, nil
 }
 
-// StreamThrustLimit - the thrust limiter of the thruster. A value between 0 and
+// ThrustLimitStream - the thrust limiter of the thruster. A value between 0 and
 // 1.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamThrustLimit() (*krpcgo.Stream[float32], error) {
+func (s *RCS) ThrustLimitStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42760,10 +42761,10 @@ func (s *RCS) Thrusters() ([]*Thruster, error) {
 	return vv, nil
 }
 
-// StreamThrusters - a list of thrusters, one of each nozzel in the RCS part.
+// ThrustersStream - a list of thrusters, one of each nozzel in the RCS part.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamThrusters() (*krpcgo.Stream[[]*Thruster], error) {
+func (s *RCS) ThrustersStream() (*krpcgo.Stream[[]*Thruster], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42826,11 +42827,11 @@ func (s *RCS) SpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpecificImpulse - the current specific impulse of the RCS, in seconds.
+// SpecificImpulseStream - the current specific impulse of the RCS, in seconds.
 // Returns zero if the RCS is not active.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *RCS) SpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42892,11 +42893,11 @@ func (s *RCS) VacuumSpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamVacuumSpecificImpulse - the vacuum specific impulse of the RCS, in
+// VacuumSpecificImpulseStream - the vacuum specific impulse of the RCS, in
 // seconds.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamVacuumSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *RCS) VacuumSpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -42959,11 +42960,11 @@ func (s *RCS) KerbinSeaLevelSpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamKerbinSeaLevelSpecificImpulse - the specific impulse of the RCS at sea
+// KerbinSeaLevelSpecificImpulseStream - the specific impulse of the RCS at sea
 // level on Kerbin, in seconds.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamKerbinSeaLevelSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *RCS) KerbinSeaLevelSpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43025,10 +43026,10 @@ func (s *RCS) Propellants() ([]string, error) {
 	return vv, nil
 }
 
-// StreamPropellants - the names of resources that the RCS consumes.
+// PropellantsStream - the names of resources that the RCS consumes.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamPropellants() (*krpcgo.Stream[[]string], error) {
+func (s *RCS) PropellantsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43092,12 +43093,12 @@ func (s *RCS) PropellantRatios() (map[string]float32, error) {
 	return vv, nil
 }
 
-// StreamPropellantRatios - the ratios of resources that the RCS consumes. A
+// PropellantRatiosStream - the ratios of resources that the RCS consumes. A
 // dictionary mapping resource names to the ratios at which they are consumed by
 // the RCS.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamPropellantRatios() (*krpcgo.Stream[map[string]float32], error) {
+func (s *RCS) PropellantRatiosStream() (*krpcgo.Stream[map[string]float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43159,10 +43160,10 @@ func (s *RCS) HasFuel() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasFuel - whether the RCS has fuel available.
+// HasFuelStream - whether the RCS has fuel available.
 //
 // Allowed game scenes: any.
-func (s *RCS) StreamHasFuel() (*krpcgo.Stream[bool], error) {
+func (s *RCS) HasFuelStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43255,10 +43256,10 @@ func (s *Radiator) Deployable() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployable - whether the radiator is deployable.
+// DeployableStream - whether the radiator is deployable.
 //
 // Allowed game scenes: any.
-func (s *Radiator) StreamDeployable() (*krpcgo.Stream[bool], error) {
+func (s *Radiator) DeployableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43321,11 +43322,11 @@ func (s *Radiator) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - for a deployable radiator, true if the radiator is extended.
+// DeployedStream - for a deployable radiator, true if the radiator is extended.
 // If the radiator is not deployable, this is always true.
 //
 // Allowed game scenes: any.
-func (s *Radiator) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *Radiator) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43421,10 +43422,10 @@ func (s *Radiator) State() (RadiatorState, error) {
 	return vv, nil
 }
 
-// StreamState - the current state of the radiator.
+// StateStream - the current state of the radiator.
 //
 // Allowed game scenes: any.
-func (s *Radiator) StreamState() (*krpcgo.Stream[RadiatorState], error) {
+func (s *Radiator) StateStream() (*krpcgo.Stream[RadiatorState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43517,10 +43518,10 @@ func (s *ReactionWheel) Active() (bool, error) {
 	return vv, nil
 }
 
-// StreamActive - whether the reaction wheel is active.
+// ActiveStream - whether the reaction wheel is active.
 //
 // Allowed game scenes: any.
-func (s *ReactionWheel) StreamActive() (*krpcgo.Stream[bool], error) {
+func (s *ReactionWheel) ActiveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43615,10 +43616,10 @@ func (s *ReactionWheel) Broken() (bool, error) {
 	return vv, nil
 }
 
-// StreamBroken - whether the reaction wheel is broken.
+// BrokenStream - whether the reaction wheel is broken.
 //
 // Allowed game scenes: any.
-func (s *ReactionWheel) StreamBroken() (*krpcgo.Stream[bool], error) {
+func (s *ReactionWheel) BrokenStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43684,14 +43685,14 @@ func (s *ReactionWheel) AvailableTorque() (api.Tuple2[api.Tuple3[float64, float6
 	return vv, nil
 }
 
-// StreamAvailableTorque - the available torque, in Newton meters, that can be
+// AvailableTorqueStream - the available torque, in Newton meters, that can be
 // produced by this reaction wheel, in the positive and negative pitch, roll and
 // yaw axes of the vessel. These axes correspond to the coordinate axes of the
 // <see cref="M:SpaceCenter.Vessel.ReferenceFrame" />. Returns zero if the
 // reaction wheel is inactive or broken.
 //
 // Allowed game scenes: any.
-func (s *ReactionWheel) StreamAvailableTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *ReactionWheel) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43756,13 +43757,13 @@ func (s *ReactionWheel) MaxTorque() (api.Tuple2[api.Tuple3[float64, float64, flo
 	return vv, nil
 }
 
-// StreamMaxTorque - the maximum torque, in Newton meters, that can be produced
+// MaxTorqueStream - the maximum torque, in Newton meters, that can be produced
 // by this reaction wheel, when it is active, in the positive and negative
 // pitch, roll and yaw axes of the vessel. These axes correspond to the
 // coordinate axes of the <see cref="M:SpaceCenter.Vessel.ReferenceFrame" />.
 //
 // Allowed game scenes: any.
-func (s *ReactionWheel) StreamMaxTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *ReactionWheel) MaxTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43832,10 +43833,10 @@ func (s *ResourceConverter) Active(index int32) (bool, error) {
 	return vv, nil
 }
 
-// StreamActive - true if the specified converter is active.
+// ActiveStream - true if the specified converter is active.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamActive(index int32) (*krpcgo.Stream[bool], error) {
+func (s *ResourceConverter) ActiveStream(index int32) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -43913,10 +43914,10 @@ func (s *ResourceConverter) Name(index int32) (string, error) {
 	return vv, nil
 }
 
-// StreamName - the name of the specified converter.
+// NameStream - the name of the specified converter.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamName(index int32) (*krpcgo.Stream[string], error) {
+func (s *ResourceConverter) NameStream(index int32) (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44060,10 +44061,10 @@ func (s *ResourceConverter) State(index int32) (ResourceConverterState, error) {
 	return vv, nil
 }
 
-// StreamState - the state of the specified converter.
+// StateStream - the state of the specified converter.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamState(index int32) (*krpcgo.Stream[ResourceConverterState], error) {
+func (s *ResourceConverter) StateStream(index int32) (*krpcgo.Stream[ResourceConverterState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44142,11 +44143,11 @@ func (s *ResourceConverter) StatusInfo(index int32) (string, error) {
 	return vv, nil
 }
 
-// StreamStatusInfo - status information for the specified converter. This is
+// StatusInfoStream - status information for the specified converter. This is
 // the full status message shown in the in-game UI.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamStatusInfo(index int32) (*krpcgo.Stream[string], error) {
+func (s *ResourceConverter) StatusInfoStream(index int32) (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44224,11 +44225,11 @@ func (s *ResourceConverter) Inputs(index int32) ([]string, error) {
 	return vv, nil
 }
 
-// StreamInputs - list of the names of resources consumed by the specified
+// InputsStream - list of the names of resources consumed by the specified
 // converter.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamInputs(index int32) (*krpcgo.Stream[[]string], error) {
+func (s *ResourceConverter) InputsStream(index int32) (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44306,11 +44307,11 @@ func (s *ResourceConverter) Outputs(index int32) ([]string, error) {
 	return vv, nil
 }
 
-// StreamOutputs - list of the names of resources produced by the specified
+// OutputsStream - list of the names of resources produced by the specified
 // converter.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamOutputs(index int32) (*krpcgo.Stream[[]string], error) {
+func (s *ResourceConverter) OutputsStream(index int32) (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44411,10 +44412,10 @@ func (s *ResourceConverter) Count() (int32, error) {
 	return vv, nil
 }
 
-// StreamCount - the number of converters in the part.
+// CountStream - the number of converters in the part.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamCount() (*krpcgo.Stream[int32], error) {
+func (s *ResourceConverter) CountStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44477,11 +44478,11 @@ func (s *ResourceConverter) ThermalEfficiency() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalEfficiency - the thermal efficiency of the converter, as a
+// ThermalEfficiencyStream - the thermal efficiency of the converter, as a
 // percentage of its maximum.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamThermalEfficiency() (*krpcgo.Stream[float32], error) {
+func (s *ResourceConverter) ThermalEfficiencyStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44543,10 +44544,10 @@ func (s *ResourceConverter) CoreTemperature() (float32, error) {
 	return vv, nil
 }
 
-// StreamCoreTemperature - the core temperature of the converter, in Kelvin.
+// CoreTemperatureStream - the core temperature of the converter, in Kelvin.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamCoreTemperature() (*krpcgo.Stream[float32], error) {
+func (s *ResourceConverter) CoreTemperatureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44609,11 +44610,11 @@ func (s *ResourceConverter) OptimumCoreTemperature() (float32, error) {
 	return vv, nil
 }
 
-// StreamOptimumCoreTemperature - the core temperature at which the converter
+// OptimumCoreTemperatureStream - the core temperature at which the converter
 // will operate with peak efficiency, in Kelvin.
 //
 // Allowed game scenes: any.
-func (s *ResourceConverter) StreamOptimumCoreTemperature() (*krpcgo.Stream[float32], error) {
+func (s *ResourceConverter) OptimumCoreTemperatureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44725,11 +44726,11 @@ func (s *ResourceDrain) CheckResourceDrain(R *Resource) (bool, error) {
 	return vv, nil
 }
 
-// StreamCheckResourceDrain - checks whether the provided resource is selected
+// CheckResourceDrainStream - checks whether the provided resource is selected
 // for draining
 //
 // Allowed game scenes: any.
-func (s *ResourceDrain) StreamCheckResourceDrain(R *Resource) (*krpcgo.Stream[bool], error) {
+func (s *ResourceDrain) CheckResourceDrainStream(R *Resource) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44880,10 +44881,10 @@ func (s *ResourceDrain) AvailableResources() ([]*Resource, error) {
 	return vv, nil
 }
 
-// StreamAvailableResources - returns list of available resources
+// AvailableResourcesStream - returns list of available resources
 //
 // Allowed game scenes: any.
-func (s *ResourceDrain) StreamAvailableResources() (*krpcgo.Stream[[]*Resource], error) {
+func (s *ResourceDrain) AvailableResourcesStream() (*krpcgo.Stream[[]*Resource], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -44945,10 +44946,10 @@ func (s *ResourceDrain) DrainMode() (DrainModes, error) {
 	return vv, nil
 }
 
-// StreamDrainMode - sets drain mode to part or vessel-wide
+// DrainModeStream - sets drain mode to part or vessel-wide
 //
 // Allowed game scenes: any.
-func (s *ResourceDrain) StreamDrainMode() (*krpcgo.Stream[DrainModes], error) {
+func (s *ResourceDrain) DrainModeStream() (*krpcgo.Stream[DrainModes], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45043,10 +45044,10 @@ func (s *ResourceDrain) MaxDrainRate() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxDrainRate - maximum possible rate of draining.
+// MaxDrainRateStream - maximum possible rate of draining.
 //
 // Allowed game scenes: any.
-func (s *ResourceDrain) StreamMaxDrainRate() (*krpcgo.Stream[float32], error) {
+func (s *ResourceDrain) MaxDrainRateStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45108,10 +45109,10 @@ func (s *ResourceDrain) MinDrainRate() (float32, error) {
 	return vv, nil
 }
 
-// StreamMinDrainRate - minimum possible rate of draining
+// MinDrainRateStream - minimum possible rate of draining
 //
 // Allowed game scenes: any.
-func (s *ResourceDrain) StreamMinDrainRate() (*krpcgo.Stream[float32], error) {
+func (s *ResourceDrain) MinDrainRateStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45173,10 +45174,10 @@ func (s *ResourceDrain) DrainRate() (float32, error) {
 	return vv, nil
 }
 
-// StreamDrainRate - current rate of draining
+// DrainRateStream - current rate of draining
 //
 // Allowed game scenes: any.
-func (s *ResourceDrain) StreamDrainRate() (*krpcgo.Stream[float32], error) {
+func (s *ResourceDrain) DrainRateStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45302,10 +45303,10 @@ func (s *ResourceHarvester) State() (ResourceHarvesterState, error) {
 	return vv, nil
 }
 
-// StreamState - the state of the harvester.
+// StateStream - the state of the harvester.
 //
 // Allowed game scenes: any.
-func (s *ResourceHarvester) StreamState() (*krpcgo.Stream[ResourceHarvesterState], error) {
+func (s *ResourceHarvester) StateStream() (*krpcgo.Stream[ResourceHarvesterState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45367,10 +45368,10 @@ func (s *ResourceHarvester) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - whether the harvester is deployed.
+// DeployedStream - whether the harvester is deployed.
 //
 // Allowed game scenes: any.
-func (s *ResourceHarvester) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *ResourceHarvester) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45465,10 +45466,10 @@ func (s *ResourceHarvester) Active() (bool, error) {
 	return vv, nil
 }
 
-// StreamActive - whether the harvester is actively drilling.
+// ActiveStream - whether the harvester is actively drilling.
 //
 // Allowed game scenes: any.
-func (s *ResourceHarvester) StreamActive() (*krpcgo.Stream[bool], error) {
+func (s *ResourceHarvester) ActiveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45564,11 +45565,11 @@ func (s *ResourceHarvester) ExtractionRate() (float32, error) {
 	return vv, nil
 }
 
-// StreamExtractionRate - the rate at which the drill is extracting ore, in
+// ExtractionRateStream - the rate at which the drill is extracting ore, in
 // units per second.
 //
 // Allowed game scenes: any.
-func (s *ResourceHarvester) StreamExtractionRate() (*krpcgo.Stream[float32], error) {
+func (s *ResourceHarvester) ExtractionRateStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45631,11 +45632,11 @@ func (s *ResourceHarvester) ThermalEfficiency() (float32, error) {
 	return vv, nil
 }
 
-// StreamThermalEfficiency - the thermal efficiency of the drill, as a
+// ThermalEfficiencyStream - the thermal efficiency of the drill, as a
 // percentage of its maximum.
 //
 // Allowed game scenes: any.
-func (s *ResourceHarvester) StreamThermalEfficiency() (*krpcgo.Stream[float32], error) {
+func (s *ResourceHarvester) ThermalEfficiencyStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45697,10 +45698,10 @@ func (s *ResourceHarvester) CoreTemperature() (float32, error) {
 	return vv, nil
 }
 
-// StreamCoreTemperature - the core temperature of the drill, in Kelvin.
+// CoreTemperatureStream - the core temperature of the drill, in Kelvin.
 //
 // Allowed game scenes: any.
-func (s *ResourceHarvester) StreamCoreTemperature() (*krpcgo.Stream[float32], error) {
+func (s *ResourceHarvester) CoreTemperatureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45763,11 +45764,11 @@ func (s *ResourceHarvester) OptimumCoreTemperature() (float32, error) {
 	return vv, nil
 }
 
-// StreamOptimumCoreTemperature - the core temperature at which the drill will
+// OptimumCoreTemperatureStream - the core temperature at which the drill will
 // operate with peak efficiency, in Kelvin.
 //
 // Allowed game scenes: any.
-func (s *ResourceHarvester) StreamOptimumCoreTemperature() (*krpcgo.Stream[float32], error) {
+func (s *ResourceHarvester) OptimumCoreTemperatureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45837,10 +45838,10 @@ func (s *RoboticController) HasPart(part *Part) (bool, error) {
 	return vv, nil
 }
 
-// StreamHasPart - whether the controller any axisfield from the part
+// HasPartStream - whether the controller any axisfield from the part
 //
 // Allowed game scenes: any.
-func (s *RoboticController) StreamHasPart(part *Part) (*krpcgo.Stream[bool], error) {
+func (s *RoboticController) HasPartStream(part *Part) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45910,10 +45911,10 @@ func (s *RoboticController) ListAxes() ([][]string, error) {
 	return vv, nil
 }
 
-// StreamListAxes - list the axes for the controller.
+// ListAxesStream - list the axes for the controller.
 //
 // Allowed game scenes: any.
-func (s *RoboticController) StreamListAxes() (*krpcgo.Stream[[][]string], error) {
+func (s *RoboticController) ListAxesStream() (*krpcgo.Stream[[][]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -45991,10 +45992,10 @@ func (s *RoboticController) AddAxis(module *Module, fieldName string) (bool, err
 	return vv, nil
 }
 
-// StreamAddAxis - add an axis to the controller
+// AddAxisStream - add an axis to the controller
 //
 // Allowed game scenes: any.
-func (s *RoboticController) StreamAddAxis(module *Module, fieldName string) (*krpcgo.Stream[bool], error) {
+func (s *RoboticController) AddAxisStream(module *Module, fieldName string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46104,10 +46105,10 @@ func (s *RoboticController) AddKey(module *Module, fieldName string, time float3
 	return vv, nil
 }
 
-// StreamAddKey - add key frame value for controller axis.
+// AddKeyStream - add key frame value for controller axis.
 //
 // Allowed game scenes: any.
-func (s *RoboticController) StreamAddKey(module *Module, fieldName string, time float32, value float32) (*krpcgo.Stream[bool], error) {
+func (s *RoboticController) AddKeyStream(module *Module, fieldName string, time float32, value float32) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46217,10 +46218,10 @@ func (s *RoboticController) ClearAxis(module *Module, fieldName string) (bool, e
 	return vv, nil
 }
 
-// StreamClearAxis - clear axis.
+// ClearAxisStream - clear axis.
 //
 // Allowed game scenes: any.
-func (s *RoboticController) StreamClearAxis(module *Module, fieldName string) (*krpcgo.Stream[bool], error) {
+func (s *RoboticController) ClearAxisStream(module *Module, fieldName string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46385,10 +46386,10 @@ func (s *RoboticHinge) TargetAngle() (float32, error) {
 	return vv, nil
 }
 
-// StreamTargetAngle - target Angle for Robotic Hinge
+// TargetAngleStream - target Angle for Robotic Hinge
 //
 // Allowed game scenes: any.
-func (s *RoboticHinge) StreamTargetAngle() (*krpcgo.Stream[float32], error) {
+func (s *RoboticHinge) TargetAngleStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46483,10 +46484,10 @@ func (s *RoboticHinge) CurrentAngle() (float32, error) {
 	return vv, nil
 }
 
-// StreamCurrentAngle - current Angle for Robotic Hinge
+// CurrentAngleStream - current Angle for Robotic Hinge
 //
 // Allowed game scenes: any.
-func (s *RoboticHinge) StreamCurrentAngle() (*krpcgo.Stream[float32], error) {
+func (s *RoboticHinge) CurrentAngleStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46548,10 +46549,10 @@ func (s *RoboticHinge) Rate() (float32, error) {
 	return vv, nil
 }
 
-// StreamRate - target Movement Rate in Degrees/s
+// RateStream - target Movement RateStream in Degrees/s
 //
 // Allowed game scenes: any.
-func (s *RoboticHinge) StreamRate() (*krpcgo.Stream[float32], error) {
+func (s *RoboticHinge) RateStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46646,10 +46647,10 @@ func (s *RoboticHinge) Damping() (float32, error) {
 	return vv, nil
 }
 
-// StreamDamping - damping Percentage&gt;
+// DampingStream - damping Percentage&gt;
 //
 // Allowed game scenes: any.
-func (s *RoboticHinge) StreamDamping() (*krpcgo.Stream[float32], error) {
+func (s *RoboticHinge) DampingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46744,10 +46745,10 @@ func (s *RoboticHinge) HingeLocked() (bool, error) {
 	return vv, nil
 }
 
-// StreamHingeLocked - lock Movement
+// HingeLockedStream - lock Movement
 //
 // Allowed game scenes: any.
-func (s *RoboticHinge) StreamHingeLocked() (*krpcgo.Stream[bool], error) {
+func (s *RoboticHinge) HingeLockedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46842,10 +46843,10 @@ func (s *RoboticHinge) MotorEngaged() (bool, error) {
 	return vv, nil
 }
 
-// StreamMotorEngaged - engage/Disengage Motor
+// MotorEngagedStream - engage/Disengage Motor
 //
 // Allowed game scenes: any.
-func (s *RoboticHinge) StreamMotorEngaged() (*krpcgo.Stream[bool], error) {
+func (s *RoboticHinge) MotorEngagedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -46996,10 +46997,10 @@ func (s *RoboticPiston) TargetPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamTargetPosition - target Extension for robotic piston.
+// TargetPositionStream - target Extension for robotic piston.
 //
 // Allowed game scenes: any.
-func (s *RoboticPiston) StreamTargetPosition() (*krpcgo.Stream[float32], error) {
+func (s *RoboticPiston) TargetPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47094,10 +47095,10 @@ func (s *RoboticPiston) CurrentPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamCurrentPosition - current Extension of piston
+// CurrentPositionStream - current Extension of piston
 //
 // Allowed game scenes: any.
-func (s *RoboticPiston) StreamCurrentPosition() (*krpcgo.Stream[float32], error) {
+func (s *RoboticPiston) CurrentPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47159,10 +47160,10 @@ func (s *RoboticPiston) Rate() (float32, error) {
 	return vv, nil
 }
 
-// StreamRate - target Movement Rate in Degrees/s
+// RateStream - target Movement RateStream in Degrees/s
 //
 // Allowed game scenes: any.
-func (s *RoboticPiston) StreamRate() (*krpcgo.Stream[float32], error) {
+func (s *RoboticPiston) RateStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47257,10 +47258,10 @@ func (s *RoboticPiston) Damping() (float32, error) {
 	return vv, nil
 }
 
-// StreamDamping - damping Percentage&gt;
+// DampingStream - damping Percentage&gt;
 //
 // Allowed game scenes: any.
-func (s *RoboticPiston) StreamDamping() (*krpcgo.Stream[float32], error) {
+func (s *RoboticPiston) DampingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47355,10 +47356,10 @@ func (s *RoboticPiston) PistonLocked() (bool, error) {
 	return vv, nil
 }
 
-// StreamPistonLocked - lock Movement
+// PistonLockedStream - lock Movement
 //
 // Allowed game scenes: any.
-func (s *RoboticPiston) StreamPistonLocked() (*krpcgo.Stream[bool], error) {
+func (s *RoboticPiston) PistonLockedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47453,10 +47454,10 @@ func (s *RoboticPiston) MotorEngaged() (bool, error) {
 	return vv, nil
 }
 
-// StreamMotorEngaged - engage/Disengage Motor
+// MotorEngagedStream - engage/Disengage Motor
 //
 // Allowed game scenes: any.
-func (s *RoboticPiston) StreamMotorEngaged() (*krpcgo.Stream[bool], error) {
+func (s *RoboticPiston) MotorEngagedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47607,10 +47608,10 @@ func (s *RoboticRotation) TargetPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamTargetPosition - target Angle for Robotic Servo
+// TargetPositionStream - target Angle for Robotic Servo
 //
 // Allowed game scenes: any.
-func (s *RoboticRotation) StreamTargetPosition() (*krpcgo.Stream[float32], error) {
+func (s *RoboticRotation) TargetPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47705,10 +47706,10 @@ func (s *RoboticRotation) CurrentPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamCurrentPosition - current Angle for Robotic Hinge
+// CurrentPositionStream - current Angle for Robotic Hinge
 //
 // Allowed game scenes: any.
-func (s *RoboticRotation) StreamCurrentPosition() (*krpcgo.Stream[float32], error) {
+func (s *RoboticRotation) CurrentPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47770,10 +47771,10 @@ func (s *RoboticRotation) Rate() (float32, error) {
 	return vv, nil
 }
 
-// StreamRate - target Movement Rate in Degrees/s
+// RateStream - target Movement RateStream in Degrees/s
 //
 // Allowed game scenes: any.
-func (s *RoboticRotation) StreamRate() (*krpcgo.Stream[float32], error) {
+func (s *RoboticRotation) RateStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47868,10 +47869,10 @@ func (s *RoboticRotation) Damping() (float32, error) {
 	return vv, nil
 }
 
-// StreamDamping - damping Percentage&gt;
+// DampingStream - damping Percentage&gt;
 //
 // Allowed game scenes: any.
-func (s *RoboticRotation) StreamDamping() (*krpcgo.Stream[float32], error) {
+func (s *RoboticRotation) DampingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -47966,10 +47967,10 @@ func (s *RoboticRotation) RotationLocked() (bool, error) {
 	return vv, nil
 }
 
-// StreamRotationLocked - lock Movement
+// RotationLockedStream - lock Movement
 //
 // Allowed game scenes: any.
-func (s *RoboticRotation) StreamRotationLocked() (*krpcgo.Stream[bool], error) {
+func (s *RoboticRotation) RotationLockedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48064,10 +48065,10 @@ func (s *RoboticRotation) MotorEngaged() (bool, error) {
 	return vv, nil
 }
 
-// StreamMotorEngaged - engage/Disengage Motor
+// MotorEngagedStream - engage/Disengage Motor
 //
 // Allowed game scenes: any.
-func (s *RoboticRotation) StreamMotorEngaged() (*krpcgo.Stream[bool], error) {
+func (s *RoboticRotation) MotorEngagedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48193,10 +48194,10 @@ func (s *RoboticRotor) TargetRPM() (float32, error) {
 	return vv, nil
 }
 
-// StreamTargetRPM - target RPM for Robotic Rotor
+// TargetRPMStream - target RPM for Robotic Rotor
 //
 // Allowed game scenes: any.
-func (s *RoboticRotor) StreamTargetRPM() (*krpcgo.Stream[float32], error) {
+func (s *RoboticRotor) TargetRPMStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48291,10 +48292,10 @@ func (s *RoboticRotor) CurrentRPM() (float32, error) {
 	return vv, nil
 }
 
-// StreamCurrentRPM - current RPM for Robotic Hinge
+// CurrentRPMStream - current RPM for Robotic Hinge
 //
 // Allowed game scenes: any.
-func (s *RoboticRotor) StreamCurrentRPM() (*krpcgo.Stream[float32], error) {
+func (s *RoboticRotor) CurrentRPMStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48356,10 +48357,10 @@ func (s *RoboticRotor) Inverted() (bool, error) {
 	return vv, nil
 }
 
-// StreamInverted - invert Rotor Direction?
+// InvertedStream - invert Rotor Direction?
 //
 // Allowed game scenes: any.
-func (s *RoboticRotor) StreamInverted() (*krpcgo.Stream[bool], error) {
+func (s *RoboticRotor) InvertedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48454,10 +48455,10 @@ func (s *RoboticRotor) RotationLocked() (bool, error) {
 	return vv, nil
 }
 
-// StreamRotationLocked - lock Movement
+// RotationLockedStream - lock Movement
 //
 // Allowed game scenes: any.
-func (s *RoboticRotor) StreamRotationLocked() (*krpcgo.Stream[bool], error) {
+func (s *RoboticRotor) RotationLockedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48552,10 +48553,10 @@ func (s *RoboticRotor) MotorEngaged() (bool, error) {
 	return vv, nil
 }
 
-// StreamMotorEngaged - engage/Disengage Motor
+// MotorEngagedStream - engage/Disengage Motor
 //
 // Allowed game scenes: any.
-func (s *RoboticRotor) StreamMotorEngaged() (*krpcgo.Stream[bool], error) {
+func (s *RoboticRotor) MotorEngagedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48650,10 +48651,10 @@ func (s *RoboticRotor) TorqueLimit() (float32, error) {
 	return vv, nil
 }
 
-// StreamTorqueLimit - torque Limit Percentage
+// TorqueLimitStream - torque Limit Percentage
 //
 // Allowed game scenes: any.
-func (s *RoboticRotor) StreamTorqueLimit() (*krpcgo.Stream[float32], error) {
+func (s *RoboticRotor) TorqueLimitStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48748,10 +48749,10 @@ func (s *ScienceData) DataAmount() (float32, error) {
 	return vv, nil
 }
 
-// StreamDataAmount - data amount.
+// DataAmountStream - data amount.
 //
 // Allowed game scenes: any.
-func (s *ScienceData) StreamDataAmount() (*krpcgo.Stream[float32], error) {
+func (s *ScienceData) DataAmountStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48813,10 +48814,10 @@ func (s *ScienceData) ScienceValue() (float32, error) {
 	return vv, nil
 }
 
-// StreamScienceValue - science value.
+// ScienceValueStream - science value.
 //
 // Allowed game scenes: any.
-func (s *ScienceData) StreamScienceValue() (*krpcgo.Stream[float32], error) {
+func (s *ScienceData) ScienceValueStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48878,10 +48879,10 @@ func (s *ScienceData) TransmitValue() (float32, error) {
 	return vv, nil
 }
 
-// StreamTransmitValue - transmit value.
+// TransmitValueStream - transmit value.
 //
 // Allowed game scenes: any.
-func (s *ScienceData) StreamTransmitValue() (*krpcgo.Stream[float32], error) {
+func (s *ScienceData) TransmitValueStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -48944,11 +48945,11 @@ func (s *ScienceSubject) Science() (float32, error) {
 	return vv, nil
 }
 
-// StreamScience - amount of science already earned from this subject, not
+// ScienceStream - amount of science already earned from this subject, not
 // updated until after transmission/recovery.
 //
 // Allowed game scenes: any.
-func (s *ScienceSubject) StreamScience() (*krpcgo.Stream[float32], error) {
+func (s *ScienceSubject) ScienceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49010,10 +49011,10 @@ func (s *ScienceSubject) ScienceCap() (float32, error) {
 	return vv, nil
 }
 
-// StreamScienceCap - total science allowable for this subject.
+// ScienceCapStream - total science allowable for this subject.
 //
 // Allowed game scenes: any.
-func (s *ScienceSubject) StreamScienceCap() (*krpcgo.Stream[float32], error) {
+func (s *ScienceSubject) ScienceCapStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49075,10 +49076,10 @@ func (s *ScienceSubject) IsComplete() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsComplete - whether the experiment has been completed.
+// IsCompleteStream - whether the experiment has been completed.
 //
 // Allowed game scenes: any.
-func (s *ScienceSubject) StreamIsComplete() (*krpcgo.Stream[bool], error) {
+func (s *ScienceSubject) IsCompleteStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49140,11 +49141,11 @@ func (s *ScienceSubject) DataScale() (float32, error) {
 	return vv, nil
 }
 
-// StreamDataScale - multiply science value by this to determine data amount in
+// DataScaleStream - multiply science value by this to determine data amount in
 // mits.
 //
 // Allowed game scenes: any.
-func (s *ScienceSubject) StreamDataScale() (*krpcgo.Stream[float32], error) {
+func (s *ScienceSubject) DataScaleStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49207,11 +49208,11 @@ func (s *ScienceSubject) ScientificValue() (float32, error) {
 	return vv, nil
 }
 
-// StreamScientificValue - diminishing value multiplier for decreasing the
+// ScientificValueStream - diminishing value multiplier for decreasing the
 // science value returned from repeated experiments.
 //
 // Allowed game scenes: any.
-func (s *ScienceSubject) StreamScientificValue() (*krpcgo.Stream[float32], error) {
+func (s *ScienceSubject) ScientificValueStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49274,11 +49275,11 @@ func (s *ScienceSubject) SubjectValue() (float32, error) {
 	return vv, nil
 }
 
-// StreamSubjectValue - multiplier for specific Celestial Body/Experiment
+// SubjectValueStream - multiplier for specific Celestial Body/Experiment
 // Situation combination.
 //
 // Allowed game scenes: any.
-func (s *ScienceSubject) StreamSubjectValue() (*krpcgo.Stream[float32], error) {
+func (s *ScienceSubject) SubjectValueStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49340,10 +49341,10 @@ func (s *ScienceSubject) Title() (string, error) {
 	return vv, nil
 }
 
-// StreamTitle - title of science subject, displayed in science archives
+// TitleStream - title of science subject, displayed in science archives
 //
 // Allowed game scenes: any.
-func (s *ScienceSubject) StreamTitle() (*krpcgo.Stream[string], error) {
+func (s *ScienceSubject) TitleStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49436,10 +49437,10 @@ func (s *Sensor) Active() (bool, error) {
 	return vv, nil
 }
 
-// StreamActive - whether the sensor is active.
+// ActiveStream - whether the sensor is active.
 //
 // Allowed game scenes: any.
-func (s *Sensor) StreamActive() (*krpcgo.Stream[bool], error) {
+func (s *Sensor) ActiveStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49534,10 +49535,10 @@ func (s *Sensor) Value() (string, error) {
 	return vv, nil
 }
 
-// StreamValue - the current value of the sensor.
+// ValueStream - the current value of the sensor.
 //
 // Allowed game scenes: any.
-func (s *Sensor) StreamValue() (*krpcgo.Stream[string], error) {
+func (s *Sensor) ValueStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49630,10 +49631,10 @@ func (s *SolarPanel) Deployable() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployable - whether the solar panel is deployable.
+// DeployableStream - whether the solar panel is deployable.
 //
 // Allowed game scenes: any.
-func (s *SolarPanel) StreamDeployable() (*krpcgo.Stream[bool], error) {
+func (s *SolarPanel) DeployableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49695,10 +49696,10 @@ func (s *SolarPanel) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - whether the solar panel is extended.
+// DeployedStream - whether the solar panel is extended.
 //
 // Allowed game scenes: any.
-func (s *SolarPanel) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *SolarPanel) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49793,10 +49794,10 @@ func (s *SolarPanel) State() (SolarPanelState, error) {
 	return vv, nil
 }
 
-// StreamState - the current state of the solar panel.
+// StateStream - the current state of the solar panel.
 //
 // Allowed game scenes: any.
-func (s *SolarPanel) StreamState() (*krpcgo.Stream[SolarPanelState], error) {
+func (s *SolarPanel) StateStream() (*krpcgo.Stream[SolarPanelState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49859,11 +49860,11 @@ func (s *SolarPanel) EnergyFlow() (float32, error) {
 	return vv, nil
 }
 
-// StreamEnergyFlow - the current amount of energy being generated by the solar
+// EnergyFlowStream - the current amount of energy being generated by the solar
 // panel, in units of charge per second.
 //
 // Allowed game scenes: any.
-func (s *SolarPanel) StreamEnergyFlow() (*krpcgo.Stream[float32], error) {
+func (s *SolarPanel) EnergyFlowStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -49926,11 +49927,11 @@ func (s *SolarPanel) SunExposure() (float32, error) {
 	return vv, nil
 }
 
-// StreamSunExposure - the current amount of sunlight that is incident on the
+// SunExposureStream - the current amount of sunlight that is incident on the
 // solar panel, as a percentage. A value between 0 and 1.
 //
 // Allowed game scenes: any.
-func (s *SolarPanel) StreamSunExposure() (*krpcgo.Stream[float32], error) {
+func (s *SolarPanel) SunExposureStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50002,12 +50003,12 @@ func (s *Thruster) ThrustPosition(referenceFrame *ReferenceFrame) (api.Tuple3[fl
 	return vv, nil
 }
 
-// StreamThrustPosition - the position at which the thruster generates thrust,
+// ThrustPositionStream - the position at which the thruster generates thrust,
 // in the given reference frame. For gimballed engines, this takes into account
 // the current rotation of the gimbal.
 //
 // Allowed game scenes: any.
-func (s *Thruster) StreamThrustPosition(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Thruster) ThrustPositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50088,13 +50089,13 @@ func (s *Thruster) ThrustDirection(referenceFrame *ReferenceFrame) (api.Tuple3[f
 	return vv, nil
 }
 
-// StreamThrustDirection - the direction of the force generated by the thruster,
+// ThrustDirectionStream - the direction of the force generated by the thruster,
 // in the given reference frame. This is opposite to the direction in which the
 // thruster expels propellant. For gimballed engines, this takes into account
 // the current rotation of the gimbal.
 //
 // Allowed game scenes: any.
-func (s *Thruster) StreamThrustDirection(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Thruster) ThrustDirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50174,12 +50175,12 @@ func (s *Thruster) InitialThrustPosition(referenceFrame *ReferenceFrame) (api.Tu
 	return vv, nil
 }
 
-// StreamInitialThrustPosition - the position at which the thruster generates
+// InitialThrustPositionStream - the position at which the thruster generates
 // thrust, when the engine is in its initial position (no gimballing), in the
 // given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Thruster) StreamInitialThrustPosition(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Thruster) InitialThrustPositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50260,13 +50261,13 @@ func (s *Thruster) InitialThrustDirection(referenceFrame *ReferenceFrame) (api.T
 	return vv, nil
 }
 
-// StreamInitialThrustDirection - the direction of the force generated by the
+// InitialThrustDirectionStream - the direction of the force generated by the
 // thruster, when the engine is in its initial position (no gimballing), in the
 // given reference frame. This is opposite to the direction in which the
 // thruster expels propellant.
 //
 // Allowed game scenes: any.
-func (s *Thruster) StreamInitialThrustDirection(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Thruster) InitialThrustDirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50344,10 +50345,10 @@ func (s *Thruster) GimbalPosition(referenceFrame *ReferenceFrame) (api.Tuple3[fl
 	return vv, nil
 }
 
-// StreamGimbalPosition - position around which the gimbal pivots.
+// GimbalPositionStream - position around which the gimbal pivots.
 //
 // Allowed game scenes: any.
-func (s *Thruster) StreamGimbalPosition(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Thruster) GimbalPositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50490,10 +50491,10 @@ func (s *Thruster) Gimballed() (bool, error) {
 	return vv, nil
 }
 
-// StreamGimballed - whether the thruster is gimballed.
+// GimballedStream - whether the thruster is gimballed.
 //
 // Allowed game scenes: any.
-func (s *Thruster) StreamGimballed() (*krpcgo.Stream[bool], error) {
+func (s *Thruster) GimballedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50556,11 +50557,11 @@ func (s *Thruster) GimbalAngle() (api.Tuple3[float64, float64, float64], error) 
 	return vv, nil
 }
 
-// StreamGimbalAngle - the current gimbal angle in the pitch, roll and yaw axes,
+// GimbalAngleStream - the current gimbal angle in the pitch, roll and yaw axes,
 // in degrees.
 //
 // Allowed game scenes: any.
-func (s *Thruster) StreamGimbalAngle() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Thruster) GimbalAngleStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50653,10 +50654,10 @@ func (s *Wheel) State() (WheelState, error) {
 	return vv, nil
 }
 
-// StreamState - the current state of the wheel.
+// StateStream - the current state of the wheel.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamState() (*krpcgo.Stream[WheelState], error) {
+func (s *Wheel) StateStream() (*krpcgo.Stream[WheelState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50718,10 +50719,10 @@ func (s *Wheel) Radius() (float32, error) {
 	return vv, nil
 }
 
-// StreamRadius - radius of the wheel, in meters.
+// RadiusStream - radius of the wheel, in meters.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamRadius() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) RadiusStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50783,10 +50784,10 @@ func (s *Wheel) Grounded() (bool, error) {
 	return vv, nil
 }
 
-// StreamGrounded - whether the wheel is touching the ground.
+// GroundedStream - whether the wheel is touching the ground.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamGrounded() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) GroundedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50848,10 +50849,10 @@ func (s *Wheel) HasBrakes() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasBrakes - whether the wheel has brakes.
+// HasBrakesStream - whether the wheel has brakes.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamHasBrakes() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) HasBrakesStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -50914,11 +50915,11 @@ func (s *Wheel) Brakes() (float32, error) {
 	return vv, nil
 }
 
-// StreamBrakes - the braking force, as a percentage of maximum, when the brakes
+// BrakesStream - the braking force, as a percentage of maximum, when the brakes
 // are applied.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamBrakes() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) BrakesStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51014,10 +51015,10 @@ func (s *Wheel) AutoFrictionControl() (bool, error) {
 	return vv, nil
 }
 
-// StreamAutoFrictionControl - whether automatic friction control is enabled.
+// AutoFrictionControlStream - whether automatic friction control is enabled.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamAutoFrictionControl() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) AutoFrictionControlStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51113,12 +51114,12 @@ func (s *Wheel) ManualFrictionControl() (float32, error) {
 	return vv, nil
 }
 
-// StreamManualFrictionControl - manual friction control value. Only has an
+// ManualFrictionControlStream - manual friction control value. Only has an
 // effect if automatic friction control is disabled. A value between 0 and 5
 // inclusive.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamManualFrictionControl() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) ManualFrictionControlStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51214,10 +51215,10 @@ func (s *Wheel) Deployable() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployable - whether the wheel is deployable.
+// DeployableStream - whether the wheel is deployable.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamDeployable() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) DeployableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51279,10 +51280,10 @@ func (s *Wheel) Deployed() (bool, error) {
 	return vv, nil
 }
 
-// StreamDeployed - whether the wheel is deployed.
+// DeployedStream - whether the wheel is deployed.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamDeployed() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) DeployedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51377,10 +51378,10 @@ func (s *Wheel) Powered() (bool, error) {
 	return vv, nil
 }
 
-// StreamPowered - whether the wheel is powered by a motor.
+// PoweredStream - whether the wheel is powered by a motor.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamPowered() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) PoweredStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51442,10 +51443,10 @@ func (s *Wheel) MotorEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamMotorEnabled - whether the motor is enabled.
+// MotorEnabledStream - whether the motor is enabled.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamMotorEnabled() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) MotorEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51540,10 +51541,10 @@ func (s *Wheel) MotorInverted() (bool, error) {
 	return vv, nil
 }
 
-// StreamMotorInverted - whether the direction of the motor is inverted.
+// MotorInvertedStream - whether the direction of the motor is inverted.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamMotorInverted() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) MotorInvertedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51638,10 +51639,10 @@ func (s *Wheel) MotorState() (MotorState, error) {
 	return vv, nil
 }
 
-// StreamMotorState - whether the direction of the motor is inverted.
+// MotorStateStream - whether the direction of the motor is inverted.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamMotorState() (*krpcgo.Stream[MotorState], error) {
+func (s *Wheel) MotorStateStream() (*krpcgo.Stream[MotorState], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51704,11 +51705,11 @@ func (s *Wheel) MotorOutput() (float32, error) {
 	return vv, nil
 }
 
-// StreamMotorOutput - the output of the motor. This is the torque currently
+// MotorOutputStream - the output of the motor. This is the torque currently
 // being generated, in Newton meters.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamMotorOutput() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) MotorOutputStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51771,11 +51772,11 @@ func (s *Wheel) TractionControlEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamTractionControlEnabled - whether automatic traction control is enabled.
+// TractionControlEnabledStream - whether automatic traction control is enabled.
 // A wheel only has traction control if it is powered.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamTractionControlEnabled() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) TractionControlEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51873,12 +51874,12 @@ func (s *Wheel) TractionControl() (float32, error) {
 	return vv, nil
 }
 
-// StreamTractionControl - setting for the traction control. Only takes effect
+// TractionControlStream - setting for the traction control. Only takes effect
 // if the wheel has automatic traction control enabled. A value between 0 and 5
 // inclusive.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamTractionControl() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) TractionControlStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -51977,12 +51978,12 @@ func (s *Wheel) DriveLimiter() (float32, error) {
 	return vv, nil
 }
 
-// StreamDriveLimiter - manual setting for the motor limiter. Only takes effect
+// DriveLimiterStream - manual setting for the motor limiter. Only takes effect
 // if the wheel has automatic traction control disabled. A value between 0 and
 // 100 inclusive.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamDriveLimiter() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) DriveLimiterStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52079,10 +52080,10 @@ func (s *Wheel) Steerable() (bool, error) {
 	return vv, nil
 }
 
-// StreamSteerable - whether the wheel has steering.
+// SteerableStream - whether the wheel has steering.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamSteerable() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) SteerableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52144,10 +52145,10 @@ func (s *Wheel) SteeringEnabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamSteeringEnabled - whether the wheel steering is enabled.
+// SteeringEnabledStream - whether the wheel steering is enabled.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamSteeringEnabled() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) SteeringEnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52242,10 +52243,10 @@ func (s *Wheel) SteeringInverted() (bool, error) {
 	return vv, nil
 }
 
-// StreamSteeringInverted - whether the wheel steering is inverted.
+// SteeringInvertedStream - whether the wheel steering is inverted.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamSteeringInverted() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) SteeringInvertedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52340,10 +52341,10 @@ func (s *Wheel) HasSuspension() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasSuspension - whether the wheel has suspension.
+// HasSuspensionStream - whether the wheel has suspension.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamHasSuspension() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) HasSuspensionStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52405,11 +52406,11 @@ func (s *Wheel) SuspensionSpringStrength() (float32, error) {
 	return vv, nil
 }
 
-// StreamSuspensionSpringStrength - suspension spring strength, as set in the
+// SuspensionSpringStrengthStream - suspension spring strength, as set in the
 // editor.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamSuspensionSpringStrength() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) SuspensionSpringStrengthStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52471,11 +52472,11 @@ func (s *Wheel) SuspensionDamperStrength() (float32, error) {
 	return vv, nil
 }
 
-// StreamSuspensionDamperStrength - suspension damper strength, as set in the
+// SuspensionDamperStrengthStream - suspension damper strength, as set in the
 // editor.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamSuspensionDamperStrength() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) SuspensionDamperStrengthStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52537,10 +52538,10 @@ func (s *Wheel) Broken() (bool, error) {
 	return vv, nil
 }
 
-// StreamBroken - whether the wheel is broken.
+// BrokenStream - whether the wheel is broken.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamBroken() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) BrokenStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52602,10 +52603,10 @@ func (s *Wheel) Repairable() (bool, error) {
 	return vv, nil
 }
 
-// StreamRepairable - whether the wheel is repairable.
+// RepairableStream - whether the wheel is repairable.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamRepairable() (*krpcgo.Stream[bool], error) {
+func (s *Wheel) RepairableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52667,10 +52668,10 @@ func (s *Wheel) Stress() (float32, error) {
 	return vv, nil
 }
 
-// StreamStress - current stress on the wheel.
+// StressStream - current stress on the wheel.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamStress() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) StressStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52732,10 +52733,10 @@ func (s *Wheel) StressTolerance() (float32, error) {
 	return vv, nil
 }
 
-// StreamStressTolerance - stress tolerance of the wheel.
+// StressToleranceStream - stress tolerance of the wheel.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamStressTolerance() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) StressToleranceStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52798,11 +52799,11 @@ func (s *Wheel) StressPercentage() (float32, error) {
 	return vv, nil
 }
 
-// StreamStressPercentage - current stress on the wheel as a percentage of its
+// StressPercentageStream - current stress on the wheel as a percentage of its
 // stress tolerance.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamStressPercentage() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) StressPercentageStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52864,10 +52865,10 @@ func (s *Wheel) Deflection() (float32, error) {
 	return vv, nil
 }
 
-// StreamDeflection - current deflection of the wheel.
+// DeflectionStream - current deflection of the wheel.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamDeflection() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) DeflectionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -52929,10 +52930,10 @@ func (s *Wheel) Slip() (float32, error) {
 	return vv, nil
 }
 
-// StreamSlip - current slip of the wheel.
+// SlipStream - current slip of the wheel.
 //
 // Allowed game scenes: any.
-func (s *Wheel) StreamSlip() (*krpcgo.Stream[float32], error) {
+func (s *Wheel) SlipStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53115,10 +53116,10 @@ func (s *Resource) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the name of the resource.
+// NameStream - the name of the resource.
 //
 // Allowed game scenes: any.
-func (s *Resource) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Resource) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53211,10 +53212,10 @@ func (s *Resource) Max() (float32, error) {
 	return vv, nil
 }
 
-// StreamMax - the total amount of the resource that can be stored in the part.
+// MaxStream - the total amount of the resource that can be stored in the part.
 //
 // Allowed game scenes: any.
-func (s *Resource) StreamMax() (*krpcgo.Stream[float32], error) {
+func (s *Resource) MaxStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53276,11 +53277,11 @@ func (s *Resource) Amount() (float32, error) {
 	return vv, nil
 }
 
-// StreamAmount - the amount of the resource that is currently stored in the
+// AmountStream - the amount of the resource that is currently stored in the
 // part.
 //
 // Allowed game scenes: any.
-func (s *Resource) StreamAmount() (*krpcgo.Stream[float32], error) {
+func (s *Resource) AmountStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53342,10 +53343,10 @@ func (s *Resource) Density() (float32, error) {
 	return vv, nil
 }
 
-// StreamDensity - the density of the resource, in <math>kg/l</math>.
+// DensityStream - the density of the resource, in <math>kg/l</math>.
 //
 // Allowed game scenes: any.
-func (s *Resource) StreamDensity() (*krpcgo.Stream[float32], error) {
+func (s *Resource) DensityStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53407,10 +53408,10 @@ func (s *Resource) FlowMode() (ResourceFlowMode, error) {
 	return vv, nil
 }
 
-// StreamFlowMode - the flow mode of the resource.
+// FlowModeStream - the flow mode of the resource.
 //
 // Allowed game scenes: any.
-func (s *Resource) StreamFlowMode() (*krpcgo.Stream[ResourceFlowMode], error) {
+func (s *Resource) FlowModeStream() (*krpcgo.Stream[ResourceFlowMode], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53472,10 +53473,10 @@ func (s *Resource) Enabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamEnabled - whether use of this resource is enabled.
+// EnabledStream - whether use of this resource is enabled.
 //
 // Allowed game scenes: any.
-func (s *Resource) StreamEnabled() (*krpcgo.Stream[bool], error) {
+func (s *Resource) EnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53631,10 +53632,10 @@ func (s *ResourceTransfer) Complete() (bool, error) {
 	return vv, nil
 }
 
-// StreamComplete - whether the transfer has completed.
+// CompleteStream - whether the transfer has completed.
 //
 // Allowed game scenes: any.
-func (s *ResourceTransfer) StreamComplete() (*krpcgo.Stream[bool], error) {
+func (s *ResourceTransfer) CompleteStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53696,10 +53697,10 @@ func (s *ResourceTransfer) Amount() (float32, error) {
 	return vv, nil
 }
 
-// StreamAmount - the amount of the resource that has been transferred.
+// AmountStream - the amount of the resource that has been transferred.
 //
 // Allowed game scenes: any.
-func (s *ResourceTransfer) StreamAmount() (*krpcgo.Stream[float32], error) {
+func (s *ResourceTransfer) AmountStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53770,11 +53771,11 @@ func (s *Resources) WithResource(name string) ([]*Resource, error) {
 	return vv, nil
 }
 
-// StreamWithResource - all the individual resources with the given name that
+// WithResourceStream - all the individual resources with the given name that
 // can be stored.
 //
 // Allowed game scenes: any.
-func (s *Resources) StreamWithResource(name string) (*krpcgo.Stream[[]*Resource], error) {
+func (s *Resources) WithResourceStream(name string) (*krpcgo.Stream[[]*Resource], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53852,10 +53853,10 @@ func (s *Resources) HasResource(name string) (bool, error) {
 	return vv, nil
 }
 
-// StreamHasResource - check whether the named resource can be stored.
+// HasResourceStream - check whether the named resource can be stored.
 //
 // Allowed game scenes: any.
-func (s *Resources) StreamHasResource(name string) (*krpcgo.Stream[bool], error) {
+func (s *Resources) HasResourceStream(name string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -53933,10 +53934,10 @@ func (s *Resources) Max(name string) (float32, error) {
 	return vv, nil
 }
 
-// StreamMax - returns the amount of a resource that can be stored.
+// MaxStream - returns the amount of a resource that can be stored.
 //
 // Allowed game scenes: any.
-func (s *Resources) StreamMax(name string) (*krpcgo.Stream[float32], error) {
+func (s *Resources) MaxStream(name string) (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54014,10 +54015,10 @@ func (s *Resources) Amount(name string) (float32, error) {
 	return vv, nil
 }
 
-// StreamAmount - returns the amount of a resource that is currently stored.
+// AmountStream - returns the amount of a resource that is currently stored.
 //
 // Allowed game scenes: any.
-func (s *Resources) StreamAmount(name string) (*krpcgo.Stream[float32], error) {
+func (s *Resources) AmountStream(name string) (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54087,10 +54088,10 @@ func (s *Resources) Density() (float32, error) {
 	return vv, nil
 }
 
-// StreamDensity - returns the density of a resource, in <math>kg/l</math>.
+// DensityStream - returns the density of a resource, in <math>kg/l</math>.
 //
 // Allowed game scenes: any.
-func (s *Resources) StreamDensity() (*krpcgo.Stream[float32], error) {
+func (s *Resources) DensityStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54152,10 +54153,10 @@ func (s *Resources) FlowMode() (ResourceFlowMode, error) {
 	return vv, nil
 }
 
-// StreamFlowMode - returns the flow mode of a resource.
+// FlowModeStream - returns the flow mode of a resource.
 //
 // Allowed game scenes: any.
-func (s *Resources) StreamFlowMode() (*krpcgo.Stream[ResourceFlowMode], error) {
+func (s *Resources) FlowModeStream() (*krpcgo.Stream[ResourceFlowMode], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54217,10 +54218,10 @@ func (s *Resources) All() ([]*Resource, error) {
 	return vv, nil
 }
 
-// StreamAll - all the individual resources that can be stored.
+// AllStream - all the individual resources that can be stored.
 //
-// Allowed game scenes: any.
-func (s *Resources) StreamAll() (*krpcgo.Stream[[]*Resource], error) {
+// AllStreamowed game scenes: any.
+func (s *Resources) AllStream() (*krpcgo.Stream[[]*Resource], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54282,10 +54283,10 @@ func (s *Resources) Names() ([]string, error) {
 	return vv, nil
 }
 
-// StreamNames - a list of resource names that can be stored.
+// NamesStream - a list of resource names that can be stored.
 //
 // Allowed game scenes: any.
-func (s *Resources) StreamNames() (*krpcgo.Stream[[]string], error) {
+func (s *Resources) NamesStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54347,10 +54348,10 @@ func (s *Resources) Enabled() (bool, error) {
 	return vv, nil
 }
 
-// StreamEnabled - whether use of all the resources are enabled.
+// EnabledStream - whether use of all the resources are enabled.
 //
 // Allowed game scenes: any.
-func (s *Resources) StreamEnabled() (*krpcgo.Stream[bool], error) {
+func (s *Resources) EnabledStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54569,11 +54570,11 @@ func (s *Vessel) Position(referenceFrame *ReferenceFrame) (api.Tuple3[float64, f
 	return vv, nil
 }
 
-// StreamPosition - the position of the center of mass of the vessel, in the
+// PositionStream - the position of the center of mass of the vessel, in the
 // given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamPosition(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Vessel) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54652,11 +54653,11 @@ func (s *Vessel) BoundingBox(referenceFrame *ReferenceFrame) (api.Tuple2[api.Tup
 	return vv, nil
 }
 
-// StreamBoundingBox - the axis-aligned bounding box of the vessel in the given
+// BoundingBoxStream - the axis-aligned bounding box of the vessel in the given
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamBoundingBox(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Vessel) BoundingBoxStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54735,11 +54736,11 @@ func (s *Vessel) Velocity(referenceFrame *ReferenceFrame) (api.Tuple3[float64, f
 	return vv, nil
 }
 
-// StreamVelocity - the velocity of the center of mass of the vessel, in the
+// VelocityStream - the velocity of the center of mass of the vessel, in the
 // given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamVelocity(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Vessel) VelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54817,10 +54818,10 @@ func (s *Vessel) Rotation(referenceFrame *ReferenceFrame) (api.Tuple4[float64, f
 	return vv, nil
 }
 
-// StreamRotation - the rotation of the vessel, in the given reference frame.
+// RotationStream - the rotation of the vessel, in the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamRotation(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *Vessel) RotationStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54899,11 +54900,11 @@ func (s *Vessel) Direction(referenceFrame *ReferenceFrame) (api.Tuple3[float64, 
 	return vv, nil
 }
 
-// StreamDirection - the direction in which the vessel is pointing, in the given
+// DirectionStream - the direction in which the vessel is pointing, in the given
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamDirection(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Vessel) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -54982,11 +54983,11 @@ func (s *Vessel) AngularVelocity(referenceFrame *ReferenceFrame) (api.Tuple3[flo
 	return vv, nil
 }
 
-// StreamAngularVelocity - the angular velocity of the vessel, in the given
+// AngularVelocityStream - the angular velocity of the vessel, in the given
 // reference frame.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamAngularVelocity(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Vessel) AngularVelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55056,10 +55057,10 @@ func (s *Vessel) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the name of the vessel.
+// NameStream - the name of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Vessel) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55154,10 +55155,10 @@ func (s *Vessel) Type() (VesselType, error) {
 	return vv, nil
 }
 
-// StreamType - the type of the vessel.
+// TypeStream - the type of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamType() (*krpcgo.Stream[VesselType], error) {
+func (s *Vessel) TypeStream() (*krpcgo.Stream[VesselType], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55252,10 +55253,10 @@ func (s *Vessel) Situation() (VesselSituation, error) {
 	return vv, nil
 }
 
-// StreamSituation - the situation the vessel is in.
+// SituationStream - the situation the vessel is in.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamSituation() (*krpcgo.Stream[VesselSituation], error) {
+func (s *Vessel) SituationStream() (*krpcgo.Stream[VesselSituation], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55317,10 +55318,10 @@ func (s *Vessel) Recoverable() (bool, error) {
 	return vv, nil
 }
 
-// StreamRecoverable - whether the vessel is recoverable.
+// RecoverableStream - whether the vessel is recoverable.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamRecoverable() (*krpcgo.Stream[bool], error) {
+func (s *Vessel) RecoverableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55382,10 +55383,10 @@ func (s *Vessel) MET() (float64, error) {
 	return vv, nil
 }
 
-// StreamMET - the mission elapsed time in seconds.
+// METStream - the mission elapsed time in seconds.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamMET() (*krpcgo.Stream[float64], error) {
+func (s *Vessel) METStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55447,10 +55448,10 @@ func (s *Vessel) Biome() (string, error) {
 	return vv, nil
 }
 
-// StreamBiome - the name of the biome the vessel is currently in.
+// BiomeStream - the name of the biome the vessel is currently in.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamBiome() (*krpcgo.Stream[string], error) {
+func (s *Vessel) BiomeStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55640,10 +55641,10 @@ func (s *Vessel) CrewCapacity() (int32, error) {
 	return vv, nil
 }
 
-// StreamCrewCapacity - the number of crew that can occupy the vessel.
+// CrewCapacityStream - the number of crew that can occupy the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamCrewCapacity() (*krpcgo.Stream[int32], error) {
+func (s *Vessel) CrewCapacityStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55705,10 +55706,10 @@ func (s *Vessel) CrewCount() (int32, error) {
 	return vv, nil
 }
 
-// StreamCrewCount - the number of crew that are occupying the vessel.
+// CrewCountStream - the number of crew that are occupying the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamCrewCount() (*krpcgo.Stream[int32], error) {
+func (s *Vessel) CrewCountStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55770,10 +55771,10 @@ func (s *Vessel) Crew() ([]*CrewMember, error) {
 	return vv, nil
 }
 
-// StreamCrew - the crew in the vessel.
+// CrewStream - the crew in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamCrew() (*krpcgo.Stream[[]*CrewMember], error) {
+func (s *Vessel) CrewStream() (*krpcgo.Stream[[]*CrewMember], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55899,10 +55900,10 @@ func (s *Vessel) Mass() (float32, error) {
 	return vv, nil
 }
 
-// StreamMass - the total mass of the vessel, including resources, in kg.
+// MassStream - the total mass of the vessel, including resources, in kg.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamMass() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) MassStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -55964,10 +55965,10 @@ func (s *Vessel) DryMass() (float32, error) {
 	return vv, nil
 }
 
-// StreamDryMass - the total mass of the vessel, excluding resources, in kg.
+// DryMassStream - the total mass of the vessel, excluding resources, in kg.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamDryMass() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) DryMassStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56031,12 +56032,12 @@ func (s *Vessel) Thrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamThrust - the total thrust currently being produced by the vessel's
+// ThrustStream - the total thrust currently being produced by the vessel's
 // engines, in Newtons. This is computed by summing <see
-// cref="M:SpaceCenter.Engine.Thrust" /> for every engine in the vessel.
+// cref="M:SpaceCenter.Engine.ThrustStream" /> for every engine in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamThrust() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) ThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56101,13 +56102,13 @@ func (s *Vessel) AvailableThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamAvailableThrust - gets the total available thrust that can be produced
+// AvailableThrustStream - gets the total available thrust that can be produced
 // by the vessel's active engines, in Newtons. This is computed by summing <see
-// cref="M:SpaceCenter.Engine.AvailableThrust" /> for every active engine in the
-// vessel.
+// cref="M:SpaceCenter.Engine.AvailableThrustStream" /> for every active engine
+// in the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamAvailableThrust() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) AvailableThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56171,12 +56172,12 @@ func (s *Vessel) MaxThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxThrust - the total maximum thrust that can be produced by the
+// MaxThrustStream - the total maximum thrust that can be produced by the
 // vessel's active engines, in Newtons. This is computed by summing <see
-// cref="M:SpaceCenter.Engine.MaxThrust" /> for every active engine.
+// cref="M:SpaceCenter.Engine.MaxThrustStream" /> for every active engine.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamMaxThrust() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) MaxThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56241,13 +56242,13 @@ func (s *Vessel) MaxVacuumThrust() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxVacuumThrust - the total maximum thrust that can be produced by the
+// MaxVacuumThrustStream - the total maximum thrust that can be produced by the
 // vessel's active engines when the vessel is in a vacuum, in Newtons. This is
-// computed by summing <see cref="M:SpaceCenter.Engine.MaxVacuumThrust" /> for
-// every active engine.
+// computed by summing <see cref="M:SpaceCenter.Engine.MaxVacuumThrustStream" />
+// for every active engine.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamMaxVacuumThrust() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) MaxVacuumThrustStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56312,13 +56313,13 @@ func (s *Vessel) SpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpecificImpulse - the combined specific impulse of all active engines,
+// SpecificImpulseStream - the combined specific impulse of all active engines,
 // in seconds. This is computed using the formula <a
 // href="https://wiki.kerbalspaceprogram.com/wiki/Specific_impulse#Multiple_engines">described
 // here</a>.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) SpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56383,13 +56384,13 @@ func (s *Vessel) VacuumSpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamVacuumSpecificImpulse - the combined vacuum specific impulse of all
+// VacuumSpecificImpulseStream - the combined vacuum specific impulse of all
 // active engines, in seconds. This is computed using the formula <a
 // href="https://wiki.kerbalspaceprogram.com/wiki/Specific_impulse#Multiple_engines">described
 // here</a>.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamVacuumSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) VacuumSpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56455,14 +56456,14 @@ func (s *Vessel) KerbinSeaLevelSpecificImpulse() (float32, error) {
 	return vv, nil
 }
 
-// StreamKerbinSeaLevelSpecificImpulse - the combined specific impulse of all
+// KerbinSeaLevelSpecificImpulseStream - the combined specific impulse of all
 // active engines at sea level on Kerbin, in seconds. This is computed using the
 // formula <a
 // href="https://wiki.kerbalspaceprogram.com/wiki/Specific_impulse#Multiple_engines">described
 // here</a>.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamKerbinSeaLevelSpecificImpulse() (*krpcgo.Stream[float32], error) {
+func (s *Vessel) KerbinSeaLevelSpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56527,13 +56528,13 @@ func (s *Vessel) MomentOfInertia() (api.Tuple3[float64, float64, float64], error
 	return vv, nil
 }
 
-// StreamMomentOfInertia - the moment of inertia of the vessel around its center
+// MomentOfInertiaStream - the moment of inertia of the vessel around its center
 // of mass in <math>kg.m^2</math>. The inertia values in the returned 3-tuple
 // are around the pitch, roll and yaw directions respectively. This corresponds
 // to the vessels reference frame (<see cref="T:SpaceCenter.ReferenceFrame" />).
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamMomentOfInertia() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Vessel) MomentOfInertiaStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56597,13 +56598,13 @@ func (s *Vessel) InertiaTensor() ([]float64, error) {
 	return vv, nil
 }
 
-// StreamInertiaTensor - the inertia tensor of the vessel around its center of
+// InertiaTensorStream - the inertia tensor of the vessel around its center of
 // mass, in the vessels reference frame (<see
 // cref="T:SpaceCenter.ReferenceFrame" />). Returns the 3x3 matrix as a list of
 // elements, in row-major order.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamInertiaTensor() (*krpcgo.Stream[[]float64], error) {
+func (s *Vessel) InertiaTensorStream() (*krpcgo.Stream[[]float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56670,7 +56671,7 @@ func (s *Vessel) AvailableTorque() (api.Tuple2[api.Tuple3[float64, float64, floa
 	return vv, nil
 }
 
-// StreamAvailableTorque - the maximum torque that the vessel generates.
+// AvailableTorqueStream - the maximum torque that the vessel generates.
 // Includes contributions from reaction wheels, RCS, gimballed engines and
 // aerodynamic control surfaces. Returns the torques in <math>N.m</math> around
 // each of the coordinate axes of the vessels reference frame (<see
@@ -56678,7 +56679,7 @@ func (s *Vessel) AvailableTorque() (api.Tuple2[api.Tuple3[float64, float64, floa
 // pitch, roll and yaw axes of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamAvailableTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Vessel) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56744,14 +56745,14 @@ func (s *Vessel) AvailableReactionWheelTorque() (api.Tuple2[api.Tuple3[float64, 
 	return vv, nil
 }
 
-// StreamAvailableReactionWheelTorque - the maximum torque that the currently
+// AvailableReactionWheelTorqueStream - the maximum torque that the currently
 // active and powered reaction wheels can generate. Returns the torques in
 // <math>N.m</math> around each of the coordinate axes of the vessels reference
 // frame (<see cref="T:SpaceCenter.ReferenceFrame" />). These axes are
 // equivalent to the pitch, roll and yaw axes of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamAvailableReactionWheelTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Vessel) AvailableReactionWheelTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56817,14 +56818,14 @@ func (s *Vessel) AvailableRCSTorque() (api.Tuple2[api.Tuple3[float64, float64, f
 	return vv, nil
 }
 
-// StreamAvailableRCSTorque - the maximum torque that the currently active RCS
+// AvailableRCSTorqueStream - the maximum torque that the currently active RCS
 // thrusters can generate. Returns the torques in <math>N.m</math> around each
 // of the coordinate axes of the vessels reference frame (<see
 // cref="T:SpaceCenter.ReferenceFrame" />). These axes are equivalent to the
 // pitch, roll and yaw axes of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamAvailableRCSTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Vessel) AvailableRCSTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56890,14 +56891,14 @@ func (s *Vessel) AvailableEngineTorque() (api.Tuple2[api.Tuple3[float64, float64
 	return vv, nil
 }
 
-// StreamAvailableEngineTorque - the maximum torque that the currently active
+// AvailableEngineTorqueStream - the maximum torque that the currently active
 // and gimballed engines can generate. Returns the torques in <math>N.m</math>
 // around each of the coordinate axes of the vessels reference frame (<see
 // cref="T:SpaceCenter.ReferenceFrame" />). These axes are equivalent to the
 // pitch, roll and yaw axes of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamAvailableEngineTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Vessel) AvailableEngineTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -56963,14 +56964,14 @@ func (s *Vessel) AvailableControlSurfaceTorque() (api.Tuple2[api.Tuple3[float64,
 	return vv, nil
 }
 
-// StreamAvailableControlSurfaceTorque - the maximum torque that the aerodynamic
+// AvailableControlSurfaceTorqueStream - the maximum torque that the aerodynamic
 // control surfaces can generate. Returns the torques in <math>N.m</math> around
 // each of the coordinate axes of the vessels reference frame (<see
 // cref="T:SpaceCenter.ReferenceFrame" />). These axes are equivalent to the
 // pitch, roll and yaw axes of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamAvailableControlSurfaceTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Vessel) AvailableControlSurfaceTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -57036,14 +57037,14 @@ func (s *Vessel) AvailableOtherTorque() (api.Tuple2[api.Tuple3[float64, float64,
 	return vv, nil
 }
 
-// StreamAvailableOtherTorque - the maximum torque that parts (excluding
+// AvailableOtherTorqueStream - the maximum torque that parts (excluding
 // reaction wheels, gimballed engines, RCS and control surfaces) can generate.
 // Returns the torques in <math>N.m</math> around each of the coordinate axes of
 // the vessels reference frame (<see cref="T:SpaceCenter.ReferenceFrame" />).
 // These axes are equivalent to the pitch, roll and yaw axes of the vessel.
 //
 // Allowed game scenes: any.
-func (s *Vessel) StreamAvailableOtherTorque() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
+func (s *Vessel) AvailableOtherTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[float64, float64, float64], api.Tuple3[float64, float64, float64]]], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -57362,11 +57363,11 @@ func (s *Waypoint) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the name of the waypoint as it appears on the map and the
+// NameStream - the name of the waypoint as it appears on the map and the
 // contract.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Waypoint) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -57462,11 +57463,11 @@ func (s *Waypoint) Color() (int32, error) {
 	return vv, nil
 }
 
-// StreamColor - the seed of the icon color. See <see
-// cref="M:SpaceCenter.WaypointManager.Colors" /> for example colors.
+// ColorStream - the seed of the icon color. See <see
+// cref="M:SpaceCenter.WaypointManager.ColorStreams" /> for example colors.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamColor() (*krpcgo.Stream[int32], error) {
+func (s *Waypoint) ColorStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -57562,10 +57563,10 @@ func (s *Waypoint) Icon() (string, error) {
 	return vv, nil
 }
 
-// StreamIcon - the icon of the waypoint.
+// IconStream - the icon of the waypoint.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamIcon() (*krpcgo.Stream[string], error) {
+func (s *Waypoint) IconStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -57660,10 +57661,10 @@ func (s *Waypoint) Latitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamLatitude - the latitude of the waypoint.
+// LatitudeStream - the latitude of the waypoint.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamLatitude() (*krpcgo.Stream[float64], error) {
+func (s *Waypoint) LatitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -57758,10 +57759,10 @@ func (s *Waypoint) Longitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamLongitude - the longitude of the waypoint.
+// LongitudeStream - the longitude of the waypoint.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamLongitude() (*krpcgo.Stream[float64], error) {
+func (s *Waypoint) LongitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -57856,10 +57857,10 @@ func (s *Waypoint) MeanAltitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamMeanAltitude - the altitude of the waypoint above sea level, in meters.
+// MeanAltitudeStream - the altitude of the waypoint above sea level, in meters.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamMeanAltitude() (*krpcgo.Stream[float64], error) {
+func (s *Waypoint) MeanAltitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -57955,11 +57956,11 @@ func (s *Waypoint) SurfaceAltitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamSurfaceAltitude - the altitude of the waypoint above the surface of the
+// SurfaceAltitudeStream - the altitude of the waypoint above the surface of the
 // body or sea level, whichever is closer, in meters.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamSurfaceAltitude() (*krpcgo.Stream[float64], error) {
+func (s *Waypoint) SurfaceAltitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58056,11 +58057,11 @@ func (s *Waypoint) BedrockAltitude() (float64, error) {
 	return vv, nil
 }
 
-// StreamBedrockAltitude - the altitude of the waypoint above the surface of the
+// BedrockAltitudeStream - the altitude of the waypoint above the surface of the
 // body, in meters. When over water, this is the altitude above the sea floor.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamBedrockAltitude() (*krpcgo.Stream[float64], error) {
+func (s *Waypoint) BedrockAltitudeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58156,10 +58157,10 @@ func (s *Waypoint) NearSurface() (bool, error) {
 	return vv, nil
 }
 
-// StreamNearSurface - true if the waypoint is near to the surface of a body.
+// NearSurfaceStream - true if the waypoint is near to the surface of a body.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamNearSurface() (*krpcgo.Stream[bool], error) {
+func (s *Waypoint) NearSurfaceStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58221,10 +58222,10 @@ func (s *Waypoint) Grounded() (bool, error) {
 	return vv, nil
 }
 
-// StreamGrounded - true if the waypoint is attached to the ground.
+// GroundedStream - true if the waypoint is attached to the ground.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamGrounded() (*krpcgo.Stream[bool], error) {
+func (s *Waypoint) GroundedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58290,14 +58291,14 @@ func (s *Waypoint) Index() (int32, error) {
 	return vv, nil
 }
 
-// StreamIndex - the integer index of this waypoint within its cluster of
+// IndexStream - the integer index of this waypoint within its cluster of
 // sibling waypoints. In other words, when you have a cluster of waypoints
 // called "Somewhere Alpha", "Somewhere Beta" and "Somewhere Gamma", the alpha
 // site has index 0, the beta site has index 1 and the gamma site has index 2.
 // When <see cref="M:SpaceCenter.Waypoint.Clustered" /> is false, this is zero.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamIndex() (*krpcgo.Stream[int32], error) {
+func (s *Waypoint) IndexStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58362,13 +58363,13 @@ func (s *Waypoint) Clustered() (bool, error) {
 	return vv, nil
 }
 
-// StreamClustered - true if this waypoint is part of a set of clustered
+// ClusteredStream - true if this waypoint is part of a set of clustered
 // waypoints with greek letter names appended (Alpha, Beta, Gamma, etc). If
 // true, there is a one-to-one correspondence with the greek letter name and the
 // <see cref="M:SpaceCenter.Waypoint.Index" />.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamClustered() (*krpcgo.Stream[bool], error) {
+func (s *Waypoint) ClusteredStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58430,10 +58431,10 @@ func (s *Waypoint) HasContract() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasContract - whether the waypoint belongs to a contract.
+// HasContractStream - whether the waypoint belongs to a contract.
 //
 // Allowed game scenes: any.
-func (s *Waypoint) StreamHasContract() (*krpcgo.Stream[bool], error) {
+func (s *Waypoint) HasContractStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58664,10 +58665,10 @@ func (s *WaypointManager) Waypoints() ([]*Waypoint, error) {
 	return vv, nil
 }
 
-// StreamWaypoints - a list of all existing waypoints.
+// WaypointsStream - a list of all existing waypoints.
 //
 // Allowed game scenes: any.
-func (s *WaypointManager) StreamWaypoints() (*krpcgo.Stream[[]*Waypoint], error) {
+func (s *WaypointManager) WaypointsStream() (*krpcgo.Stream[[]*Waypoint], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58729,11 +58730,11 @@ func (s *WaypointManager) Icons() ([]string, error) {
 	return vv, nil
 }
 
-// StreamIcons - returns all available icons (from
-// "GameData/Squad/Contracts/Icons/").
+// IconsStream - returns all available icons (from
+// "GameData/Squad/Contracts/IconsStream/").
 //
 // Allowed game scenes: any.
-func (s *WaypointManager) StreamIcons() (*krpcgo.Stream[[]string], error) {
+func (s *WaypointManager) IconsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -58796,11 +58797,11 @@ func (s *WaypointManager) Colors() (map[string]int32, error) {
 	return vv, nil
 }
 
-// StreamColors - an example map of known color - seed pairs. Any other integers
+// ColorsStream - an example map of known color - seed pairs. Any other integers
 // may be used as seed.
 //
 // Allowed game scenes: any.
-func (s *WaypointManager) StreamColors() (*krpcgo.Stream[map[string]int32], error) {
+func (s *WaypointManager) ColorsStream() (*krpcgo.Stream[map[string]int32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

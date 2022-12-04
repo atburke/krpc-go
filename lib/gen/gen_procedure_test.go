@@ -49,10 +49,10 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 	return vv, nil
 }
 
-// StreamMyProcedure - test procedure generation.
+// MyProcedureStream - test procedure generation.
 //
 // Allowed game scenes: FLIGHT.
-func (s *MyService) StreamMyProcedure(param1 uint64, param2 string) (*krpcgo.Stream[bool], error) {
+func (s *MyService) MyProcedureStream(param1 uint64, param2 string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

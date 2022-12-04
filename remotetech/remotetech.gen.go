@@ -158,10 +158,10 @@ func (s *RemoteTech) Available() (bool, error) {
 	return vv, nil
 }
 
-// StreamAvailable - whether RemoteTech is installed.
+// AvailableStream - whether RemoteTech is installed.
 //
 // Allowed game scenes: any.
-func (s *RemoteTech) StreamAvailable() (*krpcgo.Stream[bool], error) {
+func (s *RemoteTech) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Available",
@@ -205,10 +205,10 @@ func (s *RemoteTech) GroundStations() ([]string, error) {
 	return vv, nil
 }
 
-// StreamGroundStations - the names of the ground stations.
+// GroundStationsStream - the names of the ground stations.
 //
 // Allowed game scenes: any.
-func (s *RemoteTech) StreamGroundStations() (*krpcgo.Stream[[]string], error) {
+func (s *RemoteTech) GroundStationsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_GroundStations",
@@ -292,10 +292,10 @@ func (s *Antenna) HasConnection() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasConnection - whether the antenna has a connection.
+// HasConnectionStream - whether the antenna has a connection.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamHasConnection() (*krpcgo.Stream[bool], error) {
+func (s *Antenna) HasConnectionStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -363,16 +363,16 @@ func (s *Antenna) Target() (Target, error) {
 	return vv, nil
 }
 
-// StreamTarget - the object that the antenna is targetting. This property can
-// be used to set the target to <see cref="M:RemoteTech.Target.None" /> or <see
-// cref="M:RemoteTech.Target.ActiveVessel" />. To set the target to a celestial
-// body, ground station or vessel see <see
-// cref="M:RemoteTech.Antenna.TargetBody" />, <see
-// cref="M:RemoteTech.Antenna.TargetGroundStation" /> and <see
-// cref="M:RemoteTech.Antenna.TargetVessel" />.
+// TargetStream - the object that the antenna is targetting. This property can
+// be used to set the target to <see cref="M:RemoteTech.TargetStream.None" /> or
+// <see cref="M:RemoteTech.TargetStream.ActiveVessel" />. To set the target to a
+// celestial body, ground station or vessel see <see
+// cref="M:RemoteTech.Antenna.TargetStreamBody" />, <see
+// cref="M:RemoteTech.Antenna.TargetStreamGroundStation" /> and <see
+// cref="M:RemoteTech.Antenna.TargetStreamVessel" />.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamTarget() (*krpcgo.Stream[Target], error) {
+func (s *Antenna) TargetStream() (*krpcgo.Stream[Target], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -537,10 +537,10 @@ func (s *Antenna) TargetGroundStation() (string, error) {
 	return vv, nil
 }
 
-// StreamTargetGroundStation - the ground station the antenna is targetting.
+// TargetGroundStationStream - the ground station the antenna is targetting.
 //
 // Allowed game scenes: any.
-func (s *Antenna) StreamTargetGroundStation() (*krpcgo.Stream[string], error) {
+func (s *Antenna) TargetGroundStationStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -708,11 +708,11 @@ func (s *Comms) SignalDelayToVessel(other *spacecenter.Vessel) (float64, error) 
 	return vv, nil
 }
 
-// StreamSignalDelayToVessel - the signal delay between the this vessel and
+// SignalDelayToVesselStream - the signal delay between the this vessel and
 // another vessel, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamSignalDelayToVessel(other *spacecenter.Vessel) (*krpcgo.Stream[float64], error) {
+func (s *Comms) SignalDelayToVesselStream(other *spacecenter.Vessel) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -813,10 +813,10 @@ func (s *Comms) HasLocalControl() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasLocalControl - whether the vessel can be controlled locally.
+// HasLocalControlStream - whether the vessel can be controlled locally.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamHasLocalControl() (*krpcgo.Stream[bool], error) {
+func (s *Comms) HasLocalControlStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -878,10 +878,10 @@ func (s *Comms) HasFlightComputer() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasFlightComputer - whether the vessel has a flight computer on board.
+// HasFlightComputerStream - whether the vessel has a flight computer on board.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamHasFlightComputer() (*krpcgo.Stream[bool], error) {
+func (s *Comms) HasFlightComputerStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -943,10 +943,10 @@ func (s *Comms) HasConnection() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasConnection - whether the vessel has any connection.
+// HasConnectionStream - whether the vessel has any connection.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamHasConnection() (*krpcgo.Stream[bool], error) {
+func (s *Comms) HasConnectionStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1009,11 +1009,11 @@ func (s *Comms) HasConnectionToGroundStation() (bool, error) {
 	return vv, nil
 }
 
-// StreamHasConnectionToGroundStation - whether the vessel has a connection to a
+// HasConnectionToGroundStationStream - whether the vessel has a connection to a
 // ground station.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamHasConnectionToGroundStation() (*krpcgo.Stream[bool], error) {
+func (s *Comms) HasConnectionToGroundStationStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1075,10 +1075,10 @@ func (s *Comms) SignalDelay() (float64, error) {
 	return vv, nil
 }
 
-// StreamSignalDelay - the shortest signal delay to the vessel, in seconds.
+// SignalDelayStream - the shortest signal delay to the vessel, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamSignalDelay() (*krpcgo.Stream[float64], error) {
+func (s *Comms) SignalDelayStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1141,11 +1141,11 @@ func (s *Comms) SignalDelayToGroundStation() (float64, error) {
 	return vv, nil
 }
 
-// StreamSignalDelayToGroundStation - the signal delay between the vessel and
+// SignalDelayToGroundStationStream - the signal delay between the vessel and
 // the closest ground station, in seconds.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamSignalDelayToGroundStation() (*krpcgo.Stream[float64], error) {
+func (s *Comms) SignalDelayToGroundStationStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1207,10 +1207,10 @@ func (s *Comms) Antennas() ([]*Antenna, error) {
 	return vv, nil
 }
 
-// StreamAntennas - the antennas for this vessel.
+// AntennasStream - the antennas for this vessel.
 //
 // Allowed game scenes: any.
-func (s *Comms) StreamAntennas() (*krpcgo.Stream[[]*Antenna], error) {
+func (s *Comms) AntennasStream() (*krpcgo.Stream[[]*Antenna], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

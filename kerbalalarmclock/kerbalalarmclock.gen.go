@@ -185,11 +185,11 @@ func (s *KerbalAlarmClock) AlarmsWithType(t AlarmType) ([]*Alarm, error) {
 	return vv, nil
 }
 
-// StreamAlarmsWithType - get a list of alarms of the specified <paramref
+// AlarmsWithTypeStream - get a list of alarms of the specified <paramref
 // name="type" />.
 //
 // Allowed game scenes: any.
-func (s *KerbalAlarmClock) StreamAlarmsWithType(t AlarmType) (*krpcgo.Stream[[]*Alarm], error) {
+func (s *KerbalAlarmClock) AlarmsWithTypeStream(t AlarmType) (*krpcgo.Stream[[]*Alarm], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -289,10 +289,10 @@ func (s *KerbalAlarmClock) Available() (bool, error) {
 	return vv, nil
 }
 
-// StreamAvailable - whether Kerbal Alarm Clock is available.
+// AvailableStream - whether Kerbal Alarm Clock is available.
 //
 // Allowed game scenes: any.
-func (s *KerbalAlarmClock) StreamAvailable() (*krpcgo.Stream[bool], error) {
+func (s *KerbalAlarmClock) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Available",
@@ -336,10 +336,10 @@ func (s *KerbalAlarmClock) Alarms() ([]*Alarm, error) {
 	return vv, nil
 }
 
-// StreamAlarms - a list of all the alarms.
+// AlarmsStream - a list of all the alarms.
 //
 // Allowed game scenes: any.
-func (s *KerbalAlarmClock) StreamAlarms() (*krpcgo.Stream[[]*Alarm], error) {
+func (s *KerbalAlarmClock) AlarmsStream() (*krpcgo.Stream[[]*Alarm], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Alarms",
@@ -417,10 +417,10 @@ func (s *Alarm) Action() (AlarmAction, error) {
 	return vv, nil
 }
 
-// StreamAction - the action that the alarm triggers.
+// ActionStream - the action that the alarm triggers.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamAction() (*krpcgo.Stream[AlarmAction], error) {
+func (s *Alarm) ActionStream() (*krpcgo.Stream[AlarmAction], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -515,11 +515,11 @@ func (s *Alarm) Margin() (float64, error) {
 	return vv, nil
 }
 
-// StreamMargin - the number of seconds before the event that the alarm will
+// MarginStream - the number of seconds before the event that the alarm will
 // fire.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamMargin() (*krpcgo.Stream[float64], error) {
+func (s *Alarm) MarginStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -614,10 +614,10 @@ func (s *Alarm) Time() (float64, error) {
 	return vv, nil
 }
 
-// StreamTime - the time at which the alarm will fire.
+// TimeStream - the time at which the alarm will fire.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamTime() (*krpcgo.Stream[float64], error) {
+func (s *Alarm) TimeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -712,10 +712,10 @@ func (s *Alarm) Type() (AlarmType, error) {
 	return vv, nil
 }
 
-// StreamType - the type of the alarm.
+// TypeStream - the type of the alarm.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamType() (*krpcgo.Stream[AlarmType], error) {
+func (s *Alarm) TypeStream() (*krpcgo.Stream[AlarmType], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -777,10 +777,10 @@ func (s *Alarm) ID() (string, error) {
 	return vv, nil
 }
 
-// StreamID - the unique identifier for the alarm.
+// IDStream - the unique identifier for the alarm.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamID() (*krpcgo.Stream[string], error) {
+func (s *Alarm) IDStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -842,10 +842,10 @@ func (s *Alarm) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the short name of the alarm.
+// NameStream - the short name of the alarm.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Alarm) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -940,10 +940,10 @@ func (s *Alarm) Notes() (string, error) {
 	return vv, nil
 }
 
-// StreamNotes - the long description of the alarm.
+// NotesStream - the long description of the alarm.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamNotes() (*krpcgo.Stream[string], error) {
+func (s *Alarm) NotesStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1038,10 +1038,10 @@ func (s *Alarm) Remaining() (float64, error) {
 	return vv, nil
 }
 
-// StreamRemaining - the number of seconds until the alarm will fire.
+// RemainingStream - the number of seconds until the alarm will fire.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamRemaining() (*krpcgo.Stream[float64], error) {
+func (s *Alarm) RemainingStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1103,10 +1103,10 @@ func (s *Alarm) Repeat() (bool, error) {
 	return vv, nil
 }
 
-// StreamRepeat - whether the alarm will be repeated after it has fired.
+// RepeatStream - whether the alarm will be repeated after it has fired.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamRepeat() (*krpcgo.Stream[bool], error) {
+func (s *Alarm) RepeatStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1202,11 +1202,11 @@ func (s *Alarm) RepeatPeriod() (float64, error) {
 	return vv, nil
 }
 
-// StreamRepeatPeriod - the time delay to automatically create an alarm after it
+// RepeatPeriodStream - the time delay to automatically create an alarm after it
 // has fired.
 //
 // Allowed game scenes: any.
-func (s *Alarm) StreamRepeatPeriod() (*krpcgo.Stream[float64], error) {
+func (s *Alarm) RepeatPeriodStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

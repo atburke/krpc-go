@@ -153,10 +153,10 @@ func (s *KRPC) GetClientID() ([]byte, error) {
 	return vv, nil
 }
 
-// StreamGetClientID - returns the identifier for the current client.
+// GetClientIDStream - returns the identifier for the current client.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamGetClientID() (*krpcgo.Stream[[]byte], error) {
+func (s *KRPC) GetClientIDStream() (*krpcgo.Stream[[]byte], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "GetClientID",
@@ -201,11 +201,11 @@ func (s *KRPC) GetClientName() (string, error) {
 	return vv, nil
 }
 
-// StreamGetClientName - returns the name of the current client. This is an
+// GetClientNameStream - returns the name of the current client. This is an
 // empty string if the client has no name.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamGetClientName() (*krpcgo.Stream[string], error) {
+func (s *KRPC) GetClientNameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "GetClientName",
@@ -440,11 +440,11 @@ func (s *KRPC) Clients() ([]api.Tuple3[[]byte, string, string], error) {
 	return vv, nil
 }
 
-// StreamClients - a list of RPC clients that are currently connected to the
+// ClientsStream - a list of RPC clients that are currently connected to the
 // server. Each entry in the list is a clients identifier, name and address.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamClients() (*krpcgo.Stream[[]api.Tuple3[[]byte, string, string]], error) {
+func (s *KRPC) ClientsStream() (*krpcgo.Stream[[]api.Tuple3[[]byte, string, string]], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Clients",
@@ -488,10 +488,10 @@ func (s *KRPC) CurrentGameScene() (GameScene, error) {
 	return vv, nil
 }
 
-// StreamCurrentGameScene - get the current game scene.
+// CurrentGameSceneStream - get the current game scene.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamCurrentGameScene() (*krpcgo.Stream[GameScene], error) {
+func (s *KRPC) CurrentGameSceneStream() (*krpcgo.Stream[GameScene], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_CurrentGameScene",
@@ -535,10 +535,10 @@ func (s *KRPC) Paused() (bool, error) {
 	return vv, nil
 }
 
-// StreamPaused - whether the game is paused.
+// PausedStream - whether the game is paused.
 //
 // Allowed game scenes: any.
-func (s *KRPC) StreamPaused() (*krpcgo.Stream[bool], error) {
+func (s *KRPC) PausedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Paused",

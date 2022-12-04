@@ -85,11 +85,11 @@ func (s *InfernalRobotics) ServoGroups(vessel *spacecenter.Vessel) ([]*ServoGrou
 	return vv, nil
 }
 
-// StreamServoGroups - a list of all the servo groups in the given <paramref
+// ServoGroupsStream - a list of all the servo groups in the given <paramref
 // name="vessel" />.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamServoGroups(vessel *spacecenter.Vessel) (*krpcgo.Stream[[]*ServoGroup], error) {
+func (s *InfernalRobotics) ServoGroupsStream(vessel *spacecenter.Vessel) (*krpcgo.Stream[[]*ServoGroup], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -225,10 +225,10 @@ func (s *InfernalRobotics) Available() (bool, error) {
 	return vv, nil
 }
 
-// StreamAvailable - whether Infernal Robotics is installed.
+// AvailableStream - whether Infernal Robotics is installed.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamAvailable() (*krpcgo.Stream[bool], error) {
+func (s *InfernalRobotics) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Available",
@@ -272,10 +272,10 @@ func (s *InfernalRobotics) Ready() (bool, error) {
 	return vv, nil
 }
 
-// StreamReady - whether Infernal Robotics API is ready.
+// ReadyStream - whether Infernal Robotics API is ready.
 //
 // Allowed game scenes: any.
-func (s *InfernalRobotics) StreamReady() (*krpcgo.Stream[bool], error) {
+func (s *InfernalRobotics) ReadyStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Ready",
@@ -520,10 +520,10 @@ func (s *Servo) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the name of the servo.
+// NameStream - the name of the servo.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamName() (*krpcgo.Stream[string], error) {
+func (s *Servo) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -682,10 +682,10 @@ func (s *Servo) Position() (float32, error) {
 	return vv, nil
 }
 
-// StreamPosition - the position of the servo.
+// PositionStream - the position of the servo.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamPosition() (*krpcgo.Stream[float32], error) {
+func (s *Servo) PositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -748,11 +748,11 @@ func (s *Servo) MinConfigPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamMinConfigPosition - the minimum position of the servo, specified by the
+// MinConfigPositionStream - the minimum position of the servo, specified by the
 // part configuration.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamMinConfigPosition() (*krpcgo.Stream[float32], error) {
+func (s *Servo) MinConfigPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -815,11 +815,11 @@ func (s *Servo) MaxConfigPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxConfigPosition - the maximum position of the servo, specified by the
+// MaxConfigPositionStream - the maximum position of the servo, specified by the
 // part configuration.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamMaxConfigPosition() (*krpcgo.Stream[float32], error) {
+func (s *Servo) MaxConfigPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -882,11 +882,11 @@ func (s *Servo) MinPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamMinPosition - the minimum position of the servo, specified by the
+// MinPositionStream - the minimum position of the servo, specified by the
 // in-game tweak menu.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamMinPosition() (*krpcgo.Stream[float32], error) {
+func (s *Servo) MinPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -983,11 +983,11 @@ func (s *Servo) MaxPosition() (float32, error) {
 	return vv, nil
 }
 
-// StreamMaxPosition - the maximum position of the servo, specified by the
+// MaxPositionStream - the maximum position of the servo, specified by the
 // in-game tweak menu.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamMaxPosition() (*krpcgo.Stream[float32], error) {
+func (s *Servo) MaxPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1084,11 +1084,11 @@ func (s *Servo) ConfigSpeed() (float32, error) {
 	return vv, nil
 }
 
-// StreamConfigSpeed - the speed multiplier of the servo, specified by the part
+// ConfigSpeedStream - the speed multiplier of the servo, specified by the part
 // configuration.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamConfigSpeed() (*krpcgo.Stream[float32], error) {
+func (s *Servo) ConfigSpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1151,11 +1151,11 @@ func (s *Servo) Speed() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpeed - the speed multiplier of the servo, specified by the in-game
+// SpeedStream - the speed multiplier of the servo, specified by the in-game
 // tweak menu.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamSpeed() (*krpcgo.Stream[float32], error) {
+func (s *Servo) SpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1251,10 +1251,10 @@ func (s *Servo) CurrentSpeed() (float32, error) {
 	return vv, nil
 }
 
-// StreamCurrentSpeed - the current speed at which the servo is moving.
+// CurrentSpeedStream - the current speed at which the servo is moving.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamCurrentSpeed() (*krpcgo.Stream[float32], error) {
+func (s *Servo) CurrentSpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1349,10 +1349,10 @@ func (s *Servo) Acceleration() (float32, error) {
 	return vv, nil
 }
 
-// StreamAcceleration - the current speed multiplier set in the UI.
+// AccelerationStream - the current speed multiplier set in the UI.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamAcceleration() (*krpcgo.Stream[float32], error) {
+func (s *Servo) AccelerationStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1447,10 +1447,10 @@ func (s *Servo) IsMoving() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsMoving - whether the servo is moving.
+// IsMovingStream - whether the servo is moving.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamIsMoving() (*krpcgo.Stream[bool], error) {
+func (s *Servo) IsMovingStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1512,10 +1512,10 @@ func (s *Servo) IsFreeMoving() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsFreeMoving - whether the servo is freely moving.
+// IsFreeMovingStream - whether the servo is freely moving.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamIsFreeMoving() (*krpcgo.Stream[bool], error) {
+func (s *Servo) IsFreeMovingStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1577,10 +1577,10 @@ func (s *Servo) IsLocked() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsLocked - whether the servo is locked.
+// IsLockedStream - whether the servo is locked.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamIsLocked() (*krpcgo.Stream[bool], error) {
+func (s *Servo) IsLockedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1675,10 +1675,10 @@ func (s *Servo) IsAxisInverted() (bool, error) {
 	return vv, nil
 }
 
-// StreamIsAxisInverted - whether the servos axis is inverted.
+// IsAxisInvertedStream - whether the servos axis is inverted.
 //
 // Allowed game scenes: any.
-func (s *Servo) StreamIsAxisInverted() (*krpcgo.Stream[bool], error) {
+func (s *Servo) IsAxisInvertedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -1963,10 +1963,10 @@ func (s *ServoGroup) Name() (string, error) {
 	return vv, nil
 }
 
-// StreamName - the name of the group.
+// NameStream - the name of the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamName() (*krpcgo.Stream[string], error) {
+func (s *ServoGroup) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2061,10 +2061,10 @@ func (s *ServoGroup) ForwardKey() (string, error) {
 	return vv, nil
 }
 
-// StreamForwardKey - the key assigned to be the "forward" key for the group.
+// ForwardKeyStream - the key assigned to be the "forward" key for the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamForwardKey() (*krpcgo.Stream[string], error) {
+func (s *ServoGroup) ForwardKeyStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2159,10 +2159,10 @@ func (s *ServoGroup) ReverseKey() (string, error) {
 	return vv, nil
 }
 
-// StreamReverseKey - the key assigned to be the "reverse" key for the group.
+// ReverseKeyStream - the key assigned to be the "reverse" key for the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamReverseKey() (*krpcgo.Stream[string], error) {
+func (s *ServoGroup) ReverseKeyStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2257,10 +2257,10 @@ func (s *ServoGroup) Speed() (float32, error) {
 	return vv, nil
 }
 
-// StreamSpeed - the speed multiplier for the group.
+// SpeedStream - the speed multiplier for the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamSpeed() (*krpcgo.Stream[float32], error) {
+func (s *ServoGroup) SpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2355,10 +2355,10 @@ func (s *ServoGroup) Expanded() (bool, error) {
 	return vv, nil
 }
 
-// StreamExpanded - whether the group is expanded in the InfernalRobotics UI.
+// ExpandedStream - whether the group is expanded in the InfernalRobotics UI.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamExpanded() (*krpcgo.Stream[bool], error) {
+func (s *ServoGroup) ExpandedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2453,10 +2453,10 @@ func (s *ServoGroup) Servos() ([]*Servo, error) {
 	return vv, nil
 }
 
-// StreamServos - the servos that are in the group.
+// ServosStream - the servos that are in the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamServos() (*krpcgo.Stream[[]*Servo], error) {
+func (s *ServoGroup) ServosStream() (*krpcgo.Stream[[]*Servo], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{
@@ -2518,10 +2518,10 @@ func (s *ServoGroup) Parts() ([]*spacecenter.Part, error) {
 	return vv, nil
 }
 
-// StreamParts - the parts containing the servos in the group.
+// PartsStream - the parts containing the servos in the group.
 //
 // Allowed game scenes: any.
-func (s *ServoGroup) StreamParts() (*krpcgo.Stream[[]*spacecenter.Part], error) {
+func (s *ServoGroup) PartsStream() (*krpcgo.Stream[[]*spacecenter.Part], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

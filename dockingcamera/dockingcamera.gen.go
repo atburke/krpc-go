@@ -86,10 +86,10 @@ func (s *DockingCamera) Available() (bool, error) {
 	return vv, nil
 }
 
-// StreamAvailable - check if the Camera API is avaiable
+// AvailableStream - check if the Camera API is avaiable
 //
 // Allowed game scenes: any.
-func (s *DockingCamera) StreamAvailable() (*krpcgo.Stream[bool], error) {
+func (s *DockingCamera) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	request := &api.ProcedureCall{
 		Procedure: "get_Available",
@@ -173,10 +173,10 @@ func (s *Camera) Image() ([]byte, error) {
 	return vv, nil
 }
 
-// StreamImage - get the image.
+// ImageStream - get the image.
 //
 // Allowed game scenes: any.
-func (s *Camera) StreamImage() (*krpcgo.Stream[[]byte], error) {
+func (s *Camera) ImageStream() (*krpcgo.Stream[[]byte], error) {
 	var err error
 	var argBytes []byte
 	request := &api.ProcedureCall{

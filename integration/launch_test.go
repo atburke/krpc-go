@@ -46,11 +46,11 @@ func TestLaunch(t *testing.T) {
 	orbit, err := vessel.Orbit()
 	require.NoError(t, err)
 
-	altitudeStream, err := flight.StreamMeanAltitude()
+	altitudeStream, err := flight.MeanAltitudeStream()
 	require.NoError(t, err)
-	apoapsisStream, err := orbit.StreamApoapsisAltitude()
+	apoapsisStream, err := orbit.ApoapsisAltitudeStream()
 	require.NoError(t, err)
-	qStream, err := flight.StreamDynamicPressure()
+	qStream, err := flight.DynamicPressureStream()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		require.NoError(t, altitudeStream.Close())
@@ -82,10 +82,7 @@ func TestLaunch(t *testing.T) {
 			fmt.Printf("current stage is %v\n", stage)
 			resources, err := vessel.ResourcesInDecoupleStage(stage-1, false)
 			require.NoError(t, err)
-			names, err := resources.Names()
-			require.NoError(t, err)
-			fmt.Println(names)
-			amountStream, err := resources.StreamAmount("LiquidFuel")
+			amountStream, err := resources.AmountStream("LiquidFuel")
 			require.NoError(t, err)
 
 		readAmount:
@@ -93,7 +90,6 @@ func TestLaunch(t *testing.T) {
 				select {
 				case amount := <-amountStream.C:
 					if amount < 0.1 {
-						fmt.Println("ran out of liquid fuel in current stage")
 						_, err = control.ActivateNextStage()
 						require.NoError(t, amountStream.Close())
 						require.NoError(t, err)
@@ -219,7 +215,7 @@ func TestLaunch(t *testing.T) {
 	require.NoError(t, sc.WarpTo(burnUT-leadTime, 10, 1))
 
 	// Execute burn
-	timeToApoapsisStream, err := orbit.StreamTimeToApoapsis()
+	timeToApoapsisStream, err := orbit.TimeToApoapsisStream()
 	require.NoError(t, err)
 	t.Cleanup(func() {
 		require.NoError(t, timeToApoapsisStream.Close())
@@ -236,7 +232,7 @@ func TestLaunch(t *testing.T) {
 	time.Sleep(time.Duration(math.Round((burnTime - 0.1) * float64(time.Second))))
 	require.NoError(t, control.SetThrottle(0.05))
 
-	remainingBurnStream, err := node.StreamRemainingDeltaV()
+	remainingBurnStream, err := node.RemainingDeltaVStream()
 	require.NoError(t, err)
 	remainingBurn := <-remainingBurnStream.C
 	for remainingBurn > 5 {
