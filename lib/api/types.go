@@ -58,8 +58,16 @@ type Vector2D struct {
 	X, Y float64
 }
 
+// NewVector2D creates a 2D vector from components.
+func NewVector2D(x, y float64) Vector2D {
+	return Vector2D{
+		X: x,
+		Y: y,
+	}
+}
+
 // Vector2DFromTuple creates a vector from a tuple.
-func Vector2DFromTuple[T Real](t Tuple2[float64, float64]) Vector2D {
+func Vector2DFromTuple(t Tuple2[float64, float64]) Vector2D {
 	return Vector2D{
 		X: t.A,
 		Y: t.B,
@@ -74,6 +82,15 @@ func (v Vector2D) Tuple() Tuple2[float64, float64] {
 // Vector3D is a 3D vector.
 type Vector3D struct {
 	X, Y, Z float64
+}
+
+// NewVector3D creates a vector from components.
+func NewVector3D(x, y, z float64) Vector3D {
+	return Vector3D{
+		X: x,
+		Y: y,
+		Z: z,
+	}
 }
 
 // Vector3DFromTuple creates a vector from a tuple.

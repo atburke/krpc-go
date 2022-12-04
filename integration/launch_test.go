@@ -5,15 +5,18 @@ import (
 	"fmt"
 	"math"
 	"testing"
+	"time"
 
 	krpcgo "github.com/atburke/krpc-go"
 	"github.com/atburke/krpc-go/krpc"
+	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/spacecenter"
 	"github.com/stretchr/testify/require"
 )
 
 // TestLaunch starts from the space center, loads the Kerbal, X, and launches
-// it into orbit.
+// it into orbit. The procedure for launching the vessel into orbit is adapted
+// from https://krpc.github.io/krpc/tutorials/launch-into-orbit.html.
 func TestLaunch(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	t.Cleanup(cancel)
@@ -22,33 +25,26 @@ func TestLaunch(t *testing.T) {
 	require.NoError(t, client.Connect(ctx))
 
 	krpcService := krpc.NewKRPC(client)
-	// require.NoError(t, krpcService.SetPaused(false))
+	require.NoError(t, krpcService.SetPaused(false))
 	t.Cleanup(func() {
 		require.NoError(t, krpcService.SetPaused(true))
 	})
 
+	// Set stuff up
 	gamescene, err := krpcService.CurrentGameScene()
 	require.NoError(t, err)
-	fmt.Println("got game scene")
 	require.Equal(t, krpc.GameScene_Flight, gamescene, "Test should be run from the launch pad.")
 	sc := spacecenter.NewSpaceCenter(client)
 
 	vessel, err := sc.ActiveVessel()
 	require.NoError(t, err)
-	fmt.Println("got vessel")
-	name, err := vessel.Name()
-	require.NoError(t, err)
-	fmt.Printf("Launching vessel %q\n", name)
 
 	rf, err := vessel.SurfaceReferenceFrame()
 	require.NoError(t, err)
-	fmt.Println("got reference frame")
 	flight, err := vessel.Flight(rf)
 	require.NoError(t, err)
-	fmt.Println("got flight")
 	orbit, err := vessel.Orbit()
 	require.NoError(t, err)
-	fmt.Println("got orbit")
 
 	altitudeStream, err := flight.StreamMeanAltitude()
 	require.NoError(t, err)
@@ -71,6 +67,7 @@ func TestLaunch(t *testing.T) {
 	autopilot, err := vessel.AutoPilot()
 	require.NoError(t, err)
 
+	// Launch
 	_, err = control.ActivateNextStage()
 	require.NoError(t, err)
 	require.NoError(t, autopilot.Engage())
@@ -125,6 +122,7 @@ func TestLaunch(t *testing.T) {
 
 	for apoapsis < 0.9*targetAltitude {
 		select {
+		// Manage heading
 		case altitude := <-altitudeStream.C:
 			if altitude < turnStartAltitude || altitude > turnEndAltitude {
 				continue
@@ -150,4 +148,106 @@ func TestLaunch(t *testing.T) {
 			return
 		}
 	}
+
+	// Fine tune apoapsis approach
+	require.NoError(t, control.SetThrottle(0.25))
+	for apoapsis < targetAltitude {
+		select {
+		case apoapsis = <-apoapsisStream.C:
+		case <-ctx.Done():
+			return
+		}
+	}
+	require.NoError(t, control.SetThrottle(0))
+
+	// Coast out of the atmosphere
+	for apoapsis < 70500 {
+		select {
+		case apoapsis = <-apoapsisStream.C:
+		case <-ctx.Done():
+			return
+		}
+	}
+
+	// Plan circularization
+	body, err := orbit.Body()
+	require.NoError(t, err)
+	mu, err := body.GravitationalParameter()
+	require.NoError(t, err)
+	r, err := orbit.Apoapsis()
+	require.NoError(t, err)
+	a1, err := orbit.SemiMajorAxis()
+	require.NoError(t, err)
+	a2 := r
+	v1 := math.Sqrt(float64(mu) * ((2 / r) - (1 / a1)))
+	v2 := math.Sqrt(float64(mu) * ((2 / r) - (1 / a2)))
+	deltaV := v2 - v1
+	ut, err := sc.UT()
+	require.NoError(t, err)
+	timeToApoapsis, err := orbit.TimeToApoapsis()
+	require.NoError(t, err)
+	node, err := control.AddNode(ut+timeToApoapsis, float32(deltaV), 0, 0)
+	require.NoError(t, err)
+
+	// Calculate burn time
+	f, err := vessel.AvailableThrust()
+	require.NoError(t, err)
+	rawISP, err := vessel.SpecificImpulse()
+	require.NoError(t, err)
+	isp := float64(rawISP * 9.82)
+	m0, err := vessel.Mass()
+	require.NoError(t, err)
+	m1 := float64(m0) / math.Exp(deltaV/isp)
+	flowRate := float64(f) / isp
+	burnTime := (float64(m0) - m1) / flowRate
+
+	// Orient ship
+	require.NoError(t, control.SetRCS(true))
+	nodeRF, err := node.ReferenceFrame()
+	require.NoError(t, err)
+	require.NoError(t, autopilot.SetReferenceFrame(nodeRF))
+	require.NoError(t, autopilot.SetTargetDirection(api.NewVector3D(0, 1, 0).Tuple()))
+	require.NoError(t, autopilot.Wait())
+
+	// Wait until burn
+	ut, err = sc.UT()
+	require.NoError(t, err)
+	timeToApoapsis, err = orbit.TimeToApoapsis()
+	require.NoError(t, err)
+	burnUT := ut + timeToApoapsis - (burnTime / 2)
+	leadTime := float64(5)
+	require.NoError(t, sc.WarpTo(burnUT-leadTime, 10, 1))
+
+	// Execute burn
+	timeToApoapsisStream, err := orbit.StreamTimeToApoapsis()
+	require.NoError(t, err)
+	t.Cleanup(func() {
+		require.NoError(t, timeToApoapsisStream.Close())
+	})
+	for timeToApoapsis-(burnTime/2) > 0 {
+		select {
+		case timeToApoapsis = <-timeToApoapsisStream.C:
+		case <-ctx.Done():
+			return
+		}
+	}
+
+	require.NoError(t, control.SetThrottle(1.0))
+	time.Sleep(time.Duration(math.Round((burnTime - 0.1) * float64(time.Second))))
+	require.NoError(t, control.SetThrottle(0.05))
+
+	remainingBurnStream, err := node.StreamRemainingDeltaV()
+	require.NoError(t, err)
+	remainingBurn := <-remainingBurnStream.C
+	for remainingBurn > 5 {
+		select {
+		case remainingBurn = <-remainingBurnStream.C:
+		case <-ctx.Done():
+			return
+		}
+	}
+
+	require.NoError(t, control.SetThrottle(0))
+	require.NoError(t, node.Remove())
+
 }
