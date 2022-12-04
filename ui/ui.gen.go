@@ -200,7 +200,7 @@ func (s *UI) AddCanvas() (*Canvas, error) {
 		Procedure: "AddCanvas",
 		Service:   "UI",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -262,7 +262,7 @@ func (s *UI) Message(content string, duration float32, position MessagePosition,
 		Position: uint32(0x4),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -287,7 +287,7 @@ func (s *UI) Clear(clientOnly bool) error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -304,7 +304,7 @@ func (s *UI) StockCanvas() (*Canvas, error) {
 		Procedure: "get_StockCanvas",
 		Service:   "UI",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -334,7 +334,7 @@ func (s *Button) Remove() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -360,7 +360,7 @@ func (s *Button) RectTransform() (*RectTransform, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -391,7 +391,7 @@ func (s *Button) Text() (*Text, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -422,7 +422,7 @@ func (s *Button) Clicked() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -494,7 +494,7 @@ func (s *Button) SetClicked(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -520,7 +520,7 @@ func (s *Button) Visible() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -592,7 +592,7 @@ func (s *Button) SetVisible(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -626,7 +626,7 @@ func (s *Canvas) AddPanel(visible bool) (*Panel, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -673,7 +673,7 @@ func (s *Canvas) AddText(content string, visible bool) (*Text, error) {
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -712,7 +712,7 @@ func (s *Canvas) AddInputField(visible bool) (*InputField, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -759,7 +759,7 @@ func (s *Canvas) AddButton(content string, visible bool) (*Button, error) {
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -789,7 +789,7 @@ func (s *Canvas) Remove() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -815,7 +815,7 @@ func (s *Canvas) RectTransform() (*RectTransform, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -846,7 +846,7 @@ func (s *Canvas) Visible() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -918,7 +918,7 @@ func (s *Canvas) SetVisible(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -943,7 +943,7 @@ func (s *InputField) Remove() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -969,7 +969,7 @@ func (s *InputField) RectTransform() (*RectTransform, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1000,7 +1000,7 @@ func (s *InputField) Value() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1072,7 +1072,7 @@ func (s *InputField) SetValue(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1098,7 +1098,7 @@ func (s *InputField) Text() (*Text, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1129,7 +1129,7 @@ func (s *InputField) Changed() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1201,7 +1201,7 @@ func (s *InputField) SetChanged(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1227,7 +1227,7 @@ func (s *InputField) Visible() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1299,7 +1299,7 @@ func (s *InputField) SetVisible(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1333,7 +1333,7 @@ func (s *Panel) AddPanel(visible bool) (*Panel, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1380,7 +1380,7 @@ func (s *Panel) AddText(content string, visible bool) (*Text, error) {
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1419,7 +1419,7 @@ func (s *Panel) AddInputField(visible bool) (*InputField, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1466,7 +1466,7 @@ func (s *Panel) AddButton(content string, visible bool) (*Button, error) {
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1496,7 +1496,7 @@ func (s *Panel) Remove() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1522,7 +1522,7 @@ func (s *Panel) RectTransform() (*RectTransform, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1553,7 +1553,7 @@ func (s *Panel) Visible() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1625,7 +1625,7 @@ func (s *Panel) SetVisible(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1651,7 +1651,7 @@ func (s *RectTransform) Position() (api.Tuple2[float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1724,7 +1724,7 @@ func (s *RectTransform) SetPosition(value api.Tuple2[float64, float64]) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1751,7 +1751,7 @@ func (s *RectTransform) LocalPosition() (api.Tuple3[float64, float64, float64], 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1825,7 +1825,7 @@ func (s *RectTransform) SetLocalPosition(value api.Tuple3[float64, float64, floa
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1851,7 +1851,7 @@ func (s *RectTransform) Size() (api.Tuple2[float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1923,7 +1923,7 @@ func (s *RectTransform) SetSize(value api.Tuple2[float64, float64]) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1950,7 +1950,7 @@ func (s *RectTransform) UpperRight() (api.Tuple2[float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2024,7 +2024,7 @@ func (s *RectTransform) SetUpperRight(value api.Tuple2[float64, float64]) error 
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2051,7 +2051,7 @@ func (s *RectTransform) LowerLeft() (api.Tuple2[float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2125,7 +2125,7 @@ func (s *RectTransform) SetLowerLeft(value api.Tuple2[float64, float64]) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2159,7 +2159,7 @@ func (s *RectTransform) SetAnchor(value api.Tuple2[float64, float64]) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2186,7 +2186,7 @@ func (s *RectTransform) AnchorMax() (api.Tuple2[float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2260,7 +2260,7 @@ func (s *RectTransform) SetAnchorMax(value api.Tuple2[float64, float64]) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2287,7 +2287,7 @@ func (s *RectTransform) AnchorMin() (api.Tuple2[float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2361,7 +2361,7 @@ func (s *RectTransform) SetAnchorMin(value api.Tuple2[float64, float64]) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2388,7 +2388,7 @@ func (s *RectTransform) Pivot() (api.Tuple2[float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2462,7 +2462,7 @@ func (s *RectTransform) SetPivot(value api.Tuple2[float64, float64]) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2488,7 +2488,7 @@ func (s *RectTransform) Rotation() (api.Tuple4[float64, float64, float64, float6
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2562,7 +2562,7 @@ func (s *RectTransform) SetRotation(value api.Tuple4[float64, float64, float64, 
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2588,7 +2588,7 @@ func (s *RectTransform) Scale() (api.Tuple3[float64, float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2661,7 +2661,7 @@ func (s *RectTransform) SetScale(value api.Tuple3[float64, float64, float64]) er
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2686,7 +2686,7 @@ func (s *Text) Remove() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2712,7 +2712,7 @@ func (s *Text) RectTransform() (*RectTransform, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2743,7 +2743,7 @@ func (s *Text) AvailableFonts() ([]string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2808,7 +2808,7 @@ func (s *Text) Content() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2880,7 +2880,7 @@ func (s *Text) SetContent(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2906,7 +2906,7 @@ func (s *Text) Font() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2978,7 +2978,7 @@ func (s *Text) SetFont(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -3004,7 +3004,7 @@ func (s *Text) Size() (int32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -3076,7 +3076,7 @@ func (s *Text) SetSize(value int32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -3102,7 +3102,7 @@ func (s *Text) Style() (FontStyle, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -3174,7 +3174,7 @@ func (s *Text) SetStyle(value FontStyle) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -3200,7 +3200,7 @@ func (s *Text) Alignment() (TextAnchor, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -3272,7 +3272,7 @@ func (s *Text) SetAlignment(value TextAnchor) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -3298,7 +3298,7 @@ func (s *Text) LineSpacing() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -3370,7 +3370,7 @@ func (s *Text) SetLineSpacing(value float32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -3396,7 +3396,7 @@ func (s *Text) Color() (api.Tuple3[float64, float64, float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -3468,7 +3468,7 @@ func (s *Text) SetColor(value api.Tuple3[float64, float64, float64]) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -3494,7 +3494,7 @@ func (s *Text) Visible() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -3566,7 +3566,7 @@ func (s *Text) SetVisible(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}

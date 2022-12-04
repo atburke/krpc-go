@@ -142,7 +142,7 @@ func (s *KerbalAlarmClock) AlarmWithName(name string) (*Alarm, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -174,7 +174,7 @@ func (s *KerbalAlarmClock) AlarmsWithType(t AlarmType) ([]*Alarm, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -256,7 +256,7 @@ func (s *KerbalAlarmClock) CreateAlarm(t AlarmType, name string, ut float64) (*A
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -278,7 +278,7 @@ func (s *KerbalAlarmClock) Available() (bool, error) {
 		Procedure: "get_Available",
 		Service:   "KerbalAlarmClock",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -325,7 +325,7 @@ func (s *KerbalAlarmClock) Alarms() ([]*Alarm, error) {
 		Procedure: "get_Alarms",
 		Service:   "KerbalAlarmClock",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -380,7 +380,7 @@ func (s *Alarm) Remove() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -406,7 +406,7 @@ func (s *Alarm) Action() (AlarmAction, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -478,7 +478,7 @@ func (s *Alarm) SetAction(value AlarmAction) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -504,7 +504,7 @@ func (s *Alarm) Margin() (float64, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -577,7 +577,7 @@ func (s *Alarm) SetMargin(value float64) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -603,7 +603,7 @@ func (s *Alarm) Time() (float64, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -675,7 +675,7 @@ func (s *Alarm) SetTime(value float64) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -701,7 +701,7 @@ func (s *Alarm) Type() (AlarmType, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -766,7 +766,7 @@ func (s *Alarm) ID() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -831,7 +831,7 @@ func (s *Alarm) Name() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -903,7 +903,7 @@ func (s *Alarm) SetName(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -929,7 +929,7 @@ func (s *Alarm) Notes() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1001,7 +1001,7 @@ func (s *Alarm) SetNotes(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1027,7 +1027,7 @@ func (s *Alarm) Remaining() (float64, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1092,7 +1092,7 @@ func (s *Alarm) Repeat() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1164,7 +1164,7 @@ func (s *Alarm) SetRepeat(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1191,7 +1191,7 @@ func (s *Alarm) RepeatPeriod() (float64, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1265,7 +1265,7 @@ func (s *Alarm) SetRepeatPeriod(value float64) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1291,7 +1291,7 @@ func (s *Alarm) Vessel() (*spacecenter.Vessel, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1329,7 +1329,7 @@ func (s *Alarm) SetVessel(value *spacecenter.Vessel) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1355,7 +1355,7 @@ func (s *Alarm) XferOriginBody() (*spacecenter.CelestialBody, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1393,7 +1393,7 @@ func (s *Alarm) SetXferOriginBody(value *spacecenter.CelestialBody) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1419,7 +1419,7 @@ func (s *Alarm) XferTargetBody() (*spacecenter.CelestialBody, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1457,7 +1457,7 @@ func (s *Alarm) SetXferTargetBody(value *spacecenter.CelestialBody) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}

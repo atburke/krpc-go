@@ -22,7 +22,7 @@ func (s *BasicKRPC) GetStatus() (*api.Status, error) {
 		Service:   "KRPC",
 		Procedure: "GetStatus",
 	}
-	result, err := s.client.Call(request, true)
+	result, err := s.client.Call(request)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -38,7 +38,7 @@ func (s *BasicKRPC) GetServices() (*api.Services, error) {
 		Service:   "KRPC",
 		Procedure: "GetServices",
 	}
-	result, err := s.client.Call(request, true)
+	result, err := s.client.Call(request)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}

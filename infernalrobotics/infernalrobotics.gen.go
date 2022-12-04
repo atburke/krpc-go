@@ -74,7 +74,7 @@ func (s *InfernalRobotics) ServoGroups(vessel *spacecenter.Vessel) ([]*ServoGrou
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -151,7 +151,7 @@ func (s *InfernalRobotics) ServoGroupWithName(vessel *spacecenter.Vessel, name s
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -192,7 +192,7 @@ func (s *InfernalRobotics) ServoWithName(vessel *spacecenter.Vessel, name string
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -214,7 +214,7 @@ func (s *InfernalRobotics) Available() (bool, error) {
 		Procedure: "get_Available",
 		Service:   "InfernalRobotics",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -261,7 +261,7 @@ func (s *InfernalRobotics) Ready() (bool, error) {
 		Procedure: "get_Ready",
 		Service:   "InfernalRobotics",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -316,7 +316,7 @@ func (s *Servo) MoveRight() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -341,7 +341,7 @@ func (s *Servo) MoveLeft() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -366,7 +366,7 @@ func (s *Servo) MoveCenter() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -391,7 +391,7 @@ func (s *Servo) MoveNextPreset() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -416,7 +416,7 @@ func (s *Servo) MovePrevPreset() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -458,7 +458,7 @@ func (s *Servo) MoveTo(position float32, speed float32) error {
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -483,7 +483,7 @@ func (s *Servo) Stop() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -509,7 +509,7 @@ func (s *Servo) Name() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -581,7 +581,7 @@ func (s *Servo) SetName(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -607,7 +607,7 @@ func (s *Servo) Part() (*spacecenter.Part, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -645,7 +645,7 @@ func (s *Servo) SetHighlight(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -671,7 +671,7 @@ func (s *Servo) Position() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -737,7 +737,7 @@ func (s *Servo) MinConfigPosition() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -804,7 +804,7 @@ func (s *Servo) MaxConfigPosition() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -871,7 +871,7 @@ func (s *Servo) MinPosition() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -945,7 +945,7 @@ func (s *Servo) SetMinPosition(value float32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -972,7 +972,7 @@ func (s *Servo) MaxPosition() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1046,7 +1046,7 @@ func (s *Servo) SetMaxPosition(value float32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1073,7 +1073,7 @@ func (s *Servo) ConfigSpeed() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1140,7 +1140,7 @@ func (s *Servo) Speed() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1214,7 +1214,7 @@ func (s *Servo) SetSpeed(value float32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1240,7 +1240,7 @@ func (s *Servo) CurrentSpeed() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1312,7 +1312,7 @@ func (s *Servo) SetCurrentSpeed(value float32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1338,7 +1338,7 @@ func (s *Servo) Acceleration() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1410,7 +1410,7 @@ func (s *Servo) SetAcceleration(value float32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1436,7 +1436,7 @@ func (s *Servo) IsMoving() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1501,7 +1501,7 @@ func (s *Servo) IsFreeMoving() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1566,7 +1566,7 @@ func (s *Servo) IsLocked() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1638,7 +1638,7 @@ func (s *Servo) SetIsLocked(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1664,7 +1664,7 @@ func (s *Servo) IsAxisInverted() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1736,7 +1736,7 @@ func (s *Servo) SetIsAxisInverted(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1771,7 +1771,7 @@ func (s *ServoGroup) ServoWithName(name string) (*Servo, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1801,7 +1801,7 @@ func (s *ServoGroup) MoveRight() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1826,7 +1826,7 @@ func (s *ServoGroup) MoveLeft() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1851,7 +1851,7 @@ func (s *ServoGroup) MoveCenter() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1876,7 +1876,7 @@ func (s *ServoGroup) MoveNextPreset() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1901,7 +1901,7 @@ func (s *ServoGroup) MovePrevPreset() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1926,7 +1926,7 @@ func (s *ServoGroup) Stop() error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -1952,7 +1952,7 @@ func (s *ServoGroup) Name() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2024,7 +2024,7 @@ func (s *ServoGroup) SetName(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2050,7 +2050,7 @@ func (s *ServoGroup) ForwardKey() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2122,7 +2122,7 @@ func (s *ServoGroup) SetForwardKey(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2148,7 +2148,7 @@ func (s *ServoGroup) ReverseKey() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2220,7 +2220,7 @@ func (s *ServoGroup) SetReverseKey(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2246,7 +2246,7 @@ func (s *ServoGroup) Speed() (float32, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2318,7 +2318,7 @@ func (s *ServoGroup) SetSpeed(value float32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2344,7 +2344,7 @@ func (s *ServoGroup) Expanded() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2416,7 +2416,7 @@ func (s *ServoGroup) SetExpanded(value bool) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -2442,7 +2442,7 @@ func (s *ServoGroup) Servos() ([]*Servo, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -2507,7 +2507,7 @@ func (s *ServoGroup) Parts() ([]*spacecenter.Part, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}

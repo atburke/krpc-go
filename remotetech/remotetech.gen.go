@@ -94,7 +94,7 @@ func (s *RemoteTech) Comms(vessel *spacecenter.Vessel) (*Comms, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -125,7 +125,7 @@ func (s *RemoteTech) Antenna(part *spacecenter.Part) (*Antenna, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -147,7 +147,7 @@ func (s *RemoteTech) Available() (bool, error) {
 		Procedure: "get_Available",
 		Service:   "RemoteTech",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -194,7 +194,7 @@ func (s *RemoteTech) GroundStations() ([]string, error) {
 		Procedure: "get_GroundStations",
 		Service:   "RemoteTech",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -250,7 +250,7 @@ func (s *Antenna) Part() (*spacecenter.Part, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -281,7 +281,7 @@ func (s *Antenna) HasConnection() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -352,7 +352,7 @@ func (s *Antenna) Target() (Target, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -436,7 +436,7 @@ func (s *Antenna) SetTarget(value Target) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -462,7 +462,7 @@ func (s *Antenna) TargetBody() (*spacecenter.CelestialBody, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -500,7 +500,7 @@ func (s *Antenna) SetTargetBody(value *spacecenter.CelestialBody) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -526,7 +526,7 @@ func (s *Antenna) TargetGroundStation() (string, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -598,7 +598,7 @@ func (s *Antenna) SetTargetGroundStation(value string) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -624,7 +624,7 @@ func (s *Antenna) TargetVessel() (*spacecenter.Vessel, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -662,7 +662,7 @@ func (s *Antenna) SetTargetVessel(value *spacecenter.Vessel) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -697,7 +697,7 @@ func (s *Comms) SignalDelayToVessel(other *spacecenter.Vessel) (float64, error) 
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -771,7 +771,7 @@ func (s *Comms) Vessel() (*spacecenter.Vessel, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -802,7 +802,7 @@ func (s *Comms) HasLocalControl() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -867,7 +867,7 @@ func (s *Comms) HasFlightComputer() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -932,7 +932,7 @@ func (s *Comms) HasConnection() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -998,7 +998,7 @@ func (s *Comms) HasConnectionToGroundStation() (bool, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1064,7 +1064,7 @@ func (s *Comms) SignalDelay() (float64, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1130,7 +1130,7 @@ func (s *Comms) SignalDelayToGroundStation() (float64, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -1196,7 +1196,7 @@ func (s *Comms) Antennas() ([]*Antenna, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}

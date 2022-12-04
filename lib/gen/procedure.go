@@ -139,7 +139,7 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 	}
 	funcBody = append(funcBody,
 		lhs.Id("s").Dot("Client").Dot("Call").Call(
-			jen.Id("request"), jen.Lit(returnType != nil),
+			jen.Id("request"),
 		),
 		errCheck,
 	)

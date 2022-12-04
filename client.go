@@ -210,7 +210,7 @@ func readMessageLength(r io.Reader) (uint64, error) {
 }
 
 // CallMultiple performs a batch of procedure calls to the rpc server.
-func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall, expectResponse bool) ([]*api.ProcedureResult, error) {
+func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall) ([]*api.ProcedureResult, error) {
 	req := &api.Request{
 		Calls: calls,
 	}
@@ -225,10 +225,6 @@ func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall, expectResponse boo
 		c.mu.Unlock()
 		return nil, tracerr.Wrap(err)
 	}
-	// if !expectResponse {
-	// 	c.mu.Unlock()
-	// 	return nil, nil
-	// }
 	in, err := c.Receive()
 	c.mu.Unlock()
 
@@ -247,13 +243,10 @@ func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall, expectResponse boo
 }
 
 // Call performs a remote procedure call.
-func (c *KRPCClient) Call(call *api.ProcedureCall, expectResponse bool) (*api.ProcedureResult, error) {
-	resp, err := c.CallMultiple([]*api.ProcedureCall{call}, expectResponse)
+func (c *KRPCClient) Call(call *api.ProcedureCall) (*api.ProcedureResult, error) {
+	resp, err := c.CallMultiple([]*api.ProcedureCall{call})
 	if err != nil {
 		return nil, tracerr.Wrap(err)
-	}
-	if !expectResponse {
-		return nil, nil
 	}
 	r := resp[0]
 	if r.Error != nil {

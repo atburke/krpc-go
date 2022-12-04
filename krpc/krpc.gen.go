@@ -142,7 +142,7 @@ func (s *KRPC) GetClientID() ([]byte, error) {
 		Procedure: "GetClientID",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -190,7 +190,7 @@ func (s *KRPC) GetClientName() (string, error) {
 		Procedure: "GetClientName",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -238,7 +238,7 @@ func (s *KRPC) GetStatus() (*api.Status, error) {
 		Procedure: "GetStatus",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -261,7 +261,7 @@ func (s *KRPC) GetServices() (*api.Services, error) {
 		Procedure: "GetServices",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -299,7 +299,7 @@ func (s *KRPC) AddStream(call *api.ProcedureCall, start bool) (*api.Stream, erro
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -328,7 +328,7 @@ func (s *KRPC) StartStream(id uint64) error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -361,7 +361,7 @@ func (s *KRPC) SetStreamRate(id uint64, rate float32) error {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -386,7 +386,7 @@ func (s *KRPC) RemoveStream(id uint64) error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -411,7 +411,7 @@ func (s *KRPC) AddEvent(expression *Expression) error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -429,7 +429,7 @@ func (s *KRPC) Clients() ([]api.Tuple3[[]byte, string, string], error) {
 		Procedure: "get_Clients",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -477,7 +477,7 @@ func (s *KRPC) CurrentGameScene() (GameScene, error) {
 		Procedure: "get_CurrentGameScene",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -524,7 +524,7 @@ func (s *KRPC) Paused() (bool, error) {
 		Procedure: "get_Paused",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -579,7 +579,7 @@ func (s *KRPC) SetPaused(value bool) error {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
@@ -605,7 +605,7 @@ func (s *Expression) ConstantDouble() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -636,7 +636,7 @@ func (s *Expression) ConstantFloat() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -667,7 +667,7 @@ func (s *Expression) ConstantInt() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -698,7 +698,7 @@ func (s *Expression) ConstantBool() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -729,7 +729,7 @@ func (s *Expression) ConstantString() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -760,7 +760,7 @@ func (s *Expression) Call() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -799,7 +799,7 @@ func (s *Expression) Equal(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -838,7 +838,7 @@ func (s *Expression) NotEqual(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -877,7 +877,7 @@ func (s *Expression) GreaterThan(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -916,7 +916,7 @@ func (s *Expression) GreaterThanOrEqual(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -955,7 +955,7 @@ func (s *Expression) LessThan(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -994,7 +994,7 @@ func (s *Expression) LessThanOrEqual(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1033,7 +1033,7 @@ func (s *Expression) And(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1072,7 +1072,7 @@ func (s *Expression) Or(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1111,7 +1111,7 @@ func (s *Expression) ExclusiveOr(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1142,7 +1142,7 @@ func (s *Expression) Not() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1181,7 +1181,7 @@ func (s *Expression) Add(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1220,7 +1220,7 @@ func (s *Expression) Subtract(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1259,7 +1259,7 @@ func (s *Expression) Multiply(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1298,7 +1298,7 @@ func (s *Expression) Divide(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1337,7 +1337,7 @@ func (s *Expression) Modulo(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1376,7 +1376,7 @@ func (s *Expression) Power(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1415,7 +1415,7 @@ func (s *Expression) LeftShift(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1454,7 +1454,7 @@ func (s *Expression) RightShift(arg1 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1493,7 +1493,7 @@ func (s *Expression) Cast(t *Type) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1532,7 +1532,7 @@ func (s *Expression) Parameter(t *Type) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1571,7 +1571,7 @@ func (s *Expression) Function(body *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1610,7 +1610,7 @@ func (s *Expression) Invoke(args map[string]*Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1641,7 +1641,7 @@ func (s *Expression) CreateTuple() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1672,7 +1672,7 @@ func (s *Expression) CreateList() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1703,7 +1703,7 @@ func (s *Expression) CreateSet() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1743,7 +1743,7 @@ func (s *Expression) CreateDictionary(values []*Expression) (*Expression, error)
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1774,7 +1774,7 @@ func (s *Expression) ToList() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1805,7 +1805,7 @@ func (s *Expression) ToSet() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1844,7 +1844,7 @@ func (s *Expression) Get(index *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1875,7 +1875,7 @@ func (s *Expression) Count() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1906,7 +1906,7 @@ func (s *Expression) Sum() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1937,7 +1937,7 @@ func (s *Expression) Max() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1968,7 +1968,7 @@ func (s *Expression) Min() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -1999,7 +1999,7 @@ func (s *Expression) Average() (*Expression, error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2038,7 +2038,7 @@ func (s *Expression) Select(f *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2077,7 +2077,7 @@ func (s *Expression) Where(f *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2116,7 +2116,7 @@ func (s *Expression) Contains(value *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2155,7 +2155,7 @@ func (s *Expression) Aggregate(f *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2203,7 +2203,7 @@ func (s *Expression) AggregateWithSeed(seed *Expression, f *Expression) (*Expres
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2242,7 +2242,7 @@ func (s *Expression) Concat(arg2 *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2281,7 +2281,7 @@ func (s *Expression) OrderBy(key *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2321,7 +2321,7 @@ func (s *Expression) All(predicate *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2361,7 +2361,7 @@ func (s *Expression) Any(predicate *Expression) (*Expression, error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2383,7 +2383,7 @@ func (s *Type) Double() (*Type, error) {
 		Procedure: "Type_static_Double",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2405,7 +2405,7 @@ func (s *Type) Float() (*Type, error) {
 		Procedure: "Type_static_Float",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2427,7 +2427,7 @@ func (s *Type) Int() (*Type, error) {
 		Procedure: "Type_static_Int",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2449,7 +2449,7 @@ func (s *Type) Bool() (*Type, error) {
 		Procedure: "Type_static_Bool",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
@@ -2471,7 +2471,7 @@ func (s *Type) String() (*Type, error) {
 		Procedure: "Type_static_String",
 		Service:   "KRPC",
 	}
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}

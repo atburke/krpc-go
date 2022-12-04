@@ -5,9 +5,9 @@ package gentest
 
 import (
 	krpcgo "github.com/atburke/krpc-go"
-	krpc "github.com/atburke/krpc-go/lib/service/krpc"
 	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
+	krpc "github.com/atburke/krpc-go/krpc"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -38,7 +38,7 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 		Position: uint32(0x1),
 		Value: argBytes,
 	})
-	result, err := s.Client.Call(request, true)
+	result, err := s.Client.Call(request)
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
@@ -128,7 +128,7 @@ func (s *MyClass) SetMyProperty(param1 api.Tuple2[string, uint64]) error {
 		Position: uint32(0x1),
 		Value: argBytes,
 	})
-	_, err = s.Client.Call(request, false)
+	_, err = s.Client.Call(request)
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
