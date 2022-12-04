@@ -10,7 +10,7 @@ fmt:
 	gofmt -w .
 
 test:
-	go test . ./lib/...
+	go test . ./lib/... ./types
 
 integration:
 	go test ./integration
