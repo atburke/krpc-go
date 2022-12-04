@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
+	"github.com/atburke/krpc-go/types"
 	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"
 )
 
 // GenerateProcedure generates a procedure function from a given procedure definition.
-func GenerateProcedure(f *jen.File, serviceName string, procedure *api.Procedure) error {
+func GenerateProcedure(f *jen.File, serviceName string, procedure *types.Procedure) error {
 	var err error
 	switch procedureType := GetProcedureType(procedure.Name); procedureType {
 	case Procedure:
@@ -35,7 +35,7 @@ func GenerateProcedure(f *jen.File, serviceName string, procedure *api.Procedure
 }
 
 // formatGameScences formats a list of allowed game scenes as a string.
-func formatGameScenes(gameScenes []api.Procedure_GameScene) string {
+func formatGameScenes(gameScenes []types.Procedure_GameScene) string {
 	var scenes []string
 	for _, scene := range gameScenes {
 		scenes = append(scenes, scene.String())
@@ -50,7 +50,7 @@ func formatGameScenes(gameScenes []api.Procedure_GameScene) string {
 }
 
 // generateProcedureBody generates the function body for a procedure.
-func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, params []jen.Code, returnType *jen.Statement) {
+func generateProcedureBody(serviceName string, procedure *types.Procedure) (funcBody []jen.Code, params []jen.Code, returnType *jen.Statement) {
 	pkg := getServicePackage(serviceName)
 	returnType = GetGoType(procedure.ReturnType, WithPackage(pkg))
 	retVarType := GetGoType(procedure.ReturnType, WithPackage(pkg), NoPointerForClass)
@@ -75,7 +75,7 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 
 	// Define the request
 	funcBody = append(funcBody,
-		jen.Id("request").Op(":=").Op("&").Qual(apiPkg, "ProcedureCall").Values(jen.Dict{
+		jen.Id("request").Op(":=").Op("&").Qual(typesPkg, "ProcedureCall").Values(jen.Dict{
 			jen.Id("Service"):   jen.Lit(serviceName),
 			jen.Id("Procedure"): jen.Lit(procedure.Name),
 		}),
@@ -118,7 +118,7 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 			errCheck,
 			jen.Id("request").Dot("Arguments").Op("=").Append(
 				jen.Id("request").Dot("Arguments"),
-				jen.Op("&").Qual(apiPkg, "Argument").Values(jen.Dict{
+				jen.Op("&").Qual(typesPkg, "Argument").Values(jen.Dict{
 					jen.Id("Position"): jen.Lit(uint32(i)),
 					jen.Id("Value"):    jen.Id("argBytes"),
 				}),
@@ -150,7 +150,7 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 			jen.Err().Op("=").Qual(encodePkg, "Unmarshal").Call(jen.Id("result").Dot("Value"), jen.Op("&").Id("vv")),
 			errCheck,
 		)
-		if procedure.ReturnType.Code == api.Type_CLASS {
+		if procedure.ReturnType.Code == types.Type_CLASS {
 			funcBody = append(funcBody,
 				jen.Id("vv").Dot("Client").Op("=").Id("s").Dot("Client"),
 			)
@@ -169,7 +169,7 @@ func generateProcedureBody(serviceName string, procedure *api.Procedure) (funcBo
 }
 
 // generateBaseProcedure generates a procedure function using extra info about the call signature.
-func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceName string, procedure *api.Procedure) {
+func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceName string, procedure *types.Procedure) {
 	funcBody, params, returnType := generateProcedureBody(serviceName, procedure)
 
 	var retType jen.Code
@@ -196,7 +196,7 @@ func generateBaseProcedure(f *jen.File, procName, procDocs, receiver, serviceNam
 	}
 }
 
-func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody []jen.Code, returnType *jen.Statement) {
+func generateStreamBody(serviceName string, procedure *types.Procedure) (funcBody []jen.Code, returnType *jen.Statement) {
 	internalReturnType := GetGoType(procedure.ReturnType, WithPackage(getServicePackage(serviceName)))
 	returnType = jen.Op("*").Qual(krpcPkg, "Stream").Types(internalReturnType)
 
@@ -211,7 +211,7 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 	}
 
 	funcBody = append(funcBody,
-		jen.Id("request").Op(":=").Op("&").Qual(apiPkg, "ProcedureCall").Values(jen.Dict{
+		jen.Id("request").Op(":=").Op("&").Qual(typesPkg, "ProcedureCall").Values(jen.Dict{
 			jen.Id("Service"):   jen.Lit(serviceName),
 			jen.Id("Procedure"): jen.Lit(procedure.Name),
 		}),
@@ -240,7 +240,7 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 			errCheck,
 			jen.Id("request").Dot("Arguments").Op("=").Append(
 				jen.Id("request").Dot("Arguments"),
-				jen.Op("&").Qual(apiPkg, "Argument").Values(jen.Dict{
+				jen.Op("&").Qual(typesPkg, "Argument").Values(jen.Dict{
 					jen.Id("Position"): jen.Lit(uint32(i)),
 					jen.Id("Value"):    jen.Id("argBytes"),
 				}),
@@ -287,7 +287,7 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 	return
 }
 
-func generateProcedure(f *jen.File, serviceName string, procedure *api.Procedure) error {
+func generateProcedure(f *jen.File, serviceName string, procedure *types.Procedure) error {
 	procName := procedure.Name
 	procDocs, err := utils.ParseXMLDocumentation(procedure.Documentation, procName+" - ")
 	if err != nil {
@@ -299,7 +299,7 @@ func generateProcedure(f *jen.File, serviceName string, procedure *api.Procedure
 	return nil
 }
 
-func generateServiceGetter(f *jen.File, serviceName string, procedure *api.Procedure) error {
+func generateServiceGetter(f *jen.File, serviceName string, procedure *types.Procedure) error {
 	propName, err := GetPropertyName(procedure.Name)
 	if err != nil {
 		return tracerr.Wrap(err)
@@ -315,7 +315,7 @@ func generateServiceGetter(f *jen.File, serviceName string, procedure *api.Proce
 	return nil
 }
 
-func generateServiceSetter(f *jen.File, serviceName string, procedure *api.Procedure) error {
+func generateServiceSetter(f *jen.File, serviceName string, procedure *types.Procedure) error {
 	propName, err := GetPropertyName(procedure.Name)
 	if err != nil {
 		return tracerr.Wrap(err)
@@ -331,7 +331,7 @@ func generateServiceSetter(f *jen.File, serviceName string, procedure *api.Proce
 	return nil
 }
 
-func generateClassMethod(f *jen.File, serviceName string, procedure *api.Procedure) error {
+func generateClassMethod(f *jen.File, serviceName string, procedure *types.Procedure) error {
 	className, err := GetClassName(procedure.Name)
 	if err != nil {
 		return tracerr.Wrap(err)
@@ -347,11 +347,11 @@ func generateClassMethod(f *jen.File, serviceName string, procedure *api.Procedu
 	return nil
 }
 
-func generateStaticClassMethod(f *jen.File, serviceName string, procedure *api.Procedure) error {
+func generateStaticClassMethod(f *jen.File, serviceName string, procedure *types.Procedure) error {
 	return tracerr.Wrap(generateClassMethod(f, serviceName, procedure))
 }
 
-func generateClassGetter(f *jen.File, serviceName string, procedure *api.Procedure) error {
+func generateClassGetter(f *jen.File, serviceName string, procedure *types.Procedure) error {
 	className, err := GetClassName(procedure.Name)
 	if err != nil {
 		return tracerr.Wrap(err)
@@ -371,7 +371,7 @@ func generateClassGetter(f *jen.File, serviceName string, procedure *api.Procedu
 	return nil
 }
 
-func generateClassSetter(f *jen.File, serviceName string, procedure *api.Procedure) error {
+func generateClassSetter(f *jen.File, serviceName string, procedure *types.Procedure) error {
 	className, err := GetClassName(procedure.Name)
 	if err != nil {
 		return tracerr.Wrap(err)

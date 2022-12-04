@@ -3,14 +3,14 @@ package gen
 import (
 	"fmt"
 
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
+	"github.com/atburke/krpc-go/types"
 	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"
 )
 
 // GenerateClass generates a struct for a given class definition.
-func GenerateClass(f *jen.File, class *api.Class) error {
+func GenerateClass(f *jen.File, class *types.Class) error {
 	className := class.Name
 	classDocs, err := utils.ParseXMLDocumentation(class.Documentation, className+" - ")
 	if err != nil {

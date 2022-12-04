@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
+	"github.com/atburke/krpc-go/types"
 	"github.com/dave/jennifer/jen"
 	"github.com/mitchellh/go-wordwrap"
 	"github.com/ztrue/tracerr"
@@ -24,7 +24,7 @@ func wrapDocComment(s string) string {
 }
 
 // GenerateService generates a service.
-func GenerateService(f *jen.File, service *api.Service) error {
+func GenerateService(f *jen.File, service *types.Service) error {
 	for _, exception := range service.Exceptions {
 		if err := GenerateException(f, exception); err != nil {
 			return tracerr.Wrap(err)

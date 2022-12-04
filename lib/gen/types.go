@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/atburke/krpc-go/lib/api"
+	"github.com/atburke/krpc-go/types"
 	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"
 )
@@ -133,21 +133,21 @@ func getClassType(t *jen.Statement, withPointer bool) *jen.Statement {
 	return t
 }
 
-var pointerTypes = map[api.Type_TypeCode]struct{}{
-	api.Type_CLASS:          {},
-	api.Type_SERVICES:       {},
-	api.Type_PROCEDURE_CALL: {},
-	api.Type_STREAM:         {},
-	api.Type_STATUS:         {},
+var pointerTypes = map[types.Type_TypeCode]struct{}{
+	types.Type_CLASS:          {},
+	types.Type_SERVICES:       {},
+	types.Type_PROCEDURE_CALL: {},
+	types.Type_STREAM:         {},
+	types.Type_STATUS:         {},
 }
 
-func isPointerType(code api.Type_TypeCode) bool {
+func isPointerType(code types.Type_TypeCode) bool {
 	_, ok := pointerTypes[code]
 	return ok
 }
 
 // GetGoType gets the Go representation of a kRPC type.
-func GetGoType(t *api.Type, opts ...GetGoTypeOption) *jen.Statement {
+func GetGoType(t *types.Type, opts ...GetGoTypeOption) *jen.Statement {
 	if t == nil {
 		return nil
 	}
@@ -159,17 +159,17 @@ func GetGoType(t *api.Type, opts ...GetGoTypeOption) *jen.Statement {
 
 	switch t.Code {
 	// Special KRPC types.
-	case api.Type_PROCEDURE_CALL:
-		return getClassType(jen.Qual(apiPkg, "ProcedureCall"), cfg.UsePointer)
-	case api.Type_STREAM:
-		return getClassType(jen.Qual(apiPkg, "Stream"), cfg.UsePointer)
-	case api.Type_STATUS:
-		return getClassType(jen.Qual(apiPkg, "Status"), cfg.UsePointer)
-	case api.Type_SERVICES:
-		return getClassType(jen.Qual(apiPkg, "Services"), cfg.UsePointer)
+	case types.Type_PROCEDURE_CALL:
+		return getClassType(jen.Qual(typesPkg, "ProcedureCall"), cfg.UsePointer)
+	case types.Type_STREAM:
+		return getClassType(jen.Qual(typesPkg, "Stream"), cfg.UsePointer)
+	case types.Type_STATUS:
+		return getClassType(jen.Qual(typesPkg, "Status"), cfg.UsePointer)
+	case types.Type_SERVICES:
+		return getClassType(jen.Qual(typesPkg, "Services"), cfg.UsePointer)
 
 	// Class or enum.
-	case api.Type_CLASS:
+	case types.Type_CLASS:
 		if cfg.Package == "" {
 			return getClassType(jen.Id(t.Name), cfg.UsePointer)
 		}
@@ -179,7 +179,7 @@ func GetGoType(t *api.Type, opts ...GetGoTypeOption) *jen.Statement {
 			return getClassType(jen.Qual(p, t.Name), cfg.UsePointer)
 		}
 
-	case api.Type_ENUMERATION:
+	case types.Type_ENUMERATION:
 		if cfg.Package == "" {
 			return jen.Id(t.Name)
 		}
@@ -190,40 +190,40 @@ func GetGoType(t *api.Type, opts ...GetGoTypeOption) *jen.Statement {
 		}
 
 	// Primitives.
-	case api.Type_DOUBLE:
+	case types.Type_DOUBLE:
 		return jen.Float64()
-	case api.Type_FLOAT:
+	case types.Type_FLOAT:
 		return jen.Float32()
-	case api.Type_SINT32:
+	case types.Type_SINT32:
 		return jen.Int32()
-	case api.Type_SINT64:
+	case types.Type_SINT64:
 		return jen.Int64()
-	case api.Type_UINT32:
+	case types.Type_UINT32:
 		return jen.Uint32()
-	case api.Type_UINT64:
+	case types.Type_UINT64:
 		return jen.Uint64()
-	case api.Type_BOOL:
+	case types.Type_BOOL:
 		return jen.Bool()
-	case api.Type_STRING:
+	case types.Type_STRING:
 		return jen.String()
-	case api.Type_BYTES:
+	case types.Type_BYTES:
 		return jen.Index().Byte()
 
 	// Collections.
-	case api.Type_TUPLE:
+	case types.Type_TUPLE:
 		var tupleTypes []jen.Code
 		for _, subType := range t.Types {
 			tupleTypes = append(tupleTypes, GetGoType(subType, WithPackage(cfg.Package)))
 		}
 		return jen.Qual(
-			apiPkg, fmt.Sprintf("Tuple%v", len(t.Types)),
+			typesPkg, fmt.Sprintf("Tuple%v", len(t.Types)),
 		).Types(tupleTypes...)
 
-	case api.Type_LIST:
+	case types.Type_LIST:
 		return jen.Index().Add(GetGoType(t.Types[0], WithPackage(cfg.Package)))
-	case api.Type_SET:
+	case types.Type_SET:
 		return jen.Map(GetGoType(t.Types[0], WithPackage(cfg.Package))).Struct()
-	case api.Type_DICTIONARY:
+	case types.Type_DICTIONARY:
 		return jen.Map(GetGoType(t.Types[0], WithPackage(cfg.Package))).Add(GetGoType(t.Types[1], WithPackage(cfg.Package)))
 	}
 

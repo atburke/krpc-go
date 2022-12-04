@@ -3,15 +3,15 @@ package gen
 import (
 	"fmt"
 
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
+	"github.com/atburke/krpc-go/types"
 	"github.com/dave/jennifer/jen"
 	"github.com/mitchellh/go-wordwrap"
 	"github.com/ztrue/tracerr"
 )
 
 // GenerateEnum generates an enum for a given enum definition.
-func GenerateEnum(f *jen.File, enum *api.Enumeration) error {
+func GenerateEnum(f *jen.File, enum *types.Enumeration) error {
 	enumName := enum.Name
 	enumDocs, err := utils.ParseXMLDocumentation(enum.Documentation, enumName+" - ")
 	if err != nil {

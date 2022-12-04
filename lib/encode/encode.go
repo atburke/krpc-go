@@ -5,8 +5,8 @@ import (
 	"math"
 	"reflect"
 
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/service"
+	"github.com/atburke/krpc-go/types"
 	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"
 )
@@ -71,7 +71,7 @@ func Marshal(m interface{}) ([]byte, error) {
 	mType := reflect.TypeOf(m)
 	switch mType.Kind() {
 	case reflect.Slice:
-		var list api.List
+		var list types.List
 		for i := 0; i < value.Len(); i++ {
 			bb, err := Marshal(value.Index(i).Interface())
 			if err != nil {
@@ -84,7 +84,7 @@ func Marshal(m interface{}) ([]byte, error) {
 		elemType := mType.Elem()
 		// m is a Set (has value type struct{})
 		if isEmptyStruct(elemType) {
-			var set api.Set
+			var set types.Set
 			iter := value.MapRange()
 			for iter.Next() {
 				itemBytes, err := Marshal(iter.Key().Interface())
@@ -96,7 +96,7 @@ func Marshal(m interface{}) ([]byte, error) {
 			b, err = proto.Marshal(&set)
 			// m is a Dictionary
 		} else {
-			var dict api.Dictionary
+			var dict types.Dictionary
 			iter := value.MapRange()
 			for iter.Next() {
 				keyBytes, err := Marshal(iter.Key().Interface())
@@ -107,7 +107,7 @@ func Marshal(m interface{}) ([]byte, error) {
 				if err != nil {
 					return nil, tracerr.Wrap(err)
 				}
-				dict.Entries = append(dict.Entries, &api.DictionaryEntry{
+				dict.Entries = append(dict.Entries, &types.DictionaryEntry{
 					Key:   keyBytes,
 					Value: valueBytes,
 				})
@@ -117,7 +117,7 @@ func Marshal(m interface{}) ([]byte, error) {
 		// Assume it's a Tuple
 	case reflect.Struct:
 		fmt.Println(mType.String())
-		var tuple api.Tuple
+		var tuple types.Tuple
 		for i := 0; i < mType.NumField(); i++ {
 			fieldBytes, err := Marshal(value.Field(i).Interface())
 			if err != nil {
@@ -226,7 +226,7 @@ func Unmarshal(b []byte, m interface{}) error {
 	mInternalType := mType.Elem()
 	switch mInternalType.Kind() {
 	case reflect.Slice:
-		var list api.List
+		var list types.List
 		if err := proto.Unmarshal(b, &list); err != nil {
 			return tracerr.Wrap(err)
 		}
@@ -257,7 +257,7 @@ func Unmarshal(b []byte, m interface{}) error {
 		elemType := mInternalType.Elem()
 		// Set
 		if isEmptyStruct(elemType) {
-			var set api.Set
+			var set types.Set
 			if err := proto.Unmarshal(b, &set); err != nil {
 				return tracerr.Wrap(err)
 			}
@@ -272,7 +272,7 @@ func Unmarshal(b []byte, m interface{}) error {
 			reflect.ValueOf(m).Elem().Set(setMap)
 			// Dictionary
 		} else {
-			var dict api.Dictionary
+			var dict types.Dictionary
 			if err := proto.Unmarshal(b, &dict); err != nil {
 				return tracerr.Wrap(err)
 			}
@@ -303,7 +303,7 @@ func Unmarshal(b []byte, m interface{}) error {
 			reflect.ValueOf(m).Elem().Set(dictMap)
 		}
 	case reflect.Struct:
-		var tuple api.Tuple
+		var tuple types.Tuple
 		if err := proto.Unmarshal(b, &tuple); err != nil {
 			return tracerr.Wrap(err)
 		}

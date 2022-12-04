@@ -3,10 +3,10 @@ package lidar
 import (
 	krpcgo "github.com/atburke/krpc-go"
 	krpc "github.com/atburke/krpc-go/krpc"
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
 	spacecenter "github.com/atburke/krpc-go/spacecenter"
+	types "github.com/atburke/krpc-go/types"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -41,7 +41,7 @@ func (s *LiDAR) Laser(part *spacecenter.Part) (*Laser, error) {
 	var err error
 	var argBytes []byte
 	var vv Laser
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Laser",
 		Service:   "LiDAR",
 	}
@@ -49,7 +49,7 @@ func (s *LiDAR) Laser(part *spacecenter.Part) (*Laser, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -71,7 +71,7 @@ func (s *LiDAR) Laser(part *spacecenter.Part) (*Laser, error) {
 func (s *LiDAR) Available() (bool, error) {
 	var err error
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "LiDAR",
 	}
@@ -91,7 +91,7 @@ func (s *LiDAR) Available() (bool, error) {
 // Allowed game scenes: any.
 func (s *LiDAR) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "LiDAR",
 	}
@@ -119,7 +119,7 @@ func (s *Laser) Part() (*spacecenter.Part, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.Part
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Laser_get_Part",
 		Service:   "LiDAR",
 	}
@@ -127,7 +127,7 @@ func (s *Laser) Part() (*spacecenter.Part, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -150,7 +150,7 @@ func (s *Laser) Cloud() ([]float64, error) {
 	var err error
 	var argBytes []byte
 	var vv []float64
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Laser_get_Cloud",
 		Service:   "LiDAR",
 	}
@@ -158,7 +158,7 @@ func (s *Laser) Cloud() ([]float64, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -179,7 +179,7 @@ func (s *Laser) Cloud() ([]float64, error) {
 func (s *Laser) CloudStream() (*krpcgo.Stream[[]float64], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Laser_get_Cloud",
 		Service:   "LiDAR",
 	}
@@ -187,7 +187,7 @@ func (s *Laser) CloudStream() (*krpcgo.Stream[[]float64], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})

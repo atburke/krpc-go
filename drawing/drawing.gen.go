@@ -3,10 +3,10 @@ package drawing
 import (
 	krpcgo "github.com/atburke/krpc-go"
 	krpc "github.com/atburke/krpc-go/krpc"
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
 	spacecenter "github.com/atburke/krpc-go/spacecenter"
+	types "github.com/atburke/krpc-go/types"
 	ui "github.com/atburke/krpc-go/ui"
 	tracerr "github.com/ztrue/tracerr"
 )
@@ -62,11 +62,11 @@ func New(client *krpcgo.KRPCClient) *Drawing {
 // AddLine - draw a line in the scene.
 //
 // Allowed game scenes: any.
-func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, visible bool) (*Line, error) {
+func (s *Drawing) AddLine(start types.Tuple3[float64, float64, float64], end types.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, visible bool) (*Line, error) {
 	var err error
 	var argBytes []byte
 	var vv Line
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AddLine",
 		Service:   "Drawing",
 	}
@@ -74,7 +74,7 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -82,7 +82,7 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -90,7 +90,7 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
@@ -98,7 +98,7 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
@@ -118,11 +118,11 @@ func (s *Drawing) AddLine(start api.Tuple3[float64, float64, float64], end api.T
 // of the given reference frame.
 //
 // Allowed game scenes: any.
-func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, length float32, visible bool) (*Line, error) {
+func (s *Drawing) AddDirection(direction types.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, length float32, visible bool) (*Line, error) {
 	var err error
 	var argBytes []byte
 	var vv Line
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AddDirection",
 		Service:   "Drawing",
 	}
@@ -130,7 +130,7 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -138,7 +138,7 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -146,7 +146,7 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
@@ -154,7 +154,7 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
@@ -174,11 +174,11 @@ func (s *Drawing) AddDirection(direction api.Tuple3[float64, float64, float64], 
 // of mass of the active vessel.
 //
 // Allowed game scenes: any.
-func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, length float32, visible bool) (*Line, error) {
+func (s *Drawing) AddDirectionFromCom(direction types.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, length float32, visible bool) (*Line, error) {
 	var err error
 	var argBytes []byte
 	var vv Line
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AddDirectionFromCom",
 		Service:   "Drawing",
 	}
@@ -186,7 +186,7 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -194,7 +194,7 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -202,7 +202,7 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
@@ -210,7 +210,7 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
@@ -229,11 +229,11 @@ func (s *Drawing) AddDirectionFromCom(direction api.Tuple3[float64, float64, flo
 // AddPolygon - draw a polygon in the scene, defined by a list of vertices.
 //
 // Allowed game scenes: any.
-func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, visible bool) (*Polygon, error) {
+func (s *Drawing) AddPolygon(vertices []types.Tuple3[float64, float64, float64], referenceFrame *spacecenter.ReferenceFrame, visible bool) (*Polygon, error) {
 	var err error
 	var argBytes []byte
 	var vv Polygon
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AddPolygon",
 		Service:   "Drawing",
 	}
@@ -241,7 +241,7 @@ func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], r
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -249,7 +249,7 @@ func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], r
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -257,7 +257,7 @@ func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], r
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
@@ -276,11 +276,11 @@ func (s *Drawing) AddPolygon(vertices []api.Tuple3[float64, float64, float64], r
 // AddText - draw text in the scene.
 //
 // Allowed game scenes: any.
-func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFrame, position api.Tuple3[float64, float64, float64], rotation api.Tuple4[float64, float64, float64, float64], visible bool) (*Text, error) {
+func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFrame, position types.Tuple3[float64, float64, float64], rotation types.Tuple4[float64, float64, float64, float64], visible bool) (*Text, error) {
 	var err error
 	var argBytes []byte
 	var vv Text
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AddText",
 		Service:   "Drawing",
 	}
@@ -288,7 +288,7 @@ func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFram
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -296,7 +296,7 @@ func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFram
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -304,7 +304,7 @@ func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFram
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
@@ -312,7 +312,7 @@ func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFram
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
@@ -320,7 +320,7 @@ func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFram
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x4),
 		Value:    argBytes,
 	})
@@ -342,7 +342,7 @@ func (s *Drawing) AddText(text string, referenceFrame *spacecenter.ReferenceFram
 func (s *Drawing) Clear(clientOnly bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Clear",
 		Service:   "Drawing",
 	}
@@ -350,7 +350,7 @@ func (s *Drawing) Clear(clientOnly bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -367,7 +367,7 @@ func (s *Drawing) Clear(clientOnly bool) error {
 func (s *Line) Remove() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_Remove",
 		Service:   "Drawing",
 	}
@@ -375,7 +375,7 @@ func (s *Line) Remove() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -389,11 +389,11 @@ func (s *Line) Remove() error {
 // Start - start position of the line.
 //
 // Allowed game scenes: any.
-func (s *Line) Start() (api.Tuple3[float64, float64, float64], error) {
+func (s *Line) Start() (types.Tuple3[float64, float64, float64], error) {
 	var err error
 	var argBytes []byte
-	var vv api.Tuple3[float64, float64, float64]
-	request := &api.ProcedureCall{
+	var vv types.Tuple3[float64, float64, float64]
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Start",
 		Service:   "Drawing",
 	}
@@ -401,7 +401,7 @@ func (s *Line) Start() (api.Tuple3[float64, float64, float64], error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -419,10 +419,10 @@ func (s *Line) Start() (api.Tuple3[float64, float64, float64], error) {
 // StartStream - start position of the line.
 //
 // Allowed game scenes: any.
-func (s *Line) StartStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Line) StartStream() (*krpcgo.Stream[types.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Start",
 		Service:   "Drawing",
 	}
@@ -430,7 +430,7 @@ func (s *Line) StartStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -440,8 +440,8 @@ func (s *Line) StartStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Tuple3[float64, float64, float64] {
-		var value api.Tuple3[float64, float64, float64]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) types.Tuple3[float64, float64, float64] {
+		var value types.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -454,10 +454,10 @@ func (s *Line) StartStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 // SetStart - start position of the line.
 //
 // Allowed game scenes: any.
-func (s *Line) SetStart(value api.Tuple3[float64, float64, float64]) error {
+func (s *Line) SetStart(value types.Tuple3[float64, float64, float64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_set_Start",
 		Service:   "Drawing",
 	}
@@ -465,7 +465,7 @@ func (s *Line) SetStart(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -473,7 +473,7 @@ func (s *Line) SetStart(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -487,11 +487,11 @@ func (s *Line) SetStart(value api.Tuple3[float64, float64, float64]) error {
 // End - end position of the line.
 //
 // Allowed game scenes: any.
-func (s *Line) End() (api.Tuple3[float64, float64, float64], error) {
+func (s *Line) End() (types.Tuple3[float64, float64, float64], error) {
 	var err error
 	var argBytes []byte
-	var vv api.Tuple3[float64, float64, float64]
-	request := &api.ProcedureCall{
+	var vv types.Tuple3[float64, float64, float64]
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_End",
 		Service:   "Drawing",
 	}
@@ -499,7 +499,7 @@ func (s *Line) End() (api.Tuple3[float64, float64, float64], error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -517,10 +517,10 @@ func (s *Line) End() (api.Tuple3[float64, float64, float64], error) {
 // EndStream - end position of the line.
 //
 // Allowed game scenes: any.
-func (s *Line) EndStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Line) EndStream() (*krpcgo.Stream[types.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_End",
 		Service:   "Drawing",
 	}
@@ -528,7 +528,7 @@ func (s *Line) EndStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -538,8 +538,8 @@ func (s *Line) EndStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Tuple3[float64, float64, float64] {
-		var value api.Tuple3[float64, float64, float64]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) types.Tuple3[float64, float64, float64] {
+		var value types.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -552,10 +552,10 @@ func (s *Line) EndStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]
 // SetEnd - end position of the line.
 //
 // Allowed game scenes: any.
-func (s *Line) SetEnd(value api.Tuple3[float64, float64, float64]) error {
+func (s *Line) SetEnd(value types.Tuple3[float64, float64, float64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_set_End",
 		Service:   "Drawing",
 	}
@@ -563,7 +563,7 @@ func (s *Line) SetEnd(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -571,7 +571,7 @@ func (s *Line) SetEnd(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -585,11 +585,11 @@ func (s *Line) SetEnd(value api.Tuple3[float64, float64, float64]) error {
 // Color - set the color
 //
 // Allowed game scenes: any.
-func (s *Line) Color() (api.Tuple3[float64, float64, float64], error) {
+func (s *Line) Color() (types.Tuple3[float64, float64, float64], error) {
 	var err error
 	var argBytes []byte
-	var vv api.Tuple3[float64, float64, float64]
-	request := &api.ProcedureCall{
+	var vv types.Tuple3[float64, float64, float64]
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Color",
 		Service:   "Drawing",
 	}
@@ -597,7 +597,7 @@ func (s *Line) Color() (api.Tuple3[float64, float64, float64], error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -615,10 +615,10 @@ func (s *Line) Color() (api.Tuple3[float64, float64, float64], error) {
 // ColorStream - set the color
 //
 // Allowed game scenes: any.
-func (s *Line) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Line) ColorStream() (*krpcgo.Stream[types.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Color",
 		Service:   "Drawing",
 	}
@@ -626,7 +626,7 @@ func (s *Line) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -636,8 +636,8 @@ func (s *Line) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Tuple3[float64, float64, float64] {
-		var value api.Tuple3[float64, float64, float64]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) types.Tuple3[float64, float64, float64] {
+		var value types.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -650,10 +650,10 @@ func (s *Line) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 // SetColor - set the color
 //
 // Allowed game scenes: any.
-func (s *Line) SetColor(value api.Tuple3[float64, float64, float64]) error {
+func (s *Line) SetColor(value types.Tuple3[float64, float64, float64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_set_Color",
 		Service:   "Drawing",
 	}
@@ -661,7 +661,7 @@ func (s *Line) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -669,7 +669,7 @@ func (s *Line) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -687,7 +687,7 @@ func (s *Line) Thickness() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Thickness",
 		Service:   "Drawing",
 	}
@@ -695,7 +695,7 @@ func (s *Line) Thickness() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -716,7 +716,7 @@ func (s *Line) Thickness() (float32, error) {
 func (s *Line) ThicknessStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Thickness",
 		Service:   "Drawing",
 	}
@@ -724,7 +724,7 @@ func (s *Line) ThicknessStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -751,7 +751,7 @@ func (s *Line) ThicknessStream() (*krpcgo.Stream[float32], error) {
 func (s *Line) SetThickness(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_set_Thickness",
 		Service:   "Drawing",
 	}
@@ -759,7 +759,7 @@ func (s *Line) SetThickness(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -767,7 +767,7 @@ func (s *Line) SetThickness(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -785,7 +785,7 @@ func (s *Line) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.ReferenceFrame
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_ReferenceFrame",
 		Service:   "Drawing",
 	}
@@ -793,7 +793,7 @@ func (s *Line) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -815,7 +815,7 @@ func (s *Line) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 func (s *Line) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_set_ReferenceFrame",
 		Service:   "Drawing",
 	}
@@ -823,7 +823,7 @@ func (s *Line) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -831,7 +831,7 @@ func (s *Line) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -849,7 +849,7 @@ func (s *Line) Visible() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Visible",
 		Service:   "Drawing",
 	}
@@ -857,7 +857,7 @@ func (s *Line) Visible() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -878,7 +878,7 @@ func (s *Line) Visible() (bool, error) {
 func (s *Line) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Visible",
 		Service:   "Drawing",
 	}
@@ -886,7 +886,7 @@ func (s *Line) VisibleStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -913,7 +913,7 @@ func (s *Line) VisibleStream() (*krpcgo.Stream[bool], error) {
 func (s *Line) SetVisible(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_set_Visible",
 		Service:   "Drawing",
 	}
@@ -921,7 +921,7 @@ func (s *Line) SetVisible(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -929,7 +929,7 @@ func (s *Line) SetVisible(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -948,7 +948,7 @@ func (s *Line) Material() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Material",
 		Service:   "Drawing",
 	}
@@ -956,7 +956,7 @@ func (s *Line) Material() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -978,7 +978,7 @@ func (s *Line) Material() (string, error) {
 func (s *Line) MaterialStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_get_Material",
 		Service:   "Drawing",
 	}
@@ -986,7 +986,7 @@ func (s *Line) MaterialStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1014,7 +1014,7 @@ func (s *Line) MaterialStream() (*krpcgo.Stream[string], error) {
 func (s *Line) SetMaterial(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Line_set_Material",
 		Service:   "Drawing",
 	}
@@ -1022,7 +1022,7 @@ func (s *Line) SetMaterial(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1030,7 +1030,7 @@ func (s *Line) SetMaterial(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1047,7 +1047,7 @@ func (s *Line) SetMaterial(value string) error {
 func (s *Polygon) Remove() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_Remove",
 		Service:   "Drawing",
 	}
@@ -1055,7 +1055,7 @@ func (s *Polygon) Remove() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1069,11 +1069,11 @@ func (s *Polygon) Remove() error {
 // Vertices - vertices for the polygon.
 //
 // Allowed game scenes: any.
-func (s *Polygon) Vertices() ([]api.Tuple3[float64, float64, float64], error) {
+func (s *Polygon) Vertices() ([]types.Tuple3[float64, float64, float64], error) {
 	var err error
 	var argBytes []byte
-	var vv []api.Tuple3[float64, float64, float64]
-	request := &api.ProcedureCall{
+	var vv []types.Tuple3[float64, float64, float64]
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Vertices",
 		Service:   "Drawing",
 	}
@@ -1081,7 +1081,7 @@ func (s *Polygon) Vertices() ([]api.Tuple3[float64, float64, float64], error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1099,10 +1099,10 @@ func (s *Polygon) Vertices() ([]api.Tuple3[float64, float64, float64], error) {
 // VerticesStream - vertices for the polygon.
 //
 // Allowed game scenes: any.
-func (s *Polygon) VerticesStream() (*krpcgo.Stream[[]api.Tuple3[float64, float64, float64]], error) {
+func (s *Polygon) VerticesStream() (*krpcgo.Stream[[]types.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Vertices",
 		Service:   "Drawing",
 	}
@@ -1110,7 +1110,7 @@ func (s *Polygon) VerticesStream() (*krpcgo.Stream[[]api.Tuple3[float64, float64
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1120,8 +1120,8 @@ func (s *Polygon) VerticesStream() (*krpcgo.Stream[[]api.Tuple3[float64, float64
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) []api.Tuple3[float64, float64, float64] {
-		var value []api.Tuple3[float64, float64, float64]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []types.Tuple3[float64, float64, float64] {
+		var value []types.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -1134,10 +1134,10 @@ func (s *Polygon) VerticesStream() (*krpcgo.Stream[[]api.Tuple3[float64, float64
 // SetVertices - vertices for the polygon.
 //
 // Allowed game scenes: any.
-func (s *Polygon) SetVertices(value []api.Tuple3[float64, float64, float64]) error {
+func (s *Polygon) SetVertices(value []types.Tuple3[float64, float64, float64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_set_Vertices",
 		Service:   "Drawing",
 	}
@@ -1145,7 +1145,7 @@ func (s *Polygon) SetVertices(value []api.Tuple3[float64, float64, float64]) err
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1153,7 +1153,7 @@ func (s *Polygon) SetVertices(value []api.Tuple3[float64, float64, float64]) err
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1167,11 +1167,11 @@ func (s *Polygon) SetVertices(value []api.Tuple3[float64, float64, float64]) err
 // Color - set the color
 //
 // Allowed game scenes: any.
-func (s *Polygon) Color() (api.Tuple3[float64, float64, float64], error) {
+func (s *Polygon) Color() (types.Tuple3[float64, float64, float64], error) {
 	var err error
 	var argBytes []byte
-	var vv api.Tuple3[float64, float64, float64]
-	request := &api.ProcedureCall{
+	var vv types.Tuple3[float64, float64, float64]
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Color",
 		Service:   "Drawing",
 	}
@@ -1179,7 +1179,7 @@ func (s *Polygon) Color() (api.Tuple3[float64, float64, float64], error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1197,10 +1197,10 @@ func (s *Polygon) Color() (api.Tuple3[float64, float64, float64], error) {
 // ColorStream - set the color
 //
 // Allowed game scenes: any.
-func (s *Polygon) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Polygon) ColorStream() (*krpcgo.Stream[types.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Color",
 		Service:   "Drawing",
 	}
@@ -1208,7 +1208,7 @@ func (s *Polygon) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1218,8 +1218,8 @@ func (s *Polygon) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Tuple3[float64, float64, float64] {
-		var value api.Tuple3[float64, float64, float64]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) types.Tuple3[float64, float64, float64] {
+		var value types.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -1232,10 +1232,10 @@ func (s *Polygon) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 // SetColor - set the color
 //
 // Allowed game scenes: any.
-func (s *Polygon) SetColor(value api.Tuple3[float64, float64, float64]) error {
+func (s *Polygon) SetColor(value types.Tuple3[float64, float64, float64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_set_Color",
 		Service:   "Drawing",
 	}
@@ -1243,7 +1243,7 @@ func (s *Polygon) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1251,7 +1251,7 @@ func (s *Polygon) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1269,7 +1269,7 @@ func (s *Polygon) Thickness() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Thickness",
 		Service:   "Drawing",
 	}
@@ -1277,7 +1277,7 @@ func (s *Polygon) Thickness() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1298,7 +1298,7 @@ func (s *Polygon) Thickness() (float32, error) {
 func (s *Polygon) ThicknessStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Thickness",
 		Service:   "Drawing",
 	}
@@ -1306,7 +1306,7 @@ func (s *Polygon) ThicknessStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1333,7 +1333,7 @@ func (s *Polygon) ThicknessStream() (*krpcgo.Stream[float32], error) {
 func (s *Polygon) SetThickness(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_set_Thickness",
 		Service:   "Drawing",
 	}
@@ -1341,7 +1341,7 @@ func (s *Polygon) SetThickness(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1349,7 +1349,7 @@ func (s *Polygon) SetThickness(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1367,7 +1367,7 @@ func (s *Polygon) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.ReferenceFrame
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_ReferenceFrame",
 		Service:   "Drawing",
 	}
@@ -1375,7 +1375,7 @@ func (s *Polygon) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1397,7 +1397,7 @@ func (s *Polygon) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 func (s *Polygon) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_set_ReferenceFrame",
 		Service:   "Drawing",
 	}
@@ -1405,7 +1405,7 @@ func (s *Polygon) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1413,7 +1413,7 @@ func (s *Polygon) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1431,7 +1431,7 @@ func (s *Polygon) Visible() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Visible",
 		Service:   "Drawing",
 	}
@@ -1439,7 +1439,7 @@ func (s *Polygon) Visible() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1460,7 +1460,7 @@ func (s *Polygon) Visible() (bool, error) {
 func (s *Polygon) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Visible",
 		Service:   "Drawing",
 	}
@@ -1468,7 +1468,7 @@ func (s *Polygon) VisibleStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1495,7 +1495,7 @@ func (s *Polygon) VisibleStream() (*krpcgo.Stream[bool], error) {
 func (s *Polygon) SetVisible(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_set_Visible",
 		Service:   "Drawing",
 	}
@@ -1503,7 +1503,7 @@ func (s *Polygon) SetVisible(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1511,7 +1511,7 @@ func (s *Polygon) SetVisible(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1530,7 +1530,7 @@ func (s *Polygon) Material() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Material",
 		Service:   "Drawing",
 	}
@@ -1538,7 +1538,7 @@ func (s *Polygon) Material() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1560,7 +1560,7 @@ func (s *Polygon) Material() (string, error) {
 func (s *Polygon) MaterialStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_get_Material",
 		Service:   "Drawing",
 	}
@@ -1568,7 +1568,7 @@ func (s *Polygon) MaterialStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1596,7 +1596,7 @@ func (s *Polygon) MaterialStream() (*krpcgo.Stream[string], error) {
 func (s *Polygon) SetMaterial(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Polygon_set_Material",
 		Service:   "Drawing",
 	}
@@ -1604,7 +1604,7 @@ func (s *Polygon) SetMaterial(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1612,7 +1612,7 @@ func (s *Polygon) SetMaterial(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1629,7 +1629,7 @@ func (s *Polygon) SetMaterial(value string) error {
 func (s *Text) AvailableFonts() ([]string, error) {
 	var err error
 	var vv []string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_static_AvailableFonts",
 		Service:   "Drawing",
 	}
@@ -1649,7 +1649,7 @@ func (s *Text) AvailableFonts() ([]string, error) {
 // Allowed game scenes: any.
 func (s *Text) AvailableFontsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_static_AvailableFonts",
 		Service:   "Drawing",
 	}
@@ -1676,7 +1676,7 @@ func (s *Text) AvailableFontsStream() (*krpcgo.Stream[[]string], error) {
 func (s *Text) Remove() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_Remove",
 		Service:   "Drawing",
 	}
@@ -1684,7 +1684,7 @@ func (s *Text) Remove() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1698,11 +1698,11 @@ func (s *Text) Remove() error {
 // Position - position of the text.
 //
 // Allowed game scenes: any.
-func (s *Text) Position() (api.Tuple3[float64, float64, float64], error) {
+func (s *Text) Position() (types.Tuple3[float64, float64, float64], error) {
 	var err error
 	var argBytes []byte
-	var vv api.Tuple3[float64, float64, float64]
-	request := &api.ProcedureCall{
+	var vv types.Tuple3[float64, float64, float64]
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Position",
 		Service:   "Drawing",
 	}
@@ -1710,7 +1710,7 @@ func (s *Text) Position() (api.Tuple3[float64, float64, float64], error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1728,10 +1728,10 @@ func (s *Text) Position() (api.Tuple3[float64, float64, float64], error) {
 // PositionStream - position of the text.
 //
 // Allowed game scenes: any.
-func (s *Text) PositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Text) PositionStream() (*krpcgo.Stream[types.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Position",
 		Service:   "Drawing",
 	}
@@ -1739,7 +1739,7 @@ func (s *Text) PositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1749,8 +1749,8 @@ func (s *Text) PositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Tuple3[float64, float64, float64] {
-		var value api.Tuple3[float64, float64, float64]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) types.Tuple3[float64, float64, float64] {
+		var value types.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -1763,10 +1763,10 @@ func (s *Text) PositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 // SetPosition - position of the text.
 //
 // Allowed game scenes: any.
-func (s *Text) SetPosition(value api.Tuple3[float64, float64, float64]) error {
+func (s *Text) SetPosition(value types.Tuple3[float64, float64, float64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Position",
 		Service:   "Drawing",
 	}
@@ -1774,7 +1774,7 @@ func (s *Text) SetPosition(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1782,7 +1782,7 @@ func (s *Text) SetPosition(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1796,11 +1796,11 @@ func (s *Text) SetPosition(value api.Tuple3[float64, float64, float64]) error {
 // Rotation - rotation of the text as a quaternion.
 //
 // Allowed game scenes: any.
-func (s *Text) Rotation() (api.Tuple4[float64, float64, float64, float64], error) {
+func (s *Text) Rotation() (types.Tuple4[float64, float64, float64, float64], error) {
 	var err error
 	var argBytes []byte
-	var vv api.Tuple4[float64, float64, float64, float64]
-	request := &api.ProcedureCall{
+	var vv types.Tuple4[float64, float64, float64, float64]
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Rotation",
 		Service:   "Drawing",
 	}
@@ -1808,7 +1808,7 @@ func (s *Text) Rotation() (api.Tuple4[float64, float64, float64, float64], error
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1826,10 +1826,10 @@ func (s *Text) Rotation() (api.Tuple4[float64, float64, float64, float64], error
 // RotationStream - rotation of the text as a quaternion.
 //
 // Allowed game scenes: any.
-func (s *Text) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, float64, float64]], error) {
+func (s *Text) RotationStream() (*krpcgo.Stream[types.Tuple4[float64, float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Rotation",
 		Service:   "Drawing",
 	}
@@ -1837,7 +1837,7 @@ func (s *Text) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, flo
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1847,8 +1847,8 @@ func (s *Text) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, flo
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Tuple4[float64, float64, float64, float64] {
-		var value api.Tuple4[float64, float64, float64, float64]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) types.Tuple4[float64, float64, float64, float64] {
+		var value types.Tuple4[float64, float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -1861,10 +1861,10 @@ func (s *Text) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, flo
 // SetRotation - rotation of the text as a quaternion.
 //
 // Allowed game scenes: any.
-func (s *Text) SetRotation(value api.Tuple4[float64, float64, float64, float64]) error {
+func (s *Text) SetRotation(value types.Tuple4[float64, float64, float64, float64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Rotation",
 		Service:   "Drawing",
 	}
@@ -1872,7 +1872,7 @@ func (s *Text) SetRotation(value api.Tuple4[float64, float64, float64, float64])
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1880,7 +1880,7 @@ func (s *Text) SetRotation(value api.Tuple4[float64, float64, float64, float64])
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1898,7 +1898,7 @@ func (s *Text) Content() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Content",
 		Service:   "Drawing",
 	}
@@ -1906,7 +1906,7 @@ func (s *Text) Content() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1927,7 +1927,7 @@ func (s *Text) Content() (string, error) {
 func (s *Text) ContentStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Content",
 		Service:   "Drawing",
 	}
@@ -1935,7 +1935,7 @@ func (s *Text) ContentStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1962,7 +1962,7 @@ func (s *Text) ContentStream() (*krpcgo.Stream[string], error) {
 func (s *Text) SetContent(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Content",
 		Service:   "Drawing",
 	}
@@ -1970,7 +1970,7 @@ func (s *Text) SetContent(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1978,7 +1978,7 @@ func (s *Text) SetContent(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1996,7 +1996,7 @@ func (s *Text) Font() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Font",
 		Service:   "Drawing",
 	}
@@ -2004,7 +2004,7 @@ func (s *Text) Font() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2025,7 +2025,7 @@ func (s *Text) Font() (string, error) {
 func (s *Text) FontStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Font",
 		Service:   "Drawing",
 	}
@@ -2033,7 +2033,7 @@ func (s *Text) FontStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2060,7 +2060,7 @@ func (s *Text) FontStream() (*krpcgo.Stream[string], error) {
 func (s *Text) SetFont(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Font",
 		Service:   "Drawing",
 	}
@@ -2068,7 +2068,7 @@ func (s *Text) SetFont(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2076,7 +2076,7 @@ func (s *Text) SetFont(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2094,7 +2094,7 @@ func (s *Text) Size() (int32, error) {
 	var err error
 	var argBytes []byte
 	var vv int32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Size",
 		Service:   "Drawing",
 	}
@@ -2102,7 +2102,7 @@ func (s *Text) Size() (int32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2123,7 +2123,7 @@ func (s *Text) Size() (int32, error) {
 func (s *Text) SizeStream() (*krpcgo.Stream[int32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Size",
 		Service:   "Drawing",
 	}
@@ -2131,7 +2131,7 @@ func (s *Text) SizeStream() (*krpcgo.Stream[int32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2158,7 +2158,7 @@ func (s *Text) SizeStream() (*krpcgo.Stream[int32], error) {
 func (s *Text) SetSize(value int32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Size",
 		Service:   "Drawing",
 	}
@@ -2166,7 +2166,7 @@ func (s *Text) SetSize(value int32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2174,7 +2174,7 @@ func (s *Text) SetSize(value int32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2192,7 +2192,7 @@ func (s *Text) CharacterSize() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_CharacterSize",
 		Service:   "Drawing",
 	}
@@ -2200,7 +2200,7 @@ func (s *Text) CharacterSize() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2221,7 +2221,7 @@ func (s *Text) CharacterSize() (float32, error) {
 func (s *Text) CharacterSizeStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_CharacterSize",
 		Service:   "Drawing",
 	}
@@ -2229,7 +2229,7 @@ func (s *Text) CharacterSizeStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2256,7 +2256,7 @@ func (s *Text) CharacterSizeStream() (*krpcgo.Stream[float32], error) {
 func (s *Text) SetCharacterSize(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_CharacterSize",
 		Service:   "Drawing",
 	}
@@ -2264,7 +2264,7 @@ func (s *Text) SetCharacterSize(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2272,7 +2272,7 @@ func (s *Text) SetCharacterSize(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2290,7 +2290,7 @@ func (s *Text) Style() (ui.FontStyle, error) {
 	var err error
 	var argBytes []byte
 	var vv ui.FontStyle
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Style",
 		Service:   "Drawing",
 	}
@@ -2298,7 +2298,7 @@ func (s *Text) Style() (ui.FontStyle, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2319,7 +2319,7 @@ func (s *Text) Style() (ui.FontStyle, error) {
 func (s *Text) StyleStream() (*krpcgo.Stream[ui.FontStyle], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Style",
 		Service:   "Drawing",
 	}
@@ -2327,7 +2327,7 @@ func (s *Text) StyleStream() (*krpcgo.Stream[ui.FontStyle], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2354,7 +2354,7 @@ func (s *Text) StyleStream() (*krpcgo.Stream[ui.FontStyle], error) {
 func (s *Text) SetStyle(value ui.FontStyle) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Style",
 		Service:   "Drawing",
 	}
@@ -2362,7 +2362,7 @@ func (s *Text) SetStyle(value ui.FontStyle) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2370,7 +2370,7 @@ func (s *Text) SetStyle(value ui.FontStyle) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2388,7 +2388,7 @@ func (s *Text) Alignment() (ui.TextAlignment, error) {
 	var err error
 	var argBytes []byte
 	var vv ui.TextAlignment
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Alignment",
 		Service:   "Drawing",
 	}
@@ -2396,7 +2396,7 @@ func (s *Text) Alignment() (ui.TextAlignment, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2417,7 +2417,7 @@ func (s *Text) Alignment() (ui.TextAlignment, error) {
 func (s *Text) AlignmentStream() (*krpcgo.Stream[ui.TextAlignment], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Alignment",
 		Service:   "Drawing",
 	}
@@ -2425,7 +2425,7 @@ func (s *Text) AlignmentStream() (*krpcgo.Stream[ui.TextAlignment], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2452,7 +2452,7 @@ func (s *Text) AlignmentStream() (*krpcgo.Stream[ui.TextAlignment], error) {
 func (s *Text) SetAlignment(value ui.TextAlignment) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Alignment",
 		Service:   "Drawing",
 	}
@@ -2460,7 +2460,7 @@ func (s *Text) SetAlignment(value ui.TextAlignment) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2468,7 +2468,7 @@ func (s *Text) SetAlignment(value ui.TextAlignment) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2486,7 +2486,7 @@ func (s *Text) LineSpacing() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_LineSpacing",
 		Service:   "Drawing",
 	}
@@ -2494,7 +2494,7 @@ func (s *Text) LineSpacing() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2515,7 +2515,7 @@ func (s *Text) LineSpacing() (float32, error) {
 func (s *Text) LineSpacingStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_LineSpacing",
 		Service:   "Drawing",
 	}
@@ -2523,7 +2523,7 @@ func (s *Text) LineSpacingStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2550,7 +2550,7 @@ func (s *Text) LineSpacingStream() (*krpcgo.Stream[float32], error) {
 func (s *Text) SetLineSpacing(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_LineSpacing",
 		Service:   "Drawing",
 	}
@@ -2558,7 +2558,7 @@ func (s *Text) SetLineSpacing(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2566,7 +2566,7 @@ func (s *Text) SetLineSpacing(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2584,7 +2584,7 @@ func (s *Text) Anchor() (ui.TextAnchor, error) {
 	var err error
 	var argBytes []byte
 	var vv ui.TextAnchor
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Anchor",
 		Service:   "Drawing",
 	}
@@ -2592,7 +2592,7 @@ func (s *Text) Anchor() (ui.TextAnchor, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2613,7 +2613,7 @@ func (s *Text) Anchor() (ui.TextAnchor, error) {
 func (s *Text) AnchorStream() (*krpcgo.Stream[ui.TextAnchor], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Anchor",
 		Service:   "Drawing",
 	}
@@ -2621,7 +2621,7 @@ func (s *Text) AnchorStream() (*krpcgo.Stream[ui.TextAnchor], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2648,7 +2648,7 @@ func (s *Text) AnchorStream() (*krpcgo.Stream[ui.TextAnchor], error) {
 func (s *Text) SetAnchor(value ui.TextAnchor) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Anchor",
 		Service:   "Drawing",
 	}
@@ -2656,7 +2656,7 @@ func (s *Text) SetAnchor(value ui.TextAnchor) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2664,7 +2664,7 @@ func (s *Text) SetAnchor(value ui.TextAnchor) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2678,11 +2678,11 @@ func (s *Text) SetAnchor(value ui.TextAnchor) error {
 // Color - set the color
 //
 // Allowed game scenes: any.
-func (s *Text) Color() (api.Tuple3[float64, float64, float64], error) {
+func (s *Text) Color() (types.Tuple3[float64, float64, float64], error) {
 	var err error
 	var argBytes []byte
-	var vv api.Tuple3[float64, float64, float64]
-	request := &api.ProcedureCall{
+	var vv types.Tuple3[float64, float64, float64]
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Color",
 		Service:   "Drawing",
 	}
@@ -2690,7 +2690,7 @@ func (s *Text) Color() (api.Tuple3[float64, float64, float64], error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2708,10 +2708,10 @@ func (s *Text) Color() (api.Tuple3[float64, float64, float64], error) {
 // ColorStream - set the color
 //
 // Allowed game scenes: any.
-func (s *Text) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]], error) {
+func (s *Text) ColorStream() (*krpcgo.Stream[types.Tuple3[float64, float64, float64]], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Color",
 		Service:   "Drawing",
 	}
@@ -2719,7 +2719,7 @@ func (s *Text) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2729,8 +2729,8 @@ func (s *Text) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) api.Tuple3[float64, float64, float64] {
-		var value api.Tuple3[float64, float64, float64]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) types.Tuple3[float64, float64, float64] {
+		var value types.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -2743,10 +2743,10 @@ func (s *Text) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 // SetColor - set the color
 //
 // Allowed game scenes: any.
-func (s *Text) SetColor(value api.Tuple3[float64, float64, float64]) error {
+func (s *Text) SetColor(value types.Tuple3[float64, float64, float64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Color",
 		Service:   "Drawing",
 	}
@@ -2754,7 +2754,7 @@ func (s *Text) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2762,7 +2762,7 @@ func (s *Text) SetColor(value api.Tuple3[float64, float64, float64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2780,7 +2780,7 @@ func (s *Text) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.ReferenceFrame
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_ReferenceFrame",
 		Service:   "Drawing",
 	}
@@ -2788,7 +2788,7 @@ func (s *Text) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2810,7 +2810,7 @@ func (s *Text) ReferenceFrame() (*spacecenter.ReferenceFrame, error) {
 func (s *Text) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_ReferenceFrame",
 		Service:   "Drawing",
 	}
@@ -2818,7 +2818,7 @@ func (s *Text) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2826,7 +2826,7 @@ func (s *Text) SetReferenceFrame(value *spacecenter.ReferenceFrame) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2844,7 +2844,7 @@ func (s *Text) Visible() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Visible",
 		Service:   "Drawing",
 	}
@@ -2852,7 +2852,7 @@ func (s *Text) Visible() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2873,7 +2873,7 @@ func (s *Text) Visible() (bool, error) {
 func (s *Text) VisibleStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Visible",
 		Service:   "Drawing",
 	}
@@ -2881,7 +2881,7 @@ func (s *Text) VisibleStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2908,7 +2908,7 @@ func (s *Text) VisibleStream() (*krpcgo.Stream[bool], error) {
 func (s *Text) SetVisible(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Visible",
 		Service:   "Drawing",
 	}
@@ -2916,7 +2916,7 @@ func (s *Text) SetVisible(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2924,7 +2924,7 @@ func (s *Text) SetVisible(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2943,7 +2943,7 @@ func (s *Text) Material() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Material",
 		Service:   "Drawing",
 	}
@@ -2951,7 +2951,7 @@ func (s *Text) Material() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2973,7 +2973,7 @@ func (s *Text) Material() (string, error) {
 func (s *Text) MaterialStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_get_Material",
 		Service:   "Drawing",
 	}
@@ -2981,7 +2981,7 @@ func (s *Text) MaterialStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -3009,7 +3009,7 @@ func (s *Text) MaterialStream() (*krpcgo.Stream[string], error) {
 func (s *Text) SetMaterial(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Text_set_Material",
 		Service:   "Drawing",
 	}
@@ -3017,7 +3017,7 @@ func (s *Text) SetMaterial(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -3025,7 +3025,7 @@ func (s *Text) SetMaterial(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})

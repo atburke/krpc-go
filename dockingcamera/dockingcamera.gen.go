@@ -3,10 +3,10 @@ package dockingcamera
 import (
 	krpcgo "github.com/atburke/krpc-go"
 	krpc "github.com/atburke/krpc-go/krpc"
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
 	spacecenter "github.com/atburke/krpc-go/spacecenter"
+	types "github.com/atburke/krpc-go/types"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -41,7 +41,7 @@ func (s *DockingCamera) Camera(part *spacecenter.Part) (*Camera, error) {
 	var err error
 	var argBytes []byte
 	var vv Camera
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Camera",
 		Service:   "DockingCamera",
 	}
@@ -49,7 +49,7 @@ func (s *DockingCamera) Camera(part *spacecenter.Part) (*Camera, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -71,7 +71,7 @@ func (s *DockingCamera) Camera(part *spacecenter.Part) (*Camera, error) {
 func (s *DockingCamera) Available() (bool, error) {
 	var err error
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "DockingCamera",
 	}
@@ -91,7 +91,7 @@ func (s *DockingCamera) Available() (bool, error) {
 // Allowed game scenes: any.
 func (s *DockingCamera) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "DockingCamera",
 	}
@@ -119,7 +119,7 @@ func (s *Camera) Part() (*spacecenter.Part, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.Part
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Camera_get_Part",
 		Service:   "DockingCamera",
 	}
@@ -127,7 +127,7 @@ func (s *Camera) Part() (*spacecenter.Part, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -150,7 +150,7 @@ func (s *Camera) Image() ([]byte, error) {
 	var err error
 	var argBytes []byte
 	var vv []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Camera_get_Image",
 		Service:   "DockingCamera",
 	}
@@ -158,7 +158,7 @@ func (s *Camera) Image() ([]byte, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -179,7 +179,7 @@ func (s *Camera) Image() ([]byte, error) {
 func (s *Camera) ImageStream() (*krpcgo.Stream[[]byte], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Camera_get_Image",
 		Service:   "DockingCamera",
 	}
@@ -187,7 +187,7 @@ func (s *Camera) ImageStream() (*krpcgo.Stream[[]byte], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})

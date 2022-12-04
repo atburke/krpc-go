@@ -5,7 +5,7 @@ import (
 	"go/format"
 	"testing"
 
-	"github.com/atburke/krpc-go/lib/api"
+	"github.com/atburke/krpc-go/types"
 	"github.com/dave/jennifer/jen"
 	"github.com/stretchr/testify/require"
 )
@@ -13,66 +13,66 @@ import (
 func TestGenerateProcedure(t *testing.T) {
 	tests := []struct {
 		name        string
-		procedure   *api.Procedure
+		procedure   *types.Procedure
 		expectedOut string
 	}{
 		{
 			name: "basic procedure",
-			procedure: &api.Procedure{
+			procedure: &types.Procedure{
 				Name:          "MyProcedure",
 				Documentation: "<summary>Test procedure generation.</summary>",
-				Parameters: []*api.Parameter{
+				Parameters: []*types.Parameter{
 					{
 						Name: "param1",
-						Type: &api.Type{
-							Code: api.Type_UINT64,
+						Type: &types.Type{
+							Code: types.Type_UINT64,
 						},
 					},
 					{
 						Name: "param2",
-						Type: &api.Type{
-							Code: api.Type_STRING,
+						Type: &types.Type{
+							Code: types.Type_STRING,
 						},
 					},
 				},
-				ReturnType: &api.Type{
-					Code: api.Type_BOOL,
+				ReturnType: &types.Type{
+					Code: types.Type_BOOL,
 				},
-				GameScenes: []api.Procedure_GameScene{api.Procedure_FLIGHT},
+				GameScenes: []types.Procedure_GameScene{types.Procedure_FLIGHT},
 			},
 			expectedOut: testProcedure,
 		},
 		{
 			name: "class setter",
-			procedure: &api.Procedure{
+			procedure: &types.Procedure{
 				Name:          "MyClass_set_MyProperty",
 				Documentation: "<summary>Test class setter generation.</summary>",
-				Parameters: []*api.Parameter{
+				Parameters: []*types.Parameter{
 					{
 						Name: "this",
-						Type: &api.Type{
-							Code:    api.Type_CLASS,
+						Type: &types.Type{
+							Code:    types.Type_CLASS,
 							Service: "MyService",
 							Name:    "MyClass",
 						},
 					},
 					{
 						Name: "param1",
-						Type: &api.Type{
-							Code: api.Type_TUPLE,
-							Types: []*api.Type{
+						Type: &types.Type{
+							Code: types.Type_TUPLE,
+							Types: []*types.Type{
 								{
-									Code: api.Type_STRING,
+									Code: types.Type_STRING,
 								},
 								{
-									Code: api.Type_UINT64,
+									Code: types.Type_UINT64,
 								},
 							},
 						},
 					},
 				},
-				ReturnType: &api.Type{
-					Code: api.Type_NONE,
+				ReturnType: &types.Type{
+					Code: types.Type_NONE,
 				},
 			},
 			expectedOut: testClassSetter,
@@ -118,7 +118,7 @@ func TestGenerateClass(t *testing.T) {
 	expectedOut, err := format.Source([]byte(testClass))
 	require.NoError(t, err)
 
-	class := &api.Class{
+	class := &types.Class{
 		Name:          "Test",
 		Documentation: "<summary>A test class.</summary>",
 	}
@@ -159,10 +159,10 @@ func TestGenerateEnum(t *testing.T) {
 	expectedOut, err := format.Source([]byte(testEnum))
 	require.NoError(t, err)
 
-	enum := &api.Enumeration{
+	enum := &types.Enumeration{
 		Name:          "Test",
 		Documentation: "<summary>A test enum.</summary>",
-		Values: []*api.EnumerationValue{
+		Values: []*types.EnumerationValue{
 			{
 				Name:          "One",
 				Value:         1,
@@ -212,7 +212,7 @@ func TestGenerateException(t *testing.T) {
 	expectedOut, err := format.Source([]byte(testException))
 	require.NoError(t, err)
 
-	exception := &api.Exception{
+	exception := &types.Exception{
 		Name:          "TestException",
 		Documentation: "<summary>The exception generating code is being tested.</summary>",
 	}

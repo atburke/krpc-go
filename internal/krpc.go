@@ -2,7 +2,7 @@ package internal
 
 import (
 	krpcgo "github.com/atburke/krpc-go"
-	"github.com/atburke/krpc-go/lib/api"
+	"github.com/atburke/krpc-go/types"
 	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"
 )
@@ -17,8 +17,8 @@ func NewBasicKRPC(client *krpcgo.KRPCClient) *BasicKRPC {
 	return &BasicKRPC{client: client}
 }
 
-func (s *BasicKRPC) GetStatus() (*api.Status, error) {
-	request := &api.ProcedureCall{
+func (s *BasicKRPC) GetStatus() (*types.Status, error) {
+	request := &types.ProcedureCall{
 		Service:   "KRPC",
 		Procedure: "GetStatus",
 	}
@@ -26,15 +26,15 @@ func (s *BasicKRPC) GetStatus() (*api.Status, error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	var status api.Status
+	var status types.Status
 	if err := proto.Unmarshal(result.Value, &status); err != nil {
 		return nil, tracerr.Wrap(err)
 	}
 	return &status, nil
 }
 
-func (s *BasicKRPC) GetServices() (*api.Services, error) {
-	request := &api.ProcedureCall{
+func (s *BasicKRPC) GetServices() (*types.Services, error) {
+	request := &types.ProcedureCall{
 		Service:   "KRPC",
 		Procedure: "GetServices",
 	}
@@ -42,7 +42,7 @@ func (s *BasicKRPC) GetServices() (*api.Services, error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	var services api.Services
+	var services types.Services
 	if err := proto.Unmarshal(result.Value, &services); err != nil {
 		return nil, tracerr.Wrap(err)
 	}

@@ -1,4 +1,13 @@
-package api
+//go:generate protoc --go_out=. --go_opt=paths=source_relative krpc.proto
+
+package types
+
+import "fmt"
+
+// Error returns a human-readable error message.
+func (e *Error) Error() string {
+	return fmt.Sprintf("%v - %v: %v", e.Service, e.Name, e.Description)
+}
 
 // Tuple2 is a generic tuple with 2 elements.
 type Tuple2[T, U any] struct {

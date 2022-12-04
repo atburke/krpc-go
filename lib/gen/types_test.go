@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/atburke/krpc-go/lib/api"
+	"github.com/atburke/krpc-go/types"
 	"github.com/dave/jennifer/jen"
 	"github.com/stretchr/testify/require"
 )
@@ -116,22 +116,22 @@ func TestGetClassName(t *testing.T) {
 func TestGetGoType(t *testing.T) {
 	tests := []struct {
 		name         string
-		t            *api.Type
+		t            *types.Type
 		wantAPI      bool
 		wantService  string
 		expectedType string
 	}{
 		{
 			name: "primitive",
-			t: &api.Type{
-				Code: api.Type_UINT64,
+			t: &types.Type{
+				Code: types.Type_UINT64,
 			},
 			expectedType: "uint64",
 		},
 		{
 			name: "class",
-			t: &api.Type{
-				Code:    api.Type_CLASS,
+			t: &types.Type{
+				Code:    types.Type_CLASS,
 				Name:    "MyClass",
 				Service: "MyService",
 			},
@@ -139,8 +139,8 @@ func TestGetGoType(t *testing.T) {
 		},
 		{
 			name: "class from another package",
-			t: &api.Type{
-				Code:    api.Type_CLASS,
+			t: &types.Type{
+				Code:    types.Type_CLASS,
 				Name:    "MyClass",
 				Service: "MyOtherService",
 			},
@@ -149,38 +149,38 @@ func TestGetGoType(t *testing.T) {
 		},
 		{
 			name: "special",
-			t: &api.Type{
-				Code: api.Type_PROCEDURE_CALL,
+			t: &types.Type{
+				Code: types.Type_PROCEDURE_CALL,
 			},
 			wantAPI:      true,
-			expectedType: "*api.ProcedureCall",
+			expectedType: "*types.ProcedureCall",
 		},
 		{
 			name: "tuple",
-			t: &api.Type{
-				Code: api.Type_TUPLE,
-				Types: []*api.Type{
+			t: &types.Type{
+				Code: types.Type_TUPLE,
+				Types: []*types.Type{
 					{
-						Code: api.Type_STRING,
+						Code: types.Type_STRING,
 					},
 					{
-						Code: api.Type_BOOL,
+						Code: types.Type_BOOL,
 					},
 					{
-						Code: api.Type_DOUBLE,
+						Code: types.Type_DOUBLE,
 					},
 				},
 			},
 			wantAPI:      true,
-			expectedType: "api.Tuple3[string, bool, float64]",
+			expectedType: "types.Tuple3[string, bool, float64]",
 		},
 		{
 			name: "list",
-			t: &api.Type{
-				Code: api.Type_LIST,
-				Types: []*api.Type{
+			t: &types.Type{
+				Code: types.Type_LIST,
+				Types: []*types.Type{
 					{
-						Code: api.Type_SINT64,
+						Code: types.Type_SINT64,
 					},
 				},
 			},
@@ -188,11 +188,11 @@ func TestGetGoType(t *testing.T) {
 		},
 		{
 			name: "set",
-			t: &api.Type{
-				Code: api.Type_SET,
-				Types: []*api.Type{
+			t: &types.Type{
+				Code: types.Type_SET,
+				Types: []*types.Type{
 					{
-						Code: api.Type_STRING,
+						Code: types.Type_STRING,
 					},
 				},
 			},
@@ -200,14 +200,14 @@ func TestGetGoType(t *testing.T) {
 		},
 		{
 			name: "dictionary",
-			t: &api.Type{
-				Code: api.Type_DICTIONARY,
-				Types: []*api.Type{
+			t: &types.Type{
+				Code: types.Type_DICTIONARY,
+				Types: []*types.Type{
 					{
-						Code: api.Type_STRING,
+						Code: types.Type_STRING,
 					},
 					{
-						Code: api.Type_FLOAT,
+						Code: types.Type_FLOAT,
 					},
 				},
 			},
@@ -218,7 +218,7 @@ func TestGetGoType(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			var imports []string
 			if tc.wantAPI {
-				imports = append(imports, `import api "github.com/atburke/krpc-go/lib/api"`)
+				imports = append(imports, `import types "github.com/atburke/krpc-go/types"`)
 			}
 			if tc.wantService != "" {
 				imports = append(imports, fmt.Sprintf("import %v %q", strings.ToLower(tc.wantService), getServicePackage(tc.wantService)))

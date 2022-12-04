@@ -3,10 +3,10 @@ package kerbalalarmclock
 import (
 	krpcgo "github.com/atburke/krpc-go"
 	krpc "github.com/atburke/krpc-go/krpc"
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
 	spacecenter "github.com/atburke/krpc-go/spacecenter"
+	types "github.com/atburke/krpc-go/types"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -130,7 +130,7 @@ func (s *KerbalAlarmClock) AlarmWithName(name string) (*Alarm, error) {
 	var err error
 	var argBytes []byte
 	var vv Alarm
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AlarmWithName",
 		Service:   "KerbalAlarmClock",
 	}
@@ -138,7 +138,7 @@ func (s *KerbalAlarmClock) AlarmWithName(name string) (*Alarm, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -162,7 +162,7 @@ func (s *KerbalAlarmClock) AlarmsWithType(t AlarmType) ([]*Alarm, error) {
 	var err error
 	var argBytes []byte
 	var vv []*Alarm
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AlarmsWithType",
 		Service:   "KerbalAlarmClock",
 	}
@@ -170,7 +170,7 @@ func (s *KerbalAlarmClock) AlarmsWithType(t AlarmType) ([]*Alarm, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -192,7 +192,7 @@ func (s *KerbalAlarmClock) AlarmsWithType(t AlarmType) ([]*Alarm, error) {
 func (s *KerbalAlarmClock) AlarmsWithTypeStream(t AlarmType) (*krpcgo.Stream[[]*Alarm], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AlarmsWithType",
 		Service:   "KerbalAlarmClock",
 	}
@@ -200,7 +200,7 @@ func (s *KerbalAlarmClock) AlarmsWithTypeStream(t AlarmType) (*krpcgo.Stream[[]*
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -228,7 +228,7 @@ func (s *KerbalAlarmClock) CreateAlarm(t AlarmType, name string, ut float64) (*A
 	var err error
 	var argBytes []byte
 	var vv Alarm
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "CreateAlarm",
 		Service:   "KerbalAlarmClock",
 	}
@@ -236,7 +236,7 @@ func (s *KerbalAlarmClock) CreateAlarm(t AlarmType, name string, ut float64) (*A
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -244,7 +244,7 @@ func (s *KerbalAlarmClock) CreateAlarm(t AlarmType, name string, ut float64) (*A
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -252,7 +252,7 @@ func (s *KerbalAlarmClock) CreateAlarm(t AlarmType, name string, ut float64) (*A
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
@@ -274,7 +274,7 @@ func (s *KerbalAlarmClock) CreateAlarm(t AlarmType, name string, ut float64) (*A
 func (s *KerbalAlarmClock) Available() (bool, error) {
 	var err error
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "KerbalAlarmClock",
 	}
@@ -294,7 +294,7 @@ func (s *KerbalAlarmClock) Available() (bool, error) {
 // Allowed game scenes: any.
 func (s *KerbalAlarmClock) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "KerbalAlarmClock",
 	}
@@ -321,7 +321,7 @@ func (s *KerbalAlarmClock) AvailableStream() (*krpcgo.Stream[bool], error) {
 func (s *KerbalAlarmClock) Alarms() ([]*Alarm, error) {
 	var err error
 	var vv []*Alarm
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Alarms",
 		Service:   "KerbalAlarmClock",
 	}
@@ -341,7 +341,7 @@ func (s *KerbalAlarmClock) Alarms() ([]*Alarm, error) {
 // Allowed game scenes: any.
 func (s *KerbalAlarmClock) AlarmsStream() (*krpcgo.Stream[[]*Alarm], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Alarms",
 		Service:   "KerbalAlarmClock",
 	}
@@ -368,7 +368,7 @@ func (s *KerbalAlarmClock) AlarmsStream() (*krpcgo.Stream[[]*Alarm], error) {
 func (s *Alarm) Remove() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_Remove",
 		Service:   "KerbalAlarmClock",
 	}
@@ -376,7 +376,7 @@ func (s *Alarm) Remove() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -394,7 +394,7 @@ func (s *Alarm) Action() (AlarmAction, error) {
 	var err error
 	var argBytes []byte
 	var vv AlarmAction
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Action",
 		Service:   "KerbalAlarmClock",
 	}
@@ -402,7 +402,7 @@ func (s *Alarm) Action() (AlarmAction, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -423,7 +423,7 @@ func (s *Alarm) Action() (AlarmAction, error) {
 func (s *Alarm) ActionStream() (*krpcgo.Stream[AlarmAction], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Action",
 		Service:   "KerbalAlarmClock",
 	}
@@ -431,7 +431,7 @@ func (s *Alarm) ActionStream() (*krpcgo.Stream[AlarmAction], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -458,7 +458,7 @@ func (s *Alarm) ActionStream() (*krpcgo.Stream[AlarmAction], error) {
 func (s *Alarm) SetAction(value AlarmAction) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_Action",
 		Service:   "KerbalAlarmClock",
 	}
@@ -466,7 +466,7 @@ func (s *Alarm) SetAction(value AlarmAction) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -474,7 +474,7 @@ func (s *Alarm) SetAction(value AlarmAction) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -492,7 +492,7 @@ func (s *Alarm) Margin() (float64, error) {
 	var err error
 	var argBytes []byte
 	var vv float64
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Margin",
 		Service:   "KerbalAlarmClock",
 	}
@@ -500,7 +500,7 @@ func (s *Alarm) Margin() (float64, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -522,7 +522,7 @@ func (s *Alarm) Margin() (float64, error) {
 func (s *Alarm) MarginStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Margin",
 		Service:   "KerbalAlarmClock",
 	}
@@ -530,7 +530,7 @@ func (s *Alarm) MarginStream() (*krpcgo.Stream[float64], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -557,7 +557,7 @@ func (s *Alarm) MarginStream() (*krpcgo.Stream[float64], error) {
 func (s *Alarm) SetMargin(value float64) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_Margin",
 		Service:   "KerbalAlarmClock",
 	}
@@ -565,7 +565,7 @@ func (s *Alarm) SetMargin(value float64) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -573,7 +573,7 @@ func (s *Alarm) SetMargin(value float64) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -591,7 +591,7 @@ func (s *Alarm) Time() (float64, error) {
 	var err error
 	var argBytes []byte
 	var vv float64
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Time",
 		Service:   "KerbalAlarmClock",
 	}
@@ -599,7 +599,7 @@ func (s *Alarm) Time() (float64, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -620,7 +620,7 @@ func (s *Alarm) Time() (float64, error) {
 func (s *Alarm) TimeStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Time",
 		Service:   "KerbalAlarmClock",
 	}
@@ -628,7 +628,7 @@ func (s *Alarm) TimeStream() (*krpcgo.Stream[float64], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -655,7 +655,7 @@ func (s *Alarm) TimeStream() (*krpcgo.Stream[float64], error) {
 func (s *Alarm) SetTime(value float64) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_Time",
 		Service:   "KerbalAlarmClock",
 	}
@@ -663,7 +663,7 @@ func (s *Alarm) SetTime(value float64) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -671,7 +671,7 @@ func (s *Alarm) SetTime(value float64) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -689,7 +689,7 @@ func (s *Alarm) Type() (AlarmType, error) {
 	var err error
 	var argBytes []byte
 	var vv AlarmType
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Type",
 		Service:   "KerbalAlarmClock",
 	}
@@ -697,7 +697,7 @@ func (s *Alarm) Type() (AlarmType, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -718,7 +718,7 @@ func (s *Alarm) Type() (AlarmType, error) {
 func (s *Alarm) TypeStream() (*krpcgo.Stream[AlarmType], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Type",
 		Service:   "KerbalAlarmClock",
 	}
@@ -726,7 +726,7 @@ func (s *Alarm) TypeStream() (*krpcgo.Stream[AlarmType], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -754,7 +754,7 @@ func (s *Alarm) ID() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_ID",
 		Service:   "KerbalAlarmClock",
 	}
@@ -762,7 +762,7 @@ func (s *Alarm) ID() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -783,7 +783,7 @@ func (s *Alarm) ID() (string, error) {
 func (s *Alarm) IDStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_ID",
 		Service:   "KerbalAlarmClock",
 	}
@@ -791,7 +791,7 @@ func (s *Alarm) IDStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -819,7 +819,7 @@ func (s *Alarm) Name() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Name",
 		Service:   "KerbalAlarmClock",
 	}
@@ -827,7 +827,7 @@ func (s *Alarm) Name() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -848,7 +848,7 @@ func (s *Alarm) Name() (string, error) {
 func (s *Alarm) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Name",
 		Service:   "KerbalAlarmClock",
 	}
@@ -856,7 +856,7 @@ func (s *Alarm) NameStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -883,7 +883,7 @@ func (s *Alarm) NameStream() (*krpcgo.Stream[string], error) {
 func (s *Alarm) SetName(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_Name",
 		Service:   "KerbalAlarmClock",
 	}
@@ -891,7 +891,7 @@ func (s *Alarm) SetName(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -899,7 +899,7 @@ func (s *Alarm) SetName(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -917,7 +917,7 @@ func (s *Alarm) Notes() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Notes",
 		Service:   "KerbalAlarmClock",
 	}
@@ -925,7 +925,7 @@ func (s *Alarm) Notes() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -946,7 +946,7 @@ func (s *Alarm) Notes() (string, error) {
 func (s *Alarm) NotesStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Notes",
 		Service:   "KerbalAlarmClock",
 	}
@@ -954,7 +954,7 @@ func (s *Alarm) NotesStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -981,7 +981,7 @@ func (s *Alarm) NotesStream() (*krpcgo.Stream[string], error) {
 func (s *Alarm) SetNotes(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_Notes",
 		Service:   "KerbalAlarmClock",
 	}
@@ -989,7 +989,7 @@ func (s *Alarm) SetNotes(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -997,7 +997,7 @@ func (s *Alarm) SetNotes(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1015,7 +1015,7 @@ func (s *Alarm) Remaining() (float64, error) {
 	var err error
 	var argBytes []byte
 	var vv float64
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Remaining",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1023,7 +1023,7 @@ func (s *Alarm) Remaining() (float64, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1044,7 +1044,7 @@ func (s *Alarm) Remaining() (float64, error) {
 func (s *Alarm) RemainingStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Remaining",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1052,7 +1052,7 @@ func (s *Alarm) RemainingStream() (*krpcgo.Stream[float64], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1080,7 +1080,7 @@ func (s *Alarm) Repeat() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Repeat",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1088,7 +1088,7 @@ func (s *Alarm) Repeat() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1109,7 +1109,7 @@ func (s *Alarm) Repeat() (bool, error) {
 func (s *Alarm) RepeatStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Repeat",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1117,7 +1117,7 @@ func (s *Alarm) RepeatStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1144,7 +1144,7 @@ func (s *Alarm) RepeatStream() (*krpcgo.Stream[bool], error) {
 func (s *Alarm) SetRepeat(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_Repeat",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1152,7 +1152,7 @@ func (s *Alarm) SetRepeat(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1160,7 +1160,7 @@ func (s *Alarm) SetRepeat(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1179,7 +1179,7 @@ func (s *Alarm) RepeatPeriod() (float64, error) {
 	var err error
 	var argBytes []byte
 	var vv float64
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_RepeatPeriod",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1187,7 +1187,7 @@ func (s *Alarm) RepeatPeriod() (float64, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1209,7 +1209,7 @@ func (s *Alarm) RepeatPeriod() (float64, error) {
 func (s *Alarm) RepeatPeriodStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_RepeatPeriod",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1217,7 +1217,7 @@ func (s *Alarm) RepeatPeriodStream() (*krpcgo.Stream[float64], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1245,7 +1245,7 @@ func (s *Alarm) RepeatPeriodStream() (*krpcgo.Stream[float64], error) {
 func (s *Alarm) SetRepeatPeriod(value float64) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_RepeatPeriod",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1253,7 +1253,7 @@ func (s *Alarm) SetRepeatPeriod(value float64) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1261,7 +1261,7 @@ func (s *Alarm) SetRepeatPeriod(value float64) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1279,7 +1279,7 @@ func (s *Alarm) Vessel() (*spacecenter.Vessel, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.Vessel
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_Vessel",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1287,7 +1287,7 @@ func (s *Alarm) Vessel() (*spacecenter.Vessel, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1309,7 +1309,7 @@ func (s *Alarm) Vessel() (*spacecenter.Vessel, error) {
 func (s *Alarm) SetVessel(value *spacecenter.Vessel) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_Vessel",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1317,7 +1317,7 @@ func (s *Alarm) SetVessel(value *spacecenter.Vessel) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1325,7 +1325,7 @@ func (s *Alarm) SetVessel(value *spacecenter.Vessel) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1343,7 +1343,7 @@ func (s *Alarm) XferOriginBody() (*spacecenter.CelestialBody, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.CelestialBody
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_XferOriginBody",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1351,7 +1351,7 @@ func (s *Alarm) XferOriginBody() (*spacecenter.CelestialBody, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1373,7 +1373,7 @@ func (s *Alarm) XferOriginBody() (*spacecenter.CelestialBody, error) {
 func (s *Alarm) SetXferOriginBody(value *spacecenter.CelestialBody) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_XferOriginBody",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1381,7 +1381,7 @@ func (s *Alarm) SetXferOriginBody(value *spacecenter.CelestialBody) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1389,7 +1389,7 @@ func (s *Alarm) SetXferOriginBody(value *spacecenter.CelestialBody) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1407,7 +1407,7 @@ func (s *Alarm) XferTargetBody() (*spacecenter.CelestialBody, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.CelestialBody
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_get_XferTargetBody",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1415,7 +1415,7 @@ func (s *Alarm) XferTargetBody() (*spacecenter.CelestialBody, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1437,7 +1437,7 @@ func (s *Alarm) XferTargetBody() (*spacecenter.CelestialBody, error) {
 func (s *Alarm) SetXferTargetBody(value *spacecenter.CelestialBody) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Alarm_set_XferTargetBody",
 		Service:   "KerbalAlarmClock",
 	}
@@ -1445,7 +1445,7 @@ func (s *Alarm) SetXferTargetBody(value *spacecenter.CelestialBody) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1453,7 +1453,7 @@ func (s *Alarm) SetXferTargetBody(value *spacecenter.CelestialBody) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})

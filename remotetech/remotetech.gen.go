@@ -3,10 +3,10 @@ package remotetech
 import (
 	krpcgo "github.com/atburke/krpc-go"
 	krpc "github.com/atburke/krpc-go/krpc"
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
 	spacecenter "github.com/atburke/krpc-go/spacecenter"
+	types "github.com/atburke/krpc-go/types"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -82,7 +82,7 @@ func (s *RemoteTech) Comms(vessel *spacecenter.Vessel) (*Comms, error) {
 	var err error
 	var argBytes []byte
 	var vv Comms
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms",
 		Service:   "RemoteTech",
 	}
@@ -90,7 +90,7 @@ func (s *RemoteTech) Comms(vessel *spacecenter.Vessel) (*Comms, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -113,7 +113,7 @@ func (s *RemoteTech) Antenna(part *spacecenter.Part) (*Antenna, error) {
 	var err error
 	var argBytes []byte
 	var vv Antenna
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna",
 		Service:   "RemoteTech",
 	}
@@ -121,7 +121,7 @@ func (s *RemoteTech) Antenna(part *spacecenter.Part) (*Antenna, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -143,7 +143,7 @@ func (s *RemoteTech) Antenna(part *spacecenter.Part) (*Antenna, error) {
 func (s *RemoteTech) Available() (bool, error) {
 	var err error
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "RemoteTech",
 	}
@@ -163,7 +163,7 @@ func (s *RemoteTech) Available() (bool, error) {
 // Allowed game scenes: any.
 func (s *RemoteTech) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "RemoteTech",
 	}
@@ -190,7 +190,7 @@ func (s *RemoteTech) AvailableStream() (*krpcgo.Stream[bool], error) {
 func (s *RemoteTech) GroundStations() ([]string, error) {
 	var err error
 	var vv []string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_GroundStations",
 		Service:   "RemoteTech",
 	}
@@ -210,7 +210,7 @@ func (s *RemoteTech) GroundStations() ([]string, error) {
 // Allowed game scenes: any.
 func (s *RemoteTech) GroundStationsStream() (*krpcgo.Stream[[]string], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_GroundStations",
 		Service:   "RemoteTech",
 	}
@@ -238,7 +238,7 @@ func (s *Antenna) Part() (*spacecenter.Part, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.Part
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_Part",
 		Service:   "RemoteTech",
 	}
@@ -246,7 +246,7 @@ func (s *Antenna) Part() (*spacecenter.Part, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -269,7 +269,7 @@ func (s *Antenna) HasConnection() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_HasConnection",
 		Service:   "RemoteTech",
 	}
@@ -277,7 +277,7 @@ func (s *Antenna) HasConnection() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -298,7 +298,7 @@ func (s *Antenna) HasConnection() (bool, error) {
 func (s *Antenna) HasConnectionStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_HasConnection",
 		Service:   "RemoteTech",
 	}
@@ -306,7 +306,7 @@ func (s *Antenna) HasConnectionStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -340,7 +340,7 @@ func (s *Antenna) Target() (Target, error) {
 	var err error
 	var argBytes []byte
 	var vv Target
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_Target",
 		Service:   "RemoteTech",
 	}
@@ -348,7 +348,7 @@ func (s *Antenna) Target() (Target, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -375,7 +375,7 @@ func (s *Antenna) Target() (Target, error) {
 func (s *Antenna) TargetStream() (*krpcgo.Stream[Target], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_Target",
 		Service:   "RemoteTech",
 	}
@@ -383,7 +383,7 @@ func (s *Antenna) TargetStream() (*krpcgo.Stream[Target], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -416,7 +416,7 @@ func (s *Antenna) TargetStream() (*krpcgo.Stream[Target], error) {
 func (s *Antenna) SetTarget(value Target) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_set_Target",
 		Service:   "RemoteTech",
 	}
@@ -424,7 +424,7 @@ func (s *Antenna) SetTarget(value Target) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -432,7 +432,7 @@ func (s *Antenna) SetTarget(value Target) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -450,7 +450,7 @@ func (s *Antenna) TargetBody() (*spacecenter.CelestialBody, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.CelestialBody
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_TargetBody",
 		Service:   "RemoteTech",
 	}
@@ -458,7 +458,7 @@ func (s *Antenna) TargetBody() (*spacecenter.CelestialBody, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -480,7 +480,7 @@ func (s *Antenna) TargetBody() (*spacecenter.CelestialBody, error) {
 func (s *Antenna) SetTargetBody(value *spacecenter.CelestialBody) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_set_TargetBody",
 		Service:   "RemoteTech",
 	}
@@ -488,7 +488,7 @@ func (s *Antenna) SetTargetBody(value *spacecenter.CelestialBody) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -496,7 +496,7 @@ func (s *Antenna) SetTargetBody(value *spacecenter.CelestialBody) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -514,7 +514,7 @@ func (s *Antenna) TargetGroundStation() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_TargetGroundStation",
 		Service:   "RemoteTech",
 	}
@@ -522,7 +522,7 @@ func (s *Antenna) TargetGroundStation() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -543,7 +543,7 @@ func (s *Antenna) TargetGroundStation() (string, error) {
 func (s *Antenna) TargetGroundStationStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_TargetGroundStation",
 		Service:   "RemoteTech",
 	}
@@ -551,7 +551,7 @@ func (s *Antenna) TargetGroundStationStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -578,7 +578,7 @@ func (s *Antenna) TargetGroundStationStream() (*krpcgo.Stream[string], error) {
 func (s *Antenna) SetTargetGroundStation(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_set_TargetGroundStation",
 		Service:   "RemoteTech",
 	}
@@ -586,7 +586,7 @@ func (s *Antenna) SetTargetGroundStation(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -594,7 +594,7 @@ func (s *Antenna) SetTargetGroundStation(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -612,7 +612,7 @@ func (s *Antenna) TargetVessel() (*spacecenter.Vessel, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.Vessel
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_get_TargetVessel",
 		Service:   "RemoteTech",
 	}
@@ -620,7 +620,7 @@ func (s *Antenna) TargetVessel() (*spacecenter.Vessel, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -642,7 +642,7 @@ func (s *Antenna) TargetVessel() (*spacecenter.Vessel, error) {
 func (s *Antenna) SetTargetVessel(value *spacecenter.Vessel) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Antenna_set_TargetVessel",
 		Service:   "RemoteTech",
 	}
@@ -650,7 +650,7 @@ func (s *Antenna) SetTargetVessel(value *spacecenter.Vessel) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -658,7 +658,7 @@ func (s *Antenna) SetTargetVessel(value *spacecenter.Vessel) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -677,7 +677,7 @@ func (s *Comms) SignalDelayToVessel(other *spacecenter.Vessel) (float64, error) 
 	var err error
 	var argBytes []byte
 	var vv float64
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_SignalDelayToVessel",
 		Service:   "RemoteTech",
 	}
@@ -685,7 +685,7 @@ func (s *Comms) SignalDelayToVessel(other *spacecenter.Vessel) (float64, error) 
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -693,7 +693,7 @@ func (s *Comms) SignalDelayToVessel(other *spacecenter.Vessel) (float64, error) 
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -715,7 +715,7 @@ func (s *Comms) SignalDelayToVessel(other *spacecenter.Vessel) (float64, error) 
 func (s *Comms) SignalDelayToVesselStream(other *spacecenter.Vessel) (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_SignalDelayToVessel",
 		Service:   "RemoteTech",
 	}
@@ -723,7 +723,7 @@ func (s *Comms) SignalDelayToVesselStream(other *spacecenter.Vessel) (*krpcgo.St
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -731,7 +731,7 @@ func (s *Comms) SignalDelayToVesselStream(other *spacecenter.Vessel) (*krpcgo.St
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -759,7 +759,7 @@ func (s *Comms) Vessel() (*spacecenter.Vessel, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.Vessel
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_Vessel",
 		Service:   "RemoteTech",
 	}
@@ -767,7 +767,7 @@ func (s *Comms) Vessel() (*spacecenter.Vessel, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -790,7 +790,7 @@ func (s *Comms) HasLocalControl() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_HasLocalControl",
 		Service:   "RemoteTech",
 	}
@@ -798,7 +798,7 @@ func (s *Comms) HasLocalControl() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -819,7 +819,7 @@ func (s *Comms) HasLocalControl() (bool, error) {
 func (s *Comms) HasLocalControlStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_HasLocalControl",
 		Service:   "RemoteTech",
 	}
@@ -827,7 +827,7 @@ func (s *Comms) HasLocalControlStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -855,7 +855,7 @@ func (s *Comms) HasFlightComputer() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_HasFlightComputer",
 		Service:   "RemoteTech",
 	}
@@ -863,7 +863,7 @@ func (s *Comms) HasFlightComputer() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -884,7 +884,7 @@ func (s *Comms) HasFlightComputer() (bool, error) {
 func (s *Comms) HasFlightComputerStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_HasFlightComputer",
 		Service:   "RemoteTech",
 	}
@@ -892,7 +892,7 @@ func (s *Comms) HasFlightComputerStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -920,7 +920,7 @@ func (s *Comms) HasConnection() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_HasConnection",
 		Service:   "RemoteTech",
 	}
@@ -928,7 +928,7 @@ func (s *Comms) HasConnection() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -949,7 +949,7 @@ func (s *Comms) HasConnection() (bool, error) {
 func (s *Comms) HasConnectionStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_HasConnection",
 		Service:   "RemoteTech",
 	}
@@ -957,7 +957,7 @@ func (s *Comms) HasConnectionStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -986,7 +986,7 @@ func (s *Comms) HasConnectionToGroundStation() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_HasConnectionToGroundStation",
 		Service:   "RemoteTech",
 	}
@@ -994,7 +994,7 @@ func (s *Comms) HasConnectionToGroundStation() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1016,7 +1016,7 @@ func (s *Comms) HasConnectionToGroundStation() (bool, error) {
 func (s *Comms) HasConnectionToGroundStationStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_HasConnectionToGroundStation",
 		Service:   "RemoteTech",
 	}
@@ -1024,7 +1024,7 @@ func (s *Comms) HasConnectionToGroundStationStream() (*krpcgo.Stream[bool], erro
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1052,7 +1052,7 @@ func (s *Comms) SignalDelay() (float64, error) {
 	var err error
 	var argBytes []byte
 	var vv float64
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_SignalDelay",
 		Service:   "RemoteTech",
 	}
@@ -1060,7 +1060,7 @@ func (s *Comms) SignalDelay() (float64, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1081,7 +1081,7 @@ func (s *Comms) SignalDelay() (float64, error) {
 func (s *Comms) SignalDelayStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_SignalDelay",
 		Service:   "RemoteTech",
 	}
@@ -1089,7 +1089,7 @@ func (s *Comms) SignalDelayStream() (*krpcgo.Stream[float64], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1118,7 +1118,7 @@ func (s *Comms) SignalDelayToGroundStation() (float64, error) {
 	var err error
 	var argBytes []byte
 	var vv float64
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_SignalDelayToGroundStation",
 		Service:   "RemoteTech",
 	}
@@ -1126,7 +1126,7 @@ func (s *Comms) SignalDelayToGroundStation() (float64, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1148,7 +1148,7 @@ func (s *Comms) SignalDelayToGroundStation() (float64, error) {
 func (s *Comms) SignalDelayToGroundStationStream() (*krpcgo.Stream[float64], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_SignalDelayToGroundStation",
 		Service:   "RemoteTech",
 	}
@@ -1156,7 +1156,7 @@ func (s *Comms) SignalDelayToGroundStationStream() (*krpcgo.Stream[float64], err
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1184,7 +1184,7 @@ func (s *Comms) Antennas() ([]*Antenna, error) {
 	var err error
 	var argBytes []byte
 	var vv []*Antenna
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_Antennas",
 		Service:   "RemoteTech",
 	}
@@ -1192,7 +1192,7 @@ func (s *Comms) Antennas() ([]*Antenna, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1213,7 +1213,7 @@ func (s *Comms) Antennas() ([]*Antenna, error) {
 func (s *Comms) AntennasStream() (*krpcgo.Stream[[]*Antenna], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Comms_get_Antennas",
 		Service:   "RemoteTech",
 	}
@@ -1221,7 +1221,7 @@ func (s *Comms) AntennasStream() (*krpcgo.Stream[[]*Antenna], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})

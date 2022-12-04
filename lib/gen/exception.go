@@ -3,14 +3,14 @@ package gen
 import (
 	"fmt"
 
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
+	"github.com/atburke/krpc-go/types"
 	"github.com/dave/jennifer/jen"
 	"github.com/ztrue/tracerr"
 )
 
 // GenerateException generates an error for a given exception definition.
-func GenerateException(f *jen.File, exception *api.Exception) error {
+func GenerateException(f *jen.File, exception *types.Exception) error {
 	// Names are given in the format XYZException. We want the more go-like
 	// ErrXYZ.
 	exceptionName := "Err" + exception.Name[:len(exception.Name)-len("exception")]

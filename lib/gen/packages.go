@@ -3,7 +3,7 @@ package gen
 import "strings"
 
 const (
-	apiPkg     = "github.com/atburke/krpc-go/lib/api"
+	typesPkg   = "github.com/atburke/krpc-go/types"
 	krpcPkg    = "github.com/atburke/krpc-go"
 	servicePkg = "github.com/atburke/krpc-go/lib/service"
 	encodePkg  = "github.com/atburke/krpc-go/lib/encode"

@@ -6,7 +6,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/atburke/krpc-go/lib/api"
+	"github.com/atburke/krpc-go/types"
 	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"
 )
@@ -80,8 +80,8 @@ func (c *KRPCClient) connectRPC() error {
 	}
 	c.conn = conn
 
-	request := api.ConnectionRequest{
-		Type:       api.ConnectionRequest_RPC,
+	request := types.ConnectionRequest{
+		Type:       types.ConnectionRequest_RPC,
 		ClientName: c.ClientName,
 	}
 	out, err := proto.Marshal(&request)
@@ -96,11 +96,11 @@ func (c *KRPCClient) connectRPC() error {
 		return tracerr.Wrap(err)
 	}
 
-	var resp api.ConnectionResponse
+	var resp types.ConnectionResponse
 	if err := proto.Unmarshal(in, &resp); err != nil {
 		return tracerr.Wrap(err)
 	}
-	if resp.Status != api.ConnectionResponse_OK {
+	if resp.Status != types.ConnectionResponse_OK {
 		return tracerr.Errorf(resp.Message)
 	}
 
@@ -115,8 +115,8 @@ func (c *KRPCClient) connectStream(ctx context.Context) error {
 		tracerr.Wrap(err)
 	}
 
-	request := api.ConnectionRequest{
-		Type:             api.ConnectionRequest_STREAM,
+	request := types.ConnectionRequest{
+		Type:             types.ConnectionRequest_STREAM,
 		ClientIdentifier: c.clientIdentifier[:],
 	}
 	out, err := proto.Marshal(&request)
@@ -131,11 +131,11 @@ func (c *KRPCClient) connectStream(ctx context.Context) error {
 		tracerr.Wrap(err)
 	}
 
-	var resp api.ConnectionResponse
+	var resp types.ConnectionResponse
 	if err := proto.Unmarshal(in, &resp); err != nil {
 		tracerr.Wrap(err)
 	}
-	if resp.Status != api.ConnectionResponse_OK {
+	if resp.Status != types.ConnectionResponse_OK {
 		tracerr.Errorf(resp.Message)
 	}
 
@@ -210,8 +210,8 @@ func readMessageLength(r io.Reader) (uint64, error) {
 }
 
 // CallMultiple performs a batch of procedure calls to the rpc server.
-func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall) ([]*api.ProcedureResult, error) {
-	req := &api.Request{
+func (c *KRPCClient) CallMultiple(calls []*types.ProcedureCall) ([]*types.ProcedureResult, error) {
+	req := &types.Request{
 		Calls: calls,
 	}
 	out, err := proto.Marshal(req)
@@ -231,7 +231,7 @@ func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall) ([]*api.ProcedureR
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	var resp api.Response
+	var resp types.Response
 	if err := proto.Unmarshal(in, &resp); err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -243,8 +243,8 @@ func (c *KRPCClient) CallMultiple(calls []*api.ProcedureCall) ([]*api.ProcedureR
 }
 
 // Call performs a remote procedure call.
-func (c *KRPCClient) Call(call *api.ProcedureCall) (*api.ProcedureResult, error) {
-	resp, err := c.CallMultiple([]*api.ProcedureCall{call})
+func (c *KRPCClient) Call(call *types.ProcedureCall) (*types.ProcedureResult, error) {
+	resp, err := c.CallMultiple([]*types.ProcedureCall{call})
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}

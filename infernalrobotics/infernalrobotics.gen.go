@@ -3,10 +3,10 @@ package infernalrobotics
 import (
 	krpcgo "github.com/atburke/krpc-go"
 	krpc "github.com/atburke/krpc-go/krpc"
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
 	spacecenter "github.com/atburke/krpc-go/spacecenter"
+	types "github.com/atburke/krpc-go/types"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -62,7 +62,7 @@ func (s *InfernalRobotics) ServoGroups(vessel *spacecenter.Vessel) ([]*ServoGrou
 	var err error
 	var argBytes []byte
 	var vv []*ServoGroup
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroups",
 		Service:   "InfernalRobotics",
 	}
@@ -70,7 +70,7 @@ func (s *InfernalRobotics) ServoGroups(vessel *spacecenter.Vessel) ([]*ServoGrou
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -92,7 +92,7 @@ func (s *InfernalRobotics) ServoGroups(vessel *spacecenter.Vessel) ([]*ServoGrou
 func (s *InfernalRobotics) ServoGroupsStream(vessel *spacecenter.Vessel) (*krpcgo.Stream[[]*ServoGroup], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroups",
 		Service:   "InfernalRobotics",
 	}
@@ -100,7 +100,7 @@ func (s *InfernalRobotics) ServoGroupsStream(vessel *spacecenter.Vessel) (*krpcg
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -131,7 +131,7 @@ func (s *InfernalRobotics) ServoGroupWithName(vessel *spacecenter.Vessel, name s
 	var err error
 	var argBytes []byte
 	var vv ServoGroup
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroupWithName",
 		Service:   "InfernalRobotics",
 	}
@@ -139,7 +139,7 @@ func (s *InfernalRobotics) ServoGroupWithName(vessel *spacecenter.Vessel, name s
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -147,7 +147,7 @@ func (s *InfernalRobotics) ServoGroupWithName(vessel *spacecenter.Vessel, name s
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -172,7 +172,7 @@ func (s *InfernalRobotics) ServoWithName(vessel *spacecenter.Vessel, name string
 	var err error
 	var argBytes []byte
 	var vv Servo
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoWithName",
 		Service:   "InfernalRobotics",
 	}
@@ -180,7 +180,7 @@ func (s *InfernalRobotics) ServoWithName(vessel *spacecenter.Vessel, name string
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -188,7 +188,7 @@ func (s *InfernalRobotics) ServoWithName(vessel *spacecenter.Vessel, name string
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -210,7 +210,7 @@ func (s *InfernalRobotics) ServoWithName(vessel *spacecenter.Vessel, name string
 func (s *InfernalRobotics) Available() (bool, error) {
 	var err error
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "InfernalRobotics",
 	}
@@ -230,7 +230,7 @@ func (s *InfernalRobotics) Available() (bool, error) {
 // Allowed game scenes: any.
 func (s *InfernalRobotics) AvailableStream() (*krpcgo.Stream[bool], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Available",
 		Service:   "InfernalRobotics",
 	}
@@ -257,7 +257,7 @@ func (s *InfernalRobotics) AvailableStream() (*krpcgo.Stream[bool], error) {
 func (s *InfernalRobotics) Ready() (bool, error) {
 	var err error
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Ready",
 		Service:   "InfernalRobotics",
 	}
@@ -277,7 +277,7 @@ func (s *InfernalRobotics) Ready() (bool, error) {
 // Allowed game scenes: any.
 func (s *InfernalRobotics) ReadyStream() (*krpcgo.Stream[bool], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Ready",
 		Service:   "InfernalRobotics",
 	}
@@ -304,7 +304,7 @@ func (s *InfernalRobotics) ReadyStream() (*krpcgo.Stream[bool], error) {
 func (s *Servo) MoveRight() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_MoveRight",
 		Service:   "InfernalRobotics",
 	}
@@ -312,7 +312,7 @@ func (s *Servo) MoveRight() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -329,7 +329,7 @@ func (s *Servo) MoveRight() error {
 func (s *Servo) MoveLeft() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_MoveLeft",
 		Service:   "InfernalRobotics",
 	}
@@ -337,7 +337,7 @@ func (s *Servo) MoveLeft() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -354,7 +354,7 @@ func (s *Servo) MoveLeft() error {
 func (s *Servo) MoveCenter() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_MoveCenter",
 		Service:   "InfernalRobotics",
 	}
@@ -362,7 +362,7 @@ func (s *Servo) MoveCenter() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -379,7 +379,7 @@ func (s *Servo) MoveCenter() error {
 func (s *Servo) MoveNextPreset() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_MoveNextPreset",
 		Service:   "InfernalRobotics",
 	}
@@ -387,7 +387,7 @@ func (s *Servo) MoveNextPreset() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -404,7 +404,7 @@ func (s *Servo) MoveNextPreset() error {
 func (s *Servo) MovePrevPreset() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_MovePrevPreset",
 		Service:   "InfernalRobotics",
 	}
@@ -412,7 +412,7 @@ func (s *Servo) MovePrevPreset() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -430,7 +430,7 @@ func (s *Servo) MovePrevPreset() error {
 func (s *Servo) MoveTo(position float32, speed float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_MoveTo",
 		Service:   "InfernalRobotics",
 	}
@@ -438,7 +438,7 @@ func (s *Servo) MoveTo(position float32, speed float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -446,7 +446,7 @@ func (s *Servo) MoveTo(position float32, speed float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -454,7 +454,7 @@ func (s *Servo) MoveTo(position float32, speed float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
@@ -471,7 +471,7 @@ func (s *Servo) MoveTo(position float32, speed float32) error {
 func (s *Servo) Stop() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_Stop",
 		Service:   "InfernalRobotics",
 	}
@@ -479,7 +479,7 @@ func (s *Servo) Stop() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -497,7 +497,7 @@ func (s *Servo) Name() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Name",
 		Service:   "InfernalRobotics",
 	}
@@ -505,7 +505,7 @@ func (s *Servo) Name() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -526,7 +526,7 @@ func (s *Servo) Name() (string, error) {
 func (s *Servo) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Name",
 		Service:   "InfernalRobotics",
 	}
@@ -534,7 +534,7 @@ func (s *Servo) NameStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -561,7 +561,7 @@ func (s *Servo) NameStream() (*krpcgo.Stream[string], error) {
 func (s *Servo) SetName(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_Name",
 		Service:   "InfernalRobotics",
 	}
@@ -569,7 +569,7 @@ func (s *Servo) SetName(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -577,7 +577,7 @@ func (s *Servo) SetName(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -595,7 +595,7 @@ func (s *Servo) Part() (*spacecenter.Part, error) {
 	var err error
 	var argBytes []byte
 	var vv spacecenter.Part
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Part",
 		Service:   "InfernalRobotics",
 	}
@@ -603,7 +603,7 @@ func (s *Servo) Part() (*spacecenter.Part, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -625,7 +625,7 @@ func (s *Servo) Part() (*spacecenter.Part, error) {
 func (s *Servo) SetHighlight(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_Highlight",
 		Service:   "InfernalRobotics",
 	}
@@ -633,7 +633,7 @@ func (s *Servo) SetHighlight(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -641,7 +641,7 @@ func (s *Servo) SetHighlight(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -659,7 +659,7 @@ func (s *Servo) Position() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Position",
 		Service:   "InfernalRobotics",
 	}
@@ -667,7 +667,7 @@ func (s *Servo) Position() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -688,7 +688,7 @@ func (s *Servo) Position() (float32, error) {
 func (s *Servo) PositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Position",
 		Service:   "InfernalRobotics",
 	}
@@ -696,7 +696,7 @@ func (s *Servo) PositionStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -725,7 +725,7 @@ func (s *Servo) MinConfigPosition() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_MinConfigPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -733,7 +733,7 @@ func (s *Servo) MinConfigPosition() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -755,7 +755,7 @@ func (s *Servo) MinConfigPosition() (float32, error) {
 func (s *Servo) MinConfigPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_MinConfigPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -763,7 +763,7 @@ func (s *Servo) MinConfigPositionStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -792,7 +792,7 @@ func (s *Servo) MaxConfigPosition() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_MaxConfigPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -800,7 +800,7 @@ func (s *Servo) MaxConfigPosition() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -822,7 +822,7 @@ func (s *Servo) MaxConfigPosition() (float32, error) {
 func (s *Servo) MaxConfigPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_MaxConfigPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -830,7 +830,7 @@ func (s *Servo) MaxConfigPositionStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -859,7 +859,7 @@ func (s *Servo) MinPosition() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_MinPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -867,7 +867,7 @@ func (s *Servo) MinPosition() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -889,7 +889,7 @@ func (s *Servo) MinPosition() (float32, error) {
 func (s *Servo) MinPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_MinPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -897,7 +897,7 @@ func (s *Servo) MinPositionStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -925,7 +925,7 @@ func (s *Servo) MinPositionStream() (*krpcgo.Stream[float32], error) {
 func (s *Servo) SetMinPosition(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_MinPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -933,7 +933,7 @@ func (s *Servo) SetMinPosition(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -941,7 +941,7 @@ func (s *Servo) SetMinPosition(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -960,7 +960,7 @@ func (s *Servo) MaxPosition() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_MaxPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -968,7 +968,7 @@ func (s *Servo) MaxPosition() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -990,7 +990,7 @@ func (s *Servo) MaxPosition() (float32, error) {
 func (s *Servo) MaxPositionStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_MaxPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -998,7 +998,7 @@ func (s *Servo) MaxPositionStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1026,7 +1026,7 @@ func (s *Servo) MaxPositionStream() (*krpcgo.Stream[float32], error) {
 func (s *Servo) SetMaxPosition(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_MaxPosition",
 		Service:   "InfernalRobotics",
 	}
@@ -1034,7 +1034,7 @@ func (s *Servo) SetMaxPosition(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1042,7 +1042,7 @@ func (s *Servo) SetMaxPosition(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1061,7 +1061,7 @@ func (s *Servo) ConfigSpeed() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_ConfigSpeed",
 		Service:   "InfernalRobotics",
 	}
@@ -1069,7 +1069,7 @@ func (s *Servo) ConfigSpeed() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1091,7 +1091,7 @@ func (s *Servo) ConfigSpeed() (float32, error) {
 func (s *Servo) ConfigSpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_ConfigSpeed",
 		Service:   "InfernalRobotics",
 	}
@@ -1099,7 +1099,7 @@ func (s *Servo) ConfigSpeedStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1128,7 +1128,7 @@ func (s *Servo) Speed() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Speed",
 		Service:   "InfernalRobotics",
 	}
@@ -1136,7 +1136,7 @@ func (s *Servo) Speed() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1158,7 +1158,7 @@ func (s *Servo) Speed() (float32, error) {
 func (s *Servo) SpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Speed",
 		Service:   "InfernalRobotics",
 	}
@@ -1166,7 +1166,7 @@ func (s *Servo) SpeedStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1194,7 +1194,7 @@ func (s *Servo) SpeedStream() (*krpcgo.Stream[float32], error) {
 func (s *Servo) SetSpeed(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_Speed",
 		Service:   "InfernalRobotics",
 	}
@@ -1202,7 +1202,7 @@ func (s *Servo) SetSpeed(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1210,7 +1210,7 @@ func (s *Servo) SetSpeed(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1228,7 +1228,7 @@ func (s *Servo) CurrentSpeed() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_CurrentSpeed",
 		Service:   "InfernalRobotics",
 	}
@@ -1236,7 +1236,7 @@ func (s *Servo) CurrentSpeed() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1257,7 +1257,7 @@ func (s *Servo) CurrentSpeed() (float32, error) {
 func (s *Servo) CurrentSpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_CurrentSpeed",
 		Service:   "InfernalRobotics",
 	}
@@ -1265,7 +1265,7 @@ func (s *Servo) CurrentSpeedStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1292,7 +1292,7 @@ func (s *Servo) CurrentSpeedStream() (*krpcgo.Stream[float32], error) {
 func (s *Servo) SetCurrentSpeed(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_CurrentSpeed",
 		Service:   "InfernalRobotics",
 	}
@@ -1300,7 +1300,7 @@ func (s *Servo) SetCurrentSpeed(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1308,7 +1308,7 @@ func (s *Servo) SetCurrentSpeed(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1326,7 +1326,7 @@ func (s *Servo) Acceleration() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Acceleration",
 		Service:   "InfernalRobotics",
 	}
@@ -1334,7 +1334,7 @@ func (s *Servo) Acceleration() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1355,7 +1355,7 @@ func (s *Servo) Acceleration() (float32, error) {
 func (s *Servo) AccelerationStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_Acceleration",
 		Service:   "InfernalRobotics",
 	}
@@ -1363,7 +1363,7 @@ func (s *Servo) AccelerationStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1390,7 +1390,7 @@ func (s *Servo) AccelerationStream() (*krpcgo.Stream[float32], error) {
 func (s *Servo) SetAcceleration(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_Acceleration",
 		Service:   "InfernalRobotics",
 	}
@@ -1398,7 +1398,7 @@ func (s *Servo) SetAcceleration(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1406,7 +1406,7 @@ func (s *Servo) SetAcceleration(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1424,7 +1424,7 @@ func (s *Servo) IsMoving() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_IsMoving",
 		Service:   "InfernalRobotics",
 	}
@@ -1432,7 +1432,7 @@ func (s *Servo) IsMoving() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1453,7 +1453,7 @@ func (s *Servo) IsMoving() (bool, error) {
 func (s *Servo) IsMovingStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_IsMoving",
 		Service:   "InfernalRobotics",
 	}
@@ -1461,7 +1461,7 @@ func (s *Servo) IsMovingStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1489,7 +1489,7 @@ func (s *Servo) IsFreeMoving() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_IsFreeMoving",
 		Service:   "InfernalRobotics",
 	}
@@ -1497,7 +1497,7 @@ func (s *Servo) IsFreeMoving() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1518,7 +1518,7 @@ func (s *Servo) IsFreeMoving() (bool, error) {
 func (s *Servo) IsFreeMovingStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_IsFreeMoving",
 		Service:   "InfernalRobotics",
 	}
@@ -1526,7 +1526,7 @@ func (s *Servo) IsFreeMovingStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1554,7 +1554,7 @@ func (s *Servo) IsLocked() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_IsLocked",
 		Service:   "InfernalRobotics",
 	}
@@ -1562,7 +1562,7 @@ func (s *Servo) IsLocked() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1583,7 +1583,7 @@ func (s *Servo) IsLocked() (bool, error) {
 func (s *Servo) IsLockedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_IsLocked",
 		Service:   "InfernalRobotics",
 	}
@@ -1591,7 +1591,7 @@ func (s *Servo) IsLockedStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1618,7 +1618,7 @@ func (s *Servo) IsLockedStream() (*krpcgo.Stream[bool], error) {
 func (s *Servo) SetIsLocked(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_IsLocked",
 		Service:   "InfernalRobotics",
 	}
@@ -1626,7 +1626,7 @@ func (s *Servo) SetIsLocked(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1634,7 +1634,7 @@ func (s *Servo) SetIsLocked(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1652,7 +1652,7 @@ func (s *Servo) IsAxisInverted() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_IsAxisInverted",
 		Service:   "InfernalRobotics",
 	}
@@ -1660,7 +1660,7 @@ func (s *Servo) IsAxisInverted() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1681,7 +1681,7 @@ func (s *Servo) IsAxisInverted() (bool, error) {
 func (s *Servo) IsAxisInvertedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_get_IsAxisInverted",
 		Service:   "InfernalRobotics",
 	}
@@ -1689,7 +1689,7 @@ func (s *Servo) IsAxisInvertedStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1716,7 +1716,7 @@ func (s *Servo) IsAxisInvertedStream() (*krpcgo.Stream[bool], error) {
 func (s *Servo) SetIsAxisInverted(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Servo_set_IsAxisInverted",
 		Service:   "InfernalRobotics",
 	}
@@ -1724,7 +1724,7 @@ func (s *Servo) SetIsAxisInverted(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1732,7 +1732,7 @@ func (s *Servo) SetIsAxisInverted(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1751,7 +1751,7 @@ func (s *ServoGroup) ServoWithName(name string) (*Servo, error) {
 	var err error
 	var argBytes []byte
 	var vv Servo
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_ServoWithName",
 		Service:   "InfernalRobotics",
 	}
@@ -1759,7 +1759,7 @@ func (s *ServoGroup) ServoWithName(name string) (*Servo, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1767,7 +1767,7 @@ func (s *ServoGroup) ServoWithName(name string) (*Servo, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1789,7 +1789,7 @@ func (s *ServoGroup) ServoWithName(name string) (*Servo, error) {
 func (s *ServoGroup) MoveRight() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_MoveRight",
 		Service:   "InfernalRobotics",
 	}
@@ -1797,7 +1797,7 @@ func (s *ServoGroup) MoveRight() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1814,7 +1814,7 @@ func (s *ServoGroup) MoveRight() error {
 func (s *ServoGroup) MoveLeft() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_MoveLeft",
 		Service:   "InfernalRobotics",
 	}
@@ -1822,7 +1822,7 @@ func (s *ServoGroup) MoveLeft() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1839,7 +1839,7 @@ func (s *ServoGroup) MoveLeft() error {
 func (s *ServoGroup) MoveCenter() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_MoveCenter",
 		Service:   "InfernalRobotics",
 	}
@@ -1847,7 +1847,7 @@ func (s *ServoGroup) MoveCenter() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1864,7 +1864,7 @@ func (s *ServoGroup) MoveCenter() error {
 func (s *ServoGroup) MoveNextPreset() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_MoveNextPreset",
 		Service:   "InfernalRobotics",
 	}
@@ -1872,7 +1872,7 @@ func (s *ServoGroup) MoveNextPreset() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1889,7 +1889,7 @@ func (s *ServoGroup) MoveNextPreset() error {
 func (s *ServoGroup) MovePrevPreset() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_MovePrevPreset",
 		Service:   "InfernalRobotics",
 	}
@@ -1897,7 +1897,7 @@ func (s *ServoGroup) MovePrevPreset() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1914,7 +1914,7 @@ func (s *ServoGroup) MovePrevPreset() error {
 func (s *ServoGroup) Stop() error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_Stop",
 		Service:   "InfernalRobotics",
 	}
@@ -1922,7 +1922,7 @@ func (s *ServoGroup) Stop() error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1940,7 +1940,7 @@ func (s *ServoGroup) Name() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Name",
 		Service:   "InfernalRobotics",
 	}
@@ -1948,7 +1948,7 @@ func (s *ServoGroup) Name() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1969,7 +1969,7 @@ func (s *ServoGroup) Name() (string, error) {
 func (s *ServoGroup) NameStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Name",
 		Service:   "InfernalRobotics",
 	}
@@ -1977,7 +1977,7 @@ func (s *ServoGroup) NameStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2004,7 +2004,7 @@ func (s *ServoGroup) NameStream() (*krpcgo.Stream[string], error) {
 func (s *ServoGroup) SetName(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_set_Name",
 		Service:   "InfernalRobotics",
 	}
@@ -2012,7 +2012,7 @@ func (s *ServoGroup) SetName(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2020,7 +2020,7 @@ func (s *ServoGroup) SetName(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2038,7 +2038,7 @@ func (s *ServoGroup) ForwardKey() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_ForwardKey",
 		Service:   "InfernalRobotics",
 	}
@@ -2046,7 +2046,7 @@ func (s *ServoGroup) ForwardKey() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2067,7 +2067,7 @@ func (s *ServoGroup) ForwardKey() (string, error) {
 func (s *ServoGroup) ForwardKeyStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_ForwardKey",
 		Service:   "InfernalRobotics",
 	}
@@ -2075,7 +2075,7 @@ func (s *ServoGroup) ForwardKeyStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2102,7 +2102,7 @@ func (s *ServoGroup) ForwardKeyStream() (*krpcgo.Stream[string], error) {
 func (s *ServoGroup) SetForwardKey(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_set_ForwardKey",
 		Service:   "InfernalRobotics",
 	}
@@ -2110,7 +2110,7 @@ func (s *ServoGroup) SetForwardKey(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2118,7 +2118,7 @@ func (s *ServoGroup) SetForwardKey(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2136,7 +2136,7 @@ func (s *ServoGroup) ReverseKey() (string, error) {
 	var err error
 	var argBytes []byte
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_ReverseKey",
 		Service:   "InfernalRobotics",
 	}
@@ -2144,7 +2144,7 @@ func (s *ServoGroup) ReverseKey() (string, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2165,7 +2165,7 @@ func (s *ServoGroup) ReverseKey() (string, error) {
 func (s *ServoGroup) ReverseKeyStream() (*krpcgo.Stream[string], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_ReverseKey",
 		Service:   "InfernalRobotics",
 	}
@@ -2173,7 +2173,7 @@ func (s *ServoGroup) ReverseKeyStream() (*krpcgo.Stream[string], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2200,7 +2200,7 @@ func (s *ServoGroup) ReverseKeyStream() (*krpcgo.Stream[string], error) {
 func (s *ServoGroup) SetReverseKey(value string) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_set_ReverseKey",
 		Service:   "InfernalRobotics",
 	}
@@ -2208,7 +2208,7 @@ func (s *ServoGroup) SetReverseKey(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2216,7 +2216,7 @@ func (s *ServoGroup) SetReverseKey(value string) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2234,7 +2234,7 @@ func (s *ServoGroup) Speed() (float32, error) {
 	var err error
 	var argBytes []byte
 	var vv float32
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Speed",
 		Service:   "InfernalRobotics",
 	}
@@ -2242,7 +2242,7 @@ func (s *ServoGroup) Speed() (float32, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2263,7 +2263,7 @@ func (s *ServoGroup) Speed() (float32, error) {
 func (s *ServoGroup) SpeedStream() (*krpcgo.Stream[float32], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Speed",
 		Service:   "InfernalRobotics",
 	}
@@ -2271,7 +2271,7 @@ func (s *ServoGroup) SpeedStream() (*krpcgo.Stream[float32], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2298,7 +2298,7 @@ func (s *ServoGroup) SpeedStream() (*krpcgo.Stream[float32], error) {
 func (s *ServoGroup) SetSpeed(value float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_set_Speed",
 		Service:   "InfernalRobotics",
 	}
@@ -2306,7 +2306,7 @@ func (s *ServoGroup) SetSpeed(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2314,7 +2314,7 @@ func (s *ServoGroup) SetSpeed(value float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2332,7 +2332,7 @@ func (s *ServoGroup) Expanded() (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Expanded",
 		Service:   "InfernalRobotics",
 	}
@@ -2340,7 +2340,7 @@ func (s *ServoGroup) Expanded() (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2361,7 +2361,7 @@ func (s *ServoGroup) Expanded() (bool, error) {
 func (s *ServoGroup) ExpandedStream() (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Expanded",
 		Service:   "InfernalRobotics",
 	}
@@ -2369,7 +2369,7 @@ func (s *ServoGroup) ExpandedStream() (*krpcgo.Stream[bool], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2396,7 +2396,7 @@ func (s *ServoGroup) ExpandedStream() (*krpcgo.Stream[bool], error) {
 func (s *ServoGroup) SetExpanded(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_set_Expanded",
 		Service:   "InfernalRobotics",
 	}
@@ -2404,7 +2404,7 @@ func (s *ServoGroup) SetExpanded(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2412,7 +2412,7 @@ func (s *ServoGroup) SetExpanded(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2430,7 +2430,7 @@ func (s *ServoGroup) Servos() ([]*Servo, error) {
 	var err error
 	var argBytes []byte
 	var vv []*Servo
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Servos",
 		Service:   "InfernalRobotics",
 	}
@@ -2438,7 +2438,7 @@ func (s *ServoGroup) Servos() ([]*Servo, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2459,7 +2459,7 @@ func (s *ServoGroup) Servos() ([]*Servo, error) {
 func (s *ServoGroup) ServosStream() (*krpcgo.Stream[[]*Servo], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Servos",
 		Service:   "InfernalRobotics",
 	}
@@ -2467,7 +2467,7 @@ func (s *ServoGroup) ServosStream() (*krpcgo.Stream[[]*Servo], error) {
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2495,7 +2495,7 @@ func (s *ServoGroup) Parts() ([]*spacecenter.Part, error) {
 	var err error
 	var argBytes []byte
 	var vv []*spacecenter.Part
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Parts",
 		Service:   "InfernalRobotics",
 	}
@@ -2503,7 +2503,7 @@ func (s *ServoGroup) Parts() ([]*spacecenter.Part, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2524,7 +2524,7 @@ func (s *ServoGroup) Parts() ([]*spacecenter.Part, error) {
 func (s *ServoGroup) PartsStream() (*krpcgo.Stream[[]*spacecenter.Part], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "ServoGroup_get_Parts",
 		Service:   "InfernalRobotics",
 	}
@@ -2532,7 +2532,7 @@ func (s *ServoGroup) PartsStream() (*krpcgo.Stream[[]*spacecenter.Part], error) 
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})

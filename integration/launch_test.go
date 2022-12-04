@@ -9,8 +9,8 @@ import (
 
 	krpcgo "github.com/atburke/krpc-go"
 	"github.com/atburke/krpc-go/krpc"
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/spacecenter"
+	"github.com/atburke/krpc-go/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -202,7 +202,7 @@ func TestLaunch(t *testing.T) {
 	nodeRF, err := node.ReferenceFrame()
 	require.NoError(t, err)
 	require.NoError(t, autopilot.SetReferenceFrame(nodeRF))
-	require.NoError(t, autopilot.SetTargetDirection(api.NewVector3D(0, 1, 0).Tuple()))
+	require.NoError(t, autopilot.SetTargetDirection(types.NewVector3D(0, 1, 0).Tuple()))
 	require.NoError(t, autopilot.Wait())
 
 	// Wait until burn

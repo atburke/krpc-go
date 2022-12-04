@@ -9,8 +9,8 @@ import (
 	"os"
 	"sync"
 
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/utils"
+	"github.com/atburke/krpc-go/types"
 	"github.com/golang/protobuf/proto"
 	"github.com/ztrue/tracerr"
 )
@@ -57,7 +57,7 @@ func (s *StreamClient) Run(ctx context.Context) {
 			fmt.Fprintf(os.Stderr, "Error reading stream: %v\n", err)
 		}
 
-		var streamUpdate api.StreamUpdate
+		var streamUpdate types.StreamUpdate
 		if err := proto.Unmarshal(data, &streamUpdate); err != nil {
 			fmt.Fprintf(os.Stderr, "Error unmarshaling stream result: %v\n", err)
 		}

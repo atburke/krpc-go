@@ -2,9 +2,9 @@ package krpc
 
 import (
 	krpcgo "github.com/atburke/krpc-go"
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	service "github.com/atburke/krpc-go/lib/service"
+	types "github.com/atburke/krpc-go/types"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -138,7 +138,7 @@ func New(client *krpcgo.KRPCClient) *KRPC {
 func (s *KRPC) GetClientID() ([]byte, error) {
 	var err error
 	var vv []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "GetClientID",
 		Service:   "KRPC",
 	}
@@ -158,7 +158,7 @@ func (s *KRPC) GetClientID() ([]byte, error) {
 // Allowed game scenes: any.
 func (s *KRPC) GetClientIDStream() (*krpcgo.Stream[[]byte], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "GetClientID",
 		Service:   "KRPC",
 	}
@@ -186,7 +186,7 @@ func (s *KRPC) GetClientIDStream() (*krpcgo.Stream[[]byte], error) {
 func (s *KRPC) GetClientName() (string, error) {
 	var err error
 	var vv string
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "GetClientName",
 		Service:   "KRPC",
 	}
@@ -207,7 +207,7 @@ func (s *KRPC) GetClientName() (string, error) {
 // Allowed game scenes: any.
 func (s *KRPC) GetClientNameStream() (*krpcgo.Stream[string], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "GetClientName",
 		Service:   "KRPC",
 	}
@@ -231,10 +231,10 @@ func (s *KRPC) GetClientNameStream() (*krpcgo.Stream[string], error) {
 // GetStatus - returns some information about the server, such as the version.
 //
 // Allowed game scenes: any.
-func (s *KRPC) GetStatus() (*api.Status, error) {
+func (s *KRPC) GetStatus() (*types.Status, error) {
 	var err error
-	var vv api.Status
-	request := &api.ProcedureCall{
+	var vv types.Status
+	request := &types.ProcedureCall{
 		Procedure: "GetStatus",
 		Service:   "KRPC",
 	}
@@ -254,10 +254,10 @@ func (s *KRPC) GetStatus() (*api.Status, error) {
 // automatically create functionality such as stubs.
 //
 // Allowed game scenes: any.
-func (s *KRPC) GetServices() (*api.Services, error) {
+func (s *KRPC) GetServices() (*types.Services, error) {
 	var err error
-	var vv api.Services
-	request := &api.ProcedureCall{
+	var vv types.Services
+	request := &types.ProcedureCall{
 		Procedure: "GetServices",
 		Service:   "KRPC",
 	}
@@ -275,11 +275,11 @@ func (s *KRPC) GetServices() (*api.Services, error) {
 // AddStream - add a streaming request and return its identifier.
 //
 // Allowed game scenes: any.
-func (s *KRPC) AddStream(call *api.ProcedureCall, start bool) (*api.Stream, error) {
+func (s *KRPC) AddStream(call *types.ProcedureCall, start bool) (*types.Stream, error) {
 	var err error
 	var argBytes []byte
-	var vv api.Stream
-	request := &api.ProcedureCall{
+	var vv types.Stream
+	request := &types.ProcedureCall{
 		Procedure: "AddStream",
 		Service:   "KRPC",
 	}
@@ -287,7 +287,7 @@ func (s *KRPC) AddStream(call *api.ProcedureCall, start bool) (*api.Stream, erro
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -295,7 +295,7 @@ func (s *KRPC) AddStream(call *api.ProcedureCall, start bool) (*api.Stream, erro
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -316,7 +316,7 @@ func (s *KRPC) AddStream(call *api.ProcedureCall, start bool) (*api.Stream, erro
 func (s *KRPC) StartStream(id uint64) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "StartStream",
 		Service:   "KRPC",
 	}
@@ -324,7 +324,7 @@ func (s *KRPC) StartStream(id uint64) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -341,7 +341,7 @@ func (s *KRPC) StartStream(id uint64) error {
 func (s *KRPC) SetStreamRate(id uint64, rate float32) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "SetStreamRate",
 		Service:   "KRPC",
 	}
@@ -349,7 +349,7 @@ func (s *KRPC) SetStreamRate(id uint64, rate float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -357,7 +357,7 @@ func (s *KRPC) SetStreamRate(id uint64, rate float32) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -374,7 +374,7 @@ func (s *KRPC) SetStreamRate(id uint64, rate float32) error {
 func (s *KRPC) RemoveStream(id uint64) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "RemoveStream",
 		Service:   "KRPC",
 	}
@@ -382,7 +382,7 @@ func (s *KRPC) RemoveStream(id uint64) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -399,7 +399,7 @@ func (s *KRPC) RemoveStream(id uint64) error {
 func (s *KRPC) AddEvent(expression *Expression) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "AddEvent",
 		Service:   "KRPC",
 	}
@@ -407,7 +407,7 @@ func (s *KRPC) AddEvent(expression *Expression) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -422,10 +422,10 @@ func (s *KRPC) AddEvent(expression *Expression) error {
 // Each entry in the list is a clients identifier, name and address.
 //
 // Allowed game scenes: any.
-func (s *KRPC) Clients() ([]api.Tuple3[[]byte, string, string], error) {
+func (s *KRPC) Clients() ([]types.Tuple3[[]byte, string, string], error) {
 	var err error
-	var vv []api.Tuple3[[]byte, string, string]
-	request := &api.ProcedureCall{
+	var vv []types.Tuple3[[]byte, string, string]
+	request := &types.ProcedureCall{
 		Procedure: "get_Clients",
 		Service:   "KRPC",
 	}
@@ -444,9 +444,9 @@ func (s *KRPC) Clients() ([]api.Tuple3[[]byte, string, string], error) {
 // server. Each entry in the list is a clients identifier, name and address.
 //
 // Allowed game scenes: any.
-func (s *KRPC) ClientsStream() (*krpcgo.Stream[[]api.Tuple3[[]byte, string, string]], error) {
+func (s *KRPC) ClientsStream() (*krpcgo.Stream[[]types.Tuple3[[]byte, string, string]], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Clients",
 		Service:   "KRPC",
 	}
@@ -456,8 +456,8 @@ func (s *KRPC) ClientsStream() (*krpcgo.Stream[[]api.Tuple3[[]byte, string, stri
 		return nil, tracerr.Wrap(err)
 	}
 	rawStream := s.Client.GetStream(st.Id)
-	stream := krpcgo.MapStream(rawStream, func(b []byte) []api.Tuple3[[]byte, string, string] {
-		var value []api.Tuple3[[]byte, string, string]
+	stream := krpcgo.MapStream(rawStream, func(b []byte) []types.Tuple3[[]byte, string, string] {
+		var value []types.Tuple3[[]byte, string, string]
 		encode.Unmarshal(b, &value)
 		return value
 	})
@@ -473,7 +473,7 @@ func (s *KRPC) ClientsStream() (*krpcgo.Stream[[]api.Tuple3[[]byte, string, stri
 func (s *KRPC) CurrentGameScene() (GameScene, error) {
 	var err error
 	var vv GameScene
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_CurrentGameScene",
 		Service:   "KRPC",
 	}
@@ -493,7 +493,7 @@ func (s *KRPC) CurrentGameScene() (GameScene, error) {
 // Allowed game scenes: any.
 func (s *KRPC) CurrentGameSceneStream() (*krpcgo.Stream[GameScene], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_CurrentGameScene",
 		Service:   "KRPC",
 	}
@@ -520,7 +520,7 @@ func (s *KRPC) CurrentGameSceneStream() (*krpcgo.Stream[GameScene], error) {
 func (s *KRPC) Paused() (bool, error) {
 	var err error
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Paused",
 		Service:   "KRPC",
 	}
@@ -540,7 +540,7 @@ func (s *KRPC) Paused() (bool, error) {
 // Allowed game scenes: any.
 func (s *KRPC) PausedStream() (*krpcgo.Stream[bool], error) {
 	var err error
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "get_Paused",
 		Service:   "KRPC",
 	}
@@ -567,7 +567,7 @@ func (s *KRPC) PausedStream() (*krpcgo.Stream[bool], error) {
 func (s *KRPC) SetPaused(value bool) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "set_Paused",
 		Service:   "KRPC",
 	}
@@ -575,7 +575,7 @@ func (s *KRPC) SetPaused(value bool) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -593,7 +593,7 @@ func (s *Expression) ConstantDouble() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_ConstantDouble",
 		Service:   "KRPC",
 	}
@@ -601,7 +601,7 @@ func (s *Expression) ConstantDouble() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -624,7 +624,7 @@ func (s *Expression) ConstantFloat() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_ConstantFloat",
 		Service:   "KRPC",
 	}
@@ -632,7 +632,7 @@ func (s *Expression) ConstantFloat() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -655,7 +655,7 @@ func (s *Expression) ConstantInt() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_ConstantInt",
 		Service:   "KRPC",
 	}
@@ -663,7 +663,7 @@ func (s *Expression) ConstantInt() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -686,7 +686,7 @@ func (s *Expression) ConstantBool() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_ConstantBool",
 		Service:   "KRPC",
 	}
@@ -694,7 +694,7 @@ func (s *Expression) ConstantBool() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -717,7 +717,7 @@ func (s *Expression) ConstantString() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_ConstantString",
 		Service:   "KRPC",
 	}
@@ -725,7 +725,7 @@ func (s *Expression) ConstantString() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -748,7 +748,7 @@ func (s *Expression) Call() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Call",
 		Service:   "KRPC",
 	}
@@ -756,7 +756,7 @@ func (s *Expression) Call() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -779,7 +779,7 @@ func (s *Expression) Equal(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Equal",
 		Service:   "KRPC",
 	}
@@ -787,7 +787,7 @@ func (s *Expression) Equal(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -795,7 +795,7 @@ func (s *Expression) Equal(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -818,7 +818,7 @@ func (s *Expression) NotEqual(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_NotEqual",
 		Service:   "KRPC",
 	}
@@ -826,7 +826,7 @@ func (s *Expression) NotEqual(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -834,7 +834,7 @@ func (s *Expression) NotEqual(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -857,7 +857,7 @@ func (s *Expression) GreaterThan(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_GreaterThan",
 		Service:   "KRPC",
 	}
@@ -865,7 +865,7 @@ func (s *Expression) GreaterThan(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -873,7 +873,7 @@ func (s *Expression) GreaterThan(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -896,7 +896,7 @@ func (s *Expression) GreaterThanOrEqual(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_GreaterThanOrEqual",
 		Service:   "KRPC",
 	}
@@ -904,7 +904,7 @@ func (s *Expression) GreaterThanOrEqual(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -912,7 +912,7 @@ func (s *Expression) GreaterThanOrEqual(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -935,7 +935,7 @@ func (s *Expression) LessThan(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_LessThan",
 		Service:   "KRPC",
 	}
@@ -943,7 +943,7 @@ func (s *Expression) LessThan(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -951,7 +951,7 @@ func (s *Expression) LessThan(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -974,7 +974,7 @@ func (s *Expression) LessThanOrEqual(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_LessThanOrEqual",
 		Service:   "KRPC",
 	}
@@ -982,7 +982,7 @@ func (s *Expression) LessThanOrEqual(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -990,7 +990,7 @@ func (s *Expression) LessThanOrEqual(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1013,7 +1013,7 @@ func (s *Expression) And(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_And",
 		Service:   "KRPC",
 	}
@@ -1021,7 +1021,7 @@ func (s *Expression) And(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1029,7 +1029,7 @@ func (s *Expression) And(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1052,7 +1052,7 @@ func (s *Expression) Or(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Or",
 		Service:   "KRPC",
 	}
@@ -1060,7 +1060,7 @@ func (s *Expression) Or(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1068,7 +1068,7 @@ func (s *Expression) Or(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1091,7 +1091,7 @@ func (s *Expression) ExclusiveOr(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_ExclusiveOr",
 		Service:   "KRPC",
 	}
@@ -1099,7 +1099,7 @@ func (s *Expression) ExclusiveOr(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1107,7 +1107,7 @@ func (s *Expression) ExclusiveOr(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1130,7 +1130,7 @@ func (s *Expression) Not() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Not",
 		Service:   "KRPC",
 	}
@@ -1138,7 +1138,7 @@ func (s *Expression) Not() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1161,7 +1161,7 @@ func (s *Expression) Add(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Add",
 		Service:   "KRPC",
 	}
@@ -1169,7 +1169,7 @@ func (s *Expression) Add(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1177,7 +1177,7 @@ func (s *Expression) Add(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1200,7 +1200,7 @@ func (s *Expression) Subtract(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Subtract",
 		Service:   "KRPC",
 	}
@@ -1208,7 +1208,7 @@ func (s *Expression) Subtract(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1216,7 +1216,7 @@ func (s *Expression) Subtract(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1239,7 +1239,7 @@ func (s *Expression) Multiply(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Multiply",
 		Service:   "KRPC",
 	}
@@ -1247,7 +1247,7 @@ func (s *Expression) Multiply(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1255,7 +1255,7 @@ func (s *Expression) Multiply(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1278,7 +1278,7 @@ func (s *Expression) Divide(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Divide",
 		Service:   "KRPC",
 	}
@@ -1286,7 +1286,7 @@ func (s *Expression) Divide(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1294,7 +1294,7 @@ func (s *Expression) Divide(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1317,7 +1317,7 @@ func (s *Expression) Modulo(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Modulo",
 		Service:   "KRPC",
 	}
@@ -1325,7 +1325,7 @@ func (s *Expression) Modulo(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1333,7 +1333,7 @@ func (s *Expression) Modulo(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1356,7 +1356,7 @@ func (s *Expression) Power(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Power",
 		Service:   "KRPC",
 	}
@@ -1364,7 +1364,7 @@ func (s *Expression) Power(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1372,7 +1372,7 @@ func (s *Expression) Power(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1395,7 +1395,7 @@ func (s *Expression) LeftShift(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_LeftShift",
 		Service:   "KRPC",
 	}
@@ -1403,7 +1403,7 @@ func (s *Expression) LeftShift(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1411,7 +1411,7 @@ func (s *Expression) LeftShift(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1434,7 +1434,7 @@ func (s *Expression) RightShift(arg1 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_RightShift",
 		Service:   "KRPC",
 	}
@@ -1442,7 +1442,7 @@ func (s *Expression) RightShift(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1450,7 +1450,7 @@ func (s *Expression) RightShift(arg1 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1473,7 +1473,7 @@ func (s *Expression) Cast(t *Type) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Cast",
 		Service:   "KRPC",
 	}
@@ -1481,7 +1481,7 @@ func (s *Expression) Cast(t *Type) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1489,7 +1489,7 @@ func (s *Expression) Cast(t *Type) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1512,7 +1512,7 @@ func (s *Expression) Parameter(t *Type) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Parameter",
 		Service:   "KRPC",
 	}
@@ -1520,7 +1520,7 @@ func (s *Expression) Parameter(t *Type) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1528,7 +1528,7 @@ func (s *Expression) Parameter(t *Type) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1551,7 +1551,7 @@ func (s *Expression) Function(body *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Function",
 		Service:   "KRPC",
 	}
@@ -1559,7 +1559,7 @@ func (s *Expression) Function(body *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1567,7 +1567,7 @@ func (s *Expression) Function(body *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1590,7 +1590,7 @@ func (s *Expression) Invoke(args map[string]*Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Invoke",
 		Service:   "KRPC",
 	}
@@ -1598,7 +1598,7 @@ func (s *Expression) Invoke(args map[string]*Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1606,7 +1606,7 @@ func (s *Expression) Invoke(args map[string]*Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1629,7 +1629,7 @@ func (s *Expression) CreateTuple() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_CreateTuple",
 		Service:   "KRPC",
 	}
@@ -1637,7 +1637,7 @@ func (s *Expression) CreateTuple() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1660,7 +1660,7 @@ func (s *Expression) CreateList() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_CreateList",
 		Service:   "KRPC",
 	}
@@ -1668,7 +1668,7 @@ func (s *Expression) CreateList() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1691,7 +1691,7 @@ func (s *Expression) CreateSet() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_CreateSet",
 		Service:   "KRPC",
 	}
@@ -1699,7 +1699,7 @@ func (s *Expression) CreateSet() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1723,7 +1723,7 @@ func (s *Expression) CreateDictionary(values []*Expression) (*Expression, error)
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_CreateDictionary",
 		Service:   "KRPC",
 	}
@@ -1731,7 +1731,7 @@ func (s *Expression) CreateDictionary(values []*Expression) (*Expression, error)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1739,7 +1739,7 @@ func (s *Expression) CreateDictionary(values []*Expression) (*Expression, error)
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1762,7 +1762,7 @@ func (s *Expression) ToList() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_ToList",
 		Service:   "KRPC",
 	}
@@ -1770,7 +1770,7 @@ func (s *Expression) ToList() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1793,7 +1793,7 @@ func (s *Expression) ToSet() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_ToSet",
 		Service:   "KRPC",
 	}
@@ -1801,7 +1801,7 @@ func (s *Expression) ToSet() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1824,7 +1824,7 @@ func (s *Expression) Get(index *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Get",
 		Service:   "KRPC",
 	}
@@ -1832,7 +1832,7 @@ func (s *Expression) Get(index *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1840,7 +1840,7 @@ func (s *Expression) Get(index *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -1863,7 +1863,7 @@ func (s *Expression) Count() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Count",
 		Service:   "KRPC",
 	}
@@ -1871,7 +1871,7 @@ func (s *Expression) Count() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1894,7 +1894,7 @@ func (s *Expression) Sum() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Sum",
 		Service:   "KRPC",
 	}
@@ -1902,7 +1902,7 @@ func (s *Expression) Sum() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1925,7 +1925,7 @@ func (s *Expression) Max() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Max",
 		Service:   "KRPC",
 	}
@@ -1933,7 +1933,7 @@ func (s *Expression) Max() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1956,7 +1956,7 @@ func (s *Expression) Min() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Min",
 		Service:   "KRPC",
 	}
@@ -1964,7 +1964,7 @@ func (s *Expression) Min() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -1987,7 +1987,7 @@ func (s *Expression) Average() (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Average",
 		Service:   "KRPC",
 	}
@@ -1995,7 +1995,7 @@ func (s *Expression) Average() (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2018,7 +2018,7 @@ func (s *Expression) Select(f *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Select",
 		Service:   "KRPC",
 	}
@@ -2026,7 +2026,7 @@ func (s *Expression) Select(f *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2034,7 +2034,7 @@ func (s *Expression) Select(f *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2057,7 +2057,7 @@ func (s *Expression) Where(f *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Where",
 		Service:   "KRPC",
 	}
@@ -2065,7 +2065,7 @@ func (s *Expression) Where(f *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2073,7 +2073,7 @@ func (s *Expression) Where(f *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2096,7 +2096,7 @@ func (s *Expression) Contains(value *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Contains",
 		Service:   "KRPC",
 	}
@@ -2104,7 +2104,7 @@ func (s *Expression) Contains(value *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2112,7 +2112,7 @@ func (s *Expression) Contains(value *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2135,7 +2135,7 @@ func (s *Expression) Aggregate(f *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Aggregate",
 		Service:   "KRPC",
 	}
@@ -2143,7 +2143,7 @@ func (s *Expression) Aggregate(f *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2151,7 +2151,7 @@ func (s *Expression) Aggregate(f *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2175,7 +2175,7 @@ func (s *Expression) AggregateWithSeed(seed *Expression, f *Expression) (*Expres
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_AggregateWithSeed",
 		Service:   "KRPC",
 	}
@@ -2183,7 +2183,7 @@ func (s *Expression) AggregateWithSeed(seed *Expression, f *Expression) (*Expres
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2191,7 +2191,7 @@ func (s *Expression) AggregateWithSeed(seed *Expression, f *Expression) (*Expres
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2199,7 +2199,7 @@ func (s *Expression) AggregateWithSeed(seed *Expression, f *Expression) (*Expres
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
@@ -2222,7 +2222,7 @@ func (s *Expression) Concat(arg2 *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Concat",
 		Service:   "KRPC",
 	}
@@ -2230,7 +2230,7 @@ func (s *Expression) Concat(arg2 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2238,7 +2238,7 @@ func (s *Expression) Concat(arg2 *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2261,7 +2261,7 @@ func (s *Expression) OrderBy(key *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_OrderBy",
 		Service:   "KRPC",
 	}
@@ -2269,7 +2269,7 @@ func (s *Expression) OrderBy(key *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2277,7 +2277,7 @@ func (s *Expression) OrderBy(key *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2301,7 +2301,7 @@ func (s *Expression) All(predicate *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_All",
 		Service:   "KRPC",
 	}
@@ -2309,7 +2309,7 @@ func (s *Expression) All(predicate *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2317,7 +2317,7 @@ func (s *Expression) All(predicate *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2341,7 +2341,7 @@ func (s *Expression) Any(predicate *Expression) (*Expression, error) {
 	var err error
 	var argBytes []byte
 	var vv Expression
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Expression_static_Any",
 		Service:   "KRPC",
 	}
@@ -2349,7 +2349,7 @@ func (s *Expression) Any(predicate *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
@@ -2357,7 +2357,7 @@ func (s *Expression) Any(predicate *Expression) (*Expression, error) {
 	if err != nil {
 		return &vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
@@ -2379,7 +2379,7 @@ func (s *Expression) Any(predicate *Expression) (*Expression, error) {
 func (s *Type) Double() (*Type, error) {
 	var err error
 	var vv Type
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Type_static_Double",
 		Service:   "KRPC",
 	}
@@ -2401,7 +2401,7 @@ func (s *Type) Double() (*Type, error) {
 func (s *Type) Float() (*Type, error) {
 	var err error
 	var vv Type
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Type_static_Float",
 		Service:   "KRPC",
 	}
@@ -2423,7 +2423,7 @@ func (s *Type) Float() (*Type, error) {
 func (s *Type) Int() (*Type, error) {
 	var err error
 	var vv Type
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Type_static_Int",
 		Service:   "KRPC",
 	}
@@ -2445,7 +2445,7 @@ func (s *Type) Int() (*Type, error) {
 func (s *Type) Bool() (*Type, error) {
 	var err error
 	var vv Type
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Type_static_Bool",
 		Service:   "KRPC",
 	}
@@ -2467,7 +2467,7 @@ func (s *Type) Bool() (*Type, error) {
 func (s *Type) String() (*Type, error) {
 	var err error
 	var vv Type
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "Type_static_String",
 		Service:   "KRPC",
 	}

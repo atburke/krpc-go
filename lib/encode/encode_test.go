@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/atburke/krpc-go/lib/api"
 	"github.com/atburke/krpc-go/lib/service"
+	"github.com/atburke/krpc-go/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -91,7 +91,7 @@ func TestMarshalAndUnmarshal(t *testing.T) {
 		},
 		{
 			name:  "tuple",
-			input: api.NewTuple3("test", uint64(77), float64(6.28)),
+			input: types.NewTuple3("test", uint64(77), float64(6.28)),
 		},
 		{
 			name:  "slice of pointers",

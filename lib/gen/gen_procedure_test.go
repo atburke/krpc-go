@@ -5,9 +5,9 @@ package gentest
 
 import (
 	krpcgo "github.com/atburke/krpc-go"
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
 	krpc "github.com/atburke/krpc-go/krpc"
+	types "github.com/atburke/krpc-go/types"
 	tracerr "github.com/ztrue/tracerr"
 )
 
@@ -18,7 +18,7 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 	var err error
 	var argBytes []byte
 	var vv bool
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "MyProcedure",
 		Service: "MyService",
 	}
@@ -26,7 +26,7 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value: argBytes,
 	})
@@ -34,7 +34,7 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 	if err != nil {
 		return vv, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value: argBytes,
 	})
@@ -55,7 +55,7 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 func (s *MyService) MyProcedureStream(param1 uint64, param2 string) (*krpcgo.Stream[bool], error) {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "MyProcedure",
 		Service: "MyService",
 	}
@@ -63,7 +63,7 @@ func (s *MyService) MyProcedureStream(param1 uint64, param2 string) (*krpcgo.Str
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value: argBytes,
 	})
@@ -71,7 +71,7 @@ func (s *MyService) MyProcedureStream(param1 uint64, param2 string) (*krpcgo.Str
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value: argBytes,
 	})
@@ -97,18 +97,18 @@ const testClassSetter = `
 package gentest
 
 import (
-	api "github.com/atburke/krpc-go/lib/api"
 	encode "github.com/atburke/krpc-go/lib/encode"
+	types "github.com/atburke/krpc-go/types"
 	tracerr "github.com/ztrue/tracerr"
 )
 
 // SetMyProperty - test class setter generation.
 //
 // Allowed game scenes: any.
-func (s *MyClass) SetMyProperty(param1 api.Tuple2[string, uint64]) error {
+func (s *MyClass) SetMyProperty(param1 types.Tuple2[string, uint64]) error {
 	var err error
 	var argBytes []byte
-	request := &api.ProcedureCall{
+	request := &types.ProcedureCall{
 		Procedure: "MyClass_set_MyProperty",
 		Service: "MyService",
 	}
@@ -116,7 +116,7 @@ func (s *MyClass) SetMyProperty(param1 api.Tuple2[string, uint64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x0),
 		Value: argBytes,
 	})
@@ -124,7 +124,7 @@ func (s *MyClass) SetMyProperty(param1 api.Tuple2[string, uint64]) error {
 	if err != nil {
 		return tracerr.Wrap(err)
 	}
-	request.Arguments = append(request.Arguments, &api.Argument{
+	request.Arguments = append(request.Arguments, &types.Argument{
 		Position: uint32(0x1),
 		Value: argBytes,
 	})
