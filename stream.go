@@ -136,12 +136,16 @@ func (sm *streamManager) newStream() *Stream[[]byte] {
 	c := make(chan []byte)
 	idx := sm.newID()
 	sm.channels[idx] = c
-	return &Stream[[]byte]{
+	s := &Stream[[]byte]{
 		C:     c,
 		ID:    sm.id,
 		clone: sm.newStream,
-		close: func() { sm.deleteStream(idx) },
 	}
+	s.AddCloser(func() error {
+		sm.deleteStream(idx)
+		return nil
+	})
+	return s
 }
 
 func (sm *streamManager) deleteStream(idx int) {
@@ -166,10 +170,10 @@ func (sm *streamManager) write(b []byte) {
 
 // Stream is a struct for receiving stream data.
 type Stream[T any] struct {
-	C     chan T
-	ID    uint64
-	clone func() *Stream[T]
-	close func()
+	C       chan T
+	ID      uint64
+	clone   func() *Stream[T]
+	closers []func() error
 }
 
 // Clone clones the stream for another thread to listen on.
@@ -177,9 +181,17 @@ func (s *Stream[T]) Clone() *Stream[T] {
 	return s.clone()
 }
 
+func (s *Stream[T]) AddCloser(close func() error) {
+	s.closers = append(s.closers, close)
+}
+
 // Close closes the stream.
 func (s *Stream[T]) Close() error {
-	s.close()
+	for _, close := range s.closers {
+		if err := close(); err != nil {
+			return tracerr.Wrap(err)
+		}
+	}
 	return nil
 }
 
@@ -192,11 +204,12 @@ func MapStream[S, T any](src *Stream[S], m func(S) T) *Stream[T] {
 		clone: func() *Stream[T] {
 			return MapStream(src.Clone(), m)
 		},
-		close: func() {
-			cancel()
-			src.close()
-		},
 	}
+
+	dst.AddCloser(func() error {
+		cancel()
+		return tracerr.Wrap(src.Close())
+	})
 
 	go func() {
 		for {

@@ -54,9 +54,12 @@ func TestLaunch(t *testing.T) {
 	require.NoError(t, err)
 	apoapsisStream, err := orbit.StreamApoapsisAltitude()
 	require.NoError(t, err)
+	qStream, err := flight.StreamDynamicPressure()
+	require.NoError(t, err)
 	t.Cleanup(func() {
 		require.NoError(t, altitudeStream.Close())
 		require.NoError(t, apoapsisStream.Close())
+		require.NoError(t, qStream.Close())
 	})
 
 	control, err := vessel.Control()
@@ -118,6 +121,8 @@ func TestLaunch(t *testing.T) {
 	turnAngle := 0.0
 	var apoapsis float64
 
+	limitingThrottle := false
+
 	for apoapsis < 0.9*targetAltitude {
 		select {
 		case altitude := <-altitudeStream.C:
@@ -131,6 +136,16 @@ func TestLaunch(t *testing.T) {
 				require.NoError(t, autopilot.TargetPitchAndHeading(float32(90-turnAngle), 90))
 			}
 		case apoapsis = <-apoapsisStream.C:
+
+			// Lazy Q limiting
+		case q := <-qStream.C:
+			if q >= 20000 && !limitingThrottle {
+				limitingThrottle = true
+				require.NoError(t, control.SetThrottle(0.5))
+			} else if q < 20000 && limitingThrottle {
+				limitingThrottle = false
+				require.NoError(t, control.SetThrottle(1.0))
+			}
 		case <-ctx.Done():
 			return
 		}

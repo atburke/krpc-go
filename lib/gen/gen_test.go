@@ -135,7 +135,7 @@ const testEnum = `
 package gentest
 
 
-// Test is a test enum.
+// Test - a test enum.
 type Test int32
 
 const (
@@ -192,7 +192,7 @@ const testException = `
 package gentest
 
 
-// ErrTest means the exception generating code is being tested.
+// ErrTest - the exception generating code is being tested.
 type ErrTest struct {
 	msg string
 }

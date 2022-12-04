@@ -1,4 +1,4 @@
-.PHONY: gen fmt test gen-clean
+.PHONY: gen fmt test integration gen-clean
 
 gen:
 	go generate ./...
@@ -10,4 +10,7 @@ fmt:
 	gofmt -w .
 
 test:
-	go test ./...
+	go test . ./lib/...
+
+integration:
+	go test ./integration

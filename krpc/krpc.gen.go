@@ -173,6 +173,9 @@ func (s *KRPC) StreamGetClientID() (*krpcgo.Stream[[]byte], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -218,6 +221,9 @@ func (s *KRPC) StreamGetClientName() (*krpcgo.Stream[string], error) {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -455,6 +461,9 @@ func (s *KRPC) StreamClients() (*krpcgo.Stream[[]api.Tuple3[[]byte, string, stri
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -499,6 +508,9 @@ func (s *KRPC) StreamCurrentGameScene() (*krpcgo.Stream[GameScene], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -542,6 +554,9 @@ func (s *KRPC) StreamPaused() (*krpcgo.Stream[bool], error) {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }

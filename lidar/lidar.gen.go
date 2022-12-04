@@ -106,6 +106,9 @@ func (s *LiDAR) StreamAvailable() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -198,6 +201,9 @@ func (s *Laser) StreamCloud() (*krpcgo.Stream[[]float64], error) {
 		var value []float64
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }

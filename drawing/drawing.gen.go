@@ -445,6 +445,9 @@ func (s *Line) StreamStart() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -539,6 +542,9 @@ func (s *Line) StreamEnd() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]
 		var value api.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -635,6 +641,9 @@ func (s *Line) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -729,6 +738,9 @@ func (s *Line) StreamThickness() (*krpcgo.Stream[float32], error) {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -889,6 +901,9 @@ func (s *Line) StreamVisible() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -985,6 +1000,9 @@ func (s *Line) StreamMaterial() (*krpcgo.Stream[string], error) {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1107,6 +1125,9 @@ func (s *Polygon) StreamVertices() (*krpcgo.Stream[[]api.Tuple3[float64, float64
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1202,6 +1223,9 @@ func (s *Polygon) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1296,6 +1320,9 @@ func (s *Polygon) StreamThickness() (*krpcgo.Stream[float32], error) {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1456,6 +1483,9 @@ func (s *Polygon) StreamVisible() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1553,6 +1583,9 @@ func (s *Polygon) StreamMaterial() (*krpcgo.Stream[string], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1630,6 +1663,9 @@ func (s *Text) StreamAvailableFonts() (*krpcgo.Stream[[]string], error) {
 		var value []string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1717,6 +1753,9 @@ func (s *Text) StreamPosition() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		var value api.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1813,6 +1852,9 @@ func (s *Text) StreamRotation() (*krpcgo.Stream[api.Tuple4[float64, float64, flo
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1907,6 +1949,9 @@ func (s *Text) StreamContent() (*krpcgo.Stream[string], error) {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -2003,6 +2048,9 @@ func (s *Text) StreamFont() (*krpcgo.Stream[string], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2097,6 +2145,9 @@ func (s *Text) StreamSize() (*krpcgo.Stream[int32], error) {
 		var value int32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -2193,6 +2244,9 @@ func (s *Text) StreamCharacterSize() (*krpcgo.Stream[float32], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2287,6 +2341,9 @@ func (s *Text) StreamStyle() (*krpcgo.Stream[ui.FontStyle], error) {
 		var value ui.FontStyle
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -2383,6 +2440,9 @@ func (s *Text) StreamAlignment() (*krpcgo.Stream[ui.TextAlignment], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2477,6 +2537,9 @@ func (s *Text) StreamLineSpacing() (*krpcgo.Stream[float32], error) {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -2573,6 +2636,9 @@ func (s *Text) StreamAnchor() (*krpcgo.Stream[ui.TextAnchor], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2667,6 +2733,9 @@ func (s *Text) StreamColor() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		var value api.Tuple3[float64, float64, float64]
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -2827,6 +2896,9 @@ func (s *Text) StreamVisible() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2923,6 +2995,9 @@ func (s *Text) StreamMaterial() (*krpcgo.Stream[string], error) {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }

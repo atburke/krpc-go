@@ -178,6 +178,9 @@ func (s *RemoteTech) StreamAvailable() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -221,6 +224,9 @@ func (s *RemoteTech) StreamGroundStations() (*krpcgo.Stream[[]string], error) {
 		var value []string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -315,6 +321,9 @@ func (s *Antenna) StreamHasConnection() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -388,6 +397,9 @@ func (s *Antenna) StreamTarget() (*krpcgo.Stream[Target], error) {
 		var value Target
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -553,6 +565,9 @@ func (s *Antenna) StreamTargetGroundStation() (*krpcgo.Stream[string], error) {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -731,6 +746,9 @@ func (s *Comms) StreamSignalDelayToVessel(other *spacecenter.Vessel) (*krpcgo.St
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -824,6 +842,9 @@ func (s *Comms) StreamHasLocalControl() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -886,6 +907,9 @@ func (s *Comms) StreamHasFlightComputer() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -947,6 +971,9 @@ func (s *Comms) StreamHasConnection() (*krpcgo.Stream[bool], error) {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1012,6 +1039,9 @@ func (s *Comms) StreamHasConnectionToGroundStation() (*krpcgo.Stream[bool], erro
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1073,6 +1103,9 @@ func (s *Comms) StreamSignalDelay() (*krpcgo.Stream[float64], error) {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1138,6 +1171,9 @@ func (s *Comms) StreamSignalDelayToGroundStation() (*krpcgo.Stream[float64], err
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1199,6 +1235,9 @@ func (s *Comms) StreamAntennas() (*krpcgo.Stream[[]*Antenna], error) {
 		var value []*Antenna
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }

@@ -106,6 +106,9 @@ func (s *DockingCamera) StreamAvailable() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -198,6 +201,9 @@ func (s *Camera) StreamImage() (*krpcgo.Stream[[]byte], error) {
 		var value []byte
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }

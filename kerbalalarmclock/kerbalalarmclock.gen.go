@@ -215,6 +215,9 @@ func (s *KerbalAlarmClock) StreamAlarmsWithType(t AlarmType) (*krpcgo.Stream[[]*
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -306,6 +309,9 @@ func (s *KerbalAlarmClock) StreamAvailable() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -349,6 +355,9 @@ func (s *KerbalAlarmClock) StreamAlarms() (*krpcgo.Stream[[]*Alarm], error) {
 		var value []*Alarm
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -436,6 +445,9 @@ func (s *Alarm) StreamAction() (*krpcgo.Stream[AlarmAction], error) {
 		var value AlarmAction
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -533,6 +545,9 @@ func (s *Alarm) StreamMargin() (*krpcgo.Stream[float64], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -627,6 +642,9 @@ func (s *Alarm) StreamTime() (*krpcgo.Stream[float64], error) {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -723,6 +741,9 @@ func (s *Alarm) StreamType() (*krpcgo.Stream[AlarmType], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -785,6 +806,9 @@ func (s *Alarm) StreamID() (*krpcgo.Stream[string], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -846,6 +870,9 @@ func (s *Alarm) StreamName() (*krpcgo.Stream[string], error) {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -942,6 +969,9 @@ func (s *Alarm) StreamNotes() (*krpcgo.Stream[string], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1037,6 +1067,9 @@ func (s *Alarm) StreamRemaining() (*krpcgo.Stream[float64], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1098,6 +1131,9 @@ func (s *Alarm) StreamRepeat() (*krpcgo.Stream[bool], error) {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1195,6 +1231,9 @@ func (s *Alarm) StreamRepeatPeriod() (*krpcgo.Stream[float64], error) {
 		var value float64
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }

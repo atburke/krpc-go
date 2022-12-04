@@ -135,7 +135,7 @@ func TestGetGoType(t *testing.T) {
 				Name:    "MyClass",
 				Service: "MyService",
 			},
-			expectedType: "MyClass",
+			expectedType: "*MyClass",
 		},
 		{
 			name: "class from another package",
@@ -145,7 +145,7 @@ func TestGetGoType(t *testing.T) {
 				Service: "MyOtherService",
 			},
 			wantService:  "MyOtherService",
-			expectedType: "myotherservice.MyClass",
+			expectedType: "*myotherservice.MyClass",
 		},
 		{
 			name: "special",
@@ -153,7 +153,7 @@ func TestGetGoType(t *testing.T) {
 				Code: api.Type_PROCEDURE_CALL,
 			},
 			wantAPI:      true,
-			expectedType: "api.ProcedureCall",
+			expectedType: "*api.ProcedureCall",
 		},
 		{
 			name: "tuple",

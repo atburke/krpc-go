@@ -115,6 +115,9 @@ func (s *InfernalRobotics) StreamServoGroups(vessel *spacecenter.Vessel) (*krpcg
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -242,6 +245,9 @@ func (s *InfernalRobotics) StreamAvailable() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -285,6 +291,9 @@ func (s *InfernalRobotics) StreamReady() (*krpcgo.Stream[bool], error) {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -540,6 +549,9 @@ func (s *Servo) StreamName() (*krpcgo.Stream[string], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -699,6 +711,9 @@ func (s *Servo) StreamPosition() (*krpcgo.Stream[float32], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -762,6 +777,9 @@ func (s *Servo) StreamMinConfigPosition() (*krpcgo.Stream[float32], error) {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -827,6 +845,9 @@ func (s *Servo) StreamMaxConfigPosition() (*krpcgo.Stream[float32], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -890,6 +911,9 @@ func (s *Servo) StreamMinPosition() (*krpcgo.Stream[float32], error) {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -989,6 +1013,9 @@ func (s *Servo) StreamMaxPosition() (*krpcgo.Stream[float32], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1087,6 +1114,9 @@ func (s *Servo) StreamConfigSpeed() (*krpcgo.Stream[float32], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1150,6 +1180,9 @@ func (s *Servo) StreamSpeed() (*krpcgo.Stream[float32], error) {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1247,6 +1280,9 @@ func (s *Servo) StreamCurrentSpeed() (*krpcgo.Stream[float32], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1341,6 +1377,9 @@ func (s *Servo) StreamAcceleration() (*krpcgo.Stream[float32], error) {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1437,6 +1476,9 @@ func (s *Servo) StreamIsMoving() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1499,6 +1541,9 @@ func (s *Servo) StreamIsFreeMoving() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -1560,6 +1605,9 @@ func (s *Servo) StreamIsLocked() (*krpcgo.Stream[bool], error) {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1655,6 +1703,9 @@ func (s *Servo) StreamIsAxisInverted() (*krpcgo.Stream[bool], error) {
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -1941,6 +1992,9 @@ func (s *ServoGroup) StreamName() (*krpcgo.Stream[string], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2035,6 +2089,9 @@ func (s *ServoGroup) StreamForwardKey() (*krpcgo.Stream[string], error) {
 		var value string
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -2131,6 +2188,9 @@ func (s *ServoGroup) StreamReverseKey() (*krpcgo.Stream[string], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2225,6 +2285,9 @@ func (s *ServoGroup) StreamSpeed() (*krpcgo.Stream[float32], error) {
 		var value float32
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -2321,6 +2384,9 @@ func (s *ServoGroup) StreamExpanded() (*krpcgo.Stream[bool], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2416,6 +2482,9 @@ func (s *ServoGroup) StreamServos() (*krpcgo.Stream[[]*Servo], error) {
 		encode.Unmarshal(b, &value)
 		return value
 	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
+	})
 	return stream, nil
 }
 
@@ -2477,6 +2546,9 @@ func (s *ServoGroup) StreamParts() (*krpcgo.Stream[[]*spacecenter.Part], error) 
 		var value []*spacecenter.Part
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }

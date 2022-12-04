@@ -275,6 +275,11 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 				jen.Return(jen.Id("value")),
 			),
 		),
+		jen.Id("stream").Dot("AddCloser").Call(jen.Func().Params().Error().Block(
+			jen.Return(jen.Qual(tracerrPkg, "Wrap").Call(
+				jen.Id("krpc").Dot("RemoveStream").Call(jen.Id("st").Dot("Id")),
+			)),
+		)),
 		jen.Return(jen.Id("stream"), jen.Nil()),
 	)
 

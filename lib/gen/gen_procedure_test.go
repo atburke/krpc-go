@@ -11,7 +11,7 @@ import (
 	tracerr "github.com/ztrue/tracerr"
 )
 
-// MyProcedure will test procedure generation.
+// MyProcedure - test procedure generation.
 //
 // Allowed game scenes: FLIGHT.
 func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
@@ -49,7 +49,7 @@ func (s *MyService) MyProcedure(param1 uint64, param2 string) (bool, error) {
 	return vv, nil
 }
 
-// StreamMyProcedure will test procedure generation.
+// StreamMyProcedure - test procedure generation.
 //
 // Allowed game scenes: FLIGHT.
 func (s *MyService) StreamMyProcedure(param1 uint64, param2 string) (*krpcgo.Stream[bool], error) {
@@ -76,7 +76,7 @@ func (s *MyService) StreamMyProcedure(param1 uint64, param2 string) (*krpcgo.Str
 		Value: argBytes,
 	})
 	krpc := krpc.NewKRPC(s.Client)
-	st, err := krpc.AddStream(*request, true)
+	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
 	}
@@ -85,6 +85,9 @@ func (s *MyService) StreamMyProcedure(param1 uint64, param2 string) (*krpcgo.Str
 		var value bool
 		encode.Unmarshal(b, &value)
 		return value
+	})
+	stream.AddCloser(func() error {
+		return tracerr.Wrap(krpc.RemoveStream(st.Id))
 	})
 	return stream, nil
 }
@@ -99,7 +102,7 @@ import (
 	tracerr "github.com/ztrue/tracerr"
 )
 
-// SetMyProperty will test class setter generation.
+// SetMyProperty - test class setter generation.
 //
 // Allowed game scenes: any.
 func (s *MyClass) SetMyProperty(param1 api.Tuple2[string, uint64]) error {
