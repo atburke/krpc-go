@@ -29,8 +29,8 @@ type LiDAR struct {
 	Client *krpcgo.KRPCClient
 }
 
-// NewLiDAR creates a new LiDAR.
-func NewLiDAR(client *krpcgo.KRPCClient) *LiDAR {
+// New creates a new LiDAR.
+func New(client *krpcgo.KRPCClient) *LiDAR {
 	return &LiDAR{Client: client}
 }
 
@@ -95,7 +95,7 @@ func (s *LiDAR) AvailableStream() (*krpcgo.Stream[bool], error) {
 		Procedure: "get_Available",
 		Service:   "LiDAR",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -191,7 +191,7 @@ func (s *Laser) CloudStream() (*krpcgo.Stream[[]float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)

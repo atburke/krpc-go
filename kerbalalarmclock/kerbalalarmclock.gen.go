@@ -116,8 +116,8 @@ type KerbalAlarmClock struct {
 	Client *krpcgo.KRPCClient
 }
 
-// NewKerbalAlarmClock creates a new KerbalAlarmClock.
-func NewKerbalAlarmClock(client *krpcgo.KRPCClient) *KerbalAlarmClock {
+// New creates a new KerbalAlarmClock.
+func New(client *krpcgo.KRPCClient) *KerbalAlarmClock {
 	return &KerbalAlarmClock{Client: client}
 }
 
@@ -204,7 +204,7 @@ func (s *KerbalAlarmClock) AlarmsWithTypeStream(t AlarmType) (*krpcgo.Stream[[]*
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -298,7 +298,7 @@ func (s *KerbalAlarmClock) AvailableStream() (*krpcgo.Stream[bool], error) {
 		Procedure: "get_Available",
 		Service:   "KerbalAlarmClock",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -345,7 +345,7 @@ func (s *KerbalAlarmClock) AlarmsStream() (*krpcgo.Stream[[]*Alarm], error) {
 		Procedure: "get_Alarms",
 		Service:   "KerbalAlarmClock",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -435,7 +435,7 @@ func (s *Alarm) ActionStream() (*krpcgo.Stream[AlarmAction], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -534,7 +534,7 @@ func (s *Alarm) MarginStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -632,7 +632,7 @@ func (s *Alarm) TimeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -730,7 +730,7 @@ func (s *Alarm) TypeStream() (*krpcgo.Stream[AlarmType], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -795,7 +795,7 @@ func (s *Alarm) IDStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -860,7 +860,7 @@ func (s *Alarm) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -958,7 +958,7 @@ func (s *Alarm) NotesStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1056,7 +1056,7 @@ func (s *Alarm) RemainingStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1121,7 +1121,7 @@ func (s *Alarm) RepeatStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1221,7 +1221,7 @@ func (s *Alarm) RepeatPeriodStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)

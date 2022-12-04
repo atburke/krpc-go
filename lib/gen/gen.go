@@ -51,8 +51,8 @@ func GenerateService(f *jen.File, service *api.Service) error {
 		jen.Id("Client").Op("*").Qual(krpcPkg, "KRPCClient"),
 	)
 
-	f.Comment(fmt.Sprintf("New%v creates a new %v.", service.Name, service.Name))
-	f.Func().Id("New" + service.Name).Params(
+	f.Comment(fmt.Sprintf("New creates a new %v.", service.Name))
+	f.Func().Id("New").Params(
 		jen.Id("client").Op("*").Qual(krpcPkg, "KRPCClient"),
 	).Op("*").Id(service.Name).Block(
 		jen.Return(jen.Op("&").Id(service.Name).Values(jen.Dict{

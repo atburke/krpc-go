@@ -54,8 +54,8 @@ type Drawing struct {
 	Client *krpcgo.KRPCClient
 }
 
-// NewDrawing creates a new Drawing.
-func NewDrawing(client *krpcgo.KRPCClient) *Drawing {
+// New creates a new Drawing.
+func New(client *krpcgo.KRPCClient) *Drawing {
 	return &Drawing{Client: client}
 }
 
@@ -434,7 +434,7 @@ func (s *Line) StartStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -532,7 +532,7 @@ func (s *Line) EndStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float64]
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -630,7 +630,7 @@ func (s *Line) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -728,7 +728,7 @@ func (s *Line) ThicknessStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -890,7 +890,7 @@ func (s *Line) VisibleStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -990,7 +990,7 @@ func (s *Line) MaterialStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1114,7 +1114,7 @@ func (s *Polygon) VerticesStream() (*krpcgo.Stream[[]api.Tuple3[float64, float64
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1212,7 +1212,7 @@ func (s *Polygon) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1310,7 +1310,7 @@ func (s *Polygon) ThicknessStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1472,7 +1472,7 @@ func (s *Polygon) VisibleStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1572,7 +1572,7 @@ func (s *Polygon) MaterialStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1653,7 +1653,7 @@ func (s *Text) AvailableFontsStream() (*krpcgo.Stream[[]string], error) {
 		Procedure: "Text_static_AvailableFonts",
 		Service:   "Drawing",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1743,7 +1743,7 @@ func (s *Text) PositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1841,7 +1841,7 @@ func (s *Text) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, flo
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1939,7 +1939,7 @@ func (s *Text) ContentStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2037,7 +2037,7 @@ func (s *Text) FontStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2135,7 +2135,7 @@ func (s *Text) SizeStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2233,7 +2233,7 @@ func (s *Text) CharacterSizeStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2331,7 +2331,7 @@ func (s *Text) StyleStream() (*krpcgo.Stream[ui.FontStyle], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2429,7 +2429,7 @@ func (s *Text) AlignmentStream() (*krpcgo.Stream[ui.TextAlignment], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2527,7 +2527,7 @@ func (s *Text) LineSpacingStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2625,7 +2625,7 @@ func (s *Text) AnchorStream() (*krpcgo.Stream[ui.TextAnchor], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2723,7 +2723,7 @@ func (s *Text) ColorStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float6
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2885,7 +2885,7 @@ func (s *Text) VisibleStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2985,7 +2985,7 @@ func (s *Text) MaterialStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)

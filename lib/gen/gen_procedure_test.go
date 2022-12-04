@@ -75,7 +75,7 @@ func (s *MyService) MyProcedureStream(param1 uint64, param2 string) (*krpcgo.Str
 		Position: uint32(0x1),
 		Value: argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)

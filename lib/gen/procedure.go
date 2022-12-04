@@ -250,9 +250,9 @@ func generateStreamBody(serviceName string, procedure *api.Procedure) (funcBody 
 
 	var krpcConstructor *jen.Statement
 	if serviceName == "KRPC" {
-		krpcConstructor = jen.Id("NewKRPC")
+		krpcConstructor = jen.Id("New")
 	} else {
-		krpcConstructor = jen.Qual(getServicePackage("KRPC"), "NewKRPC")
+		krpcConstructor = jen.Qual(getServicePackage("KRPC"), "New")
 	}
 
 	funcBody = append(funcBody,

@@ -24,7 +24,7 @@ func TestLaunch(t *testing.T) {
 	client := krpcgo.NewKRPCClient(krpcgo.KRPCClientConfig{})
 	require.NoError(t, client.Connect(ctx))
 
-	krpcService := krpc.NewKRPC(client)
+	krpcService := krpc.New(client)
 	require.NoError(t, krpcService.SetPaused(false))
 	t.Cleanup(func() {
 		require.NoError(t, krpcService.SetPaused(true))
@@ -34,7 +34,7 @@ func TestLaunch(t *testing.T) {
 	gamescene, err := krpcService.CurrentGameScene()
 	require.NoError(t, err)
 	require.Equal(t, krpc.GameScene_Flight, gamescene, "Test should be run from the launch pad.")
-	sc := spacecenter.NewSpaceCenter(client)
+	sc := spacecenter.New(client)
 
 	vessel, err := sc.ActiveVessel()
 	require.NoError(t, err)

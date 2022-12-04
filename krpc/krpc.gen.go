@@ -127,8 +127,8 @@ type KRPC struct {
 	Client *krpcgo.KRPCClient
 }
 
-// NewKRPC creates a new KRPC.
-func NewKRPC(client *krpcgo.KRPCClient) *KRPC {
+// New creates a new KRPC.
+func New(client *krpcgo.KRPCClient) *KRPC {
 	return &KRPC{Client: client}
 }
 
@@ -162,7 +162,7 @@ func (s *KRPC) GetClientIDStream() (*krpcgo.Stream[[]byte], error) {
 		Procedure: "GetClientID",
 		Service:   "KRPC",
 	}
-	krpc := NewKRPC(s.Client)
+	krpc := New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -211,7 +211,7 @@ func (s *KRPC) GetClientNameStream() (*krpcgo.Stream[string], error) {
 		Procedure: "GetClientName",
 		Service:   "KRPC",
 	}
-	krpc := NewKRPC(s.Client)
+	krpc := New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -450,7 +450,7 @@ func (s *KRPC) ClientsStream() (*krpcgo.Stream[[]api.Tuple3[[]byte, string, stri
 		Procedure: "get_Clients",
 		Service:   "KRPC",
 	}
-	krpc := NewKRPC(s.Client)
+	krpc := New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -497,7 +497,7 @@ func (s *KRPC) CurrentGameSceneStream() (*krpcgo.Stream[GameScene], error) {
 		Procedure: "get_CurrentGameScene",
 		Service:   "KRPC",
 	}
-	krpc := NewKRPC(s.Client)
+	krpc := New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -544,7 +544,7 @@ func (s *KRPC) PausedStream() (*krpcgo.Stream[bool], error) {
 		Procedure: "get_Paused",
 		Service:   "KRPC",
 	}
-	krpc := NewKRPC(s.Client)
+	krpc := New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)

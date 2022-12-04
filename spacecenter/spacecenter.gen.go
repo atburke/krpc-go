@@ -1516,8 +1516,8 @@ type SpaceCenter struct {
 	Client *krpcgo.KRPCClient
 }
 
-// NewSpaceCenter creates a new SpaceCenter.
-func NewSpaceCenter(client *krpcgo.KRPCClient) *SpaceCenter {
+// New creates a new SpaceCenter.
+func New(client *krpcgo.KRPCClient) *SpaceCenter {
 	return &SpaceCenter{Client: client}
 }
 
@@ -1587,7 +1587,7 @@ func (s *SpaceCenter) LaunchableVesselsStream(craftDirectory string) (*krpcgo.St
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1860,7 +1860,7 @@ func (s *SpaceCenter) CanRailsWarpAtStream(factor int32) (*krpcgo.Stream[bool], 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2006,7 +2006,7 @@ func (s *SpaceCenter) TransformPositionStream(position api.Tuple3[float64, float
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2105,7 +2105,7 @@ func (s *SpaceCenter) TransformDirectionStream(direction api.Tuple3[float64, flo
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2203,7 +2203,7 @@ func (s *SpaceCenter) TransformRotationStream(rotation api.Tuple4[float64, float
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2320,7 +2320,7 @@ func (s *SpaceCenter) TransformVelocityStream(position api.Tuple3[float64, float
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2420,7 +2420,7 @@ func (s *SpaceCenter) RaycastDistanceStream(position api.Tuple3[float64, float64
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2515,7 +2515,7 @@ func (s *SpaceCenter) GameModeStream() (*krpcgo.Stream[GameMode], error) {
 		Procedure: "get_GameMode",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2562,7 +2562,7 @@ func (s *SpaceCenter) ScienceStream() (*krpcgo.Stream[float32], error) {
 		Procedure: "get_Science",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2609,7 +2609,7 @@ func (s *SpaceCenter) FundsStream() (*krpcgo.Stream[float64], error) {
 		Procedure: "get_Funds",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2656,7 +2656,7 @@ func (s *SpaceCenter) ReputationStream() (*krpcgo.Stream[float32], error) {
 		Procedure: "get_Reputation",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2750,7 +2750,7 @@ func (s *SpaceCenter) VesselsStream() (*krpcgo.Stream[[]*Vessel], error) {
 		Procedure: "get_Vessels",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -2799,7 +2799,7 @@ func (s *SpaceCenter) BodiesStream() (*krpcgo.Stream[map[string]*CelestialBody],
 		Procedure: "get_Bodies",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3075,7 +3075,7 @@ func (s *SpaceCenter) UIVisibleStream() (*krpcgo.Stream[bool], error) {
 		Procedure: "get_UIVisible",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3147,7 +3147,7 @@ func (s *SpaceCenter) NavballStream() (*krpcgo.Stream[bool], error) {
 		Procedure: "get_Navball",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3219,7 +3219,7 @@ func (s *SpaceCenter) UTStream() (*krpcgo.Stream[float64], error) {
 		Procedure: "get_UT",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3270,7 +3270,7 @@ func (s *SpaceCenter) GStream() (*krpcgo.Stream[float64], error) {
 		Procedure: "get_G",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3325,7 +3325,7 @@ func (s *SpaceCenter) WarpModeStream() (*krpcgo.Stream[WarpMode], error) {
 		Procedure: "get_WarpMode",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3377,7 +3377,7 @@ func (s *SpaceCenter) WarpRateStream() (*krpcgo.Stream[float32], error) {
 		Procedure: "get_WarpRate",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3433,7 +3433,7 @@ func (s *SpaceCenter) WarpFactorStream() (*krpcgo.Stream[float32], error) {
 		Procedure: "get_WarpFactor",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3492,7 +3492,7 @@ func (s *SpaceCenter) RailsWarpFactorStream() (*krpcgo.Stream[int32], error) {
 		Procedure: "get_RailsWarpFactor",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3574,7 +3574,7 @@ func (s *SpaceCenter) PhysicsWarpFactorStream() (*krpcgo.Stream[int32], error) {
 		Procedure: "get_PhysicsWarpFactor",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3654,7 +3654,7 @@ func (s *SpaceCenter) MaximumRailsWarpFactorStream() (*krpcgo.Stream[int32], err
 		Procedure: "get_MaximumRailsWarpFactor",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3705,7 +3705,7 @@ func (s *SpaceCenter) FARAvailableStream() (*krpcgo.Stream[bool], error) {
 		Procedure: "get_FARAvailable",
 		Service:   "SpaceCenter",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3770,7 +3770,7 @@ func (s *Alarm) TypeStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3835,7 +3835,7 @@ func (s *Alarm) TitleStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3900,7 +3900,7 @@ func (s *Alarm) DescriptionStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -3965,7 +3965,7 @@ func (s *Alarm) UTStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -4030,7 +4030,7 @@ func (s *Alarm) TimeTillStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -4096,7 +4096,7 @@ func (s *Alarm) EventOffsetStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -4199,7 +4199,7 @@ func (s *Alarm) IDStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -4652,7 +4652,7 @@ func (s *AlarmClock) GetAlarmsStream() (*krpcgo.Stream[[]*Alarm], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -4841,7 +4841,7 @@ func (s *AutoPilot) ErrorStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -4908,7 +4908,7 @@ func (s *AutoPilot) PitchErrorStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -4975,7 +4975,7 @@ func (s *AutoPilot) HeadingErrorStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5044,7 +5044,7 @@ func (s *AutoPilot) RollErrorStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5175,7 +5175,7 @@ func (s *AutoPilot) TargetPitchStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5273,7 +5273,7 @@ func (s *AutoPilot) TargetHeadingStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5371,7 +5371,7 @@ func (s *AutoPilot) TargetRollStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5473,7 +5473,7 @@ func (s *AutoPilot) TargetDirectionStream() (*krpcgo.Stream[api.Tuple3[float64, 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5573,7 +5573,7 @@ func (s *AutoPilot) SASStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5675,7 +5675,7 @@ func (s *AutoPilot) SASModeStream() (*krpcgo.Stream[SASMode], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5777,7 +5777,7 @@ func (s *AutoPilot) RollThresholdStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5882,7 +5882,7 @@ func (s *AutoPilot) StoppingTimeStream() (*krpcgo.Stream[api.Tuple3[float64, flo
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -5989,7 +5989,7 @@ func (s *AutoPilot) DecelerationTimeStream() (*krpcgo.Stream[api.Tuple3[float64,
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6097,7 +6097,7 @@ func (s *AutoPilot) AttenuationAngleStream() (*krpcgo.Stream[api.Tuple3[float64,
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6204,7 +6204,7 @@ func (s *AutoPilot) AutoTuneStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6309,7 +6309,7 @@ func (s *AutoPilot) TimeToPeakStream() (*krpcgo.Stream[api.Tuple3[float64, float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6413,7 +6413,7 @@ func (s *AutoPilot) OvershootStream() (*krpcgo.Stream[api.Tuple3[float64, float6
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6513,7 +6513,7 @@ func (s *AutoPilot) PitchPIDGainsStream() (*krpcgo.Stream[api.Tuple3[float64, fl
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6611,7 +6611,7 @@ func (s *AutoPilot) RollPIDGainsStream() (*krpcgo.Stream[api.Tuple3[float64, flo
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6709,7 +6709,7 @@ func (s *AutoPilot) YawPIDGainsStream() (*krpcgo.Stream[api.Tuple3[float64, floa
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6807,7 +6807,7 @@ func (s *Camera) ModeStream() (*krpcgo.Stream[CameraMode], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -6909,7 +6909,7 @@ func (s *Camera) PitchStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7009,7 +7009,7 @@ func (s *Camera) HeadingStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7111,7 +7111,7 @@ func (s *Camera) DistanceStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7211,7 +7211,7 @@ func (s *Camera) MinPitchStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7276,7 +7276,7 @@ func (s *Camera) MaxPitchStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7342,7 +7342,7 @@ func (s *Camera) MinDistanceStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7408,7 +7408,7 @@ func (s *Camera) MaxDistanceStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7474,7 +7474,7 @@ func (s *Camera) DefaultDistanceStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7777,7 +7777,7 @@ func (s *CelestialBody) SurfaceHeightStream(latitude float64, longitude float64)
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7878,7 +7878,7 @@ func (s *CelestialBody) BedrockHeightStream(latitude float64, longitude float64)
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -7993,7 +7993,7 @@ func (s *CelestialBody) MSLPositionStream(latitude float64, longitude float64, r
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8110,7 +8110,7 @@ func (s *CelestialBody) SurfacePositionStream(latitude float64, longitude float6
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8227,7 +8227,7 @@ func (s *CelestialBody) BedrockPositionStream(latitude float64, longitude float6
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8358,7 +8358,7 @@ func (s *CelestialBody) PositionAtAltitudeStream(latitude float64, longitude flo
 		Position: uint32(0x4),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8457,7 +8457,7 @@ func (s *CelestialBody) LatitudeAtPositionStream(position api.Tuple3[float64, fl
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8556,7 +8556,7 @@ func (s *CelestialBody) LongitudeAtPositionStream(position api.Tuple3[float64, f
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8655,7 +8655,7 @@ func (s *CelestialBody) AltitudeAtPositionStream(position api.Tuple3[float64, fl
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8754,7 +8754,7 @@ func (s *CelestialBody) AtmosphericDensityAtPositionStream(position api.Tuple3[f
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8853,7 +8853,7 @@ func (s *CelestialBody) TemperatureAtStream(position api.Tuple3[float64, float64
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -8936,7 +8936,7 @@ func (s *CelestialBody) DensityAtStream(altitude float64) (*krpcgo.Stream[float6
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9019,7 +9019,7 @@ func (s *CelestialBody) PressureAtStream(altitude float64) (*krpcgo.Stream[float
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9116,7 +9116,7 @@ func (s *CelestialBody) BiomeAtStream(latitude float64, longitude float64) (*krp
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9199,7 +9199,7 @@ func (s *CelestialBody) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9281,7 +9281,7 @@ func (s *CelestialBody) VelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9362,7 +9362,7 @@ func (s *CelestialBody) RotationStream(referenceFrame *ReferenceFrame) (*krpcgo.
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9445,7 +9445,7 @@ func (s *CelestialBody) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9528,7 +9528,7 @@ func (s *CelestialBody) AngularVelocityStream(referenceFrame *ReferenceFrame) (*
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9593,7 +9593,7 @@ func (s *CelestialBody) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9660,7 +9660,7 @@ func (s *CelestialBody) SatellitesStream() (*krpcgo.Stream[[]*CelestialBody], er
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9725,7 +9725,7 @@ func (s *CelestialBody) MassStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9794,7 +9794,7 @@ func (s *CelestialBody) GravitationalParameterStream() (*krpcgo.Stream[float32],
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9861,7 +9861,7 @@ func (s *CelestialBody) SurfaceGravityStream() (*krpcgo.Stream[float32], error) 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9927,7 +9927,7 @@ func (s *CelestialBody) RotationalPeriodStream() (*krpcgo.Stream[float32], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -9993,7 +9993,7 @@ func (s *CelestialBody) RotationalSpeedStream() (*krpcgo.Stream[float32], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10060,7 +10060,7 @@ func (s *CelestialBody) RotationAngleStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10127,7 +10127,7 @@ func (s *CelestialBody) InitialRotationStream() (*krpcgo.Stream[float64], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10192,7 +10192,7 @@ func (s *CelestialBody) EquatorialRadiusStream() (*krpcgo.Stream[float32], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10259,7 +10259,7 @@ func (s *CelestialBody) SphereOfInfluenceStream() (*krpcgo.Stream[float32], erro
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10355,7 +10355,7 @@ func (s *CelestialBody) HasAtmosphereStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10420,7 +10420,7 @@ func (s *CelestialBody) AtmosphereDepthStream() (*krpcgo.Stream[float32], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10487,7 +10487,7 @@ func (s *CelestialBody) HasAtmosphericOxygenStream() (*krpcgo.Stream[bool], erro
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10552,7 +10552,7 @@ func (s *CelestialBody) BiomesStream() (*krpcgo.Stream[map[string]struct{}], err
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10619,7 +10619,7 @@ func (s *CelestialBody) FlyingHighAltitudeThresholdStream() (*krpcgo.Stream[floa
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10686,7 +10686,7 @@ func (s *CelestialBody) SpaceHighAltitudeThresholdStream() (*krpcgo.Stream[float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10872,7 +10872,7 @@ func (s *CommLink) TypeStream() (*krpcgo.Stream[CommLinkType], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -10937,7 +10937,7 @@ func (s *CommLink) SignalStrengthStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11064,7 +11064,7 @@ func (s *CommNode) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11129,7 +11129,7 @@ func (s *CommNode) IsHomeStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11196,7 +11196,7 @@ func (s *CommNode) IsControlPointStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11261,7 +11261,7 @@ func (s *CommNode) IsVesselStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11357,7 +11357,7 @@ func (s *Comms) CanCommunicateStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11423,7 +11423,7 @@ func (s *Comms) CanTransmitScienceStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11488,7 +11488,7 @@ func (s *Comms) SignalStrengthStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11553,7 +11553,7 @@ func (s *Comms) SignalDelayStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11618,7 +11618,7 @@ func (s *Comms) PowerStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11683,7 +11683,7 @@ func (s *Comms) ControlPathStream() (*krpcgo.Stream[[]*CommLink], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11823,7 +11823,7 @@ func (s *Contract) TypeStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11888,7 +11888,7 @@ func (s *Contract) TitleStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -11953,7 +11953,7 @@ func (s *Contract) DescriptionStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12018,7 +12018,7 @@ func (s *Contract) NotesStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12083,7 +12083,7 @@ func (s *Contract) SynopsisStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12148,7 +12148,7 @@ func (s *Contract) KeywordsStream() (*krpcgo.Stream[[]string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12213,7 +12213,7 @@ func (s *Contract) StateStream() (*krpcgo.Stream[ContractState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12278,7 +12278,7 @@ func (s *Contract) ActiveStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12343,7 +12343,7 @@ func (s *Contract) FailedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12408,7 +12408,7 @@ func (s *Contract) SeenStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12473,7 +12473,7 @@ func (s *Contract) ReadStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12538,7 +12538,7 @@ func (s *Contract) CanBeCanceledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12603,7 +12603,7 @@ func (s *Contract) CanBeDeclinedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12668,7 +12668,7 @@ func (s *Contract) CanBeFailedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12733,7 +12733,7 @@ func (s *Contract) FundsAdvanceStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12798,7 +12798,7 @@ func (s *Contract) FundsCompletionStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12863,7 +12863,7 @@ func (s *Contract) FundsFailureStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12928,7 +12928,7 @@ func (s *Contract) ReputationCompletionStream() (*krpcgo.Stream[float64], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -12993,7 +12993,7 @@ func (s *Contract) ReputationFailureStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13058,7 +13058,7 @@ func (s *Contract) ScienceCompletionStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13123,7 +13123,7 @@ func (s *Contract) ParametersStream() (*krpcgo.Stream[[]*ContractParameter], err
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13188,7 +13188,7 @@ func (s *ContractManager) TypesStream() (*krpcgo.Stream[map[string]struct{}], er
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13253,7 +13253,7 @@ func (s *ContractManager) AllContractsStream() (*krpcgo.Stream[[]*Contract], err
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13318,7 +13318,7 @@ func (s *ContractManager) ActiveContractsStream() (*krpcgo.Stream[[]*Contract], 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13383,7 +13383,7 @@ func (s *ContractManager) OfferedContractsStream() (*krpcgo.Stream[[]*Contract],
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13448,7 +13448,7 @@ func (s *ContractManager) CompletedContractsStream() (*krpcgo.Stream[[]*Contract
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13513,7 +13513,7 @@ func (s *ContractManager) FailedContractsStream() (*krpcgo.Stream[[]*Contract], 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13578,7 +13578,7 @@ func (s *ContractParameter) TitleStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13643,7 +13643,7 @@ func (s *ContractParameter) NotesStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13708,7 +13708,7 @@ func (s *ContractParameter) ChildrenStream() (*krpcgo.Stream[[]*ContractParamete
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13773,7 +13773,7 @@ func (s *ContractParameter) CompletedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13838,7 +13838,7 @@ func (s *ContractParameter) FailedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13903,7 +13903,7 @@ func (s *ContractParameter) OptionalStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -13969,7 +13969,7 @@ func (s *ContractParameter) FundsCompletionStream() (*krpcgo.Stream[float64], er
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14034,7 +14034,7 @@ func (s *ContractParameter) FundsFailureStream() (*krpcgo.Stream[float64], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14101,7 +14101,7 @@ func (s *ContractParameter) ReputationCompletionStream() (*krpcgo.Stream[float64
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14167,7 +14167,7 @@ func (s *ContractParameter) ReputationFailureStream() (*krpcgo.Stream[float64], 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14233,7 +14233,7 @@ func (s *ContractParameter) ScienceCompletionStream() (*krpcgo.Stream[float64], 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14300,7 +14300,7 @@ func (s *Control) ActivateNextStageStream() (*krpcgo.Stream[[]*Vessel], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14381,7 +14381,7 @@ func (s *Control) GetActionGroupStream(group uint32) (*krpcgo.Stream[bool], erro
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14611,7 +14611,7 @@ func (s *Control) StateStream() (*krpcgo.Stream[ControlState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14678,7 +14678,7 @@ func (s *Control) SourceStream() (*krpcgo.Stream[ControlSource], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14743,7 +14743,7 @@ func (s *Control) SASStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14845,7 +14845,7 @@ func (s *Control) SASModeStream() (*krpcgo.Stream[SASMode], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -14949,7 +14949,7 @@ func (s *Control) SpeedModeStream() (*krpcgo.Stream[SpeedMode], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15049,7 +15049,7 @@ func (s *Control) RCSStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15151,7 +15151,7 @@ func (s *Control) ReactionWheelsStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15251,7 +15251,7 @@ func (s *Control) GearStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15353,7 +15353,7 @@ func (s *Control) LegsStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15457,7 +15457,7 @@ func (s *Control) WheelsStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15557,7 +15557,7 @@ func (s *Control) LightsStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15655,7 +15655,7 @@ func (s *Control) BrakesStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15757,7 +15757,7 @@ func (s *Control) AntennasStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15861,7 +15861,7 @@ func (s *Control) CargoBaysStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -15965,7 +15965,7 @@ func (s *Control) IntakesStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16069,7 +16069,7 @@ func (s *Control) ParachutesStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16173,7 +16173,7 @@ func (s *Control) RadiatorsStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16277,7 +16277,7 @@ func (s *Control) ResourceHarvestersStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16382,7 +16382,7 @@ func (s *Control) ResourceHarvestersActiveStream() (*krpcgo.Stream[bool], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16486,7 +16486,7 @@ func (s *Control) SolarPanelsStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16586,7 +16586,7 @@ func (s *Control) AbortStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16684,7 +16684,7 @@ func (s *Control) ThrottleStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16790,7 +16790,7 @@ func (s *Control) InputModeStream() (*krpcgo.Stream[ControlInputMode], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16894,7 +16894,7 @@ func (s *Control) PitchStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -16995,7 +16995,7 @@ func (s *Control) YawStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17096,7 +17096,7 @@ func (s *Control) RollStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17197,7 +17197,7 @@ func (s *Control) ForwardStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17298,7 +17298,7 @@ func (s *Control) UpStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17399,7 +17399,7 @@ func (s *Control) RightStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17502,7 +17502,7 @@ func (s *Control) WheelThrottleStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17604,7 +17604,7 @@ func (s *Control) WheelSteeringStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17705,7 +17705,7 @@ func (s *Control) CurrentStageStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17770,7 +17770,7 @@ func (s *Control) StageLockStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17870,7 +17870,7 @@ func (s *Control) NodesStream() (*krpcgo.Stream[[]*Node], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -17935,7 +17935,7 @@ func (s *CrewMember) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18033,7 +18033,7 @@ func (s *CrewMember) TypeStream() (*krpcgo.Stream[CrewMemberType], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18098,7 +18098,7 @@ func (s *CrewMember) OnMissionStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18163,7 +18163,7 @@ func (s *CrewMember) CourageStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18261,7 +18261,7 @@ func (s *CrewMember) StupidityStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18359,7 +18359,7 @@ func (s *CrewMember) ExperienceStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18457,7 +18457,7 @@ func (s *CrewMember) BadassStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18555,7 +18555,7 @@ func (s *CrewMember) VeteranStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18705,7 +18705,7 @@ func (s *Flight) SimulateAerodynamicForceAtStream(body *CelestialBody, position 
 		Position: uint32(0x3),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18770,7 +18770,7 @@ func (s *Flight) GForceStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18837,7 +18837,7 @@ func (s *Flight) MeanAltitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18906,7 +18906,7 @@ func (s *Flight) SurfaceAltitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -18975,7 +18975,7 @@ func (s *Flight) BedrockAltitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19044,7 +19044,7 @@ func (s *Flight) ElevationStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19112,7 +19112,7 @@ func (s *Flight) LatitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19181,7 +19181,7 @@ func (s *Flight) LongitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19248,7 +19248,7 @@ func (s *Flight) VelocityStream() (*krpcgo.Stream[api.Tuple3[float64, float64, f
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19315,7 +19315,7 @@ func (s *Flight) SpeedStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19382,7 +19382,7 @@ func (s *Flight) HorizontalSpeedStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19449,7 +19449,7 @@ func (s *Flight) VerticalSpeedStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19516,7 +19516,7 @@ func (s *Flight) CenterOfMassStream() (*krpcgo.Stream[api.Tuple3[float64, float6
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19583,7 +19583,7 @@ func (s *Flight) RotationStream() (*krpcgo.Stream[api.Tuple4[float64, float64, f
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19650,7 +19650,7 @@ func (s *Flight) DirectionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19717,7 +19717,7 @@ func (s *Flight) PitchStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19784,7 +19784,7 @@ func (s *Flight) HeadingStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19851,7 +19851,7 @@ func (s *Flight) RollStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19918,7 +19918,7 @@ func (s *Flight) ProgradeStream() (*krpcgo.Stream[api.Tuple3[float64, float64, f
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -19985,7 +19985,7 @@ func (s *Flight) RetrogradeStream() (*krpcgo.Stream[api.Tuple3[float64, float64,
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20052,7 +20052,7 @@ func (s *Flight) NormalStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20119,7 +20119,7 @@ func (s *Flight) AntiNormalStream() (*krpcgo.Stream[api.Tuple3[float64, float64,
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20186,7 +20186,7 @@ func (s *Flight) RadialStream() (*krpcgo.Stream[api.Tuple3[float64, float64, flo
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20254,7 +20254,7 @@ func (s *Flight) AntiRadialStream() (*krpcgo.Stream[api.Tuple3[float64, float64,
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20321,7 +20321,7 @@ func (s *Flight) AtmosphereDensityStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20392,7 +20392,7 @@ func (s *Flight) DynamicPressureStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20459,7 +20459,7 @@ func (s *Flight) StaticPressureAtMSLStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20526,7 +20526,7 @@ func (s *Flight) StaticPressureStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20593,7 +20593,7 @@ func (s *Flight) AerodynamicForceStream() (*krpcgo.Stream[api.Tuple3[float64, fl
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20662,7 +20662,7 @@ func (s *Flight) LiftStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20731,7 +20731,7 @@ func (s *Flight) DragStream() (*krpcgo.Stream[api.Tuple3[float64, float64, float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20798,7 +20798,7 @@ func (s *Flight) SpeedOfSoundStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20863,7 +20863,7 @@ func (s *Flight) MachStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20928,7 +20928,7 @@ func (s *Flight) ReynoldsNumberStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -20996,7 +20996,7 @@ func (s *Flight) TrueAirSpeedStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21065,7 +21065,7 @@ func (s *Flight) EquivalentAirSpeedStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21134,7 +21134,7 @@ func (s *Flight) TerminalVelocityStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21201,7 +21201,7 @@ func (s *Flight) AngleOfAttackStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21268,7 +21268,7 @@ func (s *Flight) SideslipAngleStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21341,7 +21341,7 @@ func (s *Flight) TotalAirTemperatureStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21410,7 +21410,7 @@ func (s *Flight) StaticAirTemperatureStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21479,7 +21479,7 @@ func (s *Flight) StallFractionStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21546,7 +21546,7 @@ func (s *Flight) DragCoefficientStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21613,7 +21613,7 @@ func (s *Flight) LiftCoefficientStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21682,7 +21682,7 @@ func (s *Flight) BallisticCoefficientStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21755,7 +21755,7 @@ func (s *Flight) ThrustSpecificFuelConsumptionStream() (*krpcgo.Stream[float32],
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21836,7 +21836,7 @@ func (s *Node) BurnVectorStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -21919,7 +21919,7 @@ func (s *Node) RemainingBurnVectorStream(referenceFrame *ReferenceFrame) (*krpcg
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22027,7 +22027,7 @@ func (s *Node) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[ap
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22108,7 +22108,7 @@ func (s *Node) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[a
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22175,7 +22175,7 @@ func (s *Node) ProgradeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22276,7 +22276,7 @@ func (s *Node) NormalStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22377,7 +22377,7 @@ func (s *Node) RadialStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22476,7 +22476,7 @@ func (s *Node) DeltaVStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22578,7 +22578,7 @@ func (s *Node) RemainingDeltaVStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22643,7 +22643,7 @@ func (s *Node) UTStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22742,7 +22742,7 @@ func (s *Node) TimeToStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22919,7 +22919,7 @@ func (s *Orbit) ReferencePlaneNormalStream() (*krpcgo.Stream[api.Tuple3[float64,
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -22986,7 +22986,7 @@ func (s *Orbit) ReferencePlaneDirectionStream() (*krpcgo.Stream[api.Tuple3[float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23067,7 +23067,7 @@ func (s *Orbit) MeanAnomalyAtUTStream(ut float64) (*krpcgo.Stream[float64], erro
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23150,7 +23150,7 @@ func (s *Orbit) RadiusAtTrueAnomalyStream(trueAnomaly float64) (*krpcgo.Stream[f
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23231,7 +23231,7 @@ func (s *Orbit) TrueAnomalyAtRadiusStream(radius float64) (*krpcgo.Stream[float6
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23312,7 +23312,7 @@ func (s *Orbit) TrueAnomalyAtUTStream(ut float64) (*krpcgo.Stream[float64], erro
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23395,7 +23395,7 @@ func (s *Orbit) UTAtTrueAnomalyStream(trueAnomaly float64) (*krpcgo.Stream[float
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23477,7 +23477,7 @@ func (s *Orbit) EccentricAnomalyAtUTStream(ut float64) (*krpcgo.Stream[float64],
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23559,7 +23559,7 @@ func (s *Orbit) OrbitalSpeedAtStream(time float64) (*krpcgo.Stream[float64], err
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23640,7 +23640,7 @@ func (s *Orbit) RadiusAtStream(ut float64) (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23738,7 +23738,7 @@ func (s *Orbit) PositionAtStream(ut float64, referenceFrame *ReferenceFrame) (*k
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23821,7 +23821,7 @@ func (s *Orbit) TimeOfClosestApproachStream(target *Orbit) (*krpcgo.Stream[float
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -23904,7 +23904,7 @@ func (s *Orbit) DistanceAtClosestApproachStream(target *Orbit) (*krpcgo.Stream[f
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24003,7 +24003,7 @@ func (s *Orbit) ListClosestApproachesStream(target *Orbit, orbits int32) (*krpcg
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24086,7 +24086,7 @@ func (s *Orbit) TrueAnomalyAtANStream(target *Orbit) (*krpcgo.Stream[float64], e
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24169,7 +24169,7 @@ func (s *Orbit) TrueAnomalyAtDNStream(target *Orbit) (*krpcgo.Stream[float64], e
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24252,7 +24252,7 @@ func (s *Orbit) RelativeInclinationStream(target *Orbit) (*krpcgo.Stream[float64
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24351,7 +24351,7 @@ func (s *Orbit) ApoapsisStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24418,7 +24418,7 @@ func (s *Orbit) PeriapsisStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24485,7 +24485,7 @@ func (s *Orbit) ApoapsisAltitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24552,7 +24552,7 @@ func (s *Orbit) PeriapsisAltitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24617,7 +24617,7 @@ func (s *Orbit) SemiMajorAxisStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24682,7 +24682,7 @@ func (s *Orbit) SemiMinorAxisStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24751,7 +24751,7 @@ func (s *Orbit) RadiusStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24816,7 +24816,7 @@ func (s *Orbit) SpeedStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24881,7 +24881,7 @@ func (s *Orbit) PeriodStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -24947,7 +24947,7 @@ func (s *Orbit) TimeToApoapsisStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25013,7 +25013,7 @@ func (s *Orbit) TimeToPeriapsisStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25082,7 +25082,7 @@ func (s *Orbit) EccentricityStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25151,7 +25151,7 @@ func (s *Orbit) InclinationStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25220,7 +25220,7 @@ func (s *Orbit) LongitudeOfAscendingNodeStream() (*krpcgo.Stream[float64], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25289,7 +25289,7 @@ func (s *Orbit) ArgumentOfPeriapsisStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25356,7 +25356,7 @@ func (s *Orbit) MeanAnomalyAtEpochStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25425,7 +25425,7 @@ func (s *Orbit) EpochStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25492,7 +25492,7 @@ func (s *Orbit) MeanAnomalyStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25559,7 +25559,7 @@ func (s *Orbit) EccentricAnomalyStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25626,7 +25626,7 @@ func (s *Orbit) TrueAnomalyStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25727,7 +25727,7 @@ func (s *Orbit) TimeToSOIChangeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25792,7 +25792,7 @@ func (s *Orbit) OrbitalSpeedStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -25938,7 +25938,7 @@ func (s *Antenna) StateStream() (*krpcgo.Stream[AntennaState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26003,7 +26003,7 @@ func (s *Antenna) DeployableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26068,7 +26068,7 @@ func (s *Antenna) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26166,7 +26166,7 @@ func (s *Antenna) CanTransmitStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26231,7 +26231,7 @@ func (s *Antenna) AllowPartialStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26329,7 +26329,7 @@ func (s *Antenna) PowerStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26396,7 +26396,7 @@ func (s *Antenna) CombinableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26463,7 +26463,7 @@ func (s *Antenna) CombinableExponentStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26528,7 +26528,7 @@ func (s *Antenna) PacketIntervalStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26593,7 +26593,7 @@ func (s *Antenna) PacketSizeStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26658,7 +26658,7 @@ func (s *Antenna) PacketResourceCostStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26754,7 +26754,7 @@ func (s *CargoBay) StateStream() (*krpcgo.Stream[CargoBayState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26819,7 +26819,7 @@ func (s *CargoBay) OpenStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -26948,7 +26948,7 @@ func (s *ControlSurface) PitchEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27046,7 +27046,7 @@ func (s *ControlSurface) YawEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27144,7 +27144,7 @@ func (s *ControlSurface) RollEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27244,7 +27244,7 @@ func (s *ControlSurface) AuthorityLimiterStream() (*krpcgo.Stream[float32], erro
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27343,7 +27343,7 @@ func (s *ControlSurface) InvertedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27441,7 +27441,7 @@ func (s *ControlSurface) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27539,7 +27539,7 @@ func (s *ControlSurface) SurfaceAreaStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27610,7 +27610,7 @@ func (s *ControlSurface) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27738,7 +27738,7 @@ func (s *Decoupler) DecoupledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27803,7 +27803,7 @@ func (s *Decoupler) StagedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27870,7 +27870,7 @@ func (s *Decoupler) ImpulseStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -27986,7 +27986,7 @@ func (s *DockingPort) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.St
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28069,7 +28069,7 @@ func (s *DockingPort) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.S
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28151,7 +28151,7 @@ func (s *DockingPort) RotationStream(referenceFrame *ReferenceFrame) (*krpcgo.St
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28247,7 +28247,7 @@ func (s *DockingPort) StateStream() (*krpcgo.Stream[DockingPortState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28346,7 +28346,7 @@ func (s *DockingPort) ReengageDistanceStream() (*krpcgo.Stream[float32], error) 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28411,7 +28411,7 @@ func (s *DockingPort) HasShieldStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28484,7 +28484,7 @@ func (s *DockingPort) ShieldedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28685,7 +28685,7 @@ func (s *Engine) ActiveStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28787,7 +28787,7 @@ func (s *Engine) ThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28860,7 +28860,7 @@ func (s *Engine) AvailableThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -28929,7 +28929,7 @@ func (s *Engine) MaxThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29002,7 +29002,7 @@ func (s *Engine) MaxVacuumThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29071,7 +29071,7 @@ func (s *Engine) ThrustLimitStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29171,7 +29171,7 @@ func (s *Engine) ThrustersStream() (*krpcgo.Stream[[]*Thruster], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29238,7 +29238,7 @@ func (s *Engine) SpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29305,7 +29305,7 @@ func (s *Engine) VacuumSpecificImpulseStream() (*krpcgo.Stream[float32], error) 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29372,7 +29372,7 @@ func (s *Engine) KerbinSeaLevelSpecificImpulseStream() (*krpcgo.Stream[float32],
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29438,7 +29438,7 @@ func (s *Engine) PropellantNamesStream() (*krpcgo.Stream[[]string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29503,7 +29503,7 @@ func (s *Engine) PropellantsStream() (*krpcgo.Stream[[]*Propellant], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29572,7 +29572,7 @@ func (s *Engine) PropellantRatiosStream() (*krpcgo.Stream[map[string]float32], e
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29637,7 +29637,7 @@ func (s *Engine) HasFuelStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29707,7 +29707,7 @@ func (s *Engine) ThrottleStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29776,7 +29776,7 @@ func (s *Engine) ThrottleLockedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29845,7 +29845,7 @@ func (s *Engine) CanRestartStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29913,7 +29913,7 @@ func (s *Engine) CanShutdownStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -29978,7 +29978,7 @@ func (s *Engine) HasModesStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30043,7 +30043,7 @@ func (s *Engine) ModeStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30143,7 +30143,7 @@ func (s *Engine) ModesStream() (*krpcgo.Stream[map[string]*Engine], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30208,7 +30208,7 @@ func (s *Engine) AutoModeSwitchStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30306,7 +30306,7 @@ func (s *Engine) GimballedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30373,7 +30373,7 @@ func (s *Engine) GimbalRangeStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30440,7 +30440,7 @@ func (s *Engine) GimbalLockedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30541,7 +30541,7 @@ func (s *Engine) GimbalLimitStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30648,7 +30648,7 @@ func (s *Engine) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[f
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30848,7 +30848,7 @@ func (s *Experiment) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30913,7 +30913,7 @@ func (s *Experiment) TitleStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -30978,7 +30978,7 @@ func (s *Experiment) InoperableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31043,7 +31043,7 @@ func (s *Experiment) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31108,7 +31108,7 @@ func (s *Experiment) RerunnableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31173,7 +31173,7 @@ func (s *Experiment) HasDataStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31238,7 +31238,7 @@ func (s *Experiment) DataStream() (*krpcgo.Stream[[]*ScienceData], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31305,7 +31305,7 @@ func (s *Experiment) AvailableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31370,7 +31370,7 @@ func (s *Experiment) BiomeStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31525,7 +31525,7 @@ func (s *Fairing) JettisonedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31646,7 +31646,7 @@ func (s *Force) ForceVectorStream() (*krpcgo.Stream[api.Tuple3[float64, float64,
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31746,7 +31746,7 @@ func (s *Force) PositionStream() (*krpcgo.Stream[api.Tuple3[float64, float64, fl
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -31940,7 +31940,7 @@ func (s *Intake) OpenStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32038,7 +32038,7 @@ func (s *Intake) SpeedStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32104,7 +32104,7 @@ func (s *Intake) FlowStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32169,7 +32169,7 @@ func (s *Intake) AreaStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32322,7 +32322,7 @@ func (s *Leg) StateStream() (*krpcgo.Stream[LegState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32387,7 +32387,7 @@ func (s *Leg) DeployableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32452,7 +32452,7 @@ func (s *Leg) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32550,7 +32550,7 @@ func (s *Leg) IsGroundedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32646,7 +32646,7 @@ func (s *Light) ActiveStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32744,7 +32744,7 @@ func (s *Light) ColorStream() (*krpcgo.Stream[api.Tuple3[float32, float32, float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32842,7 +32842,7 @@ func (s *Light) PowerUsageStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -32923,7 +32923,7 @@ func (s *Module) HasFieldStream(name string) (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33004,7 +33004,7 @@ func (s *Module) GetFieldStream(name string) (*krpcgo.Stream[string], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33241,7 +33241,7 @@ func (s *Module) HasEventStream(name string) (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33356,7 +33356,7 @@ func (s *Module) HasActionStream(name string) (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33462,7 +33462,7 @@ func (s *Module) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33560,7 +33560,7 @@ func (s *Module) FieldsStream() (*krpcgo.Stream[map[string]string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33627,7 +33627,7 @@ func (s *Module) EventsStream() (*krpcgo.Stream[[]string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33694,7 +33694,7 @@ func (s *Module) ActionsStream() (*krpcgo.Stream[[]string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33842,7 +33842,7 @@ func (s *Parachute) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33909,7 +33909,7 @@ func (s *Parachute) ArmedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -33974,7 +33974,7 @@ func (s *Parachute) StateStream() (*krpcgo.Stream[ParachuteState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34041,7 +34041,7 @@ func (s *Parachute) DeployAltitudeStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34142,7 +34142,7 @@ func (s *Parachute) DeployMinPressureStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34257,7 +34257,7 @@ func (s *Part) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[ap
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34342,7 +34342,7 @@ func (s *Part) CenterOfMassStream(referenceFrame *ReferenceFrame) (*krpcgo.Strea
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34425,7 +34425,7 @@ func (s *Part) BoundingBoxStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34507,7 +34507,7 @@ func (s *Part) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[a
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34589,7 +34589,7 @@ func (s *Part) VelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[ap
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34670,7 +34670,7 @@ func (s *Part) RotationStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[ap
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34844,7 +34844,7 @@ func (s *Part) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34911,7 +34911,7 @@ func (s *Part) TitleStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -34978,7 +34978,7 @@ func (s *Part) TagStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35077,7 +35077,7 @@ func (s *Part) HighlightedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35176,7 +35176,7 @@ func (s *Part) HighlightColorStream() (*krpcgo.Stream[api.Tuple3[float64, float6
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35274,7 +35274,7 @@ func (s *Part) CostStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35407,7 +35407,7 @@ func (s *Part) ChildrenStream() (*krpcgo.Stream[[]*Part], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35475,7 +35475,7 @@ func (s *Part) AxiallyAttachedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35542,7 +35542,7 @@ func (s *Part) RadiallyAttachedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35609,7 +35609,7 @@ func (s *Part) StageStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35676,7 +35676,7 @@ func (s *Part) DecoupleStageStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35743,7 +35743,7 @@ func (s *Part) MasslessStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35810,7 +35810,7 @@ func (s *Part) MassStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35877,7 +35877,7 @@ func (s *Part) DryMassStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -35944,7 +35944,7 @@ func (s *Part) ShieldedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36009,7 +36009,7 @@ func (s *Part) DynamicPressureStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36075,7 +36075,7 @@ func (s *Part) ImpactToleranceStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36140,7 +36140,7 @@ func (s *Part) TemperatureStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36205,7 +36205,7 @@ func (s *Part) SkinTemperatureStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36271,7 +36271,7 @@ func (s *Part) MaxTemperatureStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36338,7 +36338,7 @@ func (s *Part) MaxSkinTemperatureStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36405,7 +36405,7 @@ func (s *Part) ThermalMassStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36472,7 +36472,7 @@ func (s *Part) ThermalSkinMassStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36539,7 +36539,7 @@ func (s *Part) ThermalResourceMassStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36610,7 +36610,7 @@ func (s *Part) ThermalInternalFluxStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36681,7 +36681,7 @@ func (s *Part) ThermalConductionFluxStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36752,7 +36752,7 @@ func (s *Part) ThermalConvectionFluxStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36823,7 +36823,7 @@ func (s *Part) ThermalRadiationFluxStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36895,7 +36895,7 @@ func (s *Part) ThermalSkinToInternalFluxStream() (*krpcgo.Stream[float32], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -36991,7 +36991,7 @@ func (s *Part) CrossfeedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -37056,7 +37056,7 @@ func (s *Part) IsFuelLineStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -37123,7 +37123,7 @@ func (s *Part) FuelLinesFromStream() (*krpcgo.Stream[[]*Part], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -37190,7 +37190,7 @@ func (s *Part) FuelLinesToStream() (*krpcgo.Stream[[]*Part], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -37255,7 +37255,7 @@ func (s *Part) ModulesStream() (*krpcgo.Stream[[]*Module], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -37578,7 +37578,7 @@ func (s *Part) ExperimentsStream() (*krpcgo.Stream[[]*Experiment], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -38255,7 +38255,7 @@ func (s *Part) MomentOfInertiaStream() (*krpcgo.Stream[api.Tuple3[float64, float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -38324,7 +38324,7 @@ func (s *Part) InertiaTensorStream() (*krpcgo.Stream[[]float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -38514,7 +38514,7 @@ func (s *Parts) WithNameStream(name string) (*krpcgo.Stream[[]*Part], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -38597,7 +38597,7 @@ func (s *Parts) WithTitleStream(title string) (*krpcgo.Stream[[]*Part], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -38680,7 +38680,7 @@ func (s *Parts) WithTagStream(tag string) (*krpcgo.Stream[[]*Part], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -38765,7 +38765,7 @@ func (s *Parts) WithModuleStream(moduleName string) (*krpcgo.Stream[[]*Part], er
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -38848,7 +38848,7 @@ func (s *Parts) InStageStream(stage int32) (*krpcgo.Stream[[]*Part], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -38931,7 +38931,7 @@ func (s *Parts) InDecoupleStageStream(stage int32) (*krpcgo.Stream[[]*Part], err
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39016,7 +39016,7 @@ func (s *Parts) ModulesWithNameStream(moduleName string) (*krpcgo.Stream[[]*Modu
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39081,7 +39081,7 @@ func (s *Parts) AllStream() (*krpcgo.Stream[[]*Part], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39241,7 +39241,7 @@ func (s *Parts) AntennasStream() (*krpcgo.Stream[[]*Antenna], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39306,7 +39306,7 @@ func (s *Parts) ControlSurfacesStream() (*krpcgo.Stream[[]*ControlSurface], erro
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39371,7 +39371,7 @@ func (s *Parts) CargoBaysStream() (*krpcgo.Stream[[]*CargoBay], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39436,7 +39436,7 @@ func (s *Parts) DecouplersStream() (*krpcgo.Stream[[]*Decoupler], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39501,7 +39501,7 @@ func (s *Parts) DockingPortsStream() (*krpcgo.Stream[[]*DockingPort], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39566,7 +39566,7 @@ func (s *Parts) EnginesStream() (*krpcgo.Stream[[]*Engine], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39631,7 +39631,7 @@ func (s *Parts) ExperimentsStream() (*krpcgo.Stream[[]*Experiment], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39696,7 +39696,7 @@ func (s *Parts) FairingsStream() (*krpcgo.Stream[[]*Fairing], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39761,7 +39761,7 @@ func (s *Parts) IntakesStream() (*krpcgo.Stream[[]*Intake], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39826,7 +39826,7 @@ func (s *Parts) LegsStream() (*krpcgo.Stream[[]*Leg], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39891,7 +39891,7 @@ func (s *Parts) LaunchClampsStream() (*krpcgo.Stream[[]*LaunchClamp], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -39956,7 +39956,7 @@ func (s *Parts) LightsStream() (*krpcgo.Stream[[]*Light], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40021,7 +40021,7 @@ func (s *Parts) ParachutesStream() (*krpcgo.Stream[[]*Parachute], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40086,7 +40086,7 @@ func (s *Parts) RadiatorsStream() (*krpcgo.Stream[[]*Radiator], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40151,7 +40151,7 @@ func (s *Parts) RCSStream() (*krpcgo.Stream[[]*RCS], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40216,7 +40216,7 @@ func (s *Parts) ReactionWheelsStream() (*krpcgo.Stream[[]*ReactionWheel], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40281,7 +40281,7 @@ func (s *Parts) ResourceConvertersStream() (*krpcgo.Stream[[]*ResourceConverter]
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40346,7 +40346,7 @@ func (s *Parts) ResourceHarvestersStream() (*krpcgo.Stream[[]*ResourceHarvester]
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40411,7 +40411,7 @@ func (s *Parts) SensorsStream() (*krpcgo.Stream[[]*Sensor], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40476,7 +40476,7 @@ func (s *Parts) SolarPanelsStream() (*krpcgo.Stream[[]*SolarPanel], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40541,7 +40541,7 @@ func (s *Parts) WheelsStream() (*krpcgo.Stream[[]*Wheel], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40606,7 +40606,7 @@ func (s *Parts) RoboticHingesStream() (*krpcgo.Stream[[]*RoboticHinge], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40671,7 +40671,7 @@ func (s *Parts) RoboticPistonsStream() (*krpcgo.Stream[[]*RoboticPiston], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40736,7 +40736,7 @@ func (s *Parts) RoboticRotationsStream() (*krpcgo.Stream[[]*RoboticRotation], er
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40801,7 +40801,7 @@ func (s *Parts) RoboticRotorsStream() (*krpcgo.Stream[[]*RoboticRotor], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40866,7 +40866,7 @@ func (s *Parts) ResourceDrainsStream() (*krpcgo.Stream[[]*ResourceDrain], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40931,7 +40931,7 @@ func (s *Propellant) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -40996,7 +40996,7 @@ func (s *Propellant) CurrentAmountStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41061,7 +41061,7 @@ func (s *Propellant) CurrentRequirementStream() (*krpcgo.Stream[float64], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41128,7 +41128,7 @@ func (s *Propellant) TotalResourceAvailableStream() (*krpcgo.Stream[float64], er
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41195,7 +41195,7 @@ func (s *Propellant) TotalResourceCapacityStream() (*krpcgo.Stream[float64], err
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41262,7 +41262,7 @@ func (s *Propellant) IgnoreForIspStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41329,7 +41329,7 @@ func (s *Propellant) IgnoreForThrustCurveStream() (*krpcgo.Stream[bool], error) 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41394,7 +41394,7 @@ func (s *Propellant) DrawStackGaugeStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41459,7 +41459,7 @@ func (s *Propellant) IsDeprivedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41524,7 +41524,7 @@ func (s *Propellant) RatioStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41628,7 +41628,7 @@ func (s *RCS) ActiveStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41693,7 +41693,7 @@ func (s *RCS) EnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41793,7 +41793,7 @@ func (s *RCS) PitchEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41894,7 +41894,7 @@ func (s *RCS) YawEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -41995,7 +41995,7 @@ func (s *RCS) RollEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42096,7 +42096,7 @@ func (s *RCS) ForwardEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42197,7 +42197,7 @@ func (s *RCS) UpEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42298,7 +42298,7 @@ func (s *RCS) RightEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42405,7 +42405,7 @@ func (s *RCS) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[floa
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42477,7 +42477,7 @@ func (s *RCS) AvailableThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42548,7 +42548,7 @@ func (s *RCS) MaxThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42615,7 +42615,7 @@ func (s *RCS) MaxVacuumThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42681,7 +42681,7 @@ func (s *RCS) ThrustLimitStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42779,7 +42779,7 @@ func (s *RCS) ThrustersStream() (*krpcgo.Stream[[]*Thruster], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42846,7 +42846,7 @@ func (s *RCS) SpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42912,7 +42912,7 @@ func (s *RCS) VacuumSpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -42979,7 +42979,7 @@ func (s *RCS) KerbinSeaLevelSpecificImpulseStream() (*krpcgo.Stream[float32], er
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43044,7 +43044,7 @@ func (s *RCS) PropellantsStream() (*krpcgo.Stream[[]string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43113,7 +43113,7 @@ func (s *RCS) PropellantRatiosStream() (*krpcgo.Stream[map[string]float32], erro
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43178,7 +43178,7 @@ func (s *RCS) HasFuelStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43274,7 +43274,7 @@ func (s *Radiator) DeployableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43341,7 +43341,7 @@ func (s *Radiator) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43440,7 +43440,7 @@ func (s *Radiator) StateStream() (*krpcgo.Stream[RadiatorState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43536,7 +43536,7 @@ func (s *ReactionWheel) ActiveStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43634,7 +43634,7 @@ func (s *ReactionWheel) BrokenStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43707,7 +43707,7 @@ func (s *ReactionWheel) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.T
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43778,7 +43778,7 @@ func (s *ReactionWheel) MaxTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43859,7 +43859,7 @@ func (s *ResourceConverter) ActiveStream(index int32) (*krpcgo.Stream[bool], err
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -43940,7 +43940,7 @@ func (s *ResourceConverter) NameStream(index int32) (*krpcgo.Stream[string], err
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44087,7 +44087,7 @@ func (s *ResourceConverter) StateStream(index int32) (*krpcgo.Stream[ResourceCon
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44170,7 +44170,7 @@ func (s *ResourceConverter) StatusInfoStream(index int32) (*krpcgo.Stream[string
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44252,7 +44252,7 @@ func (s *ResourceConverter) InputsStream(index int32) (*krpcgo.Stream[[]string],
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44334,7 +44334,7 @@ func (s *ResourceConverter) OutputsStream(index int32) (*krpcgo.Stream[[]string]
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44430,7 +44430,7 @@ func (s *ResourceConverter) CountStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44497,7 +44497,7 @@ func (s *ResourceConverter) ThermalEfficiencyStream() (*krpcgo.Stream[float32], 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44562,7 +44562,7 @@ func (s *ResourceConverter) CoreTemperatureStream() (*krpcgo.Stream[float32], er
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44629,7 +44629,7 @@ func (s *ResourceConverter) OptimumCoreTemperatureStream() (*krpcgo.Stream[float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44753,7 +44753,7 @@ func (s *ResourceDrain) CheckResourceDrainStream(R *Resource) (*krpcgo.Stream[bo
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44899,7 +44899,7 @@ func (s *ResourceDrain) AvailableResourcesStream() (*krpcgo.Stream[[]*Resource],
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -44964,7 +44964,7 @@ func (s *ResourceDrain) DrainModeStream() (*krpcgo.Stream[DrainModes], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45062,7 +45062,7 @@ func (s *ResourceDrain) MaxDrainRateStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45127,7 +45127,7 @@ func (s *ResourceDrain) MinDrainRateStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45192,7 +45192,7 @@ func (s *ResourceDrain) DrainRateStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45321,7 +45321,7 @@ func (s *ResourceHarvester) StateStream() (*krpcgo.Stream[ResourceHarvesterState
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45386,7 +45386,7 @@ func (s *ResourceHarvester) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45484,7 +45484,7 @@ func (s *ResourceHarvester) ActiveStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45584,7 +45584,7 @@ func (s *ResourceHarvester) ExtractionRateStream() (*krpcgo.Stream[float32], err
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45651,7 +45651,7 @@ func (s *ResourceHarvester) ThermalEfficiencyStream() (*krpcgo.Stream[float32], 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45716,7 +45716,7 @@ func (s *ResourceHarvester) CoreTemperatureStream() (*krpcgo.Stream[float32], er
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45783,7 +45783,7 @@ func (s *ResourceHarvester) OptimumCoreTemperatureStream() (*krpcgo.Stream[float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45864,7 +45864,7 @@ func (s *RoboticController) HasPartStream(part *Part) (*krpcgo.Stream[bool], err
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -45929,7 +45929,7 @@ func (s *RoboticController) ListAxesStream() (*krpcgo.Stream[[][]string], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46026,7 +46026,7 @@ func (s *RoboticController) AddAxisStream(module *Module, fieldName string) (*kr
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46155,7 +46155,7 @@ func (s *RoboticController) AddKeyStream(module *Module, fieldName string, time 
 		Position: uint32(0x4),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46252,7 +46252,7 @@ func (s *RoboticController) ClearAxisStream(module *Module, fieldName string) (*
 		Position: uint32(0x2),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46404,7 +46404,7 @@ func (s *RoboticHinge) TargetAngleStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46502,7 +46502,7 @@ func (s *RoboticHinge) CurrentAngleStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46567,7 +46567,7 @@ func (s *RoboticHinge) RateStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46665,7 +46665,7 @@ func (s *RoboticHinge) DampingStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46763,7 +46763,7 @@ func (s *RoboticHinge) HingeLockedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -46861,7 +46861,7 @@ func (s *RoboticHinge) MotorEngagedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47015,7 +47015,7 @@ func (s *RoboticPiston) TargetPositionStream() (*krpcgo.Stream[float32], error) 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47113,7 +47113,7 @@ func (s *RoboticPiston) CurrentPositionStream() (*krpcgo.Stream[float32], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47178,7 +47178,7 @@ func (s *RoboticPiston) RateStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47276,7 +47276,7 @@ func (s *RoboticPiston) DampingStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47374,7 +47374,7 @@ func (s *RoboticPiston) PistonLockedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47472,7 +47472,7 @@ func (s *RoboticPiston) MotorEngagedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47626,7 +47626,7 @@ func (s *RoboticRotation) TargetPositionStream() (*krpcgo.Stream[float32], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47724,7 +47724,7 @@ func (s *RoboticRotation) CurrentPositionStream() (*krpcgo.Stream[float32], erro
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47789,7 +47789,7 @@ func (s *RoboticRotation) RateStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47887,7 +47887,7 @@ func (s *RoboticRotation) DampingStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -47985,7 +47985,7 @@ func (s *RoboticRotation) RotationLockedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48083,7 +48083,7 @@ func (s *RoboticRotation) MotorEngagedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48212,7 +48212,7 @@ func (s *RoboticRotor) TargetRPMStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48310,7 +48310,7 @@ func (s *RoboticRotor) CurrentRPMStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48375,7 +48375,7 @@ func (s *RoboticRotor) InvertedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48473,7 +48473,7 @@ func (s *RoboticRotor) RotationLockedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48571,7 +48571,7 @@ func (s *RoboticRotor) MotorEngagedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48669,7 +48669,7 @@ func (s *RoboticRotor) TorqueLimitStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48767,7 +48767,7 @@ func (s *ScienceData) DataAmountStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48832,7 +48832,7 @@ func (s *ScienceData) ScienceValueStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48897,7 +48897,7 @@ func (s *ScienceData) TransmitValueStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -48964,7 +48964,7 @@ func (s *ScienceSubject) ScienceStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49029,7 +49029,7 @@ func (s *ScienceSubject) ScienceCapStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49094,7 +49094,7 @@ func (s *ScienceSubject) IsCompleteStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49160,7 +49160,7 @@ func (s *ScienceSubject) DataScaleStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49227,7 +49227,7 @@ func (s *ScienceSubject) ScientificValueStream() (*krpcgo.Stream[float32], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49294,7 +49294,7 @@ func (s *ScienceSubject) SubjectValueStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49359,7 +49359,7 @@ func (s *ScienceSubject) TitleStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49455,7 +49455,7 @@ func (s *Sensor) ActiveStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49553,7 +49553,7 @@ func (s *Sensor) ValueStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49649,7 +49649,7 @@ func (s *SolarPanel) DeployableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49714,7 +49714,7 @@ func (s *SolarPanel) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49812,7 +49812,7 @@ func (s *SolarPanel) StateStream() (*krpcgo.Stream[SolarPanelState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49879,7 +49879,7 @@ func (s *SolarPanel) EnergyFlowStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -49946,7 +49946,7 @@ func (s *SolarPanel) SunExposureStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50031,7 +50031,7 @@ func (s *Thruster) ThrustPositionStream(referenceFrame *ReferenceFrame) (*krpcgo
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50118,7 +50118,7 @@ func (s *Thruster) ThrustDirectionStream(referenceFrame *ReferenceFrame) (*krpcg
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50203,7 +50203,7 @@ func (s *Thruster) InitialThrustPositionStream(referenceFrame *ReferenceFrame) (
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50290,7 +50290,7 @@ func (s *Thruster) InitialThrustDirectionStream(referenceFrame *ReferenceFrame) 
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50371,7 +50371,7 @@ func (s *Thruster) GimbalPositionStream(referenceFrame *ReferenceFrame) (*krpcgo
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50509,7 +50509,7 @@ func (s *Thruster) GimballedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50576,7 +50576,7 @@ func (s *Thruster) GimbalAngleStream() (*krpcgo.Stream[api.Tuple3[float64, float
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50672,7 +50672,7 @@ func (s *Wheel) StateStream() (*krpcgo.Stream[WheelState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50737,7 +50737,7 @@ func (s *Wheel) RadiusStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50802,7 +50802,7 @@ func (s *Wheel) GroundedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50867,7 +50867,7 @@ func (s *Wheel) HasBrakesStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -50934,7 +50934,7 @@ func (s *Wheel) BrakesStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51033,7 +51033,7 @@ func (s *Wheel) AutoFrictionControlStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51134,7 +51134,7 @@ func (s *Wheel) ManualFrictionControlStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51233,7 +51233,7 @@ func (s *Wheel) DeployableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51298,7 +51298,7 @@ func (s *Wheel) DeployedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51396,7 +51396,7 @@ func (s *Wheel) PoweredStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51461,7 +51461,7 @@ func (s *Wheel) MotorEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51559,7 +51559,7 @@ func (s *Wheel) MotorInvertedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51657,7 +51657,7 @@ func (s *Wheel) MotorStateStream() (*krpcgo.Stream[MotorState], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51724,7 +51724,7 @@ func (s *Wheel) MotorOutputStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51791,7 +51791,7 @@ func (s *Wheel) TractionControlEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51894,7 +51894,7 @@ func (s *Wheel) TractionControlStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -51998,7 +51998,7 @@ func (s *Wheel) DriveLimiterStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52098,7 +52098,7 @@ func (s *Wheel) SteerableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52163,7 +52163,7 @@ func (s *Wheel) SteeringEnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52261,7 +52261,7 @@ func (s *Wheel) SteeringInvertedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52359,7 +52359,7 @@ func (s *Wheel) HasSuspensionStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52425,7 +52425,7 @@ func (s *Wheel) SuspensionSpringStrengthStream() (*krpcgo.Stream[float32], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52491,7 +52491,7 @@ func (s *Wheel) SuspensionDamperStrengthStream() (*krpcgo.Stream[float32], error
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52556,7 +52556,7 @@ func (s *Wheel) BrokenStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52621,7 +52621,7 @@ func (s *Wheel) RepairableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52686,7 +52686,7 @@ func (s *Wheel) StressStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52751,7 +52751,7 @@ func (s *Wheel) StressToleranceStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52818,7 +52818,7 @@ func (s *Wheel) StressPercentageStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52883,7 +52883,7 @@ func (s *Wheel) DeflectionStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -52948,7 +52948,7 @@ func (s *Wheel) SlipStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53134,7 +53134,7 @@ func (s *Resource) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53230,7 +53230,7 @@ func (s *Resource) MaxStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53296,7 +53296,7 @@ func (s *Resource) AmountStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53361,7 +53361,7 @@ func (s *Resource) DensityStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53426,7 +53426,7 @@ func (s *Resource) FlowModeStream() (*krpcgo.Stream[ResourceFlowMode], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53491,7 +53491,7 @@ func (s *Resource) EnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53650,7 +53650,7 @@ func (s *ResourceTransfer) CompleteStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53715,7 +53715,7 @@ func (s *ResourceTransfer) AmountStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53798,7 +53798,7 @@ func (s *Resources) WithResourceStream(name string) (*krpcgo.Stream[[]*Resource]
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53879,7 +53879,7 @@ func (s *Resources) HasResourceStream(name string) (*krpcgo.Stream[bool], error)
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -53960,7 +53960,7 @@ func (s *Resources) MaxStream(name string) (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54041,7 +54041,7 @@ func (s *Resources) AmountStream(name string) (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54106,7 +54106,7 @@ func (s *Resources) DensityStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54171,7 +54171,7 @@ func (s *Resources) FlowModeStream() (*krpcgo.Stream[ResourceFlowMode], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54236,7 +54236,7 @@ func (s *Resources) AllStream() (*krpcgo.Stream[[]*Resource], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54301,7 +54301,7 @@ func (s *Resources) NamesStream() (*krpcgo.Stream[[]string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54366,7 +54366,7 @@ func (s *Resources) EnabledStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54597,7 +54597,7 @@ func (s *Vessel) PositionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54680,7 +54680,7 @@ func (s *Vessel) BoundingBoxStream(referenceFrame *ReferenceFrame) (*krpcgo.Stre
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54763,7 +54763,7 @@ func (s *Vessel) VelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54844,7 +54844,7 @@ func (s *Vessel) RotationStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream[
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -54927,7 +54927,7 @@ func (s *Vessel) DirectionStream(referenceFrame *ReferenceFrame) (*krpcgo.Stream
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55010,7 +55010,7 @@ func (s *Vessel) AngularVelocityStream(referenceFrame *ReferenceFrame) (*krpcgo.
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55075,7 +55075,7 @@ func (s *Vessel) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55173,7 +55173,7 @@ func (s *Vessel) TypeStream() (*krpcgo.Stream[VesselType], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55271,7 +55271,7 @@ func (s *Vessel) SituationStream() (*krpcgo.Stream[VesselSituation], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55336,7 +55336,7 @@ func (s *Vessel) RecoverableStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55401,7 +55401,7 @@ func (s *Vessel) METStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55466,7 +55466,7 @@ func (s *Vessel) BiomeStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55659,7 +55659,7 @@ func (s *Vessel) CrewCapacityStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55724,7 +55724,7 @@ func (s *Vessel) CrewCountStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55789,7 +55789,7 @@ func (s *Vessel) CrewStream() (*krpcgo.Stream[[]*CrewMember], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55918,7 +55918,7 @@ func (s *Vessel) MassStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -55983,7 +55983,7 @@ func (s *Vessel) DryMassStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56052,7 +56052,7 @@ func (s *Vessel) ThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56123,7 +56123,7 @@ func (s *Vessel) AvailableThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56192,7 +56192,7 @@ func (s *Vessel) MaxThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56263,7 +56263,7 @@ func (s *Vessel) MaxVacuumThrustStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56334,7 +56334,7 @@ func (s *Vessel) SpecificImpulseStream() (*krpcgo.Stream[float32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56405,7 +56405,7 @@ func (s *Vessel) VacuumSpecificImpulseStream() (*krpcgo.Stream[float32], error) 
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56478,7 +56478,7 @@ func (s *Vessel) KerbinSeaLevelSpecificImpulseStream() (*krpcgo.Stream[float32],
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56549,7 +56549,7 @@ func (s *Vessel) MomentOfInertiaStream() (*krpcgo.Stream[api.Tuple3[float64, flo
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56619,7 +56619,7 @@ func (s *Vessel) InertiaTensorStream() (*krpcgo.Stream[[]float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56694,7 +56694,7 @@ func (s *Vessel) AvailableTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple3[f
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56767,7 +56767,7 @@ func (s *Vessel) AvailableReactionWheelTorqueStream() (*krpcgo.Stream[api.Tuple2
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56840,7 +56840,7 @@ func (s *Vessel) AvailableRCSTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tuple
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56913,7 +56913,7 @@ func (s *Vessel) AvailableEngineTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tu
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -56986,7 +56986,7 @@ func (s *Vessel) AvailableControlSurfaceTorqueStream() (*krpcgo.Stream[api.Tuple
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -57059,7 +57059,7 @@ func (s *Vessel) AvailableOtherTorqueStream() (*krpcgo.Stream[api.Tuple2[api.Tup
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -57382,7 +57382,7 @@ func (s *Waypoint) NameStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -57482,7 +57482,7 @@ func (s *Waypoint) ColorStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -57581,7 +57581,7 @@ func (s *Waypoint) IconStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -57679,7 +57679,7 @@ func (s *Waypoint) LatitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -57777,7 +57777,7 @@ func (s *Waypoint) LongitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -57875,7 +57875,7 @@ func (s *Waypoint) MeanAltitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -57975,7 +57975,7 @@ func (s *Waypoint) SurfaceAltitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58076,7 +58076,7 @@ func (s *Waypoint) BedrockAltitudeStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58175,7 +58175,7 @@ func (s *Waypoint) NearSurfaceStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58240,7 +58240,7 @@ func (s *Waypoint) GroundedStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58313,7 +58313,7 @@ func (s *Waypoint) IndexStream() (*krpcgo.Stream[int32], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58384,7 +58384,7 @@ func (s *Waypoint) ClusteredStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58449,7 +58449,7 @@ func (s *Waypoint) HasContractStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58683,7 +58683,7 @@ func (s *WaypointManager) WaypointsStream() (*krpcgo.Stream[[]*Waypoint], error)
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58749,7 +58749,7 @@ func (s *WaypointManager) IconsStream() (*krpcgo.Stream[[]string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -58816,7 +58816,7 @@ func (s *WaypointManager) ColorsStream() (*krpcgo.Stream[map[string]int32], erro
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)

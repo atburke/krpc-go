@@ -69,8 +69,8 @@ type RemoteTech struct {
 	Client *krpcgo.KRPCClient
 }
 
-// NewRemoteTech creates a new RemoteTech.
-func NewRemoteTech(client *krpcgo.KRPCClient) *RemoteTech {
+// New creates a new RemoteTech.
+func New(client *krpcgo.KRPCClient) *RemoteTech {
 	return &RemoteTech{Client: client}
 }
 
@@ -167,7 +167,7 @@ func (s *RemoteTech) AvailableStream() (*krpcgo.Stream[bool], error) {
 		Procedure: "get_Available",
 		Service:   "RemoteTech",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -214,7 +214,7 @@ func (s *RemoteTech) GroundStationsStream() (*krpcgo.Stream[[]string], error) {
 		Procedure: "get_GroundStations",
 		Service:   "RemoteTech",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -310,7 +310,7 @@ func (s *Antenna) HasConnectionStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -387,7 +387,7 @@ func (s *Antenna) TargetStream() (*krpcgo.Stream[Target], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -555,7 +555,7 @@ func (s *Antenna) TargetGroundStationStream() (*krpcgo.Stream[string], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -735,7 +735,7 @@ func (s *Comms) SignalDelayToVesselStream(other *spacecenter.Vessel) (*krpcgo.St
 		Position: uint32(0x1),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -831,7 +831,7 @@ func (s *Comms) HasLocalControlStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -896,7 +896,7 @@ func (s *Comms) HasFlightComputerStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -961,7 +961,7 @@ func (s *Comms) HasConnectionStream() (*krpcgo.Stream[bool], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1028,7 +1028,7 @@ func (s *Comms) HasConnectionToGroundStationStream() (*krpcgo.Stream[bool], erro
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1093,7 +1093,7 @@ func (s *Comms) SignalDelayStream() (*krpcgo.Stream[float64], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1160,7 +1160,7 @@ func (s *Comms) SignalDelayToGroundStationStream() (*krpcgo.Stream[float64], err
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -1225,7 +1225,7 @@ func (s *Comms) AntennasStream() (*krpcgo.Stream[[]*Antenna], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)

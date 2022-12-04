@@ -29,8 +29,8 @@ type DockingCamera struct {
 	Client *krpcgo.KRPCClient
 }
 
-// NewDockingCamera creates a new DockingCamera.
-func NewDockingCamera(client *krpcgo.KRPCClient) *DockingCamera {
+// New creates a new DockingCamera.
+func New(client *krpcgo.KRPCClient) *DockingCamera {
 	return &DockingCamera{Client: client}
 }
 
@@ -95,7 +95,7 @@ func (s *DockingCamera) AvailableStream() (*krpcgo.Stream[bool], error) {
 		Procedure: "get_Available",
 		Service:   "DockingCamera",
 	}
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
@@ -191,7 +191,7 @@ func (s *Camera) ImageStream() (*krpcgo.Stream[[]byte], error) {
 		Position: uint32(0x0),
 		Value:    argBytes,
 	})
-	krpc := krpc.NewKRPC(s.Client)
+	krpc := krpc.New(s.Client)
 	st, err := krpc.AddStream(request, true)
 	if err != nil {
 		return nil, tracerr.Wrap(err)
