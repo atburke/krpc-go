@@ -16,7 +16,8 @@ import (
 
 // TestLaunch starts from the space center, loads the Kerbal, X, and launches
 // it into orbit. The procedure for launching the vessel into orbit is adapted
-// from https://krpc.github.io/krpc/tutorials/launch-into-orbit.html.
+// from https://krpc.github.io/krpc/tutorials/launch-into-orbit.html. This
+// function is tested with the Kerbal X starting on the KSC launchpad.
 func TestLaunch(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	t.Cleanup(cancel)

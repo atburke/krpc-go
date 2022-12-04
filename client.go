@@ -59,6 +59,12 @@ func NewKRPCClient(cfg KRPCClientConfig) *KRPCClient {
 	}
 }
 
+// DefaultKRPCClient creates a new kRPC client with all default parameters.
+// Equivalent to `NewKRPCClient(KRPCClientConfig{})`.
+func DefaultKRPCClient() *KRPCClient {
+	return NewKRPCClient(KRPCClientConfig{})
+}
+
 // Connect connects to a kRPC server.
 func (c *KRPCClient) Connect(ctx context.Context) error {
 	if err := c.connectRPC(); err != nil {
